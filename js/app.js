@@ -282,13 +282,19 @@ function renderApp() {
 
 // Render Header Metrics Cards
 function renderMetrics() {
-  const totalCost = bomItems.reduce((acc, item) => acc + (item.qty * item.unitPrice), 0);
+  const totalCost = bomItems.reduce((acc, item) => {
+    const p = (item.unitPrice === '' || item.unitPrice === null || item.unitPrice === undefined) ? 0 : parseFloat(item.unitPrice);
+    return acc + (item.qty * (isNaN(p) ? 0 : p));
+  }, 0);
   const totalUnique = bomItems.length;
   const totalQuantity = bomItems.reduce((acc, item) => acc + item.qty, 0);
 
   // Active node filtered subtotal
   const filteredItems = getFilteredItems();
-  const filteredCost = filteredItems.reduce((acc, item) => acc + (item.qty * item.unitPrice), 0);
+  const filteredCost = filteredItems.reduce((acc, item) => {
+    const p = (item.unitPrice === '' || item.unitPrice === null || item.unitPrice === undefined) ? 0 : parseFloat(item.unitPrice);
+    return acc + (item.qty * (isNaN(p) ? 0 : p));
+  }, 0);
 
   document.getElementById('metricTotalCost').textContent = `रु ${totalCost.toLocaleString('en-IN')}`;
   document.getElementById('metricTotalUnique').textContent = `${totalUnique} Components`;
@@ -347,7 +353,8 @@ function renderTable() {
   }
 
   tbody.innerHTML = items.map(item => {
-    const subtotal = item.qty * item.unitPrice;
+    const isPriceBlank = item.unitPrice === '' || item.unitPrice === null || item.unitPrice === undefined || isNaN(parseFloat(item.unitPrice));
+    const subtotal = isPriceBlank ? 0 : item.qty * parseFloat(item.unitPrice);
     return `
       <tr id="row-${item.id}">
         <td>
@@ -369,11 +376,11 @@ function renderTable() {
         <td>
           <div class="price-input-wrapper">
             <span class="price-currency">रु</span>
-            <input type="number" class="price-input" value="${item.unitPrice}" min="0" step="10" onchange="updateUnitPrice('${item.id}', this.value)">
+            <input type="number" class="price-input" value="${isPriceBlank ? '' : item.unitPrice}" placeholder="TBD" min="0" step="10" onchange="updateUnitPrice('${item.id}', this.value)">
           </div>
         </td>
         <td class="subtotal-cell">
-          रु ${subtotal.toLocaleString('en-IN')}
+          ${isPriceBlank ? '<span class="tbd-text">TBD</span>' : 'रु ' + subtotal.toLocaleString('en-IN')}
         </td>
         <td>
           <select class="status-pill-select ${getStatusClass(item.status)}" onchange="updateStatus('${item.id}', this.value)">
@@ -467,15 +474,16 @@ function updateQty(id, newQty) {
 
 // Update unit price of a component
 function updateUnitPrice(id, newPrice) {
-  const price = parseFloat(newPrice);
-  if (isNaN(price) || price < 0) return;
+  const rawVal = String(newPrice).trim();
+  const price = rawVal === '' ? '' : parseFloat(rawVal);
+  if (price !== '' && isNaN(price)) return;
 
   const item = bomItems.find(i => i.id === id);
   if (item) {
     item.unitPrice = price;
-    saveBOMData();
+    saveBOMData(item, 'upsert');
     renderApp();
-    showToast(`Updated price for ${item.name}`);
+    showToast(price === '' ? `Set price for ${item.name} to TBD` : `Updated price for ${item.name}`);
   }
 }
 
@@ -486,7 +494,7 @@ function deleteItem(id) {
 
   if (confirm(`Are you sure you want to delete "${item.name}" from ${getNodeLabel(item.node)}?`)) {
     bomItems = bomItems.filter(i => i.id !== id);
-    saveBOMData();
+    saveBOMData(item, 'delete');
     renderApp();
     showToast(`Deleted ${item.name}`);
   }
@@ -500,7 +508,8 @@ function handleAddComponent(e) {
   const spec = document.getElementById('compSpec').value.trim();
   const node = document.getElementById('compNode').value;
   const qty = parseInt(document.getElementById('compQty').value) || 1;
-  const unitPrice = parseFloat(document.getElementById('compPrice').value) || 0;
+  const rawPrice = document.getElementById('compPrice').value.trim();
+  const unitPrice = rawPrice === '' ? '' : (parseFloat(rawPrice) || '');
   const status = document.getElementById('compStatus').value;
 
   if (!name) return;
@@ -516,7 +525,7 @@ function handleAddComponent(e) {
   };
 
   bomItems.push(newItem);
-  saveBOMData();
+  saveBOMData(newItem, 'upsert');
   closeAddModal();
   renderApp();
   showToast(`Added ${name} to ${getNodeLabel(node)}`);
