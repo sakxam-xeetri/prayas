@@ -1,0 +1,189 @@
+site_name: PRAYAS V1 Documentation
+site_url: https://prayas-robot.github.io/docs/
+site_description: Production-grade Engineering Documentation for PRAYAS V1 Humanoid Robot
+
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: Fira Code
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+
+nav:
+  - Home: README.md
+  - 01 Project Overview:
+      - Project Overview: 01_Project/Project_Overview.md
+      - Objectives: 01_Project/Objectives.md
+      - Vision: 01_Project/Vision.md
+      - Roadmap: 01_Project/Roadmap.md
+      - Architecture Principles: 01_Project/Architecture_Principles.md
+  - 02 System Architecture:
+      - System Architecture: 02_System_Architecture/System_Architecture.md
+      - Node Architecture: 02_System_Architecture/Node_Architecture.md
+      - Communication: 02_System_Architecture/Communication.md
+      - Power Distribution: 02_System_Architecture/Power_Distribution.md
+      - Mechanical Architecture: 02_System_Architecture/Mechanical_Architecture.md
+      - Software Architecture: 02_System_Architecture/Software_Architecture.md
+  - 03 Hardware Architecture:
+      - Controllers Spec: 03_Hardware/Controllers.md
+      - Motor Node: 03_Hardware/Motor_Node.md
+      - Servo Node: 03_Hardware/Servo_Node.md
+      - Master Node: 03_Hardware/Master_Node.md
+      - AI Node: 03_Hardware/AI_Node.md
+      - Camera Node: 03_Hardware/Camera_Node.md
+      - Sensor Node: 03_Hardware/Sensor_Node.md
+      - Power Node: 03_Hardware/Power_Node.md
+      - Display Node: 03_Hardware/Display_Node.md
+      - Audio System: 03_Hardware/Audio_System.md
+      - Battery System: 03_Hardware/Battery_System.md
+      - Mechanical System: 03_Hardware/Mechanical_System.md
+      - Robot Frame: 03_Hardware/Robot_Frame.md
+      - Materials Spec: 03_Hardware/Materials.md
+      - Bill of Materials: 03_Hardware/BOM.md
+      - Nepali Bill of Materials: 03_Hardware/BOM_Nepali.md
+      - Materials Tree (Node-wise): 03_Hardware/Materials_Tree.md
+  - 04 Software & Firmware:
+      - Firmware Architecture: 04_Software/Firmware_Architecture.md
+      - FreeRTOS Integration: 04_Software/FreeRTOS.md
+      - Folder Structure: 04_Software/Folder_Structure.md
+      - Libraries & Dependencies: 04_Software/Libraries.md
+      - Configuration Guide: 04_Software/Configuration.md
+      - OTA Updates: 04_Software/OTA.md
+      - Logging & Diagnostics: 04_Software/Logging.md
+      - Error Handling & Watchdog: 04_Software/Error_Handling.md
+  - 05 AI System:
+      - Voice Assistant Overview: 05_AI/Voice_Assistant.md
+      - Conversation System: 05_AI/Conversation_System.md
+      - Xiaozhi Framework: 05_AI/Xiaozhi_Framework.md
+      - Model Context Protocol (MCP): 05_AI/MCP.md
+      - Speech To Text (STT): 05_AI/Speech_To_Text.md
+      - Text To Speech (TTS): 05_AI/Text_To_Speech.md
+      - Intent Parser: 05_AI/Intent_System.md
+      - Robot Actions: 05_AI/Robot_Actions.md
+      - Vision & Tracking: 05_AI/Vision.md
+  - 06 Control System:
+      - Gamepad Control: 06_Control/Gamepad_Control.md
+      - Voice Control: 06_Control/Voice_Control.md
+      - Remote Control: 06_Control/Remote_Control.md
+      - Web Control: 06_Control/Web_Control.md
+      - Autonomous Control: 06_Control/Autonomous_Control.md
+      - Motor Control: 06_Control/Motor_Control.md
+      - Servo Control: 06_Control/Servo_Control.md
+      - Control Priority: 06_Control/Control_Priority.md
+  - 07 Mechanical Design:
+      - Robot Layout & Placement: 07_Mechanical/Robot_Layout.md
+      - Robot Dimensions: 07_Mechanical/Robot_Dimensions.md
+      - Servo Positions & Joints: 07_Mechanical/Servo_Positions.md
+      - Arm Kinematics: 07_Mechanical/Arm_Kinematics.md
+      - Motorized Base: 07_Mechanical/Motorized_Base.md
+      - Weight Distribution: 07_Mechanical/Weight_Distribution.md
+      - Center of Gravity (COG): 07_Mechanical/Center_of_Gravity.md
+      - Assembly Guide: 07_Mechanical/Assembly.md
+  - 08 Electrical System:
+      - GPIO Mapping Table: 08_Electrical/GPIO_Map.md
+      - Wiring Schema: 08_Electrical/Wiring.md
+      - Power Rails Specs: 08_Electrical/Power_Rails.md
+      - Voltage Regulation: 08_Electrical/Voltage.md
+      - Current Draw & Budget: 08_Electrical/Current.md
+      - Connectors & Terminals: 08_Electrical/Connectors.md
+      - Fuse Selection: 08_Electrical/Fuse.md
+      - Circuit Protection: 08_Electrical/Protection.md
+  - 09 Communication Protocol:
+      - ESP-NOW Protocol: 09_Communication/ESP_NOW.md
+      - MQTT Broker: 09_Communication/MQTT.md
+      - Message Protocol: 09_Communication/Message_Protocol.md
+      - Heartbeat Fail-safes: 09_Communication/Heartbeat.md
+      - State Synchronization: 09_Communication/Synchronization.md
+      - Auto-Retry System: 09_Communication/Retry_System.md
+      - JSON Message Schemas: 09_Communication/JSON_Schema.md
+  - 10 Web Dashboard:
+      - Dashboard Architecture: 10_Web_Dashboard/Dashboard.md
+      - Telemetry Dashboard: 10_Web_Dashboard/Telemetry.md
+      - OTA Flashing Interface: 10_Web_Dashboard/OTA.md
+      - Health & Performance: 10_Web_Dashboard/Monitoring.md
+      - Remote Logs Stream: 10_Web_Dashboard/Logs.md
+      - Live Video Feed: 10_Web_Dashboard/Video.md
+      - Manual Controls Panel: 10_Web_Dashboard/Controls.md
+  - 11 Testing & Diagnostics:
+      - Servo Diagnostics: 11_Testing/Servo_Test.md
+      - Motor Calibration: 11_Testing/Motor_Test.md
+      - Power Rails Verification: 11_Testing/Power_Test.md
+      - Battery Stress Testing: 11_Testing/Battery_Test.md
+      - Network Signal Testing: 11_Testing/Network_Test.md
+      - Inter-Node Diagnostics: 11_Testing/Communication_Test.md
+      - Integration Load Test: 11_Testing/Stress_Test.md
+  - 12 Manufacturing & Upgrades:
+      - 3D Printing Parameters: 12_Manufacturing/3D_Printing.md
+      - Structural Materials: 12_Manufacturing/Materials.md
+      - Custom Part Drawings: 12_Manufacturing/Parts.md
+      - Assembly Steps: 12_Manufacturing/Assembly_Order.md
+      - Sensors & Servos Calibration: 12_Manufacturing/Calibration.md
+      - Periodic Maintenance: 12_Manufacturing/Maintenance.md
+      - Future Upgrades: 12_Manufacturing/Future_Upgrades.md
+  - Node API Reference:
+      - Core Node API: API/Node_API.md
+      - MQTT API: API/MQTT_API.md
+      - Servo API: API/Servo_API.md
+      - Motor API: API/Motor_API.md
+      - Telemetry API: API/Telemetry_API.md
+  - Developer Guide:
+      - Coding & Formatting Standards: Developer/Coding_Standards.md
+      - Git Branching & Pull Requests: Developer/Git_Workflow.md
+      - Contributing to PRAYAS: Developer/Contributing.md
+  - Changelog: CHANGELOG.md

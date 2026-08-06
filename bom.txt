@@ -1,0 +1,75 @@
+PRAYAS V1 COMPLETE NODE-WISE BOM
+
+NODE 01 MOTOR NODE
+ESP32 Dev Module x1
+BTS7960 x2
+Johnson 12V 200RPM Motors x4
+10 cm Wheels x4
+INA219 x1
+18-D80NK IR Sensors x3
+Rocker Switch x1
+Motor Clamps x4
+XT60 x1
+Perfboard x1
+4-Pin JST x4
+Wire & Jumpers As Required
+Mounting Hardware As Required
+
+NODE 02 SERVO NODE
+ESP32 x1
+PCA9685 x1
+MG995 x7
+Servo Extensions x7
+Terminal Block x1
+Perfboard x1
+JST x8
+Wire As Required
+
+NODE 03 SENSOR NODE
+Arduino Nano x1
+MPU6050 x1
+DHT11 x1
+Perfboard x1
+JST x3
+
+NODE 04 CONTROL & DISPLAY NODE
+ESP32 x1
+3.5 TFT Display x1
+Perfboard x1
+Push Buttons x3 (Opt.)
+Rotary Encoder x1 (Opt.)
+JST x4
+Functions: Dashboard, Web Controller, OTA, MQTT, Monitoring
+
+NODE 05 AI NODE
+ESP32-S3-CAM x1
+INMP441 x1
+MAX98357A x1
+8 Ohm 10W Speaker x1
+32GB MicroSD x1
+Perfboard x1
+JST x4
+Functions: AI, Voice, Vision, STT, TTS
+
+NODE 06 POWER NODE
+18650 Cells x12
+Battery Holders x12
+3S 40A BMS x1
+5V20A Buck x1
+5V3A Buck x2
+XT60 Male x1
+XT60 Female x1
+20A Fuse x1
+Fuse Holder x1
+Main Switch x1
+Power Distribution Board x1
+
+MECHANICAL
+3D Printed Head x1
+3D Printed Arms x2
+PVC Pipe 4in 70cm x1
+Plywood Base x1
+Sunboard As Required
+Acrylic x1
+Aluminium Square Pipe As Required
+Hardware As Required

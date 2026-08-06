@@ -1,0 +1,6233 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Production-grade Engineering Documentation for PRAYAS V1 Humanoid Robot">
+      
+      
+      
+        <link rel="canonical" href="https://prayas-robot.github.io/docs/03_Hardware/Servo_Node/">
+      
+      
+        <link rel="prev" href="../Motor_Node/">
+      
+      
+        <link rel="next" href="../Master_Node/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Servo Node - PRAYAS V1 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#servo-controller-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PRAYAS V1 Documentation" class="md-header__button md-logo" aria-label="PRAYAS V1 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PRAYAS V1 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Servo Node
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01_Project/Project_Overview/" class="md-tabs__link">
+          
+  
+  
+  01 Project Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02_System_Architecture/System_Architecture/" class="md-tabs__link">
+          
+  
+  
+  02 System Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Controllers/" class="md-tabs__link">
+          
+  
+  
+  03 Hardware Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04_Software/Firmware_Architecture/" class="md-tabs__link">
+          
+  
+  
+  04 Software & Firmware
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05_AI/Voice_Assistant/" class="md-tabs__link">
+          
+  
+  
+  05 AI System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06_Control/Gamepad_Control/" class="md-tabs__link">
+          
+  
+  
+  06 Control System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../07_Mechanical/Robot_Layout/" class="md-tabs__link">
+          
+  
+  
+  07 Mechanical Design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../08_Electrical/GPIO_Map/" class="md-tabs__link">
+          
+  
+  
+  08 Electrical System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../09_Communication/ESP_NOW/" class="md-tabs__link">
+          
+  
+  
+  09 Communication Protocol
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../10_Web_Dashboard/Dashboard/" class="md-tabs__link">
+          
+  
+  
+  10 Web Dashboard
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../11_Testing/Servo_Test/" class="md-tabs__link">
+          
+  
+  
+  11 Testing & Diagnostics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../12_Manufacturing/3D_Printing/" class="md-tabs__link">
+          
+  
+  
+  12 Manufacturing & Upgrades
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../API/Node_API/" class="md-tabs__link">
+          
+  
+  
+  Node API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Developer/Coding_Standards/" class="md-tabs__link">
+          
+  
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CHANGELOG/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PRAYAS V1 Documentation" class="md-nav__button md-logo" aria-label="PRAYAS V1 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PRAYAS V1 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 Project Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    01 Project Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Project_Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Objectives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objectives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Architecture_Principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    02 System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/System_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Node_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Power_Distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Mechanical_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanical Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Software_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 Hardware Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    03 Hardware Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Controllers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controllers Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Motor_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Node
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-servo-node-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Servo Node Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Servo Node Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Responsibilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-a-dedicated-servo-node-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Dedicated Servo Node is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-pca9685-is-used-instead-of-driving-servos-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PCA9685 is Used Instead of Driving Servos Directly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Components Required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-component-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Component Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Component Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-dev-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Dev Board
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pca9685-servo-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA9685 Servo Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mg995-servo-motors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MG995 Servo Motors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5v-10a-buck-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5V 10A Buck Converter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xt60-connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XT60 Connector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-470f1000f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacitors (470µF–1000µF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-servo-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Servo Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mechanical-movement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mechanical Movement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Mechanical Movement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#head-neck-yaw-servo-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head Neck Yaw (Servo 1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-shoulder-pitch-servo-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Shoulder Pitch (Servo 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-elbow-pitch-servo-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Elbow Pitch (Servo 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-wrist-roll-servo-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Wrist Roll (Servo 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-shoulder-pitch-servo-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Shoulder Pitch (Servo 5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-elbow-pitch-servo-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Elbow Pitch (Servo 6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-wrist-roll-servo-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Wrist Roll (Servo 7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-circuit-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Circuit Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Circuit Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-to-pca9685" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 to PCA9685
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pca9685-to-mg995-servos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA9685 to MG995 Servos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buck-converter-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buck Converter Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground-sharing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ground Sharing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gpio-connection-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GPIO Connection Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage-and-current-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage and Current Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cable-safety-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cable &amp; Safety Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-servo-driver-channel-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Servo Driver Channel Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-working-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Working Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-home-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Home Position
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-motion-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Motion Profiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Motion Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#speed-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speed Profiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceleration-and-deceleration-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceleration and Deceleration Profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-testing-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Testing Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-engineering-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Engineering Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Master_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AI_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Camera_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camera Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sensor_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Power_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Display_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Battery_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mechanical_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanical System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Robot_Frame/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Frame
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Materials_Tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials Tree (Node-wise)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 Software & Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    04 Software & Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Firmware_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/FreeRTOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FreeRTOS Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Folder_Structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Folder Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Libraries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Libraries & Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/OTA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OTA Updates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging & Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Error_Handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling & Watchdog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AI System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    05 AI System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Voice_Assistant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice Assistant Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Conversation_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conversation System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Xiaozhi_Framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xiaozhi Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/MCP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Context Protocol (MCP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Speech_To_Text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Speech To Text (STT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Text_To_Speech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text To Speech (TTS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Intent_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intent Parser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Robot_Actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision & Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 Control System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    06 Control System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Gamepad_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gamepad Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Voice_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Remote_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Web_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Autonomous_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autonomous Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Servo_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Control_Priority/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Priority
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 Mechanical Design
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    07 Mechanical Design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Robot_Layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Layout & Placement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Robot_Dimensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Servo_Positions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Positions & Joints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Arm_Kinematics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arm Kinematics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Motorized_Base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motorized Base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Weight_Distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Center_of_Gravity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Center of Gravity (COG)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 Electrical System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    08 Electrical System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/GPIO_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPIO Mapping Table
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Wiring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiring Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Power_Rails/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Rails Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Voltage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voltage Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Current/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Current Draw & Budget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Connectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connectors & Terminals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Fuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fuse Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuit Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 Communication Protocol
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    09 Communication Protocol
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/ESP_NOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ESP-NOW Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/MQTT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT Broker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Message_Protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Message Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat Fail-safes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Synchronization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    State Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Retry_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auto-Retry System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/JSON_Schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON Message Schemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 Web Dashboard
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10 Web Dashboard
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Telemetry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Telemetry Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/OTA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OTA Flashing Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health & Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Logs Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Video Feed
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual Controls Panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 Testing & Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11 Testing & Diagnostics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Servo_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Motor_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Power_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Rails Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Battery_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Stress Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Network_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Signal Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Communication_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inter-Node Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Stress_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration Load Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Manufacturing & Upgrades
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12 Manufacturing & Upgrades
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/3D_Printing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D Printing Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structural Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Parts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Part Drawings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Assembly_Order/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensors & Servos Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Periodic Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Future_Upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Future Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Node API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Node_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Node API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/MQTT_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Servo_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Motor_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Telemetry_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Telemetry API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Coding_Standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding & Formatting Standards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Git_Workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Branching & Pull Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing to PRAYAS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-servo-node-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Servo Node Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Servo Node Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Responsibilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-a-dedicated-servo-node-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Dedicated Servo Node is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-pca9685-is-used-instead-of-driving-servos-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why PCA9685 is Used Instead of Driving Servos Directly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Components Required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-component-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Component Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Component Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-dev-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 Dev Board
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pca9685-servo-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA9685 Servo Driver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mg995-servo-motors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MG995 Servo Motors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5v-10a-buck-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5V 10A Buck Converter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xt60-connector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XT60 Connector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-470f1000f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capacitors (470µF–1000µF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-servo-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Servo Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mechanical-movement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Mechanical Movement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Mechanical Movement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#head-neck-yaw-servo-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head Neck Yaw (Servo 1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-shoulder-pitch-servo-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Shoulder Pitch (Servo 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-elbow-pitch-servo-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Elbow Pitch (Servo 3)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#left-wrist-roll-servo-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left Wrist Roll (Servo 4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-shoulder-pitch-servo-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Shoulder Pitch (Servo 5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-elbow-pitch-servo-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Elbow Pitch (Servo 6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#right-wrist-roll-servo-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Right Wrist Roll (Servo 7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-circuit-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Circuit Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Circuit Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esp32-to-pca9685" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ESP32 to PCA9685
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pca9685-to-mg995-servos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA9685 to MG995 Servos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buck-converter-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buck Converter Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground-sharing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ground Sharing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gpio-connection-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. GPIO Connection Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage-and-current-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage and Current Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cable-safety-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cable &amp; Safety Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-servo-driver-channel-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Servo Driver Channel Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-working-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Working Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-home-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Home Position
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-motion-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Motion Profiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Motion Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#speed-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speed Profiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acceleration-and-deceleration-profiling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceleration and Deceleration Profiling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Wiring Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-testing-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Testing Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-engineering-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Engineering Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="servo-controller-node">Servo Controller Node<a class="headerlink" href="#servo-controller-node" title="Permanent link">&para;</a></h1>
+<h2 id="1-servo-node-overview">1. Servo Node Overview<a class="headerlink" href="#1-servo-node-overview" title="Permanent link">&para;</a></h2>
+<h3 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h3>
+<p>The Servo Controller Node is the dedicated hardware subsystem of the PRAYAS robot responsible for managing the high-precision angular positions and trajectories of the physical joints. It coordinates the movement of the robot's head and arms based on directives sent from the Master Node.</p>
+<h3 id="responsibilities">Responsibilities<a class="headerlink" href="#responsibilities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Command Decoding</strong>: Receives movement instructions wirelessly from the Master Node via ESP-NOW.</li>
+<li><strong>PWM Generation</strong>: Drives multiple high-torque servos simultaneously using precise hardware pulse-width modulation (PWM) control signals.</li>
+<li><strong>Motion Profiling</strong>: Calculates smooth transition speeds between home and target positions to prevent mechanical wear and jerking.</li>
+<li><strong>Fail-Safe Management</strong>: Safely parks joints at startup and shuts off PWM channels during an emergency.</li>
+</ul>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Control Commands</strong>: Digital wireless messages from the Master Node via ESP-NOW.</li>
+<li><strong>Logic Power</strong>: 5V DC low-current logic supply.</li>
+<li><strong>Servo Power</strong>: 5V DC high-current power rail fed from a dedicated regulator.</li>
+</ul>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PWM Channels</strong>: 7 channels of 50Hz hardware-timed control signals routed to the individual servo motors.</li>
+</ul>
+<h3 id="why-a-dedicated-servo-node-is-used">Why a Dedicated Servo Node is Used<a class="headerlink" href="#why-a-dedicated-servo-node-is-used" title="Permanent link">&para;</a></h3>
+<p>Servo motors draw large, sudden surges of current when accelerating or holding load. If these servos were driven by the Master Node, the electrical noise (EMI) and voltage drops (brownouts) caused by motor load would likely crash the master processor. Isolating the servos to their own node ensures system-wide stability. Additionally, offloading the timing-sensitive PWM calculations preserves Master Node CPU cycles for navigation and communication.</p>
+<h3 id="why-pca9685-is-used-instead-of-driving-servos-directly">Why PCA9685 is Used Instead of Driving Servos Directly<a class="headerlink" href="#why-pca9685-is-used-instead-of-driving-servos-directly" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Hardware Timers</strong>: The PCA9685 has an onboard 12-bit PWM generator and its own clock. Once the ESP32 sets the target angles over I2C, the PCA9685 maintains the signals continuously, freeing the ESP32's CPU.</li>
+<li><strong>Pin Efficiency</strong>: It controls up to 16 servos using only 2 I2C pins on the ESP32.</li>
+<li><strong>Electrical Isolation</strong>: It provides dedicated pins to separate high-current servo power from low-power microcontroller logic.</li>
+</ul>
+<hr />
+<h2 id="2-components-required">2. Components Required<a class="headerlink" href="#2-components-required" title="Permanent link">&para;</a></h2>
+<p>The Bill of Materials (BOM) below lists all components required to build and wire the Servo Node:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component Name</th>
+<th style="text-align: center;">Quantity</th>
+<th style="text-align: left;">Specification</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ESP32 Dev Board</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">ESP32-WROOM-32E (38-pin DevKitC)</td>
+<td style="text-align: left;">Logic controller that decodes gestures and handles I2C commands.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PCA9685 Servo Driver</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">16-Channel 12-bit I2C PWM Controller</td>
+<td style="text-align: left;">Generates precise, hardware-timed PWM signals for the servos.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MG995 Servo Motors</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">TowerPro MG995 Analog Metal Gear Servo</td>
+<td style="text-align: left;">High-torque actuators for head and arm joints.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5V 10A Buck Converter</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">DC-DC Step-Down Regulator (e.g., XL4016)</td>
+<td style="text-align: left;">Steps down 12V battery power to a stable, high-current 5V rail.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>XT60 Connector</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">XT60 Male/Female Pair</td>
+<td style="text-align: left;">Provides a secure, low-resistance battery input connection.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Power Distribution Terminal</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">5.08 mm Pitch PCB Screw Terminal Blocks</td>
+<td style="text-align: left;">Distributes power and ground connections cleanly across the node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>JST Servo Connectors</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">3-Pin JST-XH Connectors</td>
+<td style="text-align: left;">Ensures secure, vibration-proof servo wire extensions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Capacitors</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">1000µF, 16V Electrolytic Capacitor</td>
+<td style="text-align: left;">Placed across the servo power rail to buffer current spikes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Connecting Wires</strong></td>
+<td style="text-align: center;">Assorted</td>
+<td style="text-align: left;">14 AWG (Power Rail) / 24 AWG (Signal Wires)</td>
+<td style="text-align: left;">Directs electricity and control lines throughout the system.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mounting Hardware</strong></td>
+<td style="text-align: center;">Assorted</td>
+<td style="text-align: left;">M3 Nylon Standoffs, Screws, and Nuts</td>
+<td style="text-align: left;">Secures the PCBs mechanically to the robot chassis.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-component-description">3. Component Description<a class="headerlink" href="#3-component-description" title="Permanent link">&para;</a></h2>
+<h3 id="esp32-dev-board">ESP32 Dev Board<a class="headerlink" href="#esp32-dev-board" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>What it is</strong>: A dual-core 32-bit microcontroller development board equipped with Wi-Fi and Bluetooth capabilities.</p>
+<p><img alt="ESP32 DevKitC v4 Pinout Diagram" src="../../assets/img/esp32-devkitC-v4-pinout.png" style="display: block; margin: 0 auto;" width="500" />
+*   <strong>Why it is used</strong>: It provides high-speed processing, hardware support for I2C communication, and a built-in antenna for wireless ESP-NOW communication.
+*   <strong>How it works inside PRAYAS</strong>: It boots, configures the PCA9685 over I2C, listens for motion commands wirelessly, calculates smooth movement profiles, and instructs the PCA9685 to update servo positions.</p>
+</li>
+</ul>
+<h3 id="pca9685-servo-driver">PCA9685 Servo Driver<a class="headerlink" href="#pca9685-servo-driver" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>What it is</strong>: An I2C-controlled 16-channel PWM driver that operates with an internal clock.</p>
+<p><img alt="PCA9685 PWM Driver" src="../../assets/img/16chservodriver_lrg.jpg" style="display: block; margin: 0 auto;" width="320" />
+*   <strong>Why it is used</strong>: It offloads the PWM generation from the ESP32, prevents signal jitter, and simplifies wiring by clustering 16 channels of 3-pin headers.
+*   <strong>How it works inside PRAYAS</strong>: It receives joint angle configurations from the ESP32 through the I2C bus and outputs continuous 50Hz PWM signals to the connected servo motors.</p>
+</li>
+</ul>
+<h3 id="mg995-servo-motors">MG995 Servo Motors<a class="headerlink" href="#mg995-servo-motors" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>What it is</strong>: A high-torque, metal-geared analog servo motor capable of rotating 180 degrees.</p>
+<p><img alt="MG995 Metal Gear Servo" src="../../assets/img/mg995-metal-gear-servo-motor-180-degree-high-torque-for-arduino-electroxbd-2.webp" style="display: block; margin: 0 auto;" width="320" />
+*   <strong>Why it is used</strong>: Moving mechanical limbs requires high holding torque and durability. Metal gears prevent gear stripping when the arms experience weight load or external resistance.
+*   <strong>How it works inside PRAYAS</strong>: 7 servos actuate the joints of the robot (1 for head rotation, 3 per arm) based on the PWM pulse widths sent by the PCA9685.</p>
+</li>
+</ul>
+<h3 id="5v-10a-buck-converter">5V 10A Buck Converter<a class="headerlink" href="#5v-10a-buck-converter" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: An efficiency-focused step-down voltage regulator that converts high DC voltage to lower DC voltage.</li>
+<li><strong>Why it is used</strong>: The robot's primary battery runs at 12V, but MG995 servos operate optimally at 5V to 6V. Standard linear regulators would overheat instantly; a 10A buck converter handles high currents efficiently.</li>
+<li><strong>How it works inside PRAYAS</strong>: It steps the battery's 12V down to a clean, stable 5.0V output capable of delivering up to 10A of current to the servo power bus.</li>
+</ul>
+<h3 id="xt60-connector">XT60 Connector<a class="headerlink" href="#xt60-connector" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: A heavy-duty, polarized nylon connector rated for currents up to 60A.</li>
+<li><strong>Why it is used</strong>: Prevents accidental reverse-polarity connections and provides a robust mechanical joint that does not disconnect due to robot vibration.</li>
+<li><strong>How it works inside PRAYAS</strong>: Connects the main 12V power supply lines from the battery compartment to the buck converter input safely.</li>
+</ul>
+<h3 id="capacitors-470f1000f">Capacitors (470µF–1000µF)<a class="headerlink" href="#capacitors-470f1000f" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: An energy storage component that can release power rapidly.</li>
+<li><strong>Why it is used</strong>: When servos start moving simultaneously, their sudden current draw causes a temporary voltage drop (sag). A capacitor buffers this drop to prevent control board resets.</li>
+<li><strong>How it works inside PRAYAS</strong>: A 1000µF capacitor is wired directly across the PCA9685 servo power terminal block to absorb peak current demands.</li>
+</ul>
+<hr />
+<h2 id="4-servo-layout">4. Servo Layout<a class="headerlink" href="#4-servo-layout" title="Permanent link">&para;</a></h2>
+<p>The physical joints of the PRAYAS robot are mapped to the 7 servos as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Servo Identifier</th>
+<th style="text-align: left;">Robot Part</th>
+<th style="text-align: left;">Joint Name</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Servo 1</strong></td>
+<td style="text-align: left;">Head</td>
+<td style="text-align: left;">Head Neck Yaw</td>
+<td style="text-align: left;">Rotates the head left and right.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 2</strong></td>
+<td style="text-align: left;">Left Arm</td>
+<td style="text-align: left;">Left Shoulder Pitch</td>
+<td style="text-align: left;">Raises and lowers the left arm.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 3</strong></td>
+<td style="text-align: left;">Left Arm</td>
+<td style="text-align: left;">Left Elbow Pitch</td>
+<td style="text-align: left;">Folds and extends the left forearm.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 4</strong></td>
+<td style="text-align: left;">Left Arm</td>
+<td style="text-align: left;">Left Wrist Roll</td>
+<td style="text-align: left;">Rotates the left hand / executes hand gestures.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 5</strong></td>
+<td style="text-align: left;">Right Arm</td>
+<td style="text-align: left;">Right Shoulder Pitch</td>
+<td style="text-align: left;">Raises and lowers the right arm.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 6</strong></td>
+<td style="text-align: left;">Right Arm</td>
+<td style="text-align: left;">Right Elbow Pitch</td>
+<td style="text-align: left;">Folds and extends the right forearm.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 7</strong></td>
+<td style="text-align: left;">Right Arm</td>
+<td style="text-align: left;">Right Wrist Roll</td>
+<td style="text-align: left;">Rotates the right hand / executes hand gestures.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-mechanical-movement">5. Mechanical Movement<a class="headerlink" href="#5-mechanical-movement" title="Permanent link">&para;</a></h2>
+<p>To ensure the robot does not exceed its physical capabilities, joint limits are strictly defined.</p>
+<h3 id="head-neck-yaw-servo-1">Head Neck Yaw (Servo 1)<a class="headerlink" href="#head-neck-yaw-servo-1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Left Rotation</strong>: Rotates the head up to 80° left of center.</li>
+<li><strong>Right Rotation</strong>: Rotates the head up to 80° right of center.</li>
+<li><strong>Recommended Operating Limit</strong>: 10° to 170° (90° Center).</li>
+</ul>
+<h3 id="left-shoulder-pitch-servo-2">Left Shoulder Pitch (Servo 2)<a class="headerlink" href="#left-shoulder-pitch-servo-2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Raise Arm</strong>: Swings the arm forward and up.</li>
+<li><strong>Lower Arm</strong>: Swings the arm back down parallel to the torso.</li>
+<li><strong>Recommended Operating Limit</strong>: 15° to 165° (90° Center / Standing vertical).</li>
+</ul>
+<h3 id="left-elbow-pitch-servo-3">Left Elbow Pitch (Servo 3)<a class="headerlink" href="#left-elbow-pitch-servo-3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fold Forearm</strong>: Bends the elbow up towards the shoulder.</li>
+<li><strong>Extend Forearm</strong>: Straightens the arm.</li>
+<li><strong>Recommended Operating Limit</strong>: 30° to 150° (90° Center / L-shape).</li>
+</ul>
+<h3 id="left-wrist-roll-servo-4">Left Wrist Roll (Servo 4)<a class="headerlink" href="#left-wrist-roll-servo-4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Rotate/Gesture</strong>: Rotates the hand clockwise or counterclockwise.</li>
+<li><strong>Recommended Operating Limit</strong>: 0° to 180° (90° Center / Palm facing inward).</li>
+</ul>
+<h3 id="right-shoulder-pitch-servo-5">Right Shoulder Pitch (Servo 5)<a class="headerlink" href="#right-shoulder-pitch-servo-5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Raise Arm</strong>: Swings the arm forward and up.</li>
+<li><strong>Lower Arm</strong>: Swings the arm back down parallel to the torso.</li>
+<li><strong>Recommended Operating Limit</strong>: 15° to 165° (90° Center / Standing vertical).</li>
+</ul>
+<h3 id="right-elbow-pitch-servo-6">Right Elbow Pitch (Servo 6)<a class="headerlink" href="#right-elbow-pitch-servo-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fold Forearm</strong>: Bends the elbow up towards the shoulder.</li>
+<li><strong>Extend Forearm</strong>: Straightens the arm.</li>
+<li><strong>Recommended Operating Limit</strong>: 30° to 150° (90° Center / L-shape).</li>
+</ul>
+<h3 id="right-wrist-roll-servo-7">Right Wrist Roll (Servo 7)<a class="headerlink" href="#right-wrist-roll-servo-7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Rotate/Gesture</strong>: Rotates the hand clockwise or counterclockwise.</li>
+<li><strong>Recommended Operating Limit</strong>: 0° to 180° (90° Center / Palm facing inward).</li>
+</ul>
+<hr />
+<h2 id="6-circuit-connection">6. Circuit Connection<a class="headerlink" href="#6-circuit-connection" title="Permanent link">&para;</a></h2>
+<p>This section details how to wire the electronics of the Servo Node.</p>
+<h3 id="esp32-to-pca9685">ESP32 to PCA9685<a class="headerlink" href="#esp32-to-pca9685" title="Permanent link">&para;</a></h3>
+<p>Control commands are sent from the ESP32 to the PCA9685 logic terminals:</p>
+<ul>
+<li><strong>SDA Connection</strong>: Connect ESP32 <code>GPIO 21</code> directly to PCA9685 <code>SDA</code>.</li>
+<li><strong>SCL Connection</strong>: Connect ESP32 <code>GPIO 22</code> directly to PCA9685 <code>SCL</code>.</li>
+<li><strong>VCC Connection</strong>: Connect ESP32 <code>3.3V</code> or <code>5V</code> output to the PCA9685 logic <code>VCC</code> pin.</li>
+<li><strong>GND Connection</strong>: Connect ESP32 <code>GND</code> to PCA9685 logic <code>GND</code> pin.</li>
+<li><strong>OE Pin (Optional)</strong>: Connect ESP32 <code>GPIO 19</code> to PCA9685 <code>OE</code> (Output Enable). Pulling this pin HIGH disables all PWM outputs instantly, serving as an emergency shut-off.</li>
+</ul>
+<h3 id="pca9685-to-mg995-servos">PCA9685 to MG995 Servos<a class="headerlink" href="#pca9685-to-mg995-servos" title="Permanent link">&para;</a></h3>
+<p>Connect the servos to the 3-pin headers of the PCA9685 driver channels:</p>
+<ul>
+<li><strong>Signal (Yellow/Orange)</strong>: Connects to the top row (PWM signal pin) of the channel.</li>
+<li><strong>Power (Red)</strong>: Connects to the middle row (V+ power pin) of the channel.</li>
+<li><strong>Ground (Brown/Black)</strong>: Connects to the bottom row (GND pin) of the channel.</li>
+</ul>
+<h3 id="buck-converter-connections">Buck Converter Connections<a class="headerlink" href="#buck-converter-connections" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Battery to Buck Converter</strong>: Connect the 12V battery output via the XT60 connector directly to the input terminal blocks of the 5V Buck Converter, respecting polarity (<code>IN+</code> and <code>IN-</code>).</li>
+<li><strong>Buck Converter to PCA9685 Power Rail</strong>: Connect the output of the 5V Buck Converter (<code>OUT+</code> and <code>OUT-</code>) to the green screw terminals of the PCA9685 (<code>V+</code> and <code>GND</code>). Use thick wires (14 AWG) to carry the current.</li>
+</ul>
+<h3 id="ground-sharing">Ground Sharing<a class="headerlink" href="#ground-sharing" title="Permanent link">&para;</a></h3>
+<p>For the control signals to remain stable and clean, a common ground must exist. Ensure that:
+1.  The ESP32 <code>GND</code> is connected to the PCA9685 logic <code>GND</code>.
+2.  The PCA9685 logic <code>GND</code> is connected to the PCA9685 power <code>GND</code> (green terminal block).
+3.  The Buck Converter <code>OUT-</code> is connected to the PCA9685 power <code>GND</code>.</p>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Why Servo Power Must NEVER Come From the ESP32</strong>
+Microcontroller boards like the ESP32 are delicate logic devices. Their on-board voltage regulators can only supply small currents (typically under 500mA). A single MG995 servo under mechanical load can draw up to 2.5A of stall current. Attempting to power even one servo directly from the ESP32 will trigger an immediate brownout, reset the processor, and risk permanently burning out the ESP32 voltage regulator.</p>
+</blockquote>
+<hr />
+<h2 id="7-gpio-connection-table">7. GPIO Connection Table<a class="headerlink" href="#7-gpio-connection-table" title="Permanent link">&para;</a></h2>
+<p>The GPIO configurations for the ESP32 logic controller are assigned as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ESP32 Pin</th>
+<th style="text-align: left;">Connected To</th>
+<th style="text-align: left;">Device / Pin</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>GPIO 21</strong></td>
+<td style="text-align: left;">PCA9685 SDA</td>
+<td style="text-align: left;">PCA9685 Logic Board</td>
+<td style="text-align: left;">I2C Serial Data line for configuring PWM width.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 22</strong></td>
+<td style="text-align: left;">PCA9685 SCL</td>
+<td style="text-align: left;">PCA9685 Logic Board</td>
+<td style="text-align: left;">I2C Serial Clock line for synchronizing transfers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 19</strong></td>
+<td style="text-align: left;">PCA9685 OE</td>
+<td style="text-align: left;">PCA9685 Output Enable</td>
+<td style="text-align: left;">Hardware disable control (Active LOW, pull HIGH for emergency stop).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3.3V</strong></td>
+<td style="text-align: left;">PCA9685 VCC</td>
+<td style="text-align: left;">PCA9685 Logic Power</td>
+<td style="text-align: left;">Powers the logic gates inside the PCA9685 chip.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GND</strong></td>
+<td style="text-align: left;">PCA9685 GND</td>
+<td style="text-align: left;">PCA9685 Logic Ground</td>
+<td style="text-align: left;">Common logic ground reference.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-power-distribution">8. Power Distribution<a class="headerlink" href="#8-power-distribution" title="Permanent link">&para;</a></h2>
+<h3 id="power-flow-diagram">Power Flow Diagram<a class="headerlink" href="#power-flow-diagram" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>12V Battery Pack
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      ▼ (XT60 Connector)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>10A Inline Fuse
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      ▼ (16 AWG Wire)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>5V 10A Buck Converter
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>      ▼ (14 AWG Wire) ─── [ 1000µF Capacitor ]
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>PCA9685 V+ Power Rail
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>      │
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>      ▼ (22 AWG Wire)
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>7 × MG995 Servos
+</span></code></pre></div>
+<h3 id="voltage-and-current-parameters">Voltage and Current Parameters<a class="headerlink" href="#voltage-and-current-parameters" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System Voltage</strong>: 5.0V DC (optimum voltage for MG995 servos to balance high torque and cool operating temperatures).</li>
+<li><strong>Idle Current</strong>: ~10mA per servo (~70mA total for the node).</li>
+<li><strong>Operating Current</strong>: ~500mA to 800mA per servo during normal limb movement.</li>
+<li><strong>Stall/Peak Current</strong>: Up to 2.5A per servo under heavy loads.</li>
+<li><strong>Total Current Estimation</strong>: Since all 7 joints rarely stall simultaneously, the peak load during a complex dual-arm gesture is estimated at <strong>6A to 8A</strong>. The dedicated 10A buck converter provides a safe current headroom of 20%.</li>
+</ul>
+<h3 id="cable-safety-recommendations">Cable &amp; Safety Recommendations<a class="headerlink" href="#cable-safety-recommendations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Battery to Buck Converter (12V Input)</strong>: Use <strong>16 AWG</strong> silicon wires.</li>
+<li><strong>Buck Converter to PCA9685 (5V High-Current Rail)</strong>: Use <strong>14 AWG</strong> wires to prevent voltage drop over the line.</li>
+<li><strong>Ground Distribution</strong>: Establish a star-ground configuration at the output terminal of the Buck Converter to minimize ground loops and reduce logic noise.</li>
+<li><strong>Capacitor Placement</strong>: Install a <strong>1000µF (16V minimum)</strong> electrolytic capacitor directly into the PCA9685's green power terminals. Place it as close to the driver input as possible.</li>
+<li><strong>Fuse Recommendation</strong>: Install a <strong>10A fast-acting blade fuse</strong> in series between the buck converter's positive output and the PCA9685 input terminal.</li>
+</ul>
+<hr />
+<h2 id="9-servo-driver-channel-mapping">9. Servo Driver Channel Mapping<a class="headerlink" href="#9-servo-driver-channel-mapping" title="Permanent link">&para;</a></h2>
+<p>Servos must be plugged into the exact channels configured on the PCA9685 driver:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Driver Channel</th>
+<th style="text-align: left;">Servo Name</th>
+<th style="text-align: left;">Robot Part</th>
+<th style="text-align: left;">Physical Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Channel 0</strong></td>
+<td style="text-align: left;">Servo 1</td>
+<td style="text-align: left;">Head Neck Yaw</td>
+<td style="text-align: left;">Base of the neck assembly.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 1</strong></td>
+<td style="text-align: left;">Servo 2</td>
+<td style="text-align: left;">Left Shoulder Pitch</td>
+<td style="text-align: left;">Left shoulder actuator.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 2</strong></td>
+<td style="text-align: left;">Servo 3</td>
+<td style="text-align: left;">Left Elbow Pitch</td>
+<td style="text-align: left;">Left elbow actuator.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 3</strong></td>
+<td style="text-align: left;">Servo 4</td>
+<td style="text-align: left;">Left Wrist Roll</td>
+<td style="text-align: left;">Left wrist rotation assembly.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 4</strong></td>
+<td style="text-align: left;">Servo 5</td>
+<td style="text-align: left;">Right Shoulder Pitch</td>
+<td style="text-align: left;">Right shoulder actuator.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 5</strong></td>
+<td style="text-align: left;">Servo 6</td>
+<td style="text-align: left;">Right Elbow Pitch</td>
+<td style="text-align: left;">Right elbow actuator.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channel 6</strong></td>
+<td style="text-align: left;">Servo 7</td>
+<td style="text-align: left;">Right Wrist Roll</td>
+<td style="text-align: left;">Right wrist rotation assembly.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Channels 7–15</strong></td>
+<td style="text-align: left;">Reserved</td>
+<td style="text-align: left;">Unassigned</td>
+<td style="text-align: left;">Reserved for future upgrades (e.g., neck tilt, grippers).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-working-principle">10. Working Principle<a class="headerlink" href="#10-working-principle" title="Permanent link">&para;</a></h2>
+<p>The step-by-step operational pipeline of the Servo Node is detailed below:</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Power ON] --&gt; B[ESP32 Boots]
+    B --&gt; C[PCA9685 Initializes]
+    C --&gt; D[Servos Move to Home Position]
+    D --&gt; E[ESP-NOW Receives Command]
+    E --&gt; F[Servo Command Decoded]
+    F --&gt; G[Target Angle Calculated]
+    G --&gt; H[Smooth Movement Executed]
+    H --&gt; I[Status Sent Back to Master]
+    I --&gt; E</code></pre>
+<ol>
+<li><strong>Power ON</strong>: The robot's main power switch is turned on, routing 12V to the buck converter and booting the system.</li>
+<li><strong>ESP32 Boots</strong>: The ESP32 firmware initializes and establishes standard I2C communications with the PCA9685 driver.</li>
+<li><strong>PCA9685 Initializes</strong>: The I2C registers of the PCA9685 are configured, setting the internal PWM frequency to 50Hz (20ms refresh period).</li>
+<li><strong>Servos Move to Home Position</strong>: The ESP32 commands all 7 channels to move slowly to their designated startup angles (90°). To avoid current surges, channels are moved one by one with a 100ms startup delay between them.</li>
+<li><strong>ESP-NOW Command Reception</strong>: The ESP32 listens for incoming wireless gesture commands sent from the Master Node.</li>
+<li><strong>Servo Command Decoded</strong>: Upon receiving a message, the ESP32 decodes the packet to identify target angles and speed profiles for the joints.</li>
+<li><strong>Target Angle Calculation</strong>: The target angles are processed. The step increments are calculated based on the requested motion profiles.</li>
+<li><strong>Smooth Movement Execution</strong>: The intermediate servo positions are updated over I2C to execute smooth movement transitions.</li>
+<li><strong>Status Sent Back</strong>: Once the movement completes, the ESP32 sends a status confirmation back to the Master Node over ESP-NOW, waiting for the next action.</li>
+</ol>
+<hr />
+<h2 id="11-home-position">11. Home Position<a class="headerlink" href="#11-home-position" title="Permanent link">&para;</a></h2>
+<p>To prevent physical collisions with the robot's torso at startup, the initial home positions and safe operating ranges are defined below:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Servo</th>
+<th style="text-align: left;">Joint Name</th>
+<th style="text-align: center;">Home Angle</th>
+<th style="text-align: center;">Min Safe Angle</th>
+<th style="text-align: center;">Max Safe Angle</th>
+<th style="text-align: center;">Safe Operating Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Servo 1</strong></td>
+<td style="text-align: left;">Head Neck Yaw</td>
+<td style="text-align: center;">90° (Center)</td>
+<td style="text-align: center;">10°</td>
+<td style="text-align: center;">170°</td>
+<td style="text-align: center;">160° total rotation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 2</strong></td>
+<td style="text-align: left;">Left Shoulder Pitch</td>
+<td style="text-align: center;">90° (Down)</td>
+<td style="text-align: center;">15°</td>
+<td style="text-align: center;">165°</td>
+<td style="text-align: center;">150° total swing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 3</strong></td>
+<td style="text-align: left;">Left Elbow Pitch</td>
+<td style="text-align: center;">90° (L-Shape)</td>
+<td style="text-align: center;">30°</td>
+<td style="text-align: center;">150°</td>
+<td style="text-align: center;">120° fold capacity</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 4</strong></td>
+<td style="text-align: left;">Left Wrist Roll</td>
+<td style="text-align: center;">90° (Neutral)</td>
+<td style="text-align: center;">0°</td>
+<td style="text-align: center;">180°</td>
+<td style="text-align: center;">180° rotation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 5</strong></td>
+<td style="text-align: left;">Right Shoulder Pitch</td>
+<td style="text-align: center;">90° (Down)</td>
+<td style="text-align: center;">15°</td>
+<td style="text-align: center;">165°</td>
+<td style="text-align: center;">150° total swing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 6</strong></td>
+<td style="text-align: left;">Right Elbow Pitch</td>
+<td style="text-align: center;">90° (L-Shape)</td>
+<td style="text-align: center;">30°</td>
+<td style="text-align: center;">150°</td>
+<td style="text-align: center;">120° fold capacity</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo 7</strong></td>
+<td style="text-align: left;">Right Wrist Roll</td>
+<td style="text-align: center;">90° (Neutral)</td>
+<td style="text-align: center;">0°</td>
+<td style="text-align: center;">180°</td>
+<td style="text-align: center;">180° rotation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="12-motion-profiles">12. Motion Profiles<a class="headerlink" href="#12-motion-profiles" title="Permanent link">&para;</a></h2>
+<p>Directly commanding a servo to jump from one position to another creates abrupt acceleration, resulting in high mechanical torque, structural vibration, and severe power spikes. The ESP32 prevents this by executing motion profiling.</p>
+<h3 id="speed-profiles">Speed Profiles<a class="headerlink" href="#speed-profiles" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Slow Profile (15°/sec)</strong>: Used for head scanning, slow idle behaviors, and alignment adjustments.</li>
+<li><strong>Normal Profile (60°/sec)</strong>: Default speed used for standard communicative gestures (waving, gesturing).</li>
+<li><strong>Fast Profile (120°/sec)</strong>: Used for quick reactions or immediate obstacle retraction.</li>
+</ul>
+<h3 id="acceleration-and-deceleration-profiling">Acceleration and Deceleration Profiling<a class="headerlink" href="#acceleration-and-deceleration-profiling" title="Permanent link">&para;</a></h3>
+<p>The controller applies a trapezoidal velocity curve to joint movements:
+*   <strong>Smooth Acceleration</strong>: The movement starts slowly and ramps up speed to match the profile limits.
+*   <strong>Constant Speed</strong>: The joint rotates at the profile's speed limit.
+*   <strong>Smooth Deceleration</strong>: As the joint nears the target angle, the step size decreases, bringing the servo to a smooth, vibration-free halt.</p>
+<hr />
+<h2 id="13-wiring-diagram">13. Wiring Diagram<a class="headerlink" href="#13-wiring-diagram" title="Permanent link">&para;</a></h2>
+<p>The structural interconnections of the Servo Node are represented in the schematic flow below:</p>
+<pre class="mermaid"><code>graph TD
+    %% Node Declarations
+    subgraph Power_System [Power System]
+        Battery[12V Battery Pack] --&gt;|XT60 Connector| Fuse[10A Inline Fuse]
+        Fuse --&gt;|16 AWG| Buck[5V 10A Buck Converter]
+        Buck --&gt;|5V High-Current Rail - 14 AWG| PCA_Power[PCA9685 V+ Power Input]
+        Cap[1000uF Capacitor] -.-&gt;|Directly across| PCA_Power
+    end
+
+    subgraph Controller_Board [Logic Controller]
+        ESP32[ESP32 Dev Board]
+    end
+
+    subgraph Driver_Board [PWM Servo Driver]
+        PCA[PCA9685 Driver Board]
+    end
+
+    subgraph Actuators [Mechanical Servos]
+        S1[Servo 1: Head Yaw]
+        S2[Servo 2: L-Shoulder]
+        S3[Servo 3: L-Elbow]
+        S4[Servo 4: L-Wrist]
+        S5[Servo 5: R-Shoulder]
+        S6[Servo 6: R-Elbow]
+        S7[Servo 7: R-Wrist]
+    end
+
+    %% Signal Connections
+    ESP32 --&gt;|GPIO 21 SDA| PCA
+    ESP32 --&gt;|GPIO 22 SCL| PCA
+    ESP32 --&gt;|GPIO 19 OE| PCA
+    ESP32 --&gt;|3.3V Logic VCC| PCA
+    ESP32 --&gt;|Logic GND| PCA
+
+    %% Power distribution links
+    PCA_Power === PCA
+
+    %% Channel Signal mapping
+    PCA --&gt;|Ch 0 S/V+/GND| S1
+    PCA --&gt;|Ch 1 S/V+/GND| S2
+    PCA --&gt;|Ch 2 S/V+/GND| S3
+    PCA --&gt;|Ch 3 S/V+/GND| S4
+    PCA --&gt;|Ch 4 S/V+/GND| S5
+    PCA --&gt;|Ch 5 S/V+/GND| S6
+    PCA --&gt;|Ch 6 S/V+/GND| S7
+
+    %% Common ground line
+    ESP32 ---|Common Logic Ground| Buck</code></pre>
+<hr />
+<h2 id="14-testing-procedure">14. Testing Procedure<a class="headerlink" href="#14-testing-procedure" title="Permanent link">&para;</a></h2>
+<p>Follow these steps systematically during assembly to verify the Servo Node:</p>
+<ol>
+<li><strong>Test ESP32</strong>: Connect the ESP32 to a PC via USB. Flash an I2C scanner sketch. Open the Serial Monitor to verify that the ESP32 boots and runs successfully.</li>
+<li><strong>Test PCA9685 Logic</strong>: Connect the PCA9685 I2C lines (<code>SDA</code>, <code>SCL</code>, <code>VCC</code>, <code>GND</code>) to the ESP32. With the ESP32 still powered via USB, run the I2C scanner. Verify that device address <code>0x40</code> is successfully detected.</li>
+<li><strong>Check Buck Converter Output</strong>: Connect the 12V battery pack to the buck converter. Use a multimeter to measure the DC output voltage of the buck converter. Adjust the converter pot until it reads exactly <strong>5.0V to 5.2V</strong>. Disconnect the battery.</li>
+<li><strong>Connect Servo Power</strong>: Connect the buck converter output to the PCA9685 green screw terminals, checking that positive and negative match correctly. Reconnect the battery.</li>
+<li><strong>Test a Single Servo</strong>: Connect one MG995 servo to PCA9685 Channel 0. Upload a basic sweep program to the ESP32. Verify that the servo sweeps smoothly from 10° to 170° without causing the ESP32 logic controller to reset.</li>
+<li><strong>Test All Servos</strong>: Plug all 7 servos into their respective channels (0 to 6). Execute a test sweep sequence that moves each joint individually. Ensure that each servo is operating independently.</li>
+<li><strong>Calibration and Configuration</strong>: Command the servos to the home angle of 90°. Mount the mechanical joint horns so they are physically centered. Adjust your software pulse limits if necessary to align with physical structural limits.</li>
+</ol>
+<hr />
+<h2 id="15-troubleshooting">15. Troubleshooting<a class="headerlink" href="#15-troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Use this table to diagnose common issues during assembly or operation:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Problem</th>
+<th style="text-align: left;">Possible Cause</th>
+<th style="text-align: left;">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Servo Jitter or Buzzing</strong></td>
+<td style="text-align: left;">Voltage drops caused by high resistance or current spikes; logic signal interference.</td>
+<td style="text-align: left;">Check that the 1000µF capacitor is installed at the PCA9685 power terminal. Ensure the buck converter is set to 5.0V and can supply up to 10A. Keep signal wires short.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo Doesn't Move</strong></td>
+<td style="text-align: left;">Missing high-current power supply; incorrect I2C signals; OE pin is pulled high.</td>
+<td style="text-align: left;">Verify that the Buck Converter is powered and outputting 5V. Ensure that the OE pin (GPIO 19) is pulled LOW by the ESP32. Check that I2C address <code>0x40</code> is detected in scanner.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo Moves in Wrong Direction</strong></td>
+<td style="text-align: left;">The physical servo mounting direction is inverted relative to expectations.</td>
+<td style="text-align: left;">Invert the mapping algorithm in software (e.g., replace <code>target_angle</code> with <code>180 - target_angle</code> for that joint).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ESP32 Resets/Crashes</strong></td>
+<td style="text-align: left;">High-current power surges are leaking into the logic lines; missing common ground.</td>
+<td style="text-align: left;">Ensure that you are not powering the servos from the ESP32. Check that the ESP32 ground is connected directly to the PCA9685 logic ground.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Servo Overheating</strong></td>
+<td style="text-align: left;">Mechanical joint binding or servo stalled trying to reach an unreachable target angle.</td>
+<td style="text-align: left;">Power down the system immediately. Manually rotate the joint to verify there is no friction or blockage. Adjust software angle limits.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Erratic Servo Motion</strong></td>
+<td style="text-align: left;">Ground loop or missing common ground connection.</td>
+<td style="text-align: left;">Ensure the logic ground of the ESP32 and the power ground of the buck converter share a secure connection.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="16-engineering-notes">16. Engineering Notes<a class="headerlink" href="#16-engineering-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Logic Isolation</strong>: Never draw servo power from the ESP32's onboard regulator. Use a dedicated high-current 5V buck converter.</li>
+<li><strong>Buffer Capacitors</strong>: Always place a 1000µF electrolytic capacitor directly across the PCA9685 servo power terminal block to absorb peak current demands.</li>
+<li><strong>Heavy Duty Power Lines</strong>: Use thick wires (14 AWG) for the 5V power and Ground rails leading from the buck converter to the PCA9685.</li>
+<li><strong>Logic Signal Cleanliness</strong>: Keep all digital signal lines (I2C, PWM signals) bundled separately from the high-current DC power cables to prevent electromagnetic noise coupling.</li>
+<li><strong>Star Grounding</strong>: Connect all ground lines (microcontroller GND, logic GND, power GND) to a single point at the buck converter output terminal to avoid ground loops.</li>
+<li><strong>Secure Connections</strong>: Use locking JST connectors for servo extension cords to prevent wires from shaking loose during arm and head movements.</li>
+<li><strong>Cable Labeling</strong>: Label both ends of every servo cable with its joint name and channel ID (e.g., "L-Elbow (Ch 2)") to simplify troubleshooting and assembly.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

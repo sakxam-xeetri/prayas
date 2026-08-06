@@ -1,0 +1,6528 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Production-grade Engineering Documentation for PRAYAS V1 Humanoid Robot">
+      
+      
+      
+        <link rel="canonical" href="https://prayas-robot.github.io/docs/03_Hardware/Sensor_Node/">
+      
+      
+        <link rel="prev" href="../Camera_Node/">
+      
+      
+        <link rel="next" href="../Power_Node/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Sensor Node - PRAYAS V1 Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sensor-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PRAYAS V1 Documentation" class="md-header__button md-logo" aria-label="PRAYAS V1 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PRAYAS V1 Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sensor Node
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="deep-orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01_Project/Project_Overview/" class="md-tabs__link">
+          
+  
+  
+  01 Project Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02_System_Architecture/System_Architecture/" class="md-tabs__link">
+          
+  
+  
+  02 System Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Controllers/" class="md-tabs__link">
+          
+  
+  
+  03 Hardware Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04_Software/Firmware_Architecture/" class="md-tabs__link">
+          
+  
+  
+  04 Software & Firmware
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05_AI/Voice_Assistant/" class="md-tabs__link">
+          
+  
+  
+  05 AI System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06_Control/Gamepad_Control/" class="md-tabs__link">
+          
+  
+  
+  06 Control System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../07_Mechanical/Robot_Layout/" class="md-tabs__link">
+          
+  
+  
+  07 Mechanical Design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../08_Electrical/GPIO_Map/" class="md-tabs__link">
+          
+  
+  
+  08 Electrical System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../09_Communication/ESP_NOW/" class="md-tabs__link">
+          
+  
+  
+  09 Communication Protocol
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../10_Web_Dashboard/Dashboard/" class="md-tabs__link">
+          
+  
+  
+  10 Web Dashboard
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../11_Testing/Servo_Test/" class="md-tabs__link">
+          
+  
+  
+  11 Testing & Diagnostics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../12_Manufacturing/3D_Printing/" class="md-tabs__link">
+          
+  
+  
+  12 Manufacturing & Upgrades
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../API/Node_API/" class="md-tabs__link">
+          
+  
+  
+  Node API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Developer/Coding_Standards/" class="md-tabs__link">
+          
+  
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../CHANGELOG/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PRAYAS V1 Documentation" class="md-nav__button md-logo" aria-label="PRAYAS V1 Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PRAYAS V1 Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01 Project Overview
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    01 Project Overview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Project_Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Objectives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objectives
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Architecture_Principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02 System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    02 System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/System_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Node_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Power_Distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Mechanical_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanical Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_System_Architecture/Software_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Software Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03 Hardware Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    03 Hardware Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Controllers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controllers Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Motor_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Servo_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Master_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AI_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Camera_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Camera Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor Node
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensor Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-sensor-node-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Sensor Node Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Sensor Node Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Responsibilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-a-dedicated-sensor-node-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Dedicated Sensor Node is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages-of-using-arduino-nano-for-sensor-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages of Using Arduino Nano for Sensor Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collected-by-this-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collected by this Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Components Required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-component-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Component Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Component Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-sensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Sensor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart-connection-wires" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UART Connection Wires
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-sensor-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Sensor Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Sensor Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-each-sensor-contributes-to-prayas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Each Sensor Contributes to PRAYAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-circuit-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Circuit Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Circuit Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-mpu6050-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to MPU6050 (I2C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-dht11-single-wire-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to DHT11 (Single-Wire Digital)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-esp32-master-node-uart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to ESP32 Master Node (UART)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gpio-connection-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GPIO Connection Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ground Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-working-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Working Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-data-sent-to-master-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Data Sent to Master Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Data Sent to Master Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-values-transmitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Values Transmitted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-json-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample JSON Payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-format-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Format Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Wiring Diagram
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Wiring Diagram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signal-flow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signal Flow Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-sensor-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Sensor Placement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Sensor Placement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Mounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Mounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-testing-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Testing Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-engineering-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Engineering Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Engineering Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wiring-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mounting-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mounting Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#electrical-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Electrical Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Power_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Display_Node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Display Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Audio_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audio System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Battery_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mechanical_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mechanical System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Robot_Frame/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Frame
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Materials_Tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Materials Tree (Node-wise)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04 Software & Firmware
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    04 Software & Firmware
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Firmware_Architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firmware Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/FreeRTOS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FreeRTOS Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Folder_Structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Folder Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Libraries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Libraries & Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/OTA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OTA Updates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging & Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_Software/Error_Handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling & Watchdog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05 AI System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    05 AI System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Voice_Assistant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice Assistant Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Conversation_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conversation System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Xiaozhi_Framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xiaozhi Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/MCP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Context Protocol (MCP)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Speech_To_Text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Speech To Text (STT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Text_To_Speech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text To Speech (TTS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Intent_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intent Parser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Robot_Actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Actions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_AI/Vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision & Tracking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06 Control System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    06 Control System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Gamepad_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gamepad Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Voice_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voice Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Remote_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Web_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Autonomous_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Autonomous Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Motor_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Servo_Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_Control/Control_Priority/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Priority
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07 Mechanical Design
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    07 Mechanical Design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Robot_Layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Layout & Placement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Robot_Dimensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Robot Dimensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Servo_Positions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Positions & Joints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Arm_Kinematics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arm Kinematics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Motorized_Base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motorized Base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Weight_Distribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Distribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Center_of_Gravity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Center of Gravity (COG)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07_Mechanical/Assembly/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08 Electrical System
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    08 Electrical System
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/GPIO_Map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GPIO Mapping Table
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Wiring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiring Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Power_Rails/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Rails Specs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Voltage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voltage Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Current/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Current Draw & Budget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Connectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connectors & Terminals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Fuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fuse Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08_Electrical/Protection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuit Protection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09 Communication Protocol
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    09 Communication Protocol
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/ESP_NOW/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ESP-NOW Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/MQTT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT Broker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Message_Protocol/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Message Protocol
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat Fail-safes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Synchronization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    State Synchronization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/Retry_System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auto-Retry System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09_Communication/JSON_Schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON Message Schemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 Web Dashboard
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10 Web Dashboard
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dashboard Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Telemetry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Telemetry Dashboard
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/OTA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OTA Flashing Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Monitoring/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Health & Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Logs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Remote Logs Stream
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Video/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Video Feed
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10_Web_Dashboard/Controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual Controls Panel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11 Testing & Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    11 Testing & Diagnostics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Servo_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Motor_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Power_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Rails Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Battery_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Stress Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Network_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Signal Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Communication_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inter-Node Diagnostics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11_Testing/Stress_Test/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration Load Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 Manufacturing & Upgrades
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    12 Manufacturing & Upgrades
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/3D_Printing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D Printing Parameters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Materials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structural Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Parts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Part Drawings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Assembly_Order/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assembly Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sensors & Servos Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Maintenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Periodic Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12_Manufacturing/Future_Upgrades/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Future Upgrades
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Node API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Node_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Node API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/MQTT_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MQTT API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Servo_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Motor_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motor API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../API/Telemetry_API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Telemetry API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developer Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Coding_Standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding & Formatting Standards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Git_Workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git Branching & Pull Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Developer/Contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing to PRAYAS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CHANGELOG/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-sensor-node-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Sensor Node Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Sensor Node Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#responsibilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Responsibilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-a-dedicated-sensor-node-is-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a Dedicated Sensor Node is Used
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advantages-of-using-arduino-nano-for-sensor-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advantages of Using Arduino Nano for Sensor Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-collected-by-this-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Collected by this Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-components-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Components Required
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-component-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Component Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Component Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-sensor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Sensor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uart-connection-wires" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UART Connection Wires
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-sensor-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Sensor Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Sensor Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-each-sensor-contributes-to-prayas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Each Sensor Contributes to PRAYAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-circuit-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Circuit Connection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Circuit Connection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-mpu6050-i2c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to MPU6050 (I2C)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-dht11-single-wire-digital" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to DHT11 (Single-Wire Digital)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arduino-nano-to-esp32-master-node-uart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arduino Nano to ESP32 Master Node (UART)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gpio-connection-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GPIO Connection Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-power-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Flow Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operating Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ground Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-working-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Working Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-data-sent-to-master-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Data Sent to Master Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Data Sent to Master Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sensor-values-transmitted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Values Transmitted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-json-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sample JSON Payload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-format-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Format Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-wiring-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Wiring Diagram
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Wiring Diagram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signal-flow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signal Flow Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-sensor-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Sensor Placement
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Sensor Placement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu6050-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MPU6050 Mounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dht11-mounting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DHT11 Mounting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-testing-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Testing Procedure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-engineering-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Engineering Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Engineering Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wiring-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mounting-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mounting Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#electrical-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Electrical Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maintenance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maintenance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="sensor-node">Sensor Node<a class="headerlink" href="#sensor-node" title="Permanent link">&para;</a></h1>
+<h2 id="1-sensor-node-overview">1. Sensor Node Overview<a class="headerlink" href="#1-sensor-node-overview" title="Permanent link">&para;</a></h2>
+<h3 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h3>
+<p>The Sensor Node is the dedicated hardware subsystem of the PRAYAS robot responsible for collecting real-time environmental and inertial data. It monitors the robot's physical orientation, detects motion and tilt events, and measures ambient temperature and humidity to support safe navigation and situational awareness.</p>
+<h3 id="responsibilities">Responsibilities<a class="headerlink" href="#responsibilities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Motion Sensing</strong>: Reads 3-axis accelerometer and 3-axis gyroscope data to determine the robot's orientation, tilt angle, and movement state.</li>
+<li><strong>Environmental Monitoring</strong>: Measures ambient temperature and humidity to track internal and external conditions.</li>
+<li><strong>Data Packaging</strong>: Combines all sensor readings into a structured data packet.</li>
+<li><strong>Data Transmission</strong>: Sends the packaged sensor data to the ESP32 Master Node over a UART serial connection.</li>
+</ul>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Logic Power</strong>: 5V DC supply from the Power Distribution Board.</li>
+<li><strong>Sensor Signals</strong>: Raw analog and digital readings from the MPU6050 and DHT11 sensors.</li>
+</ul>
+<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>UART Serial Data</strong>: JSON-formatted sensor payload transmitted to the Master Node.</li>
+</ul>
+<h3 id="why-a-dedicated-sensor-node-is-used">Why a Dedicated Sensor Node is Used<a class="headerlink" href="#why-a-dedicated-sensor-node-is-used" title="Permanent link">&para;</a></h3>
+<p>Sensor readings require consistent sampling intervals and uninterrupted processing. If the sensor reading tasks were combined with motor control or servo PWM generation on the same microcontroller, timing conflicts could corrupt sensor data or introduce jitter. Isolating the sensors to a dedicated Arduino Nano ensures reliable, jitter-free data acquisition independent of other real-time workloads on the ESP32 nodes.</p>
+<h3 id="advantages-of-using-arduino-nano-for-sensor-management">Advantages of Using Arduino Nano for Sensor Management<a class="headerlink" href="#advantages-of-using-arduino-nano-for-sensor-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Simplicity</strong>: The Arduino Nano uses a straightforward ATmega328P processor with well-established I2C and UART libraries, making sensor integration fast and reliable.</li>
+<li><strong>Low Cost</strong>: At approximately $4–5, the Arduino Nano is one of the most affordable microcontrollers available, reducing the overall system cost.</li>
+<li><strong>Compact Form Factor</strong>: Its small size (45 × 18 mm) allows it to be mounted directly next to the sensors on the robot chassis, minimizing wire length and signal noise.</li>
+<li><strong>5V Logic Compatibility</strong>: The MPU6050 and DHT11 both operate at 5V logic, matching the Arduino Nano's native voltage level without requiring level shifters.</li>
+<li><strong>Dedicated Role</strong>: Running a single focused task (sensor reading) on its own MCU eliminates resource contention with the ESP32 nodes.</li>
+</ul>
+<h3 id="data-collected-by-this-node">Data Collected by this Node<a class="headerlink" href="#data-collected-by-this-node" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Data Type</th>
+<th style="text-align: left;">Sensor</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Acceleration (X, Y, Z)</strong></td>
+<td style="text-align: left;">MPU6050</td>
+<td style="text-align: left;">Linear acceleration along each axis in m/s².</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gyroscope (X, Y, Z)</strong></td>
+<td style="text-align: left;">MPU6050</td>
+<td style="text-align: left;">Angular velocity around each axis in °/s.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pitch</strong></td>
+<td style="text-align: left;">MPU6050 (derived)</td>
+<td style="text-align: left;">Forward/backward tilt angle of the robot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Roll</strong></td>
+<td style="text-align: left;">MPU6050 (derived)</td>
+<td style="text-align: left;">Left/right tilt angle of the robot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Temperature</strong></td>
+<td style="text-align: left;">DHT11</td>
+<td style="text-align: left;">Ambient air temperature in °C.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Humidity</strong></td>
+<td style="text-align: left;">DHT11</td>
+<td style="text-align: left;">Relative humidity in %RH.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-components-required">2. Components Required<a class="headerlink" href="#2-components-required" title="Permanent link">&para;</a></h2>
+<p>The table below lists all components required to assemble the Sensor Node:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component Name</th>
+<th style="text-align: center;">Quantity</th>
+<th style="text-align: left;">Specification</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Arduino Nano</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">ATmega328P, 16 MHz, 32KB Flash, 2KB RAM</td>
+<td style="text-align: left;">Microcontroller that reads sensors and transmits data to the Master Node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Module</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">InvenSense MPU6050, 6-axis (3-axis Accelerometer + 3-axis Gyroscope), I2C Interface</td>
+<td style="text-align: left;">Measures the robot's orientation, acceleration, and angular velocity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Sensor</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Digital Temperature &amp; Humidity Sensor, 3.3V–5V, Single-Wire Digital Interface</td>
+<td style="text-align: left;">Measures ambient temperature and relative humidity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>UART Connection Wires</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">24 AWG jumper wires (TX, RX, GND)</td>
+<td style="text-align: left;">Carries serial data between the Arduino Nano and the ESP32 Master Node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Power Connector</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">2-pin JST-XH Connector (2.54 mm pitch)</td>
+<td style="text-align: left;">Connects the 5V power supply from the distribution board to the Arduino Nano.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mounting Hardware</strong></td>
+<td style="text-align: center;">Assorted</td>
+<td style="text-align: left;">M3 Nylon Standoffs (10 mm), Screws, and Nuts</td>
+<td style="text-align: left;">Secures the Arduino Nano and sensor modules to the robot chassis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Jumper Wires</strong></td>
+<td style="text-align: center;">Assorted</td>
+<td style="text-align: left;">24 AWG Male-to-Male and Male-to-Female Dupont wires</td>
+<td style="text-align: left;">Connects the MPU6050 and DHT11 to the Arduino Nano via I2C and digital pins.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-component-description">3. Component Description<a class="headerlink" href="#3-component-description" title="Permanent link">&para;</a></h2>
+<h3 id="arduino-nano">Arduino Nano<a class="headerlink" href="#arduino-nano" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: A compact microcontroller development board based on the ATmega328P processor, running at 16 MHz with 32 KB of Flash memory and 2 KB of SRAM. It features built-in I2C (SDA/SCL) and UART (TX/RX) hardware interfaces.</li>
+<li><strong>Why it is used</strong>: The Arduino Nano provides a simple, reliable, and low-cost platform for reading sensor data. Its native 5V logic matches the operating voltage of both the MPU6050 and DHT11, eliminating the need for voltage level shifters. Its compact size allows direct mounting alongside the sensors.</li>
+<li><strong>How it works inside PRAYAS</strong>: It acts as the local data acquisition unit of the Sensor Node. It initializes both sensors over I2C and digital interfaces, reads sensor values at a fixed sampling rate, packages the data into a JSON string, and transmits it to the ESP32 Master Node over a UART serial connection.</li>
+</ul>
+<h3 id="mpu6050-module">MPU6050 Module<a class="headerlink" href="#mpu6050-module" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: A 6-axis inertial measurement unit (IMU) made by InvenSense, combining a 3-axis accelerometer and a 3-axis gyroscope on a single chip. It communicates over I2C and operates at 3.3V–5V.</li>
+<li><strong>Why it is used</strong>: The MPU6050 provides the acceleration and angular velocity data needed to monitor the robot's physical orientation. This data is essential for detecting tilt, instability, and falls — critical safety functions for a tall humanoid robot with a high center of gravity.</li>
+<li><strong>How it works inside PRAYAS</strong>: Mounted near the robot's center of gravity, the MPU6050 continuously measures linear acceleration and rotational rate along all three axes. The Arduino Nano reads these values over I2C and derives pitch and roll angles to determine whether the robot is upright, tilted, or falling.</li>
+<li><strong>Expected Output Data</strong>: Acceleration (X, Y, Z) in m/s², Angular Velocity (X, Y, Z) in °/s, derived Pitch in degrees, derived Roll in degrees.</li>
+</ul>
+<h3 id="dht11-sensor">DHT11 Sensor<a class="headerlink" href="#dht11-sensor" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: A digital temperature and humidity sensor that outputs calibrated readings over a single-wire digital protocol. It measures temperature from 0°C to 50°C and humidity from 20% to 80% RH.</li>
+<li><strong>Why it is used</strong>: Monitoring ambient temperature and humidity helps the robot assess its operating environment. High temperatures near electronics can indicate overheating, and humidity levels affect sensor accuracy and component longevity.</li>
+<li><strong>How it works inside PRAYAS</strong>: Mounted on the robot's upper body exposed to ambient air, the DHT11 is read by the Arduino Nano every 2 seconds. The readings are packaged alongside the IMU data and sent to the Master Node for telemetry reporting and environmental awareness.</li>
+<li><strong>Expected Output Data</strong>: Temperature in °C (±2°C accuracy), Relative Humidity in %RH (±5% accuracy).</li>
+</ul>
+<h3 id="uart-connection-wires">UART Connection Wires<a class="headerlink" href="#uart-connection-wires" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is</strong>: Three standard jumper wires (TX, RX, GND) that establish a serial communication link between the Arduino Nano and the ESP32 Master Node.</li>
+<li><strong>Why it is used</strong>: UART serial is a lightweight, reliable, and universally supported communication protocol that requires only two data wires (TX and RX) plus a common ground reference.</li>
+<li><strong>How it works inside PRAYAS</strong>: The Arduino Nano transmits JSON-formatted sensor data through its TX pin. The ESP32 Master Node receives this data on its designated RX pin. A shared ground wire ensures a stable reference voltage for clean signal transmission.</li>
+</ul>
+<hr />
+<h2 id="4-sensor-functions">4. Sensor Functions<a class="headerlink" href="#4-sensor-functions" title="Permanent link">&para;</a></h2>
+<h3 id="mpu6050-functions">MPU6050 Functions<a class="headerlink" href="#mpu6050-functions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Acceleration Measurement</strong>: The MPU6050's 3-axis accelerometer measures linear force along the X (left-right), Y (forward-backward), and Z (up-down) axes. At rest on a flat surface, the Z-axis reads approximately 9.8 m/s² (1g) due to gravity, while X and Y read near zero.</li>
+<li><strong>Gyroscope Measurement</strong>: The 3-axis gyroscope measures rotational velocity around each axis in degrees per second (°/s). A non-zero reading indicates the robot is rotating or tilting.</li>
+<li><strong>Pitch Calculation</strong>: Pitch is derived from the accelerometer data by measuring the forward/backward tilt angle relative to the horizontal plane. A positive pitch indicates the robot is leaning forward; a negative pitch indicates it is leaning backward.</li>
+<li><strong>Roll Calculation</strong>: Roll is derived from the accelerometer data by measuring the left/right tilt angle relative to the horizontal plane. A positive roll indicates a lean to the right; a negative roll indicates a lean to the left.</li>
+<li><strong>Motion Detection</strong>: When the magnitude of acceleration across all axes significantly exceeds 1g, the node detects active motion. This indicates the robot is moving, being pushed, or experiencing vibration.</li>
+<li><strong>Tilt Detection</strong>: If the pitch or roll angle exceeds a predefined threshold (e.g., ±15°), the node flags a tilt condition. This serves as an early warning before a potential fall.</li>
+<li><strong>Robot Stability Monitoring</strong>: By continuously tracking pitch and roll values over time, the system monitors whether the robot remains stable during locomotion, gesture execution, or when stationary.</li>
+<li><strong>Fall Detection</strong>: If the pitch or roll angle exceeds a critical threshold (e.g., ±30°) or if the Z-axis acceleration drops sharply (free-fall condition), the node identifies a fall event and immediately notifies the Master Node.</li>
+</ul>
+<h3 id="dht11-functions">DHT11 Functions<a class="headerlink" href="#dht11-functions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Temperature Measurement</strong>: The DHT11 reads the ambient air temperature in degrees Celsius. It provides a measurement range of 0°C to 50°C with an accuracy of ±2°C.</li>
+<li><strong>Humidity Measurement</strong>: The DHT11 reads the relative humidity of the surrounding air as a percentage. It provides a measurement range of 20% to 80% RH with an accuracy of ±5%.</li>
+<li><strong>Environmental Monitoring</strong>: By combining temperature and humidity data, the node provides a basic environmental profile of the robot's operating space. This data is useful for detecting overheating near electronics and for reporting system health telemetry to the dashboard.</li>
+</ul>
+<h3 id="how-each-sensor-contributes-to-prayas">How Each Sensor Contributes to PRAYAS<a class="headerlink" href="#how-each-sensor-contributes-to-prayas" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Sensor</th>
+<th style="text-align: left;">Contribution to PRAYAS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Accelerometer</strong></td>
+<td style="text-align: left;">Enables the robot to detect if it is being moved, pushed, or vibrated. Provides raw data for tilt and fall detection algorithms.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Gyroscope</strong></td>
+<td style="text-align: left;">Detects rotational motion such as the robot turning or swaying. Supports balance monitoring during locomotion.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Pitch/Roll</strong></td>
+<td style="text-align: left;">Derived orientation angles used by the Master Node to trigger corrective actions (e.g., slowing motors, alerting the user) if the robot tilts dangerously.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Temperature</strong></td>
+<td style="text-align: left;">Alerts the system if ambient temperature rises above safe operating limits for electronics (typically 45°C).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Humidity</strong></td>
+<td style="text-align: left;">Provides environmental context; extremely high humidity may affect sensor reliability and PCB longevity.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-circuit-connection">5. Circuit Connection<a class="headerlink" href="#5-circuit-connection" title="Permanent link">&para;</a></h2>
+<p>This section details how to wire the components of the Sensor Node.</p>
+<h3 id="arduino-nano-to-mpu6050-i2c">Arduino Nano to MPU6050 (I2C)<a class="headerlink" href="#arduino-nano-to-mpu6050-i2c" title="Permanent link">&para;</a></h3>
+<p>The MPU6050 communicates with the Arduino Nano over the I2C bus using two wires (SDA and SCL):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Arduino Nano Pin</th>
+<th style="text-align: left;">MPU6050 Pin</th>
+<th style="text-align: left;">Wire Color (Suggested)</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>5V</strong></td>
+<td style="text-align: left;">VCC</td>
+<td style="text-align: left;">Red</td>
+<td style="text-align: left;">Provides 5V power to the MPU6050 module.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GND</strong></td>
+<td style="text-align: left;">GND</td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Common ground reference.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A4 (SDA)</strong></td>
+<td style="text-align: left;">SDA</td>
+<td style="text-align: left;">Blue</td>
+<td style="text-align: left;">I2C data line — carries sensor register data.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A5 (SCL)</strong></td>
+<td style="text-align: left;">SCL</td>
+<td style="text-align: left;">Yellow</td>
+<td style="text-align: left;">I2C clock line — synchronizes data transfers.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>I2C Pull-Up Resistors</strong>: Most MPU6050 breakout boards include built-in 4.7kΩ pull-up resistors on the SDA and SCL lines. If using a bare MPU6050 chip, external pull-up resistors (4.7kΩ to 10kΩ) must be added between SDA–5V and SCL–5V for reliable communication.</p>
+</blockquote>
+<h3 id="arduino-nano-to-dht11-single-wire-digital">Arduino Nano to DHT11 (Single-Wire Digital)<a class="headerlink" href="#arduino-nano-to-dht11-single-wire-digital" title="Permanent link">&para;</a></h3>
+<p>The DHT11 uses a proprietary single-wire digital protocol for data transmission:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Arduino Nano Pin</th>
+<th style="text-align: left;">DHT11 Pin</th>
+<th style="text-align: left;">Wire Color (Suggested)</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>5V</strong></td>
+<td style="text-align: left;">VCC (+)</td>
+<td style="text-align: left;">Red</td>
+<td style="text-align: left;">Provides 5V power to the DHT11 sensor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GND</strong></td>
+<td style="text-align: left;">GND (−)</td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Common ground reference.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D2</strong></td>
+<td style="text-align: left;">DATA</td>
+<td style="text-align: left;">Green</td>
+<td style="text-align: left;">Digital data line — carries temperature and humidity readings.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!NOTE]
+<strong>Pull-Up Resistor</strong>: The DHT11 DATA line requires a 10kΩ pull-up resistor between DATA and VCC. Most DHT11 breakout boards include this resistor onboard. If using a bare DHT11 sensor, add the resistor externally.</p>
+</blockquote>
+<h3 id="arduino-nano-to-esp32-master-node-uart">Arduino Nano to ESP32 Master Node (UART)<a class="headerlink" href="#arduino-nano-to-esp32-master-node-uart" title="Permanent link">&para;</a></h3>
+<p>Serial data is transmitted from the Arduino Nano to the ESP32 Master Node using UART:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Arduino Nano Pin</th>
+<th style="text-align: left;">ESP32 Pin</th>
+<th style="text-align: left;">Wire Color (Suggested)</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>D1 (TX)</strong></td>
+<td style="text-align: left;">GPIO 16 (RX2)</td>
+<td style="text-align: left;">White</td>
+<td style="text-align: left;">Serial transmit — sends sensor data from Nano to ESP32.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D0 (RX)</strong></td>
+<td style="text-align: left;">GPIO 17 (TX2)</td>
+<td style="text-align: left;">Grey</td>
+<td style="text-align: left;">Serial receive — receives commands from ESP32 to Nano (optional).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GND</strong></td>
+<td style="text-align: left;">GND</td>
+<td style="text-align: left;">Black</td>
+<td style="text-align: left;">Common ground reference for UART signal integrity.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Cross-Connection Rule</strong>: UART TX on one device must connect to RX on the other. Connecting TX-to-TX or RX-to-RX will result in no communication.</p>
+</blockquote>
+<h3 id="power-distribution">Power Distribution<a class="headerlink" href="#power-distribution" title="Permanent link">&para;</a></h3>
+<p>Power flows from the main battery through the Power Distribution Board to the Sensor Node:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">From Source</th>
+<th style="text-align: left;">Connection</th>
+<th style="text-align: left;">To Destination</th>
+<th style="text-align: center;">Wire Gauge</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>5V Buck Regulator (+)</strong></td>
+<td style="text-align: left;">Red Wire</td>
+<td style="text-align: left;">Arduino Nano 5V Pin / Vin</td>
+<td style="text-align: center;">22 AWG</td>
+<td style="text-align: left;">Regulated 5V logic supply.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5V Buck Regulator (−)</strong></td>
+<td style="text-align: left;">Black Wire</td>
+<td style="text-align: left;">Arduino Nano GND Pin</td>
+<td style="text-align: center;">22 AWG</td>
+<td style="text-align: left;">Logic ground return path.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Arduino Nano 5V</strong></td>
+<td style="text-align: left;">Red Jumper</td>
+<td style="text-align: left;">MPU6050 VCC, DHT11 VCC</td>
+<td style="text-align: center;">24 AWG</td>
+<td style="text-align: left;">Distributes 5V to both sensors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Arduino Nano GND</strong></td>
+<td style="text-align: left;">Black Jumper</td>
+<td style="text-align: left;">MPU6050 GND, DHT11 GND</td>
+<td style="text-align: center;">24 AWG</td>
+<td style="text-align: left;">Distributes common ground to both sensors.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-gpio-connection-table">6. GPIO Connection Table<a class="headerlink" href="#6-gpio-connection-table" title="Permanent link">&para;</a></h2>
+<p>The table below lists all Arduino Nano pins used in this node:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Pin</th>
+<th style="text-align: left;">Connected Device</th>
+<th style="text-align: center;">Pin Mode</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>A4</strong></td>
+<td style="text-align: left;">MPU6050 SDA</td>
+<td style="text-align: center;">I2C (Output)</td>
+<td style="text-align: left;">I2C data line for reading accelerometer and gyroscope registers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A5</strong></td>
+<td style="text-align: left;">MPU6050 SCL</td>
+<td style="text-align: center;">I2C (Output)</td>
+<td style="text-align: left;">I2C clock line for synchronizing data transfers with the MPU6050.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D2</strong></td>
+<td style="text-align: left;">DHT11 DATA</td>
+<td style="text-align: center;">Digital (Input/Output)</td>
+<td style="text-align: left;">Single-wire data line for reading temperature and humidity values.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D1</strong></td>
+<td style="text-align: left;">ESP32 GPIO 16 (RX2)</td>
+<td style="text-align: center;">UART (TX)</td>
+<td style="text-align: left;">Serial transmit pin — sends JSON sensor data to the Master Node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>D0</strong></td>
+<td style="text-align: left;">ESP32 GPIO 17 (TX2)</td>
+<td style="text-align: center;">UART (RX)</td>
+<td style="text-align: left;">Serial receive pin — receives optional commands from the Master Node.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5V</strong></td>
+<td style="text-align: left;">MPU6050 VCC, DHT11 VCC</td>
+<td style="text-align: center;">Power (Output)</td>
+<td style="text-align: left;">Distributes 5V logic power to both sensor modules.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GND</strong></td>
+<td style="text-align: left;">MPU6050 GND, DHT11 GND, ESP32 GND</td>
+<td style="text-align: center;">Power (Ground)</td>
+<td style="text-align: left;">Common ground reference for all devices in the Sensor Node.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-power-distribution">7. Power Distribution<a class="headerlink" href="#7-power-distribution" title="Permanent link">&para;</a></h2>
+<h3 id="power-flow-diagram">Power Flow Diagram<a class="headerlink" href="#power-flow-diagram" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>graph TD
+    Bat[12V Battery Pack] --&gt;|12V| Fuse[15A Inline Fuse]
+    Fuse --&gt; Switch[Main Power Switch]
+    Switch --&gt;|12V| Buck5V[5V Buck Regulator]
+
+    Buck5V --&gt;|5V Rail| PowerDist[Power Distribution Board]
+    PowerDist --&gt;|5V| Arduino[Arduino Nano]
+
+    Arduino --&gt;|5V via Pin 4| MPU[MPU6050 Module]
+    Arduino --&gt;|5V via Pin 2| DHT[DHT11 Sensor]
+
+    Arduino --&gt;|GND| MPU
+    Arduino --&gt;|GND| DHT
+    Arduino --&gt;|GND| GND((Common Ground))
+    Buck5V --&gt;|GND| GND</code></pre>
+<h3 id="operating-voltage">Operating Voltage<a class="headerlink" href="#operating-voltage" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System Voltage</strong>: 5.0V DC — the native operating voltage of the Arduino Nano, MPU6050, and DHT11.</li>
+<li><strong>Voltage Source</strong>: The 5V is derived from the main 12V battery pack via a step-down buck regulator on the Power Distribution Board.</li>
+</ul>
+<h3 id="power-consumption">Power Consumption<a class="headerlink" href="#power-consumption" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: center;">Operating Voltage</th>
+<th style="text-align: center;">Idle Current</th>
+<th style="text-align: center;">Active Current</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Arduino Nano</strong></td>
+<td style="text-align: center;">5V</td>
+<td style="text-align: center;">~15 mA</td>
+<td style="text-align: center;">~45 mA</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPU6050</strong></td>
+<td style="text-align: center;">3.3V–5V</td>
+<td style="text-align: center;">~3.9 mA</td>
+<td style="text-align: center;">~5 mA (all axes active)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11</strong></td>
+<td style="text-align: center;">3.3V–5V</td>
+<td style="text-align: center;">~0.5 mA</td>
+<td style="text-align: center;">~2.5 mA (during measurement)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total Node</strong></td>
+<td style="text-align: center;">5V</td>
+<td style="text-align: center;">~19.4 mA</td>
+<td style="text-align: center;">~52.5 mA</td>
+</tr>
+</tbody>
+</table>
+<h3 id="current-requirement">Current Requirement<a class="headerlink" href="#current-requirement" title="Permanent link">&para;</a></h3>
+<p>The Sensor Node draws a maximum of approximately <strong>52.5 mA</strong> during active sensor reads and UART transmission. This is well within the capacity of the 5V buck regulator (rated for 5A) and does not impose any meaningful load on the power distribution system.</p>
+<h3 id="ground-connections">Ground Connections<a class="headerlink" href="#ground-connections" title="Permanent link">&para;</a></h3>
+<p>All ground wires from the Arduino Nano, MPU6050, DHT11, and ESP32 Master Node must be tied to a single common ground point on the Power Distribution Board. A shared ground reference is critical for:
+*   Stable I2C signal levels between the Arduino Nano and MPU6050.
+*   Clean UART serial communication between the Arduino Nano and ESP32.
+*   Accurate digital readings from the DHT11.</p>
+<h3 id="power-safety">Power Safety<a class="headerlink" href="#power-safety" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Reverse Polarity</strong>: The Arduino Nano's onboard regulator includes basic reverse polarity protection, but verify polarity before connecting power to avoid damage.</li>
+<li><strong>Voltage Verification</strong>: Always use a multimeter to confirm the buck regulator outputs 5.0V ±0.2V before connecting the Sensor Node.</li>
+<li><strong>Current Margin</strong>: At 52.5 mA peak draw, the Sensor Node operates far below any thermal or current limits. No fusing is required at the sensor node level — the main 15A fuse on the battery provides upstream protection.</li>
+</ul>
+<hr />
+<h2 id="8-working-principle">8. Working Principle<a class="headerlink" href="#8-working-principle" title="Permanent link">&para;</a></h2>
+<p>The step-by-step operation of the Sensor Node is described below:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  [ Power ON ]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       ▼
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  [ Arduino Nano Boots ]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       ▼
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  [ Initialize I2C Bus ] ──&gt; Set SDA (A4) and SCL (A5) to I2C mode
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>       ▼
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  [ Initialize MPU6050 ] ──&gt; Write configuration registers (±2g accel, ±250°/s gyro)
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>       │
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>       ▼
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  [ Initialize DHT11 ] ──&gt; Set digital pin D2 and begin sensor handshake
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>       │
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>       ▼
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>  [ Wait 2 Seconds ] ──&gt; Allow DHT11 to stabilize after power-on
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>       │
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>       ▼
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  ┌────────────────────────────────────────────┐
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  │           SAMPLING LOOP                     │
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  │                                             │
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  │  [ Read MPU6050 ] ──&gt; Fetch 14 bytes via I2C│
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  │       │                                     │
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  │       ▼                                     │
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>  │  [ Compute Pitch &amp; Roll ] ──&gt; Apply tilt    │
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>  │       │                   angle formulas    │
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>  │       ▼                                     │
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  │  [ Read DHT11 ] ──&gt; Request data from D2    │
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>  │       │                                     │
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>  │       ▼                                     │
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>  │  [ Validate Readings ] ──&gt; Check for NaN    │
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  │       │                   or stale data     │
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  │       ▼                                     │
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  │  [ Package JSON String ] ──&gt; Build payload  │
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  │       │                                     │
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  │       ▼                                     │
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  │  [ Send via UART TX ] ──&gt; Transmit to ESP32 │
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>  │       │                                     │
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>  │       ▼                                     │
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>  │  [ Delay (200 ms) ] ──&gt; 5 Hz sampling rate  │
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>  │       │                                     │
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>  │       └──────────── Loop Back ──────────────┘
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>  └────────────────────────────────────────────┘
+</span></code></pre></div>
+<ol>
+<li><strong>Power ON</strong>: The main power switch activates the 5V buck regulator, supplying power to the Arduino Nano.</li>
+<li><strong>Arduino Nano Boots</strong>: The ATmega328P initializes, sets the system clock, and prepares the hardware interfaces (I2C and UART).</li>
+<li><strong>Initialize I2C Bus</strong>: The Arduino enables its hardware I2C interface on pins A4 (SDA) and A5 (SCL) at 100 kHz standard mode.</li>
+<li><strong>Initialize MPU6050</strong>: The Arduino sends I2C configuration commands to the MPU6050, setting the accelerometer range to ±2g and the gyroscope range to ±250°/s for optimal sensitivity.</li>
+<li><strong>Initialize DHT11</strong>: The Arduino configures digital pin D2 and initiates the DHT11 handshake protocol to prepare for data reads.</li>
+<li><strong>Wait 2 Seconds</strong>: The DHT11 requires a brief stabilization period after power-on before it returns valid readings.</li>
+<li><strong>Read MPU6050</strong>: The Arduino reads 14 bytes of raw data from the MPU6050's internal registers over I2C, containing accelerometer and gyroscope values for all three axes.</li>
+<li><strong>Compute Pitch &amp; Roll</strong>: The raw accelerometer data is converted to pitch and roll angles using trigonometric formulas.</li>
+<li><strong>Read DHT11</strong>: The Arduino sends a start signal on pin D2 and reads back 5 bytes of data containing the humidity integer, humidity decimal, temperature integer, temperature decimal, and a checksum byte.</li>
+<li><strong>Validate Readings</strong>: The Arduino checks for invalid readings (NaN values, checksum errors, or stale data) and retains the last valid reading if the current read fails.</li>
+<li><strong>Package JSON String</strong>: All sensor values are formatted into a single JSON string for easy parsing by the Master Node.</li>
+<li><strong>Send via UART TX</strong>: The JSON string is transmitted bit-by-bit through the D1 (TX) pin at the configured baud rate to the ESP32 Master Node.</li>
+<li><strong>Delay (200 ms)</strong>: A short delay maintains a consistent 5 Hz sampling rate, preventing unnecessary data flooding while ensuring responsive updates.</li>
+</ol>
+<hr />
+<h2 id="9-data-sent-to-master-node">9. Data Sent to Master Node<a class="headerlink" href="#9-data-sent-to-master-node" title="Permanent link">&para;</a></h2>
+<h3 id="sensor-values-transmitted">Sensor Values Transmitted<a class="headerlink" href="#sensor-values-transmitted" title="Permanent link">&para;</a></h3>
+<p>The Arduino Nano transmits the following values to the Master Node in a single JSON payload:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Unit</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>temperature</strong></td>
+<td style="text-align: left;">°C</td>
+<td style="text-align: left;">Ambient air temperature read by the DHT11.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>humidity</strong></td>
+<td style="text-align: left;">%RH</td>
+<td style="text-align: left;">Relative humidity read by the DHT11.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>pitch</strong></td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Forward/backward tilt angle derived from accelerometer data.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>roll</strong></td>
+<td style="text-align: left;">degrees</td>
+<td style="text-align: left;">Left/right tilt angle derived from accelerometer data.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>accelX</strong></td>
+<td style="text-align: left;">m/s²</td>
+<td style="text-align: left;">Linear acceleration along the X-axis (left-right).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>accelY</strong></td>
+<td style="text-align: left;">m/s²</td>
+<td style="text-align: left;">Linear acceleration along the Y-axis (forward-backward).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>accelZ</strong></td>
+<td style="text-align: left;">m/s²</td>
+<td style="text-align: left;">Linear acceleration along the Z-axis (up-down).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gyroX</strong></td>
+<td style="text-align: left;">°/s</td>
+<td style="text-align: left;">Angular velocity around the X-axis (roll rate).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gyroY</strong></td>
+<td style="text-align: left;">°/s</td>
+<td style="text-align: left;">Angular velocity around the Y-axis (pitch rate).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>gyroZ</strong></td>
+<td style="text-align: left;">°/s</td>
+<td style="text-align: left;">Angular velocity around the Z-axis (yaw rate).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sample-json-payload">Sample JSON Payload<a class="headerlink" href="#sample-json-payload" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">28.5</span><span class="p">,</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">&quot;humidity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;pitch&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.2</span><span class="p">,</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">&quot;roll&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-1.5</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">&quot;accelX&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.02</span><span class="p">,</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">&quot;accelY&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.15</span><span class="p">,</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">&quot;accelZ&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.98</span><span class="p">,</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">&quot;gyroX&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span><span class="nt">&quot;gyroY&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-0.2</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="nt">&quot;gyroZ&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="data-format-specifications">Data Format Specifications<a class="headerlink" href="#data-format-specifications" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Baud Rate</strong>: 9600 bps (default, configurable in firmware).</li>
+<li><strong>Data Bits</strong>: 8 bits.</li>
+<li><strong>Stop Bits</strong>: 1 bit.</li>
+<li><strong>Parity</strong>: None.</li>
+<li><strong>Line Ending</strong>: Each JSON payload is terminated with a newline character (<code>\n</code>) for easy parsing on the receiving end.</li>
+<li><strong>Sampling Rate</strong>: 5 Hz (one payload transmitted every 200 ms).</li>
+</ul>
+<hr />
+<h2 id="10-wiring-diagram">10. Wiring Diagram<a class="headerlink" href="#10-wiring-diagram" title="Permanent link">&para;</a></h2>
+<p>The diagram below shows the complete electrical interconnections of the Sensor Node:</p>
+<pre class="mermaid"><code>graph TD
+    subgraph Power_System [Power System]
+        Bat[12V Battery] --&gt;|12V| Buck[5V Buck Regulator]
+        Buck --&gt;|5V| Nano[Arduino Nano]
+        Buck --&gt;|GND| GND((Common Ground))
+    end
+
+    subgraph Sensor_Board [Sensor Modules]
+        MPU[MPU6050 Module]
+        DHT[DHT11 Sensor]
+    end
+
+    subgraph Master [Master Node]
+        ESP32[ESP32 Master Node]
+    end
+
+    %% Arduino to MPU6050
+    Nano --&gt;|A4 SDA| MPU
+    Nano --&gt;|A5 SCL| MPU
+    Nano --&gt;|5V| MPU
+    Nano --&gt;|GND| MPU
+
+    %% Arduino to DHT11
+    Nano --&gt;|D2 DATA| DHT
+    Nano --&gt;|5V| DHT
+    Nano --&gt;|GND| DHT
+
+    %% Arduino to ESP32
+    Nano --&gt;|D1 TX| ESP32
+    Nano --&gt;|D0 RX| ESP32
+    Nano --&gt;|GND| ESP32</code></pre>
+<h3 id="signal-flow-summary">Signal Flow Summary<a class="headerlink" href="#signal-flow-summary" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  [ MPU6050 ] ──(I2C: SDA/SCL)──&gt; [ Arduino Nano ] ──(UART: TX/RX)──&gt; [ ESP32 Master Node ]
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  [ DHT11   ] ──(Digital: D2)  ──┘
+</span></code></pre></div>
+<hr />
+<h2 id="11-sensor-placement">11. Sensor Placement<a class="headerlink" href="#11-sensor-placement" title="Permanent link">&para;</a></h2>
+<h3 id="mpu6050-mounting">MPU6050 Mounting<a class="headerlink" href="#mpu6050-mounting" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Location</strong>: Mount the MPU6050 module as close to the robot's center of gravity (COG) as possible. For PRAYAS, this is approximately at the midpoint of the torso column, near the base deck level.</li>
+<li><strong>Orientation</strong>: The MPU6050 board must be mounted flat and level with the robot's reference frame. The X-axis should point forward, the Y-axis should point to the left, and the Z-axis should point upward.</li>
+<li><strong>Fastening</strong>: Use M3 screws with nylon standoffs to rigidly secure the module to the chassis. A loose or vibrating sensor will produce noisy, unreliable readings.</li>
+<li><strong>Vibration Isolation</strong>: Avoid mounting the MPU6050 directly next to the motor mounts. Motor vibration propagates through the chassis and corrupts accelerometer data. If unavoidable, use rubber grommets or silicone dampeners between the sensor board and the mounting surface.</li>
+</ul>
+<h3 id="dht11-mounting">DHT11 Mounting<a class="headerlink" href="#dht11-mounting" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Location</strong>: Mount the DHT11 on the robot's upper torso or chest area, where it is exposed to ambient air and not enclosed in a sealed compartment.</li>
+<li><strong>Airflow</strong>: Ensure the sensor's ventilation holes are unobstructed so that ambient air can circulate freely across the sensing element.</li>
+<li><strong>Heat Source Avoidance</strong>: Keep the DHT11 at least 10 cm away from voltage regulators, motor drivers, and buck converters. These components generate heat that will produce artificially high temperature readings.</li>
+<li><strong>Wire Routing</strong>: Route the DHT11 data wire (D2) away from high-current motor cables to prevent electromagnetic interference from corrupting the single-wire digital signal.</li>
+</ul>
+<hr />
+<h2 id="12-testing-procedure">12. Testing Procedure<a class="headerlink" href="#12-testing-procedure" title="Permanent link">&para;</a></h2>
+<p>Follow these steps systematically during assembly and commissioning:</p>
+<ol>
+<li>
+<p><strong>Test Arduino Nano</strong>: Connect the Arduino Nano to a PC via USB cable. Open the Arduino IDE Serial Monitor. Verify that the board is detected and the serial port responds at 9600 baud. Upload a basic Blink sketch to confirm the microcontroller is functional.</p>
+</li>
+<li>
+<p><strong>Test I2C Bus</strong>: Upload an I2C scanner sketch to the Arduino Nano. With the MPU6050 connected (A4→SDA, A5→SCL, 5V→VCC, GND→GND), open the Serial Monitor. Verify that I2C address <code>0x68</code> is detected. If no device is found, check wiring and solder joints.</p>
+</li>
+<li>
+<p><strong>Test MPU6050 Raw Readings</strong>: Upload a raw register read sketch that prints acceleration and gyroscope values to the Serial Monitor. Place the sensor flat on a table. Verify that:</p>
+<ul>
+<li><strong>accelX</strong> reads approximately <code>0.0</code> m/s².</li>
+<li><strong>accelY</strong> reads approximately <code>0.0</code> m/s².</li>
+<li><strong>accelZ</strong> reads approximately <code>9.8</code> m/s² (1g).</li>
+<li><strong>gyroX</strong>, <strong>gyroY</strong>, <strong>gyroZ</strong> all read near <code>0.0</code> °/s.</li>
+</ul>
+</li>
+<li>
+<p><strong>Verify Tilt Readings</strong>: Slowly tilt the MPU6050 board forward and to the side. Verify that:</p>
+<ul>
+<li><strong>Pitch</strong> increases when tilted forward and decreases when tilted backward.</li>
+<li><strong>Roll</strong> increases when tilted right and decreases when tilted left.</li>
+<li>Values return to near-zero when the sensor is placed flat again.</li>
+</ul>
+</li>
+<li>
+<p><strong>Test DHT11 Sensor</strong>: Connect the DHT11 (VCC→5V, GND→GND, DATA→D2). Upload a DHT11 read sketch. Open the Serial Monitor and verify that:</p>
+<ul>
+<li><strong>Temperature</strong> reads a plausible ambient value (e.g., 20°C–35°C).</li>
+<li><strong>Humidity</strong> reads a plausible ambient value (e.g., 30%–70% RH).</li>
+<li>Readings update every 2 seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong>Verify DHT11 Response</strong>: Breathe gently on the DHT11 sensor for 3–5 seconds. Verify that the humidity reading rises noticeably (e.g., from 45% to 70%+). This confirms the sensor is actively sampling.</p>
+</li>
+<li>
+<p><strong>Test UART Communication</strong>: Connect the Arduino Nano's TX pin (D1) to the ESP32's RX pin (GPIO 16). Connect a common GND wire between both boards. Upload a test sketch that sends a fixed JSON string every second from the Arduino. On the ESP32, open a Serial2 monitor at 9600 baud and verify that the transmitted string is received correctly without garbled characters.</p>
+</li>
+<li>
+<p><strong>Verify Data Received on ESP32</strong>: Upload the final Sensor Node firmware to the Arduino Nano and the corresponding receiver firmware to the ESP32 Master Node. Verify that the ESP32 correctly parses the incoming JSON payload and displays all 10 sensor fields (temperature, humidity, pitch, roll, accelX/Y/Z, gyroX/Y/Z) in the correct format and units.</p>
+</li>
+</ol>
+<hr />
+<h2 id="13-troubleshooting">13. Troubleshooting<a class="headerlink" href="#13-troubleshooting" title="Permanent link">&para;</a></h2>
+<p>Use this table to diagnose common issues during assembly or operation:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Problem</th>
+<th style="text-align: left;">Possible Cause</th>
+<th style="text-align: left;">Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Not Detected on I2C</strong></td>
+<td style="text-align: left;">Incorrect wiring of SDA/SCL pins. SDA or SCL not connected. Pull-up resistors missing.</td>
+<td style="text-align: left;">Verify that Arduino A4 connects to MPU6050 SDA and A5 connects to SCL. Check for loose jumper wires. If using a bare MPU6050 chip, add 4.7kΩ pull-up resistors between SDA–5V and SCL–5V.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 Returns All Zeros</strong></td>
+<td style="text-align: left;">MPU6050 is in sleep mode. I2C address mismatch (0x68 vs 0x69).</td>
+<td style="text-align: left;">Ensure the MPU6050 sleep bit is cleared in the PWR_MGMT_1 register (write 0x00 to register 0x6B). Check the AD0 pin on the MPU6050 — if LOW, address is 0x68; if HIGH, address is 0x69.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Returns Invalid Values (NaN)</strong></td>
+<td style="text-align: left;">Loose DATA wire connection. DHT11 not stabilized after power-on. Checksum error.</td>
+<td style="text-align: left;">Secure the DATA wire connection to pin D2. Add a 2-second delay after power-on before the first DHT11 read. Verify the 10kΩ pull-up resistor is present on the DATA line.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Temperature Reading Is Too High</strong></td>
+<td style="text-align: left;">Sensor mounted near heat source (motor driver, voltage regulator, buck converter).</td>
+<td style="text-align: left;">Relocate the DHT11 at least 10 cm away from any heat-generating component. Ensure adequate airflow around the sensor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>No UART Communication Between Arduino and ESP32</strong></td>
+<td style="text-align: left;">TX/RX pins are crossed incorrectly. Baud rate mismatch. No common ground.</td>
+<td style="text-align: left;">Verify that Arduino TX (D1) connects to ESP32 RX (GPIO 16) and Arduino RX (D0) connects to ESP32 TX (GPIO 17). Confirm both boards use the same baud rate (9600). Connect a GND wire between both boards.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Garbled or Corrupted UART Data</strong></td>
+<td style="text-align: left;">Baud rate mismatch between Arduino and ESP32. Electrical noise on signal wires.</td>
+<td style="text-align: left;">Ensure both the Arduino Serial.begin() and ESP32 Serial2.begin() use the same baud rate. Keep the UART wires short (&lt; 30 cm) and route them away from motor cables.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Arduino Nano Not Powering On</strong></td>
+<td style="text-align: left;">5V supply not connected. Reverse polarity on power input. Faulty buck regulator.</td>
+<td style="text-align: left;">Verify the 5V buck regulator is powered and outputting 5.0V. Check that the Arduino Nano's 5V pin connects to the regulator's positive output and GND connects to negative output. Measure with a multimeter before connecting.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inconsistent Tilt Readings</strong></td>
+<td style="text-align: left;">MPU6050 mounted loosely. Vibration from motors affecting sensor. Board not level.</td>
+<td style="text-align: left;">Tighten the MPU6050 mounting screws. Add rubber dampeners between the sensor board and chassis if motor vibration is present. Re-level the sensor during calibration.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="14-engineering-notes">14. Engineering Notes<a class="headerlink" href="#14-engineering-notes" title="Permanent link">&para;</a></h2>
+<h3 id="wiring-best-practices">Wiring Best Practices<a class="headerlink" href="#wiring-best-practices" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Short I2C Wires</strong>: Keep the I2C wires between the Arduino Nano and MPU6050 as short as possible (under 15 cm) to minimize signal degradation and electromagnetic interference.</li>
+<li><strong>Separate Signal and Power Wires</strong>: Route the I2C and UART signal wires separately from the 5V power wires. If they must cross, route them perpendicular to each other to reduce crosstalk.</li>
+<li><strong>Common Ground</strong>: Always connect all devices (Arduino Nano, MPU6050, DHT11, ESP32) to a single common ground point. A missing ground connection is the most common cause of erratic sensor readings and communication failures.</li>
+</ul>
+<h3 id="mounting-best-practices">Mounting Best Practices<a class="headerlink" href="#mounting-best-practices" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MPU6050 Level Mounting</strong>: The MPU6050 must be mounted perfectly level with the robot's mechanical reference frame. Use a spirit level or calibrate the sensor offsets in firmware to compensate for any mechanical misalignment.</li>
+<li><strong>DHT11 Air Exposure</strong>: Ensure the DHT11 is mounted in a location where ambient air can reach the sensing element. Avoid mounting it inside enclosed compartments or behind solid panels.</li>
+<li><strong>Secure All Wiring</strong>: Use zip ties or adhesive cable mounts to secure sensor wires to the robot chassis. Loose wires can snag on moving parts or work loose during locomotion, causing intermittent failures.</li>
+</ul>
+<h3 id="electrical-safety">Electrical Safety<a class="headerlink" href="#electrical-safety" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Voltage Verification</strong>: Always measure the 5V supply with a multimeter before connecting the Arduino Nano or any sensor. An incorrect voltage can permanently damage the components.</li>
+<li><strong>No Hot-Plugging Sensors</strong>: Never connect or disconnect the MPU6050 or DHT11 while the system is powered on. Always power down the Sensor Node before making wiring changes.</li>
+<li><strong>Common Ground First</strong>: When assembling the wiring, connect the ground wires first before connecting power or signal wires.</li>
+</ul>
+<h3 id="maintenance">Maintenance<a class="headerlink" href="#maintenance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Label All Cables</strong>: Label both ends of every wire with its function (e.g., "MPU6050 SDA", "DHT11 DATA", "UART TX"). This significantly reduces troubleshooting time during assembly and field repairs.</li>
+<li><strong>Periodic Inspection</strong>: Every 50 hours of operation, inspect all sensor connections for loose wires, corrosion, or mechanical wear. Re-tighten any mounting hardware that has vibrated loose.</li>
+<li><strong>Sensor Calibration</strong>: Recalibrate the MPU6050 pitch and roll offsets if the robot's mechanical structure changes (e.g., new components added, frame modifications). Store calibration offsets in the Arduino's EEPROM for persistence across reboots.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
