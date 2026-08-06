@@ -190,13 +190,16 @@ async function initApp() {
     updateStageIcon('Prototyping & BOM Planning');
   }
 
-  // Auto-connect Supabase if credentials are saved
-  const savedUrl = localStorage.getItem('prayas_sb_url');
-  const savedKey = localStorage.getItem('prayas_sb_key');
-  if (savedUrl && savedKey) {
-    document.getElementById('sbUrl').value = savedUrl;
-    document.getElementById('sbKey').value = savedKey;
-    await connectSupabase(savedUrl, savedKey, true);
+  // Auto-connect Supabase
+  const targetUrl = localStorage.getItem('prayas_sb_url') || 'https://yjfxryxpcdmbhxrpough.supabase.co';
+  const targetKey = localStorage.getItem('prayas_sb_key') || 'sb_publishable_Oqf1-qlUG3db1chllcTEOQ_7kcgPCbr';
+  
+  if (targetUrl && targetKey) {
+    const urlInput = document.getElementById('sbUrl');
+    const keyInput = document.getElementById('sbKey');
+    if (urlInput) urlInput.value = targetUrl;
+    if (keyInput) keyInput.value = targetKey;
+    await connectSupabase(targetUrl, targetKey, true);
   }
 }
 
