@@ -181,6 +181,9 @@ function initApp() {
   const masterSelect = document.getElementById('projectMasterStatus');
   if (masterStatus && masterSelect) {
     masterSelect.value = masterStatus;
+    updateStageIcon(masterStatus);
+  } else {
+    updateStageIcon('Prototyping & BOM Planning');
   }
 }
 

@@ -40,11 +40,11 @@
   --status-danger-bg: #fef2f2;
   --status-danger-border: #fecaca;
 
-  --radius-full: 9999px;
-  --radius-xl: 20px;
-  --radius-lg: 14px;
-  --radius-md: 10px;
-  --radius-sm: 6px;
+  --radius-full: 0px;
+  --radius-xl: 0px;
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
@@ -141,7 +141,7 @@ header {
 
 .tabs-scroll-wrapper::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 4px;
+  border-radius: 0px;
 }
 
 .tab-btn {
@@ -532,7 +532,7 @@ header {
   border: 1px solid var(--border-color);
   width: 30px;
   height: 30px;
-  border-radius: 6px;
+  border-radius: 0px;
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -756,7 +756,7 @@ header {
 .step-number {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: 0px;
   border: 1px solid var(--border-color);
   background: var(--bg-subtle);
   display: flex;
