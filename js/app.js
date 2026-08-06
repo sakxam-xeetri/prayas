@@ -759,7 +759,6 @@ function handleRealtimeCloudChange(payload) {
 
   localStorage.setItem('prayas_bom_data', JSON.stringify(bomItems));
   renderApp();
-  showToast('Live cloud change received');
 }
 
 // Update UI Cloud Badge Indicator
