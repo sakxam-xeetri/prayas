@@ -351,8 +351,10 @@ function renderTable() {
     return `
       <tr id="row-${item.id}">
         <td>
-          <div class="comp-name-main">${escapeHtml(item.name)}</div>
-          <div class="comp-spec-tag">${escapeHtml(item.spec)}</div>
+          <div class="comp-name-wrapper">
+            <input type="text" class="comp-name-input" value="${escapeHtml(item.name)}" onchange="updateCompName('${item.id}', this.value)" placeholder="Component Name" title="Click to edit component name">
+            <input type="text" class="comp-spec-input" value="${escapeHtml(item.spec)}" onchange="updateCompSpec('${item.id}', this.value)" placeholder="Add specification / notes..." title="Click to edit specifications">
+          </div>
         </td>
         <td>
           <span class="node-pill-tag">${getNodeLabel(item.node)}</span>
@@ -423,6 +425,30 @@ function switchTab(nodeKey, btnElement) {
   }
 
   renderApp();
+}
+
+// Update Component Name
+function updateCompName(id, newName) {
+  const name = newName.trim();
+  if (!name) return;
+
+  const item = bomItems.find(i => i.id === id);
+  if (item) {
+    item.name = name;
+    saveBOMData(item, 'upsert');
+    renderMetrics();
+    showToast(`Updated component name to "${name}"`);
+  }
+}
+
+// Update Component Specification
+function updateCompSpec(id, newSpec) {
+  const item = bomItems.find(i => i.id === id);
+  if (item) {
+    item.spec = newSpec.trim();
+    saveBOMData(item, 'upsert');
+    showToast(`Updated specification for "${item.name}"`);
+  }
 }
 
 // Update quantity of a component

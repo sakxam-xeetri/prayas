@@ -522,18 +522,61 @@ header {
 }
 
 /* Component Details Cell */
-.comp-name-main {
+.comp-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 220px;
+}
+
+.comp-name-input {
   font-weight: 700;
   color: var(--text-primary);
   font-size: 1.05rem;
-  margin-bottom: 3px;
   letter-spacing: -0.01em;
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 3px 6px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
 }
 
-.comp-spec-tag {
+.comp-name-input:hover {
+  border-color: var(--border-color);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.comp-name-input:focus {
+  border-color: var(--border-focus);
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.08);
+}
+
+.comp-spec-input {
   font-size: 0.85rem;
   color: var(--text-secondary);
   font-family: var(--font-sans);
+  background: transparent;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.comp-spec-input:hover {
+  border-color: var(--border-color);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.comp-spec-input:focus {
+  border-color: var(--border-focus);
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.08);
 }
 
 .node-pill-tag {
