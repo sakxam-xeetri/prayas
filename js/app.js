@@ -166,12 +166,16 @@ let bomItems = [];
 let activeNode = 'all';
 let searchQuery = '';
 
+// Supabase Integration State
+let supabaseClient = null;
+let isCloudConnected = false;
+
 // DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
   initApp();
 });
 
-function initApp() {
+async function initApp() {
   loadBOMData();
   bindEvents();
   renderApp();
@@ -184,6 +188,15 @@ function initApp() {
     updateStageIcon(masterStatus);
   } else {
     updateStageIcon('Prototyping & BOM Planning');
+  }
+
+  // Auto-connect Supabase if credentials are saved
+  const savedUrl = localStorage.getItem('prayas_sb_url');
+  const savedKey = localStorage.getItem('prayas_sb_key');
+  if (savedUrl && savedKey) {
+    document.getElementById('sbUrl').value = savedUrl;
+    document.getElementById('sbKey').value = savedKey;
+    await connectSupabase(savedUrl, savedKey, true);
   }
 }
 
@@ -202,9 +215,29 @@ function loadBOMData() {
   }
 }
 
-// Save data to localStorage
-function saveBOMData() {
+// Save data to localStorage and sync to Supabase if connected
+function saveBOMData(singleItem, action = 'upsert') {
   localStorage.setItem('prayas_bom_data', JSON.stringify(bomItems));
+
+  if (isCloudConnected && supabaseClient) {
+    if (singleItem) {
+      if (action === 'delete') {
+        supabaseClient.from('bom_items').delete().eq('id', singleItem.id).then();
+      } else {
+        supabaseClient.from('bom_items').upsert({
+          id: singleItem.id,
+          node: singleItem.node,
+          name: singleItem.name,
+          spec: singleItem.spec,
+          qty: singleItem.qty,
+          unit_price: singleItem.unitPrice,
+          status: singleItem.status
+        }).then();
+      }
+    } else {
+      syncAllToCloud();
+    }
+  }
 }
 
 // Bind UI events
@@ -223,6 +256,17 @@ function bindEvents() {
   const addForm = document.getElementById('addComponentForm');
   if (addForm) {
     addForm.addEventListener('submit', handleAddComponent);
+  }
+
+  // Supabase Config Form Submission
+  const sbForm = document.getElementById('supabaseConfigForm');
+  if (sbForm) {
+    sbForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('sbUrl').value.trim();
+      const key = document.getElementById('sbKey').value.trim();
+      await connectSupabase(url, key, false);
+    });
   }
 }
 
@@ -566,7 +610,151 @@ function updateStatus(id, newStatus) {
 function updateProjectMasterStatus(newStatus) {
   localStorage.setItem('prayas_project_master_status', newStatus);
   updateStageIcon(newStatus);
+  
+  if (isCloudConnected && supabaseClient) {
+    supabaseClient.from('project_settings').upsert({ key: 'master_status', value: newStatus }).then();
+  }
+
   showToast(`Project Stage updated to: ${newStatus}`);
+}
+
+// Connect Supabase Database
+async function connectSupabase(url, key, isAutoConnect = false) {
+  if (!window.supabase || !url || !key) {
+    if (!isAutoConnect) showToast('Please enter valid Supabase credentials');
+    return false;
+  }
+
+  try {
+    supabaseClient = window.supabase.createClient(url, key);
+
+    // Test connection by selecting bom_items
+    const { data, error } = await supabaseClient.from('bom_items').select('*');
+    if (error) throw error;
+
+    isCloudConnected = true;
+    localStorage.setItem('prayas_sb_url', url);
+    localStorage.setItem('prayas_sb_key', key);
+    updateCloudStatusBadge(true);
+
+    if (data && data.length > 0) {
+      bomItems = data.map(item => ({
+        id: item.id,
+        node: item.node,
+        name: item.name,
+        spec: item.spec || '',
+        qty: item.qty || 1,
+        unitPrice: item.unit_price || item.unitPrice || 0,
+        status: item.status || 'In Stock'
+      }));
+      localStorage.setItem('prayas_bom_data', JSON.stringify(bomItems));
+      renderApp();
+    } else {
+      await syncAllToCloud();
+    }
+
+    // Subscribe to realtime database changes
+    supabaseClient
+      .channel('public:bom_items')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'bom_items' }, payload => {
+        handleRealtimeCloudChange(payload);
+      })
+      .subscribe();
+
+    closeSupabaseModal();
+    if (!isAutoConnect) showToast('Connected to Supabase Realtime Cloud');
+    return true;
+  } catch (err) {
+    console.error('Supabase connection error:', err);
+    isCloudConnected = false;
+    updateCloudStatusBadge(false);
+    if (!isAutoConnect) showToast('Failed to connect to Supabase Cloud');
+    return false;
+  }
+}
+
+// Disconnect Supabase Cloud
+function disconnectSupabase() {
+  localStorage.removeItem('prayas_sb_url');
+  localStorage.removeItem('prayas_sb_key');
+  document.getElementById('sbUrl').value = '';
+  document.getElementById('sbKey').value = '';
+  supabaseClient = null;
+  isCloudConnected = false;
+  updateCloudStatusBadge(false);
+  closeSupabaseModal();
+  showToast('Disconnected from Supabase Cloud');
+}
+
+// Sync all local BOM items to Supabase
+async function syncAllToCloud() {
+  if (!isCloudConnected || !supabaseClient) return;
+
+  const records = bomItems.map(item => ({
+    id: item.id,
+    node: item.node,
+    name: item.name,
+    spec: item.spec,
+    qty: item.qty,
+    unit_price: item.unitPrice,
+    status: item.status
+  }));
+
+  await supabaseClient.from('bom_items').upsert(records);
+}
+
+// Realtime DB event listener callback
+function handleRealtimeCloudChange(payload) {
+  const { eventType, new: newRecord, old: oldRecord } = payload;
+
+  if (eventType === 'INSERT' || eventType === 'UPDATE') {
+    const existingIndex = bomItems.findIndex(i => i.id === newRecord.id);
+    const updatedObj = {
+      id: newRecord.id,
+      node: newRecord.node,
+      name: newRecord.name,
+      spec: newRecord.spec || '',
+      qty: newRecord.qty || 1,
+      unitPrice: newRecord.unit_price || newRecord.unitPrice || 0,
+      status: newRecord.status || 'In Stock'
+    };
+
+    if (existingIndex >= 0) {
+      bomItems[existingIndex] = updatedObj;
+    } else {
+      bomItems.push(updatedObj);
+    }
+  } else if (eventType === 'DELETE') {
+    bomItems = bomItems.filter(i => i.id !== oldRecord.id);
+  }
+
+  localStorage.setItem('prayas_bom_data', JSON.stringify(bomItems));
+  renderApp();
+  showToast('Live cloud change received');
+}
+
+// Update UI Cloud Badge Indicator
+function updateCloudStatusBadge(connected) {
+  const dot = document.getElementById('cloudDot');
+  const text = document.getElementById('cloudStatusText');
+  if (connected) {
+    if (dot) dot.className = 'cloud-dot online';
+    if (text) text.textContent = 'Cloud Sync Active';
+  } else {
+    if (dot) dot.className = 'cloud-dot offline';
+    if (text) text.textContent = 'Local Storage Mode';
+  }
+}
+
+// Supabase Modal Controls
+function openSupabaseModal() {
+  const modal = document.getElementById('supabaseModal');
+  if (modal) modal.classList.add('open');
+}
+
+function closeSupabaseModal() {
+  const modal = document.getElementById('supabaseModal');
+  if (modal) modal.classList.remove('open');
 }
 
 // Update SVG icon for project stage
