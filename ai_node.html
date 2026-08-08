@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRAYAS V1 - Xiaozhi Voice & Vision AI Node Technical Manual</title>
+  <title>PRAYAS AI HUB - XiaoZhi Voice & Vision AI Node Technical Manual</title>
 
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,11 +30,11 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
-            PRAYAS V1 ROBOTICS • NODE 05
+            PRAYAS V1 ROBOTICS • CENTRAL AI HUB
           </span>
           <span class="top-badge cloud-badge" style="background: #10b98115; border-color: #10b98140; color: #047857;">
             <span class="cloud-dot online"></span>
-            FIRMWARE V2.0 ACTIVE
+            FIRMWARE V2.0 ACTIVE • MQTT+UDP DUAL CHANNEL
           </span>
         </div>
 
@@ -48,9 +48,9 @@
         </div>
       </div>
 
-      <h1 class="header-title" style="margin-top: 16px;">Xiaozhi AI Node Architecture</h1>
+      <h1 class="header-title" style="margin-top: 16px;">Prayas AI Hub & Technical Architecture</h1>
       <p class="header-subtitle">
-        Comprehensive technical breakdown of Node 05: ESP32-S3 Voice & Vision Robot, MQTT+UDP hybrid protocol, MCP tool calling, local wake-up, and real-time LLM inference.
+        Authoritative knowledge hub for Node 05 (ESP32-S3 Voice & Vision Robot). In-depth guide to why JSON is used for control signaling, hybrid MQTT+UDP protocols, Model Context Protocol (MCP) hardware actuation, and local edge AI.
       </p>
     </header>
 
@@ -75,18 +75,18 @@
           </svg>
         </div>
         <div class="metric-value">Opus 16-24kHz</div>
-        <div class="metric-subtext">60ms frame duration, 16-bit mono PCM</div>
+        <div class="metric-subtext">60ms frame duration, 16-bit mono PCM over UDP</div>
       </div>
 
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-label">DUAL PROTOCOL</span>
+          <span class="metric-label">CONTROL SIGNALING</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
         </div>
-        <div class="metric-value">MQTT + UDP</div>
-        <div class="metric-subtext">JSON Control + AES-CTR Encrypted UDP Audio</div>
+        <div class="metric-value">JSON over MQTT</div>
+        <div class="metric-subtext">Extensible, structured event control & state sync</div>
       </div>
 
       <div class="metric-card">
@@ -97,22 +97,28 @@
           </svg>
         </div>
         <div class="metric-value">3.0x Faster</div>
-        <div class="metric-subtext">280ms encode, DMA & Vector acceleration</div>
+        <div class="metric-subtext">280ms encode, DMA & Vector SIMD acceleration</div>
       </div>
     </div>
 
     <!-- Sticky Navigation Bar -->
     <div class="sticky-nav-bar">
       <div class="sticky-nav-wrapper">
-        <a href="#architecture" class="nav-pill-btn active">
+        <a href="#why-json" class="nav-pill-btn active">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          AI Architecture
+          Why JSON?
+        </a>
+        <a href="#json-inspector" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          JSON Payload Inspector
         </a>
         <a href="#protocol" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
           MQTT+UDP Dual Channel
         </a>
@@ -138,7 +144,7 @@
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
           </svg>
-          MCP Protocol Control
+          MCP Tool Control
         </a>
         <a href="#setup-guide" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
@@ -149,81 +155,239 @@
       </div>
     </div>
 
-    <!-- SECTION 1: CORE AI ARCHITECTURE -->
-    <section id="architecture" class="doc-section">
+    <!-- SECTION 1: WHY JSON? THE CONTROL BACKBONE OF PRAYAS AI -->
+    <section id="why-json" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          1. Core AI Architecture & Hybrid Inference
+          1. Why JSON? The Control & State Backbone of Prayas AI
         </div>
-        <span class="doc-section-tag">Edge + Cloud + IoT</span>
+        <span class="doc-section-tag">Protocol Rationale & Engineering</span>
       </div>
 
       <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-        Xiaozhi AI operates on a <strong>Hybrid AI Architecture</strong>: low-latency edge processing on the ESP32-S3 handles instantaneous voice wake-up and local keyword filtering, while complex natural language understanding, reasoning, and speech synthesis are offloaded to high-performance cloud Large Language Models (LLMs).
+        In Project Prayas AI (Node 05), communication is split into two specialized planes: a <strong>JSON-based Control Plane</strong> operating over MQTT (or WebSocket) and a <strong>Binary UDP Media Plane</strong> streaming encrypted Opus audio. Here is the deep technical explanation of why JSON was chosen for control and state management:
       </p>
 
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
             </svg>
           </div>
-          <div class="feature-card-title">1. Local Voice Wake-Up</div>
+          <div class="feature-card-title">1. Self-Describing & Extensible Schema</div>
           <div class="feature-card-desc">
-            Runs Espressif's Wake Word Engine locally on dual ESP32-S3 LX7 cores at 240MHz. Latency &lt;200ms with &lt;5mA standby power. Default wake phrase: <strong>"你好小智"</strong> (supports 26+ custom wake words).
+            Embedded systems evolve rapidly. JSON allows introducing new capabilities (such as <code>mcp</code> tool calling, <code>emotion</code> tokens, or camera frame configurations) without breaking existing ESP32 C-firmware parsers. Unknown fields are safely ignored by <code>cJSON</code>.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <div class="feature-card-title">2. ASR & Cloud LLM Engine</div>
+          <div class="feature-card-title">2. Native Cloud LLM & API Interoperability</div>
           <div class="feature-card-desc">
-            Captures 16kHz mono audio via INMP441 MEMS microphone, compresses it using Opus 60ms frames, and streams over UDP to cloud ASR. Feeds prompt to DeepSeek, Qwen-Max, Doubao, or GPT-4o for instant reasoning.
+            LLMs (DeepSeek, Qwen-Max, OpenAI GPT-4o) natively output text and JSON function calls. Passing JSON directly between the Cloud Orchestrator and ESP32 avoids costly binary serialization/deserialization layers in server microservices.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 010 12.728" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
           </div>
-          <div class="feature-card-title">3. TTS Synthesis & Emotion Tokens</div>
+          <div class="feature-card-title">3. Asynchronous State Synchronization</div>
           <div class="feature-card-desc">
-            Synthesizes warm human voice (Azure/Baidu TTS) played back via MAX98357A I2S amplifier, while simultaneously extracting independent emotion tokens (e.g. <code>emotion: smile</code>) for display on the SSD1306 screen.
+            Voice interactions are event-driven: handshakes (<code>hello</code>), recording mode toggles (<code>listen</code>), emergency user interruptions (<code>abort</code>), and execution callbacks (<code>mcp</code>). JSON provides clear event types (<code>"type": "llm"</code>) for state machines.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
-          <div class="feature-card-title">4. MCP Robot Node Control</div>
+          <div class="feature-card-title">4. Decoupled Control vs Media Stream</div>
           <div class="feature-card-desc">
-            Translates natural spoken commands ("Raise robot arm", "Check battery status") into structured Model Context Protocol (MCP) JSON tool calls to actuate servos, motors, and peripheral robot nodes.
+            Raw audio requires low latency UDP without TCP head-of-line blocking. Control messaging requires structural clarity. Separating JSON control from Opus audio UDP ensures large state packets never stutter 60ms audio playback.
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px 0;">
+        Protocol Architecture Comparison Matrix
+      </h3>
+
+      <div class="table-responsive">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th>Protocol Vector</th>
+              <th>JSON Control Plane (MQTT/WS)</th>
+              <th>Binary Media Plane (UDP)</th>
+              <th>Protocol Buffers (Protobuf)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary Purpose</strong></td>
+              <td>Handshake, state sync, MCP tool calling, emotion tokens</td>
+              <td>Real-time 16-24kHz Opus audio streaming (60ms frames)</td>
+              <td>Alternative binary control format</td>
+            </tr>
+            <tr>
+              <td><strong>Human & Debug Readability</strong></td>
+              <td><span class="tab-badge" style="background: var(--status-green-bg); color: var(--status-green);">High (UTF-8 Plain Text)</span></td>
+              <td><span class="tab-badge" style="background: var(--status-danger-bg); color: var(--status-danger);">Low (Raw Binary Octets)</span></td>
+              <td><span class="tab-badge" style="background: var(--status-amber-bg); color: var(--status-amber);">Medium (Requires Schema Compiler)</span></td>
+            </tr>
+            <tr>
+              <td><strong>LLM Integration Overhead</strong></td>
+              <td><span class="tab-badge" style="background: var(--status-green-bg); color: var(--status-green);">Zero (Native LLM Output Format)</span></td>
+              <td><span class="tab-badge" style="background: var(--status-danger-bg); color: var(--status-danger);">High (Requires Custom Encoder)</span></td>
+              <td><span class="tab-badge" style="background: var(--status-amber-bg); color: var(--status-amber);">Medium (Requires Bridge Mapping)</span></td>
+            </tr>
+            <tr>
+              <td><strong>ESP32 Memory & Parse Latency</strong></td>
+              <td>&lt; 0.4 ms (cJSON stream parser, ~4KB buffer)</td>
+              <td>&lt; 0.05 ms (Fixed binary header offset)</td>
+              <td>&lt; 0.2 ms (Nanopb overhead, ~8KB flash)</td>
+            </tr>
+            <tr>
+              <td><strong>Schema Flexibility</strong></td>
+              <td>Dynamic key addition without breaking C structs</td>
+              <td>Fixed byte offsets; requires code change</td>
+              <td>Backwards compatible field tags</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE JSON PAYLOAD INSPECTOR & SCHEMA BREAKDOWN -->
+    <section id="json-inspector" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          2. Interactive JSON Protocol Payload Inspector & Parameter Breakdown
+        </div>
+        <span class="doc-section-tag">Interactive Schema Hub</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6;">
+        Select any message payload below to inspect its exact JSON structure and view a detailed <strong>field-by-field breakdown</strong> explaining parameter data types, descriptions, and how the ESP32 firmware handles them.
+      </p>
+
+      <div class="json-inspector-container">
+        <!-- Interactive Payload Tabs -->
+        <div class="json-tabs-bar" id="jsonTabsContainer">
+          <button class="json-tab-btn active" onclick="selectJsonPayload(0)">
+            <span class="json-tab-badge badge-dev2srv">Dev &rarr; Srv</span>
+            <span>hello</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(1)">
+            <span class="json-tab-badge badge-srv2dev">Srv &rarr; Dev</span>
+            <span>hello (resp)</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(2)">
+            <span class="json-tab-badge badge-dev2srv">Dev &rarr; Srv</span>
+            <span>listen</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(3)">
+            <span class="json-tab-badge badge-dev2srv">Dev &rarr; Srv</span>
+            <span>abort</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(4)">
+            <span class="json-tab-badge badge-srv2dev">Srv &rarr; Dev</span>
+            <span>stt</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(5)">
+            <span class="json-tab-badge badge-srv2dev">Srv &rarr; Dev</span>
+            <span>llm (delta)</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(6)">
+            <span class="json-tab-badge badge-mcp">Srv &rarr; Dev</span>
+            <span>mcp (call)</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(7)">
+            <span class="json-tab-badge badge-mcp">Dev &rarr; Srv</span>
+            <span>mcp (callback)</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(8)">
+            <span class="json-tab-badge badge-dev2srv">Dev &rarr; Srv</span>
+            <span>iot (telemetry)</span>
+          </button>
+          <button class="json-tab-btn" onclick="selectJsonPayload(9)">
+            <span class="json-tab-badge badge-dev2srv">Control</span>
+            <span>error / goodbye</span>
+          </button>
+        </div>
+
+        <div class="json-inspector-body">
+          <!-- Left Side: Raw JSON Code -->
+          <div>
+            <div class="code-block-container" style="margin: 0; height: 100%; display: flex; flex-direction: column;">
+              <div class="code-header">
+                <span class="code-title" id="inspectorJsonTitle">Device &rarr; Server: Hello Handshake Request</span>
+                <button class="btn-copy-code" onclick="copyCode(this)">Copy JSON</button>
+              </div>
+              <pre class="code-content" id="inspectorJsonDisplay" style="flex: 1; overflow-y: auto; font-size: 0.8rem; line-height: 1.5; margin: 0; background: #09090b; color: #f8fafc; padding: 14px; border-radius: 0 0 6px 6px;"></pre>
+            </div>
+          </div>
+
+          <!-- Right Side: Metadata & Parameter Breakdown Table -->
+          <div>
+            <div class="json-meta-box">
+              <div class="json-meta-title">
+                <span id="inspectorMsgName">hello (Client Request)</span>
+                <span class="tab-badge" id="inspectorDirection" style="background: #e0f2fe; color: #0369a1;">Device &rarr; Server</span>
+              </div>
+              <div class="json-meta-desc" id="inspectorMsgDesc">
+                Sent by ESP32 upon MQTT connection to negotiate audio codecs, declare hardware capabilities (e.g. MCP tool support), and request UDP audio channel credentials.
+              </div>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+              Parameter Field Specification:
+            </div>
+
+            <div class="table-responsive" style="max-height: 320px; overflow-y: auto;">
+              <table class="param-table" id="inspectorParamTable">
+                <thead>
+                  <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Firmware Action</th>
+                  </tr>
+                </thead>
+                <tbody id="inspectorParamBody">
+                  <!-- Populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION 2: DUAL-CHANNEL PROTOCOL (MQTT + UDP) -->
+    <!-- SECTION 3: DUAL-CHANNEL PROTOCOL (MQTT + UDP) -->
     <section id="protocol" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
-          2. MQTT + UDP Hybrid Communication Protocol
+          3. MQTT + UDP Hybrid Communication Protocol Lifecycle
         </div>
         <span class="doc-section-tag">Dual Channel Protocol</span>
       </div>
@@ -268,45 +432,10 @@
       </div>
 
       <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px 0;">
-        Protocol Payloads & Packet Structure
+        Encrypted UDP Opus Audio Packet Binary Specification
       </h3>
 
-      <!-- Code Snippet 1: Hello Request/Response -->
-      <div class="code-block-container">
-        <div class="code-header">
-          <span class="code-title">JSON Protocol • MQTT Hello Handshake Exchange</span>
-          <button class="btn-copy-code" onclick="copyCode(this)">Copy JSON</button>
-        </div>
-        <pre class="code-content">// 1. Device -> Server: Request Audio Channel setup
-{
-  "type": "hello",
-  "version": 3,
-  "transport": "udp",
-  "features": { "mcp": true },
-  "audio_params": {
-    "format": "opus",
-    "sample_rate": 16000,
-    "channels": 1,
-    "frame_duration": 60
-  }
-}
-
-// 2. Server -> Device: Audio Channel Configuration & AES Credentials
-{
-  "type": "hello",
-  "transport": "udp",
-  "session_id": "sess_883a91b2c4",
-  "audio_params": { "format": "opus", "sample_rate": 24000, "channels": 1, "frame_duration": 60 },
-  "udp": {
-    "server": "192.168.1.100",
-    "port": 8888,
-    "key": "0123456789ABCDEF0123456789ABCDEF",
-    "nonce": "0123456789ABCDEF0123456789ABCDEF"
-  }
-}</pre>
-      </div>
-
-      <!-- Code Snippet 2: UDP Binary Header -->
+      <!-- Code Snippet: UDP Binary Header -->
       <div class="code-block-container">
         <div class="code-header">
           <span class="code-title">Binary Packet Header • Encrypted UDP Opus Audio Packet</span>
@@ -316,21 +445,24 @@
 |   0x01      |    0x00      |     Network      |  Sync Src |   Network Byte  | Monotonic Seq  |    AES-CTR Encrypted Opus   |
 
 Field Definitions:
-- Type: Fixed 0x01 for Audio Stream Data
-- Payload Length: Length of encrypted payload (Big-Endian Network Byte Order)
-- Sequence: Monotonically increasing counter for replay protection & packet ordering
-- Encryption: AES-128-CTR with key & nonce supplied during MQTT Hello handshake</pre>
+- Type (1 Byte): Fixed 0x01 for Audio Stream Data
+- Flags (1 Byte): Reserved flag bits (0x00 default)
+- Payload Length (2 Bytes): Network byte order (Big-Endian) length of encrypted Opus audio frame
+- SSRC (4 Bytes): Synchronization Source Identifier for multi-device stream identification
+- Timestamp (4 Bytes): Monotonically increasing audio frame timestamp (Network Byte Order)
+- Sequence Number (4 Bytes): Monotonically increasing sequence counter for replay protection & packet ordering
+- Encrypted Payload: 128-bit AES-CTR encrypted Opus audio frame using key & nonce negotiated via MQTT JSON Hello</pre>
       </div>
     </section>
 
-    <!-- SECTION 3: HARDWARE ASSEMBLY & PINOUT MATRIX -->
+    <!-- SECTION 4: HARDWARE ASSEMBLY & PINOUT MATRIX -->
     <section id="hardware" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 00-2 2v14a2 2 0 002 2h2a2 2 0 002-2V6a2 2 0 00-2-2h-2z" />
           </svg>
-          3. Hardware Wiring & GPIO Pinout Matrix
+          4. Hardware Wiring & GPIO Pinout Matrix
         </div>
         <span class="doc-section-tag">ESP32-S3 Standard Wiring</span>
       </div>
@@ -463,7 +595,7 @@ Field Definitions:
       </div>
     </section>
 
-    <!-- SECTION 4: LLM INTEGRATION & VISION ENGINE -->
+    <!-- SECTION 5: LLM INTEGRATION & VISION ENGINE -->
     <section id="models-vision" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
@@ -471,7 +603,7 @@ Field Definitions:
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          4. Supported AI Models & AI Vision Engine (v2.0 Refactor)
+          5. Supported AI Models & AI Vision Engine (v2.0 Refactor)
         </div>
         <span class="doc-section-tag">Multimodal AI Capabilities</span>
       </div>
@@ -565,14 +697,14 @@ Field Definitions:
       </div>
     </section>
 
-    <!-- SECTION 5: EMOJI / EMOTION ENGINE & LIVE SIMULATOR -->
+    <!-- SECTION 6: EMOJI / EMOTION ENGINE & LIVE SIMULATOR -->
     <section id="emoji-sim" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          5. Emotion Engine & Live OLED Simulator
+          6. Emotion Engine & Live OLED Simulator
         </div>
         <span class="doc-section-tag">SVG Vector Graphics & Character Protocol</span>
       </div>
@@ -704,14 +836,14 @@ Field Definitions:
       </div>
     </section>
 
-    <!-- SECTION 6: MCP PROTOCOL CONTROL -->
+    <!-- SECTION 7: MCP PROTOCOL CONTROL -->
     <section id="mcp-control" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
           </svg>
-          6. Model Context Protocol (MCP) & Smart IoT Control
+          7. Model Context Protocol (MCP) & Smart IoT Control
         </div>
         <span class="doc-section-tag">AI-to-Hardware Control</span>
       </div>
@@ -751,14 +883,14 @@ Field Definitions:
       </div>
     </section>
 
-    <!-- SECTION 7: STEP-BY-STEP SETUP GUIDE -->
+    <!-- SECTION 8: STEP-BY-STEP SETUP GUIDE -->
     <section id="setup-guide" class="doc-section">
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
-          7. DIY Step-by-Step Compilation & Build Guide
+          8. DIY Step-by-Step Compilation & Build Guide
         </div>
         <span class="doc-section-tag">ESP-IDF Setup</span>
       </div>
@@ -808,7 +940,7 @@ idf.py -p COM3 flash monitor</pre>
 
   <!-- JavaScript -->
   <script>
-    // Copy Code Snippets
+    // Copy Code Snippets Function
     function copyCode(btn) {
       const codeBlock = btn.parentElement.nextElementSibling;
       const textToCopy = codeBlock.innerText;
@@ -827,6 +959,189 @@ idf.py -p COM3 flash monitor</pre>
         }, 2000);
       });
     }
+
+    // JSON Protocol Payloads Database for Interactive Inspector
+    const jsonPayloadData = [
+      {
+        title: "Device -> Server: Hello Handshake Request",
+        msgName: "hello (Client Request)",
+        direction: "Device -> Server",
+        dirStyle: "background: #e0f2fe; color: #0369a1;",
+        desc: "Sent by ESP32 immediately after MQTT connection to establish protocol version, request UDP audio port allocation, and specify audio sample rates and hardware capabilities.",
+        json: `{\n  "type": "hello",\n  "version": 3,\n  "transport": "udp",\n  "features": {\n    "mcp": true\n  },\n  "audio_params": {\n    "format": "opus",\n    "sample_rate": 16000,\n    "channels": 1,\n    "frame_duration": 60\n  }\n}`,
+        params: [
+          { key: "type", type: "string", desc: "Fixed protocol identifier ('hello')", action: "Routes to handshake handler in MQTT listener" },
+          { key: "version", type: "integer", desc: "Protocol version number (v3 active)", action: "Verifies backwards compatibility in server" },
+          { key: "transport", type: "string", desc: "Requested audio transport protocol ('udp')", action: "Triggers UDP port & AES key generation" },
+          { key: "features.mcp", type: "boolean", desc: "Flags Model Context Protocol support", action: "Registers hardware tool execution engine" },
+          { key: "audio_params", type: "object", desc: "PCM/Opus audio capture parameters", action: "Configures server-side ASR audio resampler" }
+        ]
+      },
+      {
+        title: "Server -> Device: Hello Handshake Response & AES Provisioning",
+        msgName: "hello (Server Response)",
+        direction: "Server -> Device",
+        dirStyle: "background: #f0fdf4; color: #15803d;",
+        desc: "Server acknowledges handshake, assigns a unique session ID, returns server UDP IP and port, and provides 128-bit AES key and nonce for UDP audio encryption.",
+        json: `{\n  "type": "hello",\n  "transport": "udp",\n  "session_id": "sess_883a91b2c4",\n  "audio_params": {\n    "format": "opus",\n    "sample_rate": 24000,\n    "channels": 1,\n    "frame_duration": 60\n  },\n  "udp": {\n    "server": "192.168.1.100",\n    "port": 8888,\n    "key": "0123456789ABCDEF0123456789ABCDEF",\n    "nonce": "0123456789ABCDEF0123456789ABCDEF"\n  }\n}`,
+        params: [
+          { key: "session_id", type: "string", desc: "Unique session UUID for active conversation", action: "Stored in ESP32 static session memory" },
+          { key: "udp.server", type: "string", desc: "Server IP / Domain for UDP audio target", action: "Used to open UDP socket on ESP32" },
+          { key: "udp.port", type: "integer", desc: "Destination UDP port for Opus streaming", action: "Binds socket target port" },
+          { key: "udp.key", type: "string", desc: "128-bit AES encryption key (32 hex characters)", action: "Initializes ESP32 mbedTLS AES-CTR context" },
+          { key: "udp.nonce", type: "string", desc: "Initialization vector / Nonce for AES-CTR", action: "Sets initial CTR counter value" }
+        ]
+      },
+      {
+        title: "Device -> Server: Listen Mode State Control",
+        msgName: "listen (Recording Trigger)",
+        direction: "Device -> Server",
+        dirStyle: "background: #e0f2fe; color: #0369a1;",
+        desc: "Notifies server that the local wake word engine detected wake phrase '你好小智' or button press, transitioning microphone into active streaming state.",
+        json: `{\n  "type": "listen",\n  "session_id": "sess_883a91b2c4",\n  "state": "start",\n  "mode": "auto"\n}`,
+        params: [
+          { key: "type", type: "string", desc: "Fixed action identifier ('listen')", action: "Triggers cloud ASR pipeline listener" },
+          { key: "session_id", type: "string", desc: "Session token returned during hello", action: "Associates microphone audio with user session" },
+          { key: "state", type: "string", desc: "Listen state ('start', 'stop', 'detect')", action: "Controls Opus packet buffering on server" },
+          { key: "mode", type: "string", desc: "Trigger mode ('auto' wake word, 'manual' button)", action: "Sets VAD (Voice Activity Detection) sensitivity" }
+        ]
+      },
+      {
+        title: "Device -> Server: Abort / Emergency Barge-In Request",
+        msgName: "abort (Barge-In Signal)",
+        direction: "Device -> Server",
+        dirStyle: "background: #e0f2fe; color: #0369a1;",
+        desc: "Sent when user speaks while LLM is generating speech or presses GPIO 00 button. Instructs server to immediately stop LLM generation and halt TTS audio stream.",
+        json: `{\n  "type": "abort",\n  "session_id": "sess_883a91b2c4",\n  "reason": "user_interrupt"\n}`,
+        params: [
+          { key: "type", type: "string", desc: "Fixed interruption identifier ('abort')", action: "Cancels active LLM stream task" },
+          { key: "session_id", type: "string", desc: "Active conversation session UUID", action: "Flushes pending TTS audio queue on server" },
+          { key: "reason", type: "string", desc: "Cause of abort ('wake_word', 'user_interrupt')", action: "ESP32 flushes I2S DMA speaker buffer immediately" }
+        ]
+      },
+      {
+        title: "Server -> Device: Speech-to-Text (STT) Transcript Result",
+        msgName: "stt (ASR Transcript)",
+        direction: "Server -> Device",
+        dirStyle: "background: #f0fdf4; color: #15803d;",
+        desc: "Streams incremental or final Speech-to-Text recognized text recognized from microphone Opus audio stream.",
+        json: `{\n  "type": "stt",\n  "session_id": "sess_883a91b2c4",\n  "text": "Turn on the living room lights",\n  "is_final": true\n}`,
+        params: [
+          { key: "type", type: "string", desc: "Speech recognition payload identifier ('stt')", action: "Updates OLED UI status line" },
+          { key: "text", type: "string", desc: "Recognized spoken sentence string", action: "Displays prompt preview on SSD1306 screen" },
+          { key: "is_final", type: "boolean", desc: "True if sentence boundary reached", action: "Triggers local processing state indicator" }
+        ]
+      },
+      {
+        title: "Server -> Device: LLM Delta Stream & Emotion Token",
+        msgName: "llm (Stream & Emotion)",
+        direction: "Server -> Device",
+        dirStyle: "background: #f0fdf4; color: #15803d;",
+        desc: "Delivers LLM response text deltas, synthesized speech audio synchronization IDs, and discrete visual emotion state tokens (e.g. 'smile').",
+        json: `{\n  "type": "llm",\n  "session_id": "sess_883a91b2c4",\n  "text": "Sure! Turning on living room lights now.",\n  "emotion": "smile",\n  "code": "0x01",\n  "audio_id": 1042\n}`,
+        params: [
+          { key: "type", type: "string", desc: "LLM stream response identifier ('llm')", action: "Parses text and emotion tokens" },
+          { key: "text", type: "string", desc: "Incremental response text chunk", action: "Updates UI subtitle text scrolling" },
+          { key: "emotion", type: "string", desc: "Visual emotion state ('smile', 'think', 'sad')", action: "Triggers vector SVG face update on OLED" },
+          { key: "code", type: "string", desc: "Hexadecimal emotion opcode", action: "Maps to pre-rendered screen bitmap ID" },
+          { key: "audio_id", type: "integer", desc: "TTS audio packet sequence sync ID", action: "Synchronizes OLED emotion display with TTS speaker audio" }
+        ]
+      },
+      {
+        title: "Server -> Device: MCP Hardware Tool Call Trigger",
+        msgName: "mcp (Tool Call)",
+        direction: "Server -> Device",
+        dirStyle: "background: #faf5ff; color: #6b21a8;",
+        desc: "Issued when cloud LLM determines a spoken command requires physical hardware actuation (moving robot arms, toggling GPIOs, reading sensors).",
+        json: `{\n  "type": "mcp",\n  "payload": {\n    "action": "call_tool",\n    "tool_name": "set_servo_angle",\n    "arguments": {\n      "node_id": "node-02",\n      "servo_channel": 1,\n      "angle_degrees": 90\n    }\n  }\n}`,
+        params: [
+          { key: "type", type: "string", desc: "MCP protocol envelope identifier ('mcp')", action: "Routes payload to MCP tool dispatcher" },
+          { key: "payload.action", type: "string", desc: "MCP action command ('call_tool')", action: "Looks up registered function pointer" },
+          { key: "payload.tool_name", type: "string", desc: "Target C++ tool function name", action: "Matches registered ESP-IDF driver tool" },
+          { key: "payload.arguments", type: "object", desc: "Function parameters (angles, pins, node IDs)", action: "Passed to driver callback function" }
+        ]
+      },
+      {
+        title: "Device -> Server: MCP Execution Result Callback",
+        msgName: "mcp (Tool Result)",
+        direction: "Device -> Server",
+        dirStyle: "background: #faf5ff; color: #6b21a8;",
+        desc: "Returned by ESP32 after hardware actuation completes to confirm success or pass sensor telemetry back to cloud LLM context.",
+        json: `{\n  "type": "mcp",\n  "payload": {\n    "status": "success",\n    "tool_name": "set_servo_angle",\n    "result": {\n      "status": "OK",\n      "current_angle": 90\n    }\n  }\n}`,
+        params: [
+          { key: "payload.status", type: "string", desc: "Execution outcome ('success', 'error')", action: "Informs LLM whether hardware action succeeded" },
+          { key: "payload.tool_name", type: "string", desc: "Name of executed tool", action: "Matches response callback to pending tool request" },
+          { key: "payload.result", type: "object", desc: "Telemetry data or returned hardware state", action: "Injected back into LLM multi-turn context" }
+        ]
+      },
+      {
+        title: "Device -> Server: IoT Telemetry & Battery Report",
+        msgName: "iot (Telemetry Report)",
+        direction: "Device -> Server",
+        dirStyle: "background: #e0f2fe; color: #0369a1;",
+        desc: "Periodic background heartbeat published by ESP32 over MQTT to report battery voltage, Wi-Fi RSSI, temperature sensors, and uptime.",
+        json: `{\n  "type": "iot",\n  "device_id": "esp32s3_node_05",\n  "telemetry": {\n    "battery_pct": 88,\n    "battery_mv": 4120,\n    "wifi_rssi": -62,\n    "uptime_sec": 3640,\n    "heap_free_kb": 240\n  }\n}`,
+        params: [
+          { key: "type", type: "string", desc: "IoT status report identifier ('iot')", action: "Processed by dashboard telemetry logger" },
+          { key: "telemetry.battery_pct", type: "integer", desc: "Remaining LiPo battery percentage", action: "Displays battery icon on OLED screen header" },
+          { key: "telemetry.wifi_rssi", type: "integer", desc: "Wi-Fi signal strength in dBm", action: "Monitors wireless link quality" },
+          { key: "telemetry.heap_free_kb", type: "integer", desc: "Free internal SRAM heap in KB", action: "Monitors memory leaks in ESP32 C-runtime" }
+        ]
+      },
+      {
+        title: "Control: Error Notification & Goodbye Teardown",
+        msgName: "error / goodbye",
+        direction: "Control Plane",
+        dirStyle: "background: #fef2f2; color: #b91c1c;",
+        desc: "Sent on session disconnection, network timeout, or server error to gracefully release sockets and mbedTLS security contexts.",
+        json: `{\n  "type": "goodbye",\n  "session_id": "sess_883a91b2c4",\n  "reason": "normal_closure"\n}`,
+        params: [
+          { key: "type", type: "string", desc: "Closure identifier ('goodbye', 'error')", action: "Cleans up UDP sockets and key memory" },
+          { key: "session_id", type: "string", desc: "Closing session UUID", action: "Frees server session resources" },
+          { key: "reason", type: "string", desc: "Teardown explanation ('normal_closure', 'timeout')", action: "Triggers automatic reconnect timer if unexpected" }
+        ]
+      }
+    ];
+
+    // Select JSON Payload in Inspector
+    function selectJsonPayload(index) {
+      const data = jsonPayloadData[index];
+      if (!data) return;
+
+      // Highlight active tab
+      const tabs = document.querySelectorAll('.json-tab-btn');
+      tabs.forEach((tab, idx) => {
+        if (idx === index) tab.classList.add('active');
+        else tab.classList.remove('active');
+      });
+
+      // Update Inspector display elements
+      document.getElementById('inspectorJsonTitle').innerText = data.title;
+      document.getElementById('inspectorJsonDisplay').innerText = data.json;
+      document.getElementById('inspectorMsgName').innerText = data.msgName;
+      document.getElementById('inspectorDirection').innerText = data.direction;
+      document.getElementById('inspectorDirection').style.cssText = data.dirStyle;
+      document.getElementById('inspectorMsgDesc').innerText = data.desc;
+
+      // Populate Parameter Breakdown Table
+      const body = document.getElementById('inspectorParamBody');
+      body.innerHTML = '';
+      data.params.forEach(param => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong style="font-family: var(--font-mono); color: var(--text-primary);">${param.key}</strong></td>
+          <td><span class="type-tag">${param.type}</span></td>
+          <td style="color: var(--text-secondary);">${param.desc}</td>
+          <td style="font-size: 0.78rem; color: #0369a1;">${param.action}</td>
+        `;
+        body.appendChild(row);
+      });
+    }
+
+    // Initialize default inspector view on load
+    document.addEventListener('DOMContentLoaded', () => {
+      selectJsonPayload(0);
+    });
 
     // Interactive Pinout Matrix Search Filter
     function filterPinoutTable() {
