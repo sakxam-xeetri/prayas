@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32-S3-CAM Hardware Wiring & Pinout Guide - Prayas AI Hub</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Main CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Header Section -->
+    <header style="padding-bottom: 24px;">
+      <div class="top-badge-wrapper" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="top-badge">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: #be185d;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            </svg>
+            PRAYAS V1 ROBOTICS • DEDICATED CAMERA HUB
+          </span>
+          <span class="top-badge cloud-badge" style="background: #fdf2f8; border-color: #fbcfe8; color: #be185d;">
+            <span class="cloud-dot online" style="background: #ec4899; box-shadow: 0 0 8px rgba(236,72,153,0.6);"></span>
+            ESP32-S3-CAM VQA ENGINE ACTIVE
+          </span>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <a href="ai_node.html" class="btn-pill btn-pill-dark" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            MAIN AI HUB
+          </a>
+          <a href="index.html" class="btn-pill btn-pill-dark" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            BOM MANAGER
+          </a>
+        </div>
+      </div>
+
+      <h1 class="header-title" style="margin-top: 16px;">ESP32-S3-CAM Dedicated Hardware & Connection Specification</h1>
+      <p class="header-subtitle">
+        Definitive technical manual for the ESP32-S3-CAM (OV2640 / OV3660 DVP Interface), complete GPIO pinout matrix, I2S audio pin sharing, SIMD vector JPEG encoding, and MCP Visual Question Answering (VQA) cloud pipelines.
+      </p>
+    </header>
+
+    <!-- Key Metrics Grid -->
+    <div class="metrics-grid" style="margin-bottom: 28px;">
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">CAMERA INTERFACE</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          </svg>
+        </div>
+        <div class="metric-value">8-Bit DVP Parallel</div>
+        <div class="metric-subtext">OV2640 / OV3660 / OV5640 (VGA 640x480 &amp; UXGA 1600x1200)</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">ENCODING SPEED</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="metric-value">280 ms / Frame</div>
+        <div class="metric-subtext">ESP32-S3 LX7 SIMD Vector hardware instruction acceleration</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">PSRAM FOOTPRINT</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div class="metric-value">95 KB RAM</div>
+        <div class="metric-subtext">47% memory reduction allowing double-buffered VGA capture</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">VISION TOOL ENGINE</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div class="metric-value">MCP take_photo</div>
+        <div class="metric-subtext">Automatic VQA integration with DeepSeek, Qwen-VL &amp; GPT-4o</div>
+      </div>
+    </div>
+
+    <!-- SECTION 1: MASTER GPIO PINOUT MATRIX -->
+    <section class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 00-2 2v14a2 2 0 002 2h2a2 2 0 002-2V6a2 2 0 00-2-2h-2z" />
+          </svg>
+          1. Master ESP32-S3-CAM GPIO Pinout & Connection Matrix
+        </div>
+        <span class="doc-section-tag">DVP Camera + I2S Audio</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        Below is the standard pinout mapping for deploying the <strong>ESP32-S3-CAM</strong> (Waveshare / XiaoZhi CAM Dev Board) with an OV2640 sensor, INMP441 I2S microphone, and MAX98357A I2S amplifier.
+      </p>
+
+      <div class="controls-card" style="margin-bottom: 16px; padding: 12px 16px;">
+        <div class="search-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="camPinSearch" class="search-input" placeholder="Search Camera Pin (D0-D7, XCLK, PCLK, VSYNC, HREF, I2S Mic, Amp)..." onkeyup="filterCamPins()">
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="pinout-table" id="camPinTable">
+          <thead>
+            <tr>
+              <th>ESP32-S3 Pin</th>
+              <th>Target Component</th>
+              <th>Component Pin</th>
+              <th>Bus / Protocol</th>
+              <th>Functional Description &amp; Technical Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="gpio-badge">GPIO 45</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D0 (Data Bit 0)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 0 input to ESP32-S3 DVP controller</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 47</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D1 (Data Bit 1)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 1 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 48</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D2 (Data Bit 2)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 2 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 46</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D3 (Data Bit 3)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 3 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 42</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D4 (Data Bit 4)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 4 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 40</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D5 (Data Bit 5)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 5 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 39</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D6 (Data Bit 6)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 6 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 21</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>D7 (Data Bit 7)</td>
+              <td><span class="dvp-bus-badge">DVP Parallel Video</span></td>
+              <td>Parallel image data bit 7 input line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 38</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>XCLK (System Clock)</td>
+              <td><span class="dvp-bus-badge">LEDC Clock Out</span></td>
+              <td>Master 20MHz clock generated by ESP32 LEDC peripheral to drive camera internal logic</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 41</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>PCLK (Pixel Clock)</td>
+              <td><span class="dvp-bus-badge">DVP Clock In</span></td>
+              <td>Pixel sync clock emitted by camera sensor during active line capture</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 17</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>VSYNC (Vertical Sync)</td>
+              <td><span class="dvp-bus-badge">DVP Frame Sync</span></td>
+              <td>Signals boundary between captured image frames</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 18</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>HREF (Horizontal Ref)</td>
+              <td><span class="dvp-bus-badge">DVP Line Sync</span></td>
+              <td>Signals active pixel line transfer</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 07</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>SIOC (SCCB Clock)</td>
+              <td><span class="bus-badge">I2C Control</span></td>
+              <td>Camera register configuration I2C SCL clock line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 08</span></td>
+              <td><strong>OV2640 Camera</strong></td>
+              <td>SIOD (SCCB Data)</td>
+              <td><span class="bus-badge">I2C Control</span></td>
+              <td>Camera register configuration I2C SDA data line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 11</span></td>
+              <td><strong>INMP441 / MAX98357A</strong></td>
+              <td>BCLK (Bit Clock)</td>
+              <td><span class="bus-badge">I2S Audio Shared</span></td>
+              <td>Continuous audio bit clock shared between mic input &amp; speaker output</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 12</span></td>
+              <td><strong>INMP441 / MAX98357A</strong></td>
+              <td>WS / LRC (Word Select)</td>
+              <td><span class="bus-badge">I2S Audio Shared</span></td>
+              <td>Left/Right channel word select clock line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 13</span></td>
+              <td><strong>INMP441 MEMS Mic</strong></td>
+              <td>SD (Data In)</td>
+              <td><span class="bus-badge">I2S Audio Input</span></td>
+              <td>16kHz PCM audio microphone capture data input</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 14</span></td>
+              <td><strong>MAX98357A Amp</strong></td>
+              <td>DIN (Data Out)</td>
+              <td><span class="bus-badge">I2S Audio Output</span></td>
+              <td>PCM speaker playback audio output into Class-D amplifier</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 00</span></td>
+              <td><strong>Boot Button</strong></td>
+              <td>Trigger Switch</td>
+              <td><span class="bus-badge">GPIO Interrupt</span></td>
+              <td>Manual wake-up or response barge-in interrupt button</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 2: POWER & CIRCUIT DECOUPLING -->
+    <section class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          2. Power Supply & Decoupling Noise Reduction
+        </div>
+        <span class="doc-section-tag">Hardware Reliability</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        Camera frame captures trigger sudden 150mA-250mA current spikes. Without proper LDO regulation and power filtering, line noise causes I2S audio distortion or camera brownout resets.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-card-title">Power Rail Requirements</div>
+          <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: #10b981; margin: 8px 0;">
+            5.0V / 2.0A <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(Dedicated LDO)</span>
+          </div>
+          <div class="feature-card-desc">Supply 5V power directly via USB-C or external LDO (AMS1117-3.3) capable of delivering at least 800mA continuous on the 3.3V rail.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">Capacitor Decoupling</div>
+          <div style="font-family: var(--font-mono); font-size: 1.3rem; font-weight: 800; color: #3b82f6; margin: 8px 0;">
+            10 &mu;F + 0.1 &mu;F <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(Ceramic)</span>
+          </div>
+          <div class="feature-card-desc">Place 10&mu;F electrolytic and 0.1&mu;F ceramic decoupling capacitors directly across OV2640 DVDD and AVDD supply pins to eliminate video sensor ripple.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">PSRAM Memory Configuration</div>
+          <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 12px 0;">
+            Octal PSRAM (8MB) • 120MHz
+          </div>
+          <div class="feature-card-desc">Ensure <code>CAMERA_FB_IN_PSRAM</code> is configured in ESP-IDF to allocate image frame buffers in external PSRAM, preserving internal SRAM for network buffers.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SIMD VECTOR HARDWARE JPEG ENCODING -->
+    <section class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          3. SIMD Vector Hardware Accelerated JPEG Encoding
+        </div>
+        <span class="doc-section-tag">Software Acceleration</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        Xiaozhi v2.0 firmware replaces legacy software JPEG encoders with <code>image_to_jpeg.c</code>, leveraging dual Xtensa LX7 SIMD vector instructions on the ESP32-S3 chip to drastically cut latency and memory footprint.
+      </p>
+
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">ESP-IDF C++ Implementation • Initializing ESP32-S3-CAM Board</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy C++ Spec</button>
+        </div>
+        <pre class="code-content">// Initialize camera configuration struct for ESP32-S3 DVP interface
+camera_config_t config = {};
+config.ledc_channel = LEDC_CHANNEL_2;
+config.ledc_timer   = LEDC_TIMER_2;
+config.pin_d0       = GPIO_NUM_45;
+config.pin_d1       = GPIO_NUM_47;
+config.pin_d2       = GPIO_NUM_48;
+config.pin_d3       = GPIO_NUM_46;
+config.pin_d4       = GPIO_NUM_42;
+config.pin_d5       = GPIO_NUM_40;
+config.pin_d6       = GPIO_NUM_39;
+config.pin_d7       = GPIO_NUM_21;
+config.pin_xclk     = GPIO_NUM_38;
+config.pin_pclk     = GPIO_NUM_41;
+config.pin_vsync    = GPIO_NUM_17;
+config.pin_href     = GPIO_NUM_18;
+config.pin_sccb_sda = GPIO_NUM_8;
+config.pin_sccb_scl = GPIO_NUM_7;
+config.xclk_freq_hz = 20000000;
+config.pixel_format = PIXFORMAT_RGB565; // Or PIXFORMAT_JPEG
+config.frame_size   = FRAMESIZE_VGA;     // 640x480 resolution
+config.jpeg_quality = 10;
+config.fb_count     = 2;                 // Double buffering in PSRAM
+config.fb_location  = CAMERA_FB_IN_PSRAM;
+
+// Instantiate hardware accelerated camera driver
+camera_ = new Esp32Camera(config);</pre>
+      </div>
+    </section>
+
+    <!-- SECTION 4: MCP VISION VQA WORKFLOW -->
+    <section class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          4. MCP Visual Question Answering (VQA) Cloud Workflow
+        </div>
+        <span class="doc-section-tag">AI Vision Integration</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        When a user speaks a vision command (e.g. <em>"What color is this shirt?"</em> or <em>"Read the text on this box"</em>), the Cloud LLM invokes the registered <code>self.camera.take_photo</code> MCP tool to capture a frame and perform multimodal reasoning.
+      </p>
+
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">JSON Protocol • Server Triggering MCP Camera Capture Tool</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy MCP Vision JSON</button>
+        </div>
+        <pre class="code-content">// 1. Cloud LLM -> ESP32-S3: Trigger registered camera tool
+{
+  "type": "mcp",
+  "payload": {
+    "action": "call_tool",
+    "tool_name": "self.camera.take_photo",
+    "arguments": {
+      "question": "What object am I holding in my hand?"
+    }
+  }
+}
+
+// 2. ESP32-S3 -> Cloud: Captures frame, encodes JPEG, and uploads to VQA endpoint
+// Upload Payload: HTTP POST multipart/form-data to camera upload endpoint
+// 3. Cloud Vision Model (Qwen-VL / GPT-4o) processes image and streams answer back via JSON text delta.</pre>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Copy Code Snippets
+    function copyCode(btn) {
+      const codeBlock = btn.parentElement.nextElementSibling;
+      const textToCopy = codeBlock.innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btn.innerText;
+        btn.innerHTML = `
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:12px; height:12px; display:inline-block; margin-right:4px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg> COPIED!`;
+        btn.style.background = '#10b981';
+        btn.style.borderColor = '#10b981';
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = '#27272a';
+          btn.style.borderColor = '#3f3f46';
+        }, 2000);
+      });
+    }
+
+    // Filter Camera Pinout Table
+    function filterCamPins() {
+      const input = document.getElementById('camPinSearch');
+      const filter = input.value.toUpperCase();
+      const table = document.getElementById('camPinTable');
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        let visible = false;
+        const tdArray = tr[i].getElementsByTagName('td');
+        for (let j = 0; j < tdArray.length; j++) {
+          if (tdArray[j]) {
+            const txtValue = tdArray[j].textContent || tdArray[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              visible = true;
+              break;
+            }
+          }
+        }
+        tr[i].style.display = visible ? '' : 'none';
+      }
+    }
+  </script>
+</body>
+
+</html>
