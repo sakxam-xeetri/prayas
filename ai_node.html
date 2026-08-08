@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRAYAS V1 - Xiaozhi Voice & Vision AI Node Technical Manual</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Main CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Top Header Section -->
+    <header style="padding-bottom: 24px;">
+      <div class="top-badge-wrapper" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="top-badge">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: #38bdf8;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            PRAYAS V1 ROBOTICS • NODE 05
+          </span>
+          <span class="top-badge cloud-badge" style="background: #10b98115; border-color: #10b98140; color: #047857;">
+            <span class="cloud-dot online"></span>
+            FIRMWARE V2.0 ACTIVE
+          </span>
+        </div>
+
+        <div>
+          <a href="index.html" class="btn-pill btn-pill-dark" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            BACK TO BOM MANAGER
+          </a>
+        </div>
+      </div>
+
+      <h1 class="header-title" style="margin-top: 16px;">Xiaozhi AI Node Architecture</h1>
+      <p class="header-subtitle">
+        Comprehensive technical breakdown of Node 05: ESP32-S3 Voice & Vision Robot, MQTT+UDP hybrid protocol, MCP tool calling, local wake-up, and real-time LLM inference.
+      </p>
+    </header>
+
+    <!-- Key Metrics Summary Grid -->
+    <div class="metrics-grid" style="margin-bottom: 28px;">
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">WAKE WORD LATENCY</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <div class="metric-value">&lt; 200 ms</div>
+        <div class="metric-subtext">Espressif Offline Wake Engine (Wake Phrase: "你好小智")</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">STREAMING CODEC</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+          </svg>
+        </div>
+        <div class="metric-value">Opus 16-24kHz</div>
+        <div class="metric-subtext">60ms frame duration, 16-bit mono PCM</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">DUAL PROTOCOL</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+        </div>
+        <div class="metric-value">MQTT + UDP</div>
+        <div class="metric-subtext">JSON Control + AES-CTR Encrypted UDP Audio</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">JPEG HARDWARE ACCEL</span>
+          <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          </svg>
+        </div>
+        <div class="metric-value">3.0x Faster</div>
+        <div class="metric-subtext">280ms encode, DMA & Vector acceleration</div>
+      </div>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <div class="sticky-nav-bar">
+      <div class="sticky-nav-wrapper">
+        <a href="#architecture" class="nav-pill-btn active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+          AI Architecture
+        </a>
+        <a href="#protocol" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          MQTT+UDP Dual Channel
+        </a>
+        <a href="#hardware" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 00-2 2v14a2 2 0 002 2h2a2 2 0 002-2V6a2 2 0 00-2-2h-2z" />
+          </svg>
+          Hardware Pinouts
+        </a>
+        <a href="#models-vision" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          LLM & Vision Engine
+        </a>
+        <a href="#emoji-sim" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Emotion & OLED Simulator
+        </a>
+        <a href="#mcp-control" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          </svg>
+          MCP Protocol Control
+        </a>
+        <a href="#setup-guide" class="nav-pill-btn">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          DIY Setup & IDF Guide
+        </a>
+      </div>
+    </div>
+
+    <!-- SECTION 1: CORE AI ARCHITECTURE -->
+    <section id="architecture" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+          1. Core AI Architecture & Hybrid Inference
+        </div>
+        <span class="doc-section-tag">Edge + Cloud + IoT</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        Xiaozhi AI operates on a <strong>Hybrid AI Architecture</strong>: low-latency edge processing on the ESP32-S3 handles instantaneous voice wake-up and local keyword filtering, while complex natural language understanding, reasoning, and speech synthesis are offloaded to high-performance cloud Large Language Models (LLMs).
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            </svg>
+          </div>
+          <div class="feature-card-title">1. Local Voice Wake-Up</div>
+          <div class="feature-card-desc">
+            Runs Espressif's Wake Word Engine locally on dual ESP32-S3 LX7 cores at 240MHz. Latency &lt;200ms with &lt;5mA standby power. Default wake phrase: <strong>"你好小智"</strong> (supports 26+ custom wake words).
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+            </svg>
+          </div>
+          <div class="feature-card-title">2. ASR & Cloud LLM Engine</div>
+          <div class="feature-card-desc">
+            Captures 16kHz mono audio via INMP441 MEMS microphone, compresses it using Opus 60ms frames, and streams over UDP to cloud ASR. Feeds prompt to DeepSeek, Qwen-Max, Doubao, or GPT-4o for instant reasoning.
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 010 12.728" />
+            </svg>
+          </div>
+          <div class="feature-card-title">3. TTS Synthesis & Emotion Tokens</div>
+          <div class="feature-card-desc">
+            Synthesizes warm human voice (Azure/Baidu TTS) played back via MAX98357A I2S amplifier, while simultaneously extracting independent emotion tokens (e.g. <code>emotion: smile</code>) for display on the SSD1306 screen.
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            </svg>
+          </div>
+          <div class="feature-card-title">4. MCP Robot Node Control</div>
+          <div class="feature-card-desc">
+            Translates natural spoken commands ("Raise robot arm", "Check battery status") into structured Model Context Protocol (MCP) JSON tool calls to actuate servos, motors, and peripheral robot nodes.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: DUAL-CHANNEL PROTOCOL (MQTT + UDP) -->
+    <section id="protocol" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+          2. MQTT + UDP Hybrid Communication Protocol
+        </div>
+        <span class="doc-section-tag">Dual Channel Protocol</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        To guarantee real-time voice response without audio stuttering, Xiaozhi AI separates signaling and data into <strong>two distinct channels</strong>:
+      </p>
+
+      <div class="protocol-flow-container">
+        <div style="font-family: var(--font-mono); font-size: 0.82rem; color: #38bdf8; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: #38bdf8;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Protocol Lifecycle & Handshake Flow
+        </div>
+
+        <div class="protocol-step-grid">
+          <div class="protocol-step-card">
+            <div class="protocol-step-num">STEP 01 • MQTT CONNECT</div>
+            <div class="protocol-step-title">MQTT Control Link</div>
+            <div class="protocol-step-detail">Device establishes secure MQTT connection to server (KeepAlive: 240s, ClientId, Auth credentials).</div>
+          </div>
+
+          <div class="protocol-step-card">
+            <div class="protocol-step-num">STEP 02 • HELLO EXCHANGE</div>
+            <div class="protocol-step-title">Audio Channel Request</div>
+            <div class="protocol-step-detail">Device sends <code>"type": "hello"</code> JSON with audio params (Opus, 16kHz, 60ms). Server returns UDP port, AES key & nonce.</div>
+          </div>
+
+          <div class="protocol-step-card active-udp">
+            <div class="protocol-step-num">STEP 03 • UDP AES-CTR INIT</div>
+            <div class="protocol-step-title">UDP Audio Channel</div>
+            <div class="protocol-step-detail">Device initializes 128-bit AES-CTR encryption context using negotiated <code>udp.key</code> and <code>udp.nonce</code>.</div>
+          </div>
+
+          <div class="protocol-step-card active-udp">
+            <div class="protocol-step-num">STEP 04 • OPUS STREAMING</div>
+            <div class="protocol-step-title">Real-Time Audio Loop</div>
+            <div class="protocol-step-detail">Bi-directional compressed Opus audio packets stream over UDP with sequence & timestamp protection.</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 24px 0 12px 0;">
+        Protocol Payloads & Packet Structure
+      </h3>
+
+      <!-- Code Snippet 1: Hello Request/Response -->
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">JSON Protocol • MQTT Hello Handshake Exchange</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy JSON</button>
+        </div>
+        <pre class="code-content">// 1. Device -> Server: Request Audio Channel setup
+{
+  "type": "hello",
+  "version": 3,
+  "transport": "udp",
+  "features": { "mcp": true },
+  "audio_params": {
+    "format": "opus",
+    "sample_rate": 16000,
+    "channels": 1,
+    "frame_duration": 60
+  }
+}
+
+// 2. Server -> Device: Audio Channel Configuration & AES Credentials
+{
+  "type": "hello",
+  "transport": "udp",
+  "session_id": "sess_883a91b2c4",
+  "audio_params": { "format": "opus", "sample_rate": 24000, "channels": 1, "frame_duration": 60 },
+  "udp": {
+    "server": "192.168.1.100",
+    "port": 8888,
+    "key": "0123456789ABCDEF0123456789ABCDEF",
+    "nonce": "0123456789ABCDEF0123456789ABCDEF"
+  }
+}</pre>
+      </div>
+
+      <!-- Code Snippet 2: UDP Binary Header -->
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">Binary Packet Header • Encrypted UDP Opus Audio Packet</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy Spec</button>
+        </div>
+        <pre class="code-content">|  Type (1B)  |  Flags (1B)  | Payload Len (2B) | SSRC (4B) | Timestamp (4B) | Sequence (4B) | Encrypted Payload (N Bytes) |
+|   0x01      |    0x00      |     Network      |  Sync Src |   Network Byte  | Monotonic Seq  |    AES-CTR Encrypted Opus   |
+
+Field Definitions:
+- Type: Fixed 0x01 for Audio Stream Data
+- Payload Length: Length of encrypted payload (Big-Endian Network Byte Order)
+- Sequence: Monotonically increasing counter for replay protection & packet ordering
+- Encryption: AES-128-CTR with key & nonce supplied during MQTT Hello handshake</pre>
+      </div>
+    </section>
+
+    <!-- SECTION 3: HARDWARE ASSEMBLY & PINOUT MATRIX -->
+    <section id="hardware" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 00-2 2v14a2 2 0 002 2h2a2 2 0 002-2V6a2 2 0 00-2-2h-2z" />
+          </svg>
+          3. Hardware Wiring & GPIO Pinout Matrix
+        </div>
+        <span class="doc-section-tag">ESP32-S3 Standard Wiring</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        Below is the master GPIO pin assignment table for building the Xiaozhi AI Node using an <strong>ESP32-S3-DevKitC-1</strong> (WROOM N16R8 module recommended with 16MB Flash and 8MB PSRAM).
+      </p>
+
+      <div class="controls-card" style="margin-bottom: 16px; padding: 12px 16px;">
+        <div class="search-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" id="pinSearchInput" class="search-input" placeholder="Search GPIO, component (Mic, Amp, OLED, Button, Camera)..." onkeyup="filterPinoutTable()">
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="pinout-table" id="pinoutMatrixTable">
+          <thead>
+            <tr>
+              <th>ESP32-S3 Pin</th>
+              <th>Target Component</th>
+              <th>Component Pin</th>
+              <th>Bus / Protocol</th>
+              <th>Functional Description & Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="gpio-badge">GPIO 04</span></td>
+              <td><strong>INMP441 MEMS Mic</strong></td>
+              <td>WS (Data Select)</td>
+              <td><span class="bus-badge">I2S Audio Input</span></td>
+              <td>Word Select / Left-Right Clock for digital microphone input</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 05</span></td>
+              <td><strong>INMP441 MEMS Mic</strong></td>
+              <td>SCK (Data Clock)</td>
+              <td><span class="bus-badge">I2S Audio Input</span></td>
+              <td>Continuous Bit Clock for audio sampling (16kHz)</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 06</span></td>
+              <td><strong>INMP441 MEMS Mic</strong></td>
+              <td>SD (Data Output)</td>
+              <td><span class="bus-badge">I2S Audio Input</span></td>
+              <td>Serial PCM audio data output line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 07</span></td>
+              <td><strong>MAX98357A Amp</strong></td>
+              <td>DIN (Digital In)</td>
+              <td><span class="bus-badge">I2S Audio Output</span></td>
+              <td>Serial PCM audio stream into class-D power amplifier</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 15</span></td>
+              <td><strong>MAX98357A Amp</strong></td>
+              <td>BCLK (Bit Clock)</td>
+              <td><span class="bus-badge">I2S Audio Output</span></td>
+              <td>Audio bit clock signal line for speaker playback</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 16</span></td>
+              <td><strong>MAX98357A Amp</strong></td>
+              <td>LRC (Left/Right Clock)</td>
+              <td><span class="bus-badge">I2S Audio Output</span></td>
+              <td>Left/Right channel sync clock</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 41</span></td>
+              <td><strong>SSD1306 OLED Display</strong></td>
+              <td>SDA (Data)</td>
+              <td><span class="bus-badge">I2C Display</span></td>
+              <td>128x32 OLED screen serial data line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 42</span></td>
+              <td><strong>SSD1306 OLED Display</strong></td>
+              <td>SCK (Clock)</td>
+              <td><span class="bus-badge">I2C Display</span></td>
+              <td>128x32 OLED screen serial clock line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 39</span></td>
+              <td><strong>Tactile Switch Button</strong></td>
+              <td>Vol- / Mute Switch</td>
+              <td><span class="bus-badge">GPIO Input</span></td>
+              <td>Short press to decrease volume; long press to mute microphone</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 40</span></td>
+              <td><strong>Tactile Switch Button</strong></td>
+              <td>Vol+ / Max Switch</td>
+              <td><span class="bus-badge">GPIO Input</span></td>
+              <td>Short press to increase volume; long press sets max volume</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 00</span></td>
+              <td><strong>Boot Button / External Switch</strong></td>
+              <td>Wake / Interrupt</td>
+              <td><span class="bus-badge">GPIO Interrupt</span></td>
+              <td>Press to interrupt active AI response or manually wake up device</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 11</span></td>
+              <td><strong>ML307R 4G Module</strong></td>
+              <td>TXD (Data Send)</td>
+              <td><span class="bus-badge">UART 4G Network</span></td>
+              <td>Cat.1 cellular module AT command transmission line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 12</span></td>
+              <td><strong>ML307R 4G Module</strong></td>
+              <td>RXD (Data Receive)</td>
+              <td><span class="bus-badge">UART 4G Network</span></td>
+              <td>Cat.1 cellular module data reception line</td>
+            </tr>
+            <tr>
+              <td><span class="gpio-badge">GPIO 15 / 04 / 05</span></td>
+              <td><strong>OV2640 Camera Module</strong></td>
+              <td>XCLK / SDA / SCL</td>
+              <td><span class="bus-badge">DVP Camera</span></td>
+              <td>2MP / 3MP high-performance vision capture pins (Firmware v2.0)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 4: LLM INTEGRATION & VISION ENGINE -->
+    <section id="models-vision" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          4. Supported AI Models & AI Vision Engine (v2.0 Refactor)
+        </div>
+        <span class="doc-section-tag">Multimodal AI Capabilities</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        Xiaozhi AI features native integration with leading cloud LLM backends as well as a <strong>v2.0 refactored ESP32 camera subsystem</strong> for visual question answering (VQA) and edge object recognition.
+      </p>
+
+      <div class="table-responsive" style="margin-bottom: 24px;">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th>AI Model Name</th>
+              <th>Provider</th>
+              <th>Inference Method</th>
+              <th>Special Capabilities</th>
+              <th>Access Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DeepSeek-V3</strong></td>
+              <td>DeepSeek</td>
+              <td>Cloud REST / WebSocket</td>
+              <td>Mathematical reasoning, code generation, low latency</td>
+              <td><span class="tab-badge" style="background: var(--status-green-bg); color: var(--status-green);">Ultra-Low Cost</span></td>
+            </tr>
+            <tr>
+              <td><strong>Qwen-Max</strong></td>
+              <td>Alibaba Cloud</td>
+              <td>Cloud API</td>
+              <td>Superior Chinese understanding, tool calling, multimodal</td>
+              <td><span class="tab-badge" style="background: var(--status-blue-bg); color: var(--status-blue);">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>Doubao-Pro</strong></td>
+              <td>ByteDance</td>
+              <td>Cloud API</td>
+              <td>Natural conversational dialogue, creative storytelling</td>
+              <td><span class="tab-badge" style="background: var(--status-blue-bg); color: var(--status-blue);">Medium</span></td>
+            </tr>
+            <tr>
+              <td><strong>ChatGPT-4o</strong></td>
+              <td>OpenAI</td>
+              <td>Cloud API</td>
+              <td>General intelligence, complex multi-turn logic</td>
+              <td><span class="tab-badge" style="background: var(--status-amber-bg); color: var(--status-amber);">High Cost</span></td>
+            </tr>
+            <tr>
+              <td><strong>Gemini 1.5 Pro</strong></td>
+              <td>Google</td>
+              <td>Cloud API</td>
+              <td>Native multimodal, long-context vision analysis</td>
+              <td><span class="tab-badge" style="background: var(--status-blue-bg); color: var(--status-blue);">Medium-High</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="doc-section-title" style="font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+        </svg>
+        Camera Subsystem & JPEG Performance Refactoring (v2.0)
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-card-title">JPEG Encoding Benchmark</div>
+          <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: #10b981; margin: 8px 0;">
+            280 ms <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(vs 850ms in v1.x)</span>
+          </div>
+          <div class="feature-card-desc">3.0x speed boost achieved by replacing legacy encoder with <code>image_to_jpeg.c</code> leveraging ESP32-S3 SIMD vector instructions.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">RAM Memory Footprint</div>
+          <div style="font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; color: #3b82f6; margin: 8px 0;">
+            95 KB <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 400;">(vs 180KB in v1.x)</span>
+          </div>
+          <div class="feature-card-desc">47% memory reduction allows double buffering (VGA 640x480) for smoother streaming to cloud vision models.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">Supported Sensor Modules</div>
+          <div style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 12px 0;">
+            OV2640 • OV3660 • OV5640 • GC032A
+          </div>
+          <div class="feature-card-desc">Supports resolutions from QVGA up to 1080p for face recognition, gesture control, and object detection.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: EMOJI / EMOTION ENGINE & LIVE SIMULATOR -->
+    <section id="emoji-sim" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          5. Emotion Engine & Live OLED Simulator
+        </div>
+        <span class="doc-section-tag">SVG Vector Graphics & Character Protocol</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        During voice dialogue, the Cloud LLM outputs an independent <strong>Emotion State Token</strong> in JSON format. The client parses the <code>emotion</code> identifier character string to update the 128x32 OLED screen using vector graphics rendering, while the TTS voice engine bypasses emotion tokens to keep audio natural.
+      </p>
+
+      <!-- Interactive Vector SVG Simulator Widget -->
+      <div class="sim-wrapper">
+        <div class="sim-picker">
+          <div class="sim-picker-title">Select Emotion Token to Test:</div>
+          <div class="sim-emoji-buttons">
+            <button class="btn-emoji-sim active" onclick="triggerEmotion('smile', 'Happy / Friendly', '0x01', 'SMILE')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line>
+              </svg>
+              <span>smile</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('thinking', 'Analyzing / Thinking', '0x02', 'THINKING')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="8" y1="9" x2="10" y2="9"></line>
+                <line x1="14" y1="8" x2="16" y2="9"></line>
+                <path d="M9 15h6"></path>
+              </svg>
+              <span>think</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('surprised', 'Astonished / Surprised', '0x03', 'SURPRISED')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line>
+                <circle cx="12" cy="15" r="2.5"></circle>
+              </svg>
+              <span>surprise</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('funny', 'Laughing / Amused', '0x04', 'FUNNY')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 9l2 1-2 1"></path>
+                <path d="M16 9l-2 1 2 1"></path>
+                <path d="M8 14c0 0 2 3 4 3s4-3 4-3H8z"></path>
+              </svg>
+              <span>funny</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('sad', 'Sad / Apologetic', '0x05', 'SAD')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line>
+                <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+              </svg>
+              <span>sad</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('cool', 'Confident / Cool', '0x06', 'COOL')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M6 9h12v2a2 2 0 01-2 2h-1a2 2 0 01-2-2v0a2 2 0 00-2 2h-1a2 2 0 01-2-2V9z"></path>
+                <path d="M8 15s1.5 1.5 4 1.5 4-1.5 4-1.5"></path>
+              </svg>
+              <span>cool</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('sleepy', 'Standby / Sleep', '0x07', 'SLEEPY')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 9.5h3"></path>
+                <path d="M13 9.5h3"></path>
+                <line x1="10" y1="15" x2="14" y2="15"></line>
+              </svg>
+              <span>sleepy</span>
+            </button>
+
+            <button class="btn-emoji-sim" onclick="triggerEmotion('confused', 'Uncertain / Confused', '0x08', 'CONFUSED')">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="9" y1="8" x2="9.01" y2="8" stroke-width="3"></line>
+                <line x1="15" y1="10" x2="15.01" y2="10" stroke-width="3"></line>
+                <path d="M8 15c2-1 4 1 8 0"></path>
+              </svg>
+              <span>confused</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sim-display-column">
+          <div style="font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">
+            Simulated SSD1306 OLED Display Output (128x32 Frame):
+          </div>
+
+          <div class="oled-screen-container">
+            <div class="oled-emoji-icon" id="simOledSvgIcon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line>
+              </svg>
+            </div>
+            <div class="oled-text-group">
+              <div class="oled-title" id="simOledState">STATE: SMILE [0x01]</div>
+              <div class="oled-subtitle">
+                <span class="oled-status-dot"></span><span id="simOledDesc">Happy / Friendly</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-block-container" style="margin: 0;">
+            <div class="code-header">
+              <span class="code-title">Incoming Server Character JSON Payload</span>
+            </div>
+            <pre class="code-content" id="simJsonPayload">{
+  "type": "llm",
+  "text": "SMILE",
+  "emotion": "smile",
+  "code": "0x01"
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: MCP PROTOCOL CONTROL -->
+    <section id="mcp-control" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          </svg>
+          6. Model Context Protocol (MCP) & Smart IoT Control
+        </div>
+        <span class="doc-section-tag">AI-to-Hardware Control</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+        The <strong>Model Context Protocol (MCP)</strong> enables the Xiaozhi AI assistant to convert spoken human intents into concrete hardware actions across all Prayas V1 robot nodes (e.g. driving motors, setting servo angles, reading telemetry sensors).
+      </p>
+
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">JSON Protocol • MCP Async Tool Call Executed by ESP32</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy MCP JSON</button>
+        </div>
+        <pre class="code-content">// Server -> ESP32: Invoking registered hardware function tool
+{
+  "type": "mcp",
+  "payload": {
+    "action": "call_tool",
+    "tool_name": "set_servo_angle",
+    "arguments": {
+      "node_id": "node-02",
+      "servo_channel": 1,
+      "angle_degrees": 90
+    }
+  }
+}
+
+// ESP32 -> Server: Execution Result Callback
+{
+  "type": "mcp",
+  "payload": {
+    "status": "success",
+    "tool_name": "set_servo_angle",
+    "result": { "status": "OK", "current_angle": 90 }
+  }
+}</pre>
+      </div>
+    </section>
+
+    <!-- SECTION 7: STEP-BY-STEP SETUP GUIDE -->
+    <section id="setup-guide" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          7. DIY Step-by-Step Compilation & Build Guide
+        </div>
+        <span class="doc-section-tag">ESP-IDF Setup</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        Follow these steps to configure the ESP-IDF build environment and flash the Xiaozhi firmware to your ESP32-S3 development board.
+      </p>
+
+      <div class="code-block-container">
+        <div class="code-header">
+          <span class="code-title">Terminal Commands • ESP-IDF Compilation & Flashing Workflow</span>
+          <button class="btn-copy-code" onclick="copyCode(this)">Copy Commands</button>
+        </div>
+        <pre class="code-content"># 1. Clone Xiaozhi ESP32 repository
+git clone --recursive https://github.com/xiaozhi-esp32/xiaozhi-esp32.git
+cd xiaozhi-esp32
+
+# 2. Set ESP32-S3 target architecture
+idf.py set-target esp32s3
+
+# 3. Configure Wake Word engine & Board settings
+idf.py menuconfig
+# Navigate: Component config -> ESP Speech Recognition -> Select Wake Word ("你好小智")
+# Navigate: Xiaozhi Assistant -> Language Settings -> Select Default Locale ("zh-CN" / "en-US")
+
+# 4. Build firmware project
+idf.py build
+
+# 5. Flash to ESP32-S3 board and open monitor terminal
+idf.py -p COM3 flash monitor</pre>
+      </div>
+
+      <div class="feature-card" style="margin-top: 20px; background: #fffbeb; border-color: #fde68a;">
+        <div style="font-weight: 700; color: #b45309; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #b45309;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          Important Configuration Note for N8R2 Boards (8MB Flash / 2MB PSRAM):
+        </div>
+        <div style="font-size: 0.88rem; color: #78350f; line-height: 1.5;">
+          If using N8R2 instead of N16R8, open <code>menuconfig</code> and change PSRAM working mode from <strong>OCTAL</strong> to <strong>QUAD</strong>, set Flash size to 8MB, and point the custom partition table to <code>partitions_8M.csv</code> before compiling.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Copy Code Snippets
+    function copyCode(btn) {
+      const codeBlock = btn.parentElement.nextElementSibling;
+      const textToCopy = codeBlock.innerText;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = btn.innerText;
+        btn.innerHTML = `
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:12px; height:12px; display:inline-block; margin-right:4px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg> COPIED!`;
+        btn.style.background = '#10b981';
+        btn.style.borderColor = '#10b981';
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = '#27272a';
+          btn.style.borderColor = '#3f3f46';
+        }, 2000);
+      });
+    }
+
+    // Interactive Pinout Matrix Search Filter
+    function filterPinoutTable() {
+      const input = document.getElementById('pinSearchInput');
+      const filter = input.value.toUpperCase();
+      const table = document.getElementById('pinoutMatrixTable');
+      const tr = table.getElementsByTagName('tr');
+
+      for (let i = 1; i < tr.length; i++) {
+        let visible = false;
+        const tdArray = tr[i].getElementsByTagName('td');
+        for (let j = 0; j < tdArray.length; j++) {
+          if (tdArray[j]) {
+            const txtValue = tdArray[j].textContent || tdArray[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              visible = true;
+              break;
+            }
+          }
+        }
+        tr[i].style.display = visible ? '' : 'none';
+      }
+    }
+
+    // Emotion Vector SVG Map
+    const svgEmotionMap = {
+      smile: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line></svg>`,
+      thinking: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="9" x2="10" y2="9"></line><line x1="14" y1="8" x2="16" y2="9"></line><path d="M9 15h6"></path></svg>`,
+      surprised: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line><circle cx="12" cy="15" r="2.5"></circle></svg>`,
+      funny: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 9l2 1-2 1"></path><path d="M16 9l-2 1 2 1"></path><path d="M8 14c0 0 2 3 4 3s4-3 4-3H8z"></path></svg>`,
+      sad: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="3"></line><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="3"></line><path d="M16 16s-1.5-2-4-2-4 2-4 2"></path></svg>`,
+      cool: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M6 9h12v2a2 2 0 01-2 2h-1a2 2 0 01-2-2v0a2 2 0 00-2 2h-1a2 2 0 01-2-2V9z"></path><path d="M8 15s1.5 1.5 4 1.5 4-1.5 4-1.5"></path></svg>`,
+      sleepy: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 9.5h3"></path><path d="M13 9.5h3"></path><line x1="10" y1="15" x2="14" y2="15"></line></svg>`,
+      confused: `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="9" y1="8" x2="9.01" y2="8" stroke-width="3"></line><line x1="15" y1="10" x2="15.01" y2="10" stroke-width="3"></line><path d="M8 15c2-1 4 1 8 0"></path></svg>`
+    };
+
+    // Vector SVG Emotion Simulator Trigger
+    function triggerEmotion(emotionType, description, hexCode, tokenLabel) {
+      const buttons = document.querySelectorAll('.btn-emoji-sim');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${emotionType}'`)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update OLED screen rendering with SVG face
+      document.getElementById('simOledSvgIcon').innerHTML = svgEmotionMap[emotionType] || svgEmotionMap['smile'];
+      document.getElementById('simOledState').innerText = `STATE: ${tokenLabel} [${hexCode}]`;
+      document.getElementById('simOledDesc').innerText = description;
+
+      // Update JSON payload output using clear character protocol
+      const jsonText = `{\n  "type": "llm",\n  "text": "${tokenLabel}",\n  "emotion": "${emotionType}",\n  "code": "${hexCode}"\n}`;
+      document.getElementById('simJsonPayload').innerText = jsonText;
+    }
+
+    // ScrollSpy for Sticky Navigation Pills
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section.doc-section');
+      const navBtns = document.querySelectorAll('.nav-pill-btn');
+      let currentSection = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 140;
+        if (window.scrollY >= sectionTop) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('href') === '#' + currentSection) {
+          btn.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

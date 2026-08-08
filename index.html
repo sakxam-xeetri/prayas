@@ -1,50 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PRAYAS V1 - Interactive Node-Wise BOM Manager</title>
-  
+
   <!-- Google Fonts: Inter & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Supabase JS SDK v2 CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
   <div class="container">
-    
+
     <!-- Top Header Section (Matching Reference Theme) -->
     <header>
-      <div class="top-badge-wrapper" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+      <div class="top-badge-wrapper"
+        style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span class="top-badge">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+              </path>
             </svg>
             PRAYAS V1 ROBOTICS
-          </span>
-          <span class="top-badge cloud-badge" id="cloudSyncStatusBadge" onclick="openSupabaseModal()" style="cursor: pointer;" title="Click to configure Supabase Cloud DB">
+            3</span>
+          <span class="top-badge cloud-badge" id="cloudSyncStatusBadge" onclick="openSupabaseModal()"
+            style="cursor: pointer;" title="Click to configure Supabase Cloud DB">
             <span class="cloud-dot offline" id="cloudDot"></span>
             <span id="cloudStatusText">Local Storage Mode</span>
           </span>
+          <a href="ai_node.html" class="top-badge cloud-badge" style="text-decoration: none; cursor: pointer; background: var(--accent-dark); color: var(--text-inverse); border-color: var(--accent-dark);" title="Open Xiaozhi AI Node Documentation & Manual">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: #38bdf8;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            XIAOZHI AI MANUAL
+          </a>
         </div>
 
         <div class="project-status-selector">
           <span id="projectStageSvg" class="project-stage-icon">
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </span>
           <span class="project-status-label">PROJECT STAGE:</span>
-          <select id="projectMasterStatus" class="project-status-select" onchange="updateProjectMasterStatus(this.value)">
+          <select id="projectMasterStatus" class="project-status-select"
+            onchange="updateProjectMasterStatus(this.value)">
             <option value="Prototyping & BOM Planning">Prototyping & Planning</option>
             <option value="Component Procurement">Component Procurement</option>
             <option value="Circuit & Node Assembly">Circuit & Node Assembly</option>
@@ -63,42 +80,65 @@
     <div class="tabs-container">
       <div class="tabs-scroll-wrapper">
         <button class="tab-btn active" data-node="all" onclick="switchTab('all', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+          </svg>
           <span class="tab-label">ALL NODES</span>
           <span class="tab-badge" id="count-all">0</span>
         </button>
         <button class="tab-btn" data-node="node-01" onclick="switchTab('node-01', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
           <span class="tab-label">01 MOTOR</span>
           <span class="tab-badge" id="count-node-01">0</span>
         </button>
         <button class="tab-btn" data-node="node-02" onclick="switchTab('node-02', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+          </svg>
           <span class="tab-label">02 SERVO</span>
           <span class="tab-badge" id="count-node-02">0</span>
         </button>
         <button class="tab-btn" data-node="node-03" onclick="switchTab('node-03', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           <span class="tab-label">03 SENSOR</span>
           <span class="tab-badge" id="count-node-03">0</span>
         </button>
         <button class="tab-btn" data-node="node-04" onclick="switchTab('node-04', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
           <span class="tab-label">04 CONTROL & DISPLAY</span>
           <span class="tab-badge" id="count-node-04">0</span>
         </button>
         <button class="tab-btn" data-node="node-05" onclick="switchTab('node-05', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
           <span class="tab-label">05 AI NODE</span>
           <span class="tab-badge" id="count-node-05">0</span>
         </button>
         <button class="tab-btn" data-node="node-06" onclick="switchTab('node-06', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
           <span class="tab-label">06 POWER</span>
           <span class="tab-badge" id="count-node-06">0</span>
         </button>
         <button class="tab-btn" data-node="node-mech" onclick="switchTab('node-mech', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
           <span class="tab-label">MECHANICAL</span>
           <span class="tab-badge" id="count-node-mech">0</span>
         </button>
@@ -111,7 +151,8 @@
         <div class="metric-header">
           <span class="metric-label">OVERALL BOM ESTIMATE</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
         <div class="metric-value" id="metricTotalCost">रु 0</div>
@@ -122,7 +163,8 @@
         <div class="metric-header">
           <span class="metric-label">UNIQUE COMPONENTS</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
           </svg>
         </div>
         <div class="metric-value" id="metricTotalUnique">0 Components</div>
@@ -145,9 +187,11 @@
     <div class="controls-card">
       <div class="search-box">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search by component name, spec, or node...">
+        <input type="text" id="searchInput" class="search-input"
+          placeholder="Search by component name, spec, or node...">
       </div>
 
       <div class="action-buttons-group">
@@ -157,7 +201,8 @@
         <button class="btn-pill btn-pill-outline" onclick="exportToCSV()">
           EXPORT CSV →
         </button>
-        <button class="btn-pill btn-pill-secondary" onclick="resetDefaultBOM()" title="Restore default bom.txt components">
+        <button class="btn-pill btn-pill-secondary" onclick="resetDefaultBOM()"
+          title="Restore default bom.txt components">
           RESET ↺
         </button>
       </div>
@@ -165,7 +210,7 @@
 
     <!-- Main Content Dual-Column Layout (Matching Reference Image) -->
     <div class="main-content-grid">
-      
+
       <!-- Left Column: Component Table Card -->
       <div class="node-view-card">
         <div class="node-card-header">
@@ -203,7 +248,8 @@
       <div class="side-info-card">
         <div class="side-info-header">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           HOW THIS NODE OPERATES
         </div>
@@ -257,7 +303,8 @@
 
           <div class="form-group">
             <label class="form-label" for="compPrice">Unit Price (रु)</label>
-            <input type="number" id="compPrice" class="form-control" value="" placeholder="Leave blank if TBD" min="0" step="10">
+            <input type="number" id="compPrice" class="form-control" value="" placeholder="Leave blank if TBD" min="0"
+              step="10">
           </div>
         </div>
 
@@ -290,21 +337,25 @@
 
       <form id="supabaseConfigForm">
         <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.4;">
-          Connect your free Supabase database for real-time multi-device BOM synchronization across all team members. See <strong>guide.md</strong> for database setup scripts.
+          Connect your free Supabase database for real-time multi-device BOM synchronization across all team members.
+          See <strong>guide.md</strong> for database setup scripts.
         </p>
 
         <div class="form-group">
           <label class="form-label" for="sbUrl">Supabase Project URL</label>
-          <input type="url" id="sbUrl" class="form-control" value="https://yjfxryxpcdmbhxrpough.supabase.co" placeholder="https://your-project.supabase.co" required>
+          <input type="url" id="sbUrl" class="form-control" value="https://yjfxryxpcdmbhxrpough.supabase.co"
+            placeholder="https://your-project.supabase.co" required>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="sbKey">Supabase Key (Publishable / Anon Key)</label>
-          <input type="text" id="sbKey" class="form-control" value="sb_publishable_Oqf1-qlUG3db1chllcTEOQ_7kcgPCbr" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." required>
+          <input type="text" id="sbKey" class="form-control" value="sb_publishable_Oqf1-qlUG3db1chllcTEOQ_7kcgPCbr"
+            placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6..." required>
         </div>
 
         <div class="modal-actions" style="justify-content: space-between; align-items: center;">
-          <button type="button" class="btn-pill btn-pill-secondary" onclick="disconnectSupabase()">Disconnect Cloud</button>
+          <button type="button" class="btn-pill btn-pill-secondary" onclick="disconnectSupabase()">Disconnect
+            Cloud</button>
           <div style="display: flex; gap: 10px;">
             <button type="button" class="btn-pill btn-pill-secondary" onclick="closeSupabaseModal()">Cancel</button>
             <button type="submit" class="btn-pill btn-pill-dark">Connect & Sync</button>
@@ -320,4 +371,5 @@
   <!-- JavaScript -->
   <script src="js/app.js"></script>
 </body>
+
 </html>
