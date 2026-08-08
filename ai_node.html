@@ -30,11 +30,11 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
-            PRAYAS V1 ROBOTICS • CENTRAL AI HUB
+            PRAYAS V1 ROBOTICS • NODE 05: AI &amp; VOICE COGNITIVE NODE
           </span>
           <span class="top-badge cloud-badge" style="background: #10b98115; border-color: #10b98140; color: #047857;">
             <span class="cloud-dot online"></span>
-            FIRMWARE V2.0 ACTIVE • OFFICIAL XIAOZHI DOCS
+            FIRMWARE V2.0 ACTIVE • OFFICIAL NODE SPEC
           </span>
         </div>
 
@@ -51,9 +51,9 @@
         </div>
       </div>
 
-      <h1 class="header-title" style="margin-top: 16px;">XiaoZhi AI Firmware Technology Integration Hub</h1>
+      <h1 class="header-title" style="margin-top: 16px;">Prayas V1 Node 05 (AI Node) System Engineering Specification</h1>
       <p class="header-subtitle">
-        Complete technical manual for Node 05 (ESP32-S3 Voice &amp; Vision Robot). Comprehensive guide covering AI features, local wake word engine, 25+ language ASR, WebSocket &amp; MQTT+UDP dual protocols, Emoji emotion engine, and ESP-IDF v5.4.0 compilation.
+        Production-grade engineering documentation for Node 05 (ESP32-S3 Voice &amp; Vision AI Node). Features distributed architecture role, FreeRTOS task priorities, state machines, vision division of labor, memory/power budgets, and fault recovery.
       </p>
     </header>
 
@@ -61,53 +61,60 @@
     <div class="metrics-grid" style="margin-bottom: 28px;">
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-label">WAKE WORD LATENCY</span>
+          <span class="metric-label">NODE DESIGNATION</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <div class="metric-value">&lt; 200 ms</div>
-        <div class="metric-subtext">Espressif Offline Engine (26+ Wake Words, "你好小智")</div>
+        <div class="metric-value">Node 05 (AI Node)</div>
+        <div class="metric-subtext">Seeed Studio XIAO ESP32-S3 Sense / DevKitC-1 (240MHz, 8MB PSRAM)</div>
       </div>
 
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-label">MULTILINGUAL ASR</span>
+          <span class="metric-label">FREERTOS TASKS</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
           </svg>
         </div>
-        <div class="metric-value">25+ Languages</div>
-        <div class="metric-subtext">Local OGG Vorbis prompt audio packages (~50KB RAM)</div>
+        <div class="metric-value">6 Core Tasks</div>
+        <div class="metric-subtext">Dual-core Xtensa LX7 task distribution &amp; priority scheduling</div>
       </div>
 
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-label">DUAL PROTOCOL</span>
+          <span class="metric-label">COMMUNICATION</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
         </div>
-        <div class="metric-value">WebSocket / MQTT+UDP</div>
-        <div class="metric-subtext">JSON Control Signaling + AES-128-CTR Opus UDP</div>
+        <div class="metric-value">MQTT + UDP + MCP</div>
+        <div class="metric-subtext">JSON Control Signaling, AES-CTR Opus Audio, MCP Tool Routing</div>
       </div>
 
       <div class="metric-card">
         <div class="metric-header">
-          <span class="metric-label">EMOJI ENGINE</span>
+          <span class="metric-label">STANDBY / PEAK POWER</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
-        <div class="metric-value">19+ Emoticons</div>
-        <div class="metric-subtext">Independent JSON emotion tokens mapped to OLED SVG</div>
+        <div class="metric-value">&lt;5 mA / 250 mA</div>
+        <div class="metric-subtext">Standby wake-up engine vs peak camera VQA + Wi-Fi TX</div>
       </div>
     </div>
 
     <!-- Sticky Navigation Bar with Nested Dropdown -->
     <div class="sticky-nav-bar">
       <div class="sticky-nav-wrapper">
-        <a href="#ai-features" class="nav-pill-btn active">
+        <a href="#node-05-spec" class="nav-pill-btn active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Node 05 Formal Spec
+        </a>
+
+        <a href="#ai-features" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
@@ -154,6 +161,220 @@
         </a>
       </div>
     </div>
+
+    <!-- SECTION 0: FORMAL NODE 05 ENGINEERING SPECIFICATION (perv_doc Standard) -->
+    <section id="node-05-spec" class="doc-section">
+      <div class="doc-section-header">
+        <div class="doc-section-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          PRAYAS V1 Node 05 (AI Node) System Engineering Specification
+        </div>
+        <span class="doc-section-tag">Formal System Architecture (perv_doc)</span>
+      </div>
+
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+        This section follows the formal production engineering specification template established in <code>perv_doc/docs/02_System_Architecture/Node_Architecture.md</code> and <code>03_Hardware/AI_Node.md</code> for the PRAYAS V1 distributed robotics framework.
+      </p>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+        1. Node Role &amp; Prayas V1 Multi-Node Distributed Ecosystem
+      </h3>
+
+      <div class="table-responsive" style="margin-bottom: 24px;">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th>Node Identifier</th>
+              <th>Microcontroller Target</th>
+              <th>Primary Responsibility</th>
+              <th>Interface Protocol Channels</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Node 01: Master Node</strong></td>
+              <td>ESP32-WROOM-32E</td>
+              <td>Central system coordinator, MQTT client, ESP-NOW packet router</td>
+              <td>Wi-Fi (MQTT), ESP-NOW, UART</td>
+            </tr>
+            <tr>
+              <td><strong>Node 02: Motor Node</strong></td>
+              <td>ESP32-WROOM-32E</td>
+              <td>4WD differential kinematics, 20kHz BTS7960 PWM drivers, IR proximity safety</td>
+              <td>ESP-NOW, GPIO PWM/EN</td>
+            </tr>
+            <tr>
+              <td><strong>Node 03: Servo Node</strong></td>
+              <td>ESP32-WROOM-32E</td>
+              <td>Head &amp; arm servo joint angle generation via I2C PCA9685 at 50Hz</td>
+              <td>ESP-NOW, I2C (PCA9685)</td>
+            </tr>
+            <tr>
+              <td><strong>Node 04: Sensor Node</strong></td>
+              <td>Arduino Nano 33 BLE</td>
+              <td>IMU orientation telemetry, obstacle distance sensors, environment monitoring</td>
+              <td>UART, I2C, GPIO</td>
+            </tr>
+            <tr style="background: #f0f9ff;">
+              <td><strong style="color: #0369a1;">Node 05: AI Node (THIS NODE)</strong></td>
+              <td><strong>Seeed Studio XIAO ESP32-S3 Sense / DevKitC-1</strong></td>
+              <td><strong>Speech capture, wake-up engine, ASR/TTS streaming, LLM reasoning, OLED emotion tokens, MCP tool calls</strong></td>
+              <td><strong>Wi-Fi (MQTT/UDP/WSS), I2S Audio, DVP Camera</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Node 06: Camera Node</strong></td>
+              <td>ESP32-CAM (AI-Thinker)</td>
+              <td>Dedicated JPEG/WebSocket video streaming feed to Web Dashboard</td>
+              <td>Wi-Fi (WebSocket / HTTP)</td>
+            </tr>
+            <tr>
+              <td><strong>Node 07: Power Node</strong></td>
+              <td>ESP32 / Discrete Logic</td>
+              <td>3S LiPo battery voltage sensing, current telemetry, low-voltage cutoff safety</td>
+              <td>ESP-NOW, ADC</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="feature-card" style="margin-bottom: 24px; background: #eff6ff; border-color: #bfdbfe;">
+        <div style="font-weight: 700; color: #1e40af; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #1e40af;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Vision System Division of Labor (perv_doc Architectural Requirement):
+        </div>
+        <div style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.5;">
+          PRAYAS V1 strictly separates vision processing into two independent hardware pathways:
+          <br>1. <strong>AI Node Camera (Node 05)</strong>: Captures snapshots for local object detection, Visual Question Answering (VQA), face recognition, and Cloud LLM cognitive spatial reasoning via MCP tool <code>self.camera.take_photo</code>.
+          <br>2. <strong>Camera Node (Node 06)</strong>: Dedicated exclusively to serving a continuous JPEG WebSockets video stream to the Web Dashboard. This guarantees that heavy cloud VQA AI queries on Node 05 never stutter or freeze the operator's real-time video feed.
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+        2. FreeRTOS Dual-Core Task Architecture &amp; Priority Scheduling Matrix
+      </h3>
+
+      <div class="table-responsive" style="margin-bottom: 24px;">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th>Task Function Name</th>
+              <th>Priority</th>
+              <th>Core Affinity</th>
+              <th>Stack Size</th>
+              <th>Task Functionality &amp; Responsibilities</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>vVoiceCaptureTask</code></td>
+              <td><span class="tab-badge" style="background: #fef2f2; color: #b91c1c;">Priority 6 (Highest)</span></td>
+              <td>Core 1</td>
+              <td>4096 Bytes</td>
+              <td>Direct I2S DMA microphone audio buffer reading (16kHz 16-bit mono PCM capture)</td>
+            </tr>
+            <tr>
+              <td><code>vWakeWordTask</code></td>
+              <td><span class="tab-badge" style="background: #fffbeb; color: #b45309;">Priority 5</span></td>
+              <td>Core 0</td>
+              <td>8192 Bytes</td>
+              <td>Executes Espressif ESP-SR offline wake engine ("你好小智") in background</td>
+            </tr>
+            <tr>
+              <td><code>vUdpAudioStreamTask</code></td>
+              <td><span class="tab-badge" style="background: #fffbeb; color: #b45309;">Priority 5</span></td>
+              <td>Core 1</td>
+              <td>6144 Bytes</td>
+              <td>Opus encoder/decoder execution &amp; AES-128-CTR encrypted UDP packet transmission</td>
+            </tr>
+            <tr>
+              <td><code>vMqttControlTask</code></td>
+              <td><span class="tab-badge" style="background: #eff6ff; color: #1d4ed8;">Priority 4</span></td>
+              <td>Core 0</td>
+              <td>6144 Bytes</td>
+              <td>Parses incoming MQTT JSON control frames (<code>hello</code>, <code>stt</code>, <code>llm</code>, <code>mcp</code>)</td>
+            </tr>
+            <tr>
+              <td><code>vMcpToolDispatchTask</code></td>
+              <td><span class="tab-badge" style="background: #eff6ff; color: #1d4ed8;">Priority 4</span></td>
+              <td>Core 1</td>
+              <td>4096 Bytes</td>
+              <td>Executes registered MCP tool driver functions and routes callbacks to Node 01 (Master)</td>
+            </tr>
+            <tr>
+              <td><code>vOledRenderTask</code></td>
+              <td><span class="tab-badge" style="background: #f1f5f9; color: #475569;">Priority 3</span></td>
+              <td>Core 0</td>
+              <td>3072 Bytes</td>
+              <td>Decodes emotion tokens and updates SSD1306 OLED screen over I2C at 30 FPS</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+        3. Node State Machine &amp; Lifecycle Transitions
+      </h3>
+
+      <div class="code-block-container" style="margin-bottom: 24px;">
+        <div class="code-header">
+          <span class="code-title">Finite State Machine (FSM) Lifecycle States</span>
+        </div>
+        <pre class="code-content">[ BOOT ] ──> [ WIFI_CONNECTING ] ──> [ MQTT_CONNECTED ] ──> [ IDLE_STANDBY ]
+                                                                   │
+    ┌──────────────────────────────────────────────────────────────┘
+    │ (Wake Phrase Detected / Button Pressed)
+    ▼
+[ WAKE_DETECTED ] ──> [ AUDIO_STREAMING (UDP) ] ──> [ LLM_PROCESSING ]
+                                                            │
+    ┌───────────────────────────────────────────────────────┴──────────────┐
+    │ (Receives TTS & Emotion Token)                                      │ (Receives MCP Tool Call)
+    ▼                                                                      ▼
+[ TTS_PLAYBACK & OLED_EMOTION ]                                  [ MCP_EXECUTING (Node 01 Router) ]
+    │                                                                      │
+    └─────────────────────────────┬────────────────────────────────────────┘
+                                  ▼
+                         [ IDLE_STANDBY ]
+
+* Emergency Interrupt (Barge-In): User speech or GPIO 00 press in any active state immediately triggers [ ABORT_HALT ] and transitions back to [ WAKE_DETECTED ].</pre>
+      </div>
+
+      <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+        4. Memory Budget, Power Consumption &amp; Fault Recovery Matrix
+      </h3>
+
+      <div class="feature-grid" style="margin-bottom: 24px;">
+        <div class="feature-card">
+          <div class="feature-card-title">Memory Allocation Budget</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
+            &bull; <strong>SRAM Heap</strong>: ~320 KB free internal SRAM reserved for FreeRTOS tasks and mbedTLS sockets.
+            <br>&bull; <strong>PSRAM (8MB)</strong>: Double-buffered camera frame buffer (~95 KB) + audio resampler buffers.
+            <br>&bull; <strong>Flash Partitioning</strong>: Custom 16MB partition table allocating 4MB for NVS/assets and 6MB per OTA app slot.
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">Power Consumption Profile</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
+            &bull; <strong>Standby Mode</strong>: &lt;5 mA (Wake word engine active, radio sleep).
+            <br>&bull; <strong>Audio Streaming</strong>: 80 mA - 120 mA (Continuous Wi-Fi TX + Opus encoding).
+            <br>&bull; <strong>Peak VQA Capture</strong>: 220 mA - 250 mA (OV2640 sensor active + SIMD JPEG encode + Wi-Fi burst).
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card-title">Fault Recovery Mechanisms</div>
+          <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
+            &bull; <strong>High Latency (&gt;2.0s)</strong>: Plays local audio cue (<em>"Processing command..."</em>) to maintain conversational UX.
+            <br>&bull; <strong>Wi-Fi Connection Loss</strong>: Triggers local fallback prompt (<code>wificonfig.ogg</code>) &amp; exponential reconnect backoff.
+            <br>&bull; <strong>Heap Fragmentation</strong>: Memory watchdog triggers soft restart if free internal heap drops below 30 KB.
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- SECTION 1: AI FEATURES - XIAOZHI FIRMWARE INTEGRATION GUIDE -->
     <section id="ai-features" class="doc-section">
@@ -543,7 +764,7 @@ Field Definitions:
       </div>
 
       <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-        The Prayas AI Node combines local hardware components (INMP441 Mic, MAX98357A Amp, SSD1306 Display, OV2640 Camera) with dual-channel network transport to provide real-time voice, vision, and robot actuation.
+        The Prayas AI Node combines local hardware components (INMP441 Mic, MAX98357A Amp, SSD1306 Display, OV2640 Camera) with dual-channel network transport to provide real-time voice, vision, and robot actuators.
       </p>
 
       <div class="feature-grid">

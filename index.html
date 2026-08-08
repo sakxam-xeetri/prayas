@@ -70,7 +70,7 @@
           </select>
         </div>
       </div>
-      <h1 class="header-title">Seven nodes. One platform.</h1>
+      <h1 class="header-title">Six active nodes. One platform.</h1>
       <p class="header-subtitle">
         Select a node below to inspect, add, delete, and update component quantities, prices, and status in real-time.
       </p>
@@ -100,14 +100,6 @@
           </svg>
           <span class="tab-label">02 SERVO</span>
           <span class="tab-badge" id="count-node-02">0</span>
-        </button>
-        <button class="tab-btn" data-node="node-03" onclick="switchTab('node-03', this)">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span class="tab-label">03 SENSOR</span>
-          <span class="tab-badge" id="count-node-03">0</span>
         </button>
         <button class="tab-btn" data-node="node-04" onclick="switchTab('node-04', this)">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -216,7 +208,7 @@
         <div class="node-card-header">
           <div class="node-card-title-group">
             <h2 id="nodeTitleText">All Robot Nodes & Drivetrain</h2>
-            <p id="nodeDescText">Complete overview of all 7 subsystems forming the Prayas V1 Humanoid platform.</p>
+            <p id="nodeDescText">Complete overview of active subsystems forming the Prayas V1 Humanoid platform.</p>
           </div>
           <div class="node-subtotal-badge">
             <span class="lbl">NODE SUB-TOTAL</span>
@@ -277,7 +269,6 @@
           <select id="compNode" class="form-control" required>
             <option value="node-01">Node 01: Motor Drivetrain</option>
             <option value="node-02">Node 02: Servo Articulation</option>
-            <option value="node-03">Node 03: Telemetry & Sensors</option>
             <option value="node-04">Node 04: Control & Display</option>
             <option value="node-05">Node 05: AI Speech & Vision</option>
             <option value="node-06">Node 06: Power & Management</option>
