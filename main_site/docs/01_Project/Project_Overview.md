@@ -1,5 +1,16 @@
 # Project Overview
 
+<div class="doc-meta-box">
+  <div class="doc-meta-item">
+    <span class="doc-meta-label">Lead Architect & Author</span>
+    <span class="doc-meta-value">Sakshyam Bastakoti</span>
+  </div>
+  <div class="doc-meta-item">
+    <span class="doc-meta-label">Official Website</span>
+    <span class="doc-meta-value"><a href="https://sakshyambastakoti.com.np" target="_blank" class="author-website-link">sakshyambastakoti.com.np</a></span>
+  </div>
+</div>
+
 ## Purpose
 The primary purpose of the PRAYAS V1 robot is to serve as an affordable, modular, and highly functional humanoid assistant platform for indoor utility. It is designed to act as a physical assistant capable of understanding natural language, performing physical tasks (pointing, gesturing, carrying objects), navigating autonomously or via remote control, and providing active support to users.
 

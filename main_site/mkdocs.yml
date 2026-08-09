@@ -1,6 +1,8 @@
 site_name: PRAYAS V1 Documentation
 site_url: https://prayas-robot.github.io/docs/
 site_description: Production-grade Engineering Documentation for PRAYAS V1 Humanoid Robot
+site_author: Sakshyam Bastakoti
+copyright: "Copyright &copy; 2026 Sakshyam Bastakoti | <a href='https://sakshyambastakoti.com.np' target='_blank' style='color: var(--md-typeset-a-color); text-decoration: underline;'>sakshyambastakoti.com.np</a>"
 
 theme:
   name: material

@@ -203,3 +203,154 @@ h2 .doc-icon, h3 .doc-icon {
   color: var(--doc-text-muted);
   line-height: 1.45;
 }
+
+/* Official Author & Systems Architect Banner */
+.author-card-container {
+  background: linear-gradient(135deg, rgba(63, 81, 181, 0.08) 0%, rgba(255, 87, 34, 0.05) 100%);
+  border: 1px solid var(--doc-border);
+  border-left: 5px solid var(--doc-accent);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 30px 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.author-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.author-avatar-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--doc-primary), var(--doc-accent));
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+  flex-shrink: 0;
+}
+
+.author-info-main {
+  flex: 1;
+}
+
+.author-title-badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--doc-accent);
+  margin-bottom: 4px;
+}
+
+.author-name {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  color: var(--md-typeset-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.author-subtitle {
+  font-size: 0.92rem;
+  color: var(--doc-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.author-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.author-tag-item {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(63, 81, 181, 0.12);
+  color: var(--doc-primary);
+  border: 1px solid rgba(63, 81, 181, 0.25);
+  font-weight: 600;
+}
+
+.author-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #3f51b5, #303f9f);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.3);
+  align-self: flex-start;
+}
+
+.author-contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(63, 81, 181, 0.45);
+}
+
+.author-website-link {
+  font-family: var(--md-code-font), monospace;
+  font-size: 0.88rem;
+  color: var(--doc-primary);
+  font-weight: 600;
+}
+
+/* System Stat Metric Badges */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 20px 0 30px 0;
+}
+
+.stat-card {
+  background: var(--doc-surface);
+  border: 1px solid var(--doc-border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--doc-primary);
+}
+
+.stat-number {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--doc-primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--doc-text-muted);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
