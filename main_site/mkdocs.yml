@@ -76,6 +76,7 @@ nav:
       - Vision: 01_Project/Vision.md
       - Roadmap: 01_Project/Roadmap.md
       - Architecture Principles: 01_Project/Architecture_Principles.md
+      - ECA Funding Proposal: 01_Project/Funding_Proposal.md
   - 02 System Architecture:
       - System Architecture: 02_System_Architecture/System_Architecture.md
       - Node Architecture: 02_System_Architecture/Node_Architecture.md
