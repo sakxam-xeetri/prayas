@@ -23,10 +23,12 @@
 
     <!-- Top Header Section -->
     <header style="padding-bottom: 24px;">
-      <div class="top-badge-wrapper" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+      <div class="top-badge-wrapper"
+        style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span class="top-badge">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: #38bdf8;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width:14px; height:14px; stroke: #38bdf8;">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
@@ -39,21 +41,28 @@
         </div>
 
         <div style="display: flex; gap: 10px;">
-          <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark" style="background: #be185d; border-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: white;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+          <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark"
+            style="background: #be185d; border-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width: 14px; height: 14px; stroke: white;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
             </svg>
             ESP32-S3-CAM PAGE
           </a>
-          <a href="index.html" class="btn-pill btn-pill-dark" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <a href="index.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
             BACK TO BOM MANAGER
           </a>
         </div>
       </div>
 
-      <h1 class="header-title" style="margin-top: 16px;">Prayas V1 Node 05 (AI Node) System Engineering Specification</h1>
+      <h1 class="header-title" style="margin-top: 16px;">Prayas V1 Node 05 (AI Node) System Engineering Specification
+      </h1>
       <p class="header-subtitle">
-        Production-grade engineering documentation for Node 05 (ESP32-S3 Voice &amp; Vision AI Node). Features distributed architecture role, FreeRTOS task priorities, state machines, vision division of labor, memory/power budgets, and fault recovery.
+        Production-grade engineering documentation for Node 05 (ESP32-S3 Voice &amp; Vision AI Node). Features
+        distributed architecture role, FreeRTOS task priorities, state machines, vision division of labor, memory/power
+        budgets, and fault recovery.
       </p>
     </header>
 
@@ -74,7 +83,8 @@
         <div class="metric-header">
           <span class="metric-label">FREERTOS TASKS</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
           </svg>
         </div>
         <div class="metric-value">6 Core Tasks</div>
@@ -85,7 +95,8 @@
         <div class="metric-header">
           <span class="metric-label">COMMUNICATION</span>
           <svg class="metric-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
           </svg>
         </div>
         <div class="metric-value">MQTT + UDP + MCP</div>
@@ -109,21 +120,24 @@
       <div class="sticky-nav-wrapper">
         <a href="#node-05-spec" class="nav-pill-btn active">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           Node 05 Formal Spec
         </a>
 
         <a href="#ai-features" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
           AI Features Guide
         </a>
 
         <a href="#usage-guide" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
           Usage Guide &rsaquo;
         </a>
@@ -132,7 +146,8 @@
         <div class="nav-dropdown">
           <a href="#dev-guide" class="nav-pill-btn nav-dropdown-toggle">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
             </svg>
             Development Guide &or;
           </a>
@@ -148,14 +163,18 @@
 
         <a href="#system-overview" class="nav-pill-btn">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           System Overview &rsaquo;
         </a>
 
-        <a href="esp32s3_cam.html" class="nav-pill-btn" style="background: #fdf2f8; color: #be185d; border-color: #fbcfe8;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 14px; height: 14px; stroke: #be185d;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+        <a href="esp32s3_cam.html" class="nav-pill-btn"
+          style="background: #fdf2f8; color: #be185d; border-color: #fbcfe8;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            style="width: 14px; height: 14px; stroke: #be185d;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
           </svg>
           ESP32-S3-CAM Hub &rsaquo;
         </a>
@@ -167,7 +186,8 @@
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
           PRAYAS V1 Node 05 (AI Node) System Engineering Specification
         </div>
@@ -175,7 +195,9 @@
       </div>
 
       <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-        This section follows the formal production engineering specification template established in <code>perv_doc/docs/02_System_Architecture/Node_Architecture.md</code> and <code>03_Hardware/AI_Node.md</code> for the PRAYAS V1 distributed robotics framework.
+        This section follows the formal production engineering specification template established in
+        <code>perv_doc/docs/02_System_Architecture/Node_Architecture.md</code> and <code>03_Hardware/AI_Node.md</code>
+        for the PRAYAS V1 distributed robotics framework.
       </p>
 
       <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
@@ -220,7 +242,8 @@
             <tr style="background: #f0f9ff;">
               <td><strong style="color: #0369a1;">Node 05: AI Node (THIS NODE)</strong></td>
               <td><strong>Seeed Studio XIAO ESP32-S3 Sense / DevKitC-1</strong></td>
-              <td><strong>Speech capture, wake-up engine, ASR/TTS streaming, LLM reasoning, OLED emotion tokens, MCP tool calls</strong></td>
+              <td><strong>Speech capture, wake-up engine, ASR/TTS streaming, LLM reasoning, OLED emotion tokens, MCP
+                  tool calls</strong></td>
               <td><strong>Wi-Fi (MQTT/UDP/WSS), I2S Audio, DVP Camera</strong></td>
             </tr>
             <tr>
@@ -240,16 +263,23 @@
       </div>
 
       <div class="feature-card" style="margin-bottom: 24px; background: #eff6ff; border-color: #bfdbfe;">
-        <div style="font-weight: 700; color: #1e40af; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #1e40af;">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div
+          style="font-weight: 700; color: #1e40af; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            style="width: 18px; height: 18px; stroke: #1e40af;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           Vision System Division of Labor (perv_doc Architectural Requirement):
         </div>
         <div style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.5;">
           PRAYAS V1 strictly separates vision processing into two independent hardware pathways:
-          <br>1. <strong>AI Node Camera (Node 05)</strong>: Captures snapshots for local object detection, Visual Question Answering (VQA), face recognition, and Cloud LLM cognitive spatial reasoning via MCP tool <code>self.camera.take_photo</code>.
-          <br>2. <strong>Camera Node (Node 06)</strong>: Dedicated exclusively to serving a continuous JPEG WebSockets video stream to the Web Dashboard. This guarantees that heavy cloud VQA AI queries on Node 05 never stutter or freeze the operator's real-time video feed.
+          <br>1. <strong>AI Node Camera (Node 05)</strong>: Captures snapshots for local object detection, Visual
+          Question Answering (VQA), face recognition, and Cloud LLM cognitive spatial reasoning via MCP tool
+          <code>self.camera.take_photo</code>.
+          <br>2. <strong>Camera Node (Node 06)</strong>: Dedicated exclusively to serving a continuous JPEG WebSockets
+          video stream to the Web Dashboard. This guarantees that heavy cloud VQA AI queries on Node 05 never stutter or
+          freeze the operator's real-time video feed.
         </div>
       </div>
 
@@ -295,7 +325,8 @@
               <td><span class="tab-badge" style="background: #eff6ff; color: #1d4ed8;">Priority 4</span></td>
               <td>Core 0</td>
               <td>6144 Bytes</td>
-              <td>Parses incoming MQTT JSON control frames (<code>hello</code>, <code>stt</code>, <code>llm</code>, <code>mcp</code>)</td>
+              <td>Parses incoming MQTT JSON control frames (<code>hello</code>, <code>stt</code>, <code>llm</code>,
+                <code>mcp</code>)</td>
             </tr>
             <tr>
               <td><code>vMcpToolDispatchTask</code></td>
@@ -323,7 +354,8 @@
         <div class="code-header">
           <span class="code-title">Finite State Machine (FSM) Lifecycle States</span>
         </div>
-        <pre class="code-content">[ BOOT ] ──> [ WIFI_CONNECTING ] ──> [ MQTT_CONNECTED ] ──> [ IDLE_STANDBY ]
+        <pre
+          class="code-content">[ BOOT ] ──> [ WIFI_CONNECTING ] ──> [ MQTT_CONNECTED ] ──> [ IDLE_STANDBY ]
                                                                    │
     ┌──────────────────────────────────────────────────────────────┘
     │ (Wake Phrase Detected / Button Pressed)
@@ -350,9 +382,12 @@
         <div class="feature-card">
           <div class="feature-card-title">Memory Allocation Budget</div>
           <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
-            &bull; <strong>SRAM Heap</strong>: ~320 KB free internal SRAM reserved for FreeRTOS tasks and mbedTLS sockets.
-            <br>&bull; <strong>PSRAM (8MB)</strong>: Double-buffered camera frame buffer (~95 KB) + audio resampler buffers.
-            <br>&bull; <strong>Flash Partitioning</strong>: Custom 16MB partition table allocating 4MB for NVS/assets and 6MB per OTA app slot.
+            &bull; <strong>SRAM Heap</strong>: ~320 KB free internal SRAM reserved for FreeRTOS tasks and mbedTLS
+            sockets.
+            <br>&bull; <strong>PSRAM (8MB)</strong>: Double-buffered camera frame buffer (~95 KB) + audio resampler
+            buffers.
+            <br>&bull; <strong>Flash Partitioning</strong>: Custom 16MB partition table allocating 4MB for NVS/assets
+            and 6MB per OTA app slot.
           </div>
         </div>
 
@@ -361,16 +396,20 @@
           <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
             &bull; <strong>Standby Mode</strong>: &lt;5 mA (Wake word engine active, radio sleep).
             <br>&bull; <strong>Audio Streaming</strong>: 80 mA - 120 mA (Continuous Wi-Fi TX + Opus encoding).
-            <br>&bull; <strong>Peak VQA Capture</strong>: 220 mA - 250 mA (OV2640 sensor active + SIMD JPEG encode + Wi-Fi burst).
+            <br>&bull; <strong>Peak VQA Capture</strong>: 220 mA - 250 mA (OV2640 sensor active + SIMD JPEG encode +
+            Wi-Fi burst).
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-title">Fault Recovery Mechanisms</div>
           <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-top: 6px;">
-            &bull; <strong>High Latency (&gt;2.0s)</strong>: Plays local audio cue (<em>"Processing command..."</em>) to maintain conversational UX.
-            <br>&bull; <strong>Wi-Fi Connection Loss</strong>: Triggers local fallback prompt (<code>wificonfig.ogg</code>) &amp; exponential reconnect backoff.
-            <br>&bull; <strong>Heap Fragmentation</strong>: Memory watchdog triggers soft restart if free internal heap drops below 30 KB.
+            &bull; <strong>High Latency (&gt;2.0s)</strong>: Plays local audio cue (<em>"Processing command..."</em>) to
+            maintain conversational UX.
+            <br>&bull; <strong>Wi-Fi Connection Loss</strong>: Triggers local fallback prompt
+            (<code>wificonfig.ogg</code>) &amp; exponential reconnect backoff.
+            <br>&bull; <strong>Heap Fragmentation</strong>: Memory watchdog triggers soft restart if free internal heap
+            drops below 30 KB.
           </div>
         </div>
       </div>
@@ -381,7 +420,8 @@
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
           </svg>
           1. AI Features - XiaoZhi Firmware AI Technology Integration Guide
         </div>
@@ -389,31 +429,40 @@
       </div>
 
       <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-        Xiaozhi AI operates on a <strong>Hybrid AI Inference Architecture</strong>: edge intelligence handles instantaneous local keyword filtering and voice wake-up on dual ESP32-S3 LX7 cores at 240MHz, while natural language reasoning, vision multi-modality, and TTS speech synthesis are offloaded to high-performance cloud LLMs.
+        Xiaozhi AI operates on a <strong>Hybrid AI Inference Architecture</strong>: edge intelligence handles
+        instantaneous local keyword filtering and voice wake-up on dual ESP32-S3 LX7 cores at 240MHz, while natural
+        language reasoning, vision multi-modality, and TTS speech synthesis are offloaded to high-performance cloud
+        LLMs.
       </p>
 
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
           </div>
           <div class="feature-card-title">1️⃣ Offline Voice Wake-up AI</div>
           <div class="feature-card-desc">
-            Powered by Espressif Speech Recognition. Default wake word: <strong>"你好小智"</strong> (&lt;200ms latency, &lt;5mA standby power). Supports 26+ official vocabulary phrases (<em>"Hi ESP"</em>, <em>"Smart Home"</em>, etc.) configured via <code>idf.py menuconfig</code>.
+            Powered by Espressif Speech Recognition. Default wake word: <strong>"你好小智"</strong> (&lt;200ms latency,
+            &lt;5mA standby power). Supports 26+ official vocabulary phrases (<em>"Hi ESP"</em>, <em>"Smart Home"</em>,
+            etc.) configured via <code>idf.py menuconfig</code>.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-icon">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
             </svg>
           </div>
           <div class="feature-card-title">2️⃣ Multilingual ASR &amp; Locales (v2.0)</div>
           <div class="feature-card-desc">
-            Captures 16kHz mono audio via INMP441 MEMS microphone. Features 25+ language audio prompt packages stored in <code>main/assets/locales/</code> (OGG Vorbis, ~150KB per language, ~50KB RAM footprint). Supports Chinese, English, Japanese, Russian, Spanish, and 17 newly added languages.
+            Captures 16kHz mono audio via INMP441 MEMS microphone. Features 25+ language audio prompt packages stored in
+            <code>main/assets/locales/</code> (OGG Vorbis, ~150KB per language, ~50KB RAM footprint). Supports Chinese,
+            English, Japanese, Russian, Spanish, and 17 newly added languages.
           </div>
         </div>
 
@@ -425,7 +474,8 @@
           </div>
           <div class="feature-card-title">3️⃣ Cloud LLM &amp; Vision Engine</div>
           <div class="feature-card-desc">
-            Streams Opus 60ms frames over UDP/WebSocket to DeepSeek-V3, Qwen-Max, Doubao, GPT-4o, or Gemini 1.5 Pro. Integrates camera VQA via MCP <code>self.camera.take_photo</code> tool.
+            Streams Opus 60ms frames over UDP/WebSocket to DeepSeek-V3, Qwen-Max, Doubao, GPT-4o, or Gemini 1.5 Pro.
+            Integrates camera VQA via MCP <code>self.camera.take_photo</code> tool.
           </div>
         </div>
       </div>
@@ -436,7 +486,8 @@
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
           2. Usage Guide &amp; Device Operation
         </div>
@@ -451,21 +502,24 @@
         <div class="feature-card">
           <div class="feature-card-title">1. Network &amp; Wi-Fi Provisioning</div>
           <div class="feature-card-desc">
-            On first boot, the ESP32-S3 starts a captive portal Wi-Fi access point (<code>XiaoZhi-Setup</code>). Connect via smartphone to enter your local Wi-Fi SSID and WPA2 key.
+            On first boot, the ESP32-S3 starts a captive portal Wi-Fi access point (<code>XiaoZhi-Setup</code>). Connect
+            via smartphone to enter your local Wi-Fi SSID and WPA2 key.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-title">2. Voice Wake-Up &amp; Push-to-Talk</div>
           <div class="feature-card-desc">
-            Say <strong>"你好小智"</strong> to trigger auto VAD listening mode, or hold down the tactile switch on <strong>GPIO 00</strong> for manual push-to-talk mode.
+            Say <strong>"你好小智"</strong> to trigger auto VAD listening mode, or hold down the tactile switch on
+            <strong>GPIO 00</strong> for manual push-to-talk mode.
           </div>
         </div>
 
         <div class="feature-card">
           <div class="feature-card-title">3. Response Interruption (Barge-In)</div>
           <div class="feature-card-desc">
-            Press GPIO 00 button or say the wake word while the robot speaker is playing audio to immediately halt LLM response generation and open microphone input.
+            Press GPIO 00 button or say the wake word while the robot speaker is playing audio to immediately halt LLM
+            response generation and open microphone input.
           </div>
         </div>
       </div>
@@ -476,7 +530,8 @@
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
           </svg>
           3. Development Guide
         </div>
@@ -485,13 +540,15 @@
 
       <!-- SUB-SECTION 3.1: ESP-IDF SETUP & COMPILATION -->
       <div id="esp-idf-setup" style="margin-bottom: 36px; padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #e0f2fe; color: #0369a1;">Section 3.1</span>
           ESP-IDF Development Environment Setup &amp; XiaoZhi Compilation
         </h3>
 
         <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
-          Xiaozhi v2.x requires <strong>ESP-IDF 5.4.0 or later</strong>. If using older ESP-IDF 5.3.x versions, compilation will fail with <code>ERROR: project depends on idf (&gt;=5.4.0)</code>.
+          Xiaozhi v2.x requires <strong>ESP-IDF 5.4.0 or later</strong>. If using older ESP-IDF 5.3.x versions,
+          compilation will fail with <code>ERROR: project depends on idf (&gt;=5.4.0)</code>.
         </p>
 
         <div class="code-block-container">
@@ -517,27 +574,35 @@ idf.py -p COM3 -b 2000000 build flash monitor</pre>
         </div>
 
         <div class="feature-card" style="margin-top: 16px; background: #fef2f2; border-color: #fecaca;">
-          <div style="font-weight: 700; color: #b91c1c; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width: 18px; height: 18px; stroke: #b91c1c;">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          <div
+            style="font-weight: 700; color: #b91c1c; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width: 18px; height: 18px; stroke: #b91c1c;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             I2C Conflict Resolution &amp; N8R2 PSRAM Fix:
           </div>
           <div style="font-size: 0.88rem; color: #7f1d1d; line-height: 1.5;">
-            If you encounter I2C bus conflicts, enter <code>idf.py menuconfig</code>, select <code>Component config -&gt; Audio Codec Device Configuration</code>, and turn off the first option. For N8R2 boards (8MB Flash / 2MB PSRAM), change PSRAM mode from <strong>OCTAL</strong> to <strong>QUAD</strong> before building.
+            If you encounter I2C bus conflicts, enter <code>idf.py menuconfig</code>, select
+            <code>Component config -&gt; Audio Codec Device Configuration</code>, and turn off the first option. For
+            N8R2 boards (8MB Flash / 2MB PSRAM), change PSRAM mode from <strong>OCTAL</strong> to <strong>QUAD</strong>
+            before building.
           </div>
         </div>
       </div>
 
       <!-- SUB-SECTION 3.2: WEBSOCKET PROTOCOL -->
       <div id="websocket-protocol" style="margin-bottom: 36px; padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #f0fdf4; color: #15803d;">Section 3.2</span>
           WebSocket Communication Protocol
         </h3>
 
         <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
-          In WebSocket mode, both control JSON messages and binary Opus audio frames are transmitted over a single full-duplex WebSocket connection (port 443 WSS).
+          In WebSocket mode, both control JSON messages and binary Opus audio frames are transmitted over a single
+          full-duplex WebSocket connection (port 443 WSS).
         </p>
 
         <div class="code-block-container">
@@ -566,7 +631,8 @@ idf.py -p COM3 -b 2000000 build flash monitor</pre>
 
       <!-- SUB-SECTION 3.3: MQTT + UDP HYBRID PROTOCOL -->
       <div id="mqtt-udp-protocol" style="margin-bottom: 36px; padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #e0f2fe; color: #0369a1;">Section 3.3</span>
           MQTT + UDP Hybrid Communication Protocol Documentation
         </h3>
@@ -593,13 +659,16 @@ Field Definitions:
 
       <!-- SUB-SECTION 3.4: EMOJI EMOTION DISPLAY SPECIFICATION -->
       <div id="emoji-emotion-display" style="margin-bottom: 36px; padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #faf5ff; color: #6b21a8;">Section 3.4</span>
           Emoji Emotion Display Specification &amp; Reference Table
         </h3>
 
         <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
-          Cloud LLMs output independent UTF-8 Emoji tokens (e.g. <code>"emotion": "smile"</code>) to express visual state on the SSD1306 screen. <strong>TTS engines must strip Emoji characters</strong> from text fields so audio output remains natural human speech.
+          Cloud LLMs output independent UTF-8 Emoji tokens (e.g. <code>"emotion": "smile"</code>) to express visual
+          state on the SSD1306 screen. <strong>TTS engines must strip Emoji characters</strong> from text fields so
+          audio output remains natural human speech.
         </p>
 
         <div class="table-responsive" style="margin-bottom: 20px;">
@@ -613,27 +682,132 @@ Field Definitions:
               </tr>
             </thead>
             <tbody>
-              <tr><td>😶</td><td><strong>neutral</strong></td><td>Neutral / Calm</td><td>Default baseline facial expression</td></tr>
-              <tr><td>🙂</td><td><strong>happy</strong></td><td>Happy / Pleased</td><td>Gentle smiling eye curves</td></tr>
-              <tr><td>😆</td><td><strong>laughing</strong></td><td>Laughing / Amused</td><td>Squinting eyes with open mouth</td></tr>
-              <tr><td>😂</td><td><strong>funny</strong></td><td>Funny / Hilarious</td><td>Tears of joy facial vector</td></tr>
-              <tr><td>😔</td><td><strong>sad</strong></td><td>Sad / Apologetic</td><td>Downwards curved mouth</td></tr>
-              <tr><td>😠</td><td><strong>angry</strong></td><td>Angry / Annoyed</td><td>Slanted eyebrows vector</td></tr>
-              <tr><td>😭</td><td><strong>crying</strong></td><td>Crying / Upset</td><td>Vertical tear streams</td></tr>
-              <tr><td>😍</td><td><strong>loving</strong></td><td>Loving / Adoring</td><td>Heart-shaped eyes</td></tr>
-              <tr><td>😳</td><td><strong>embarrassed</strong></td><td>Embarrassed</td><td>Blushing cheek indicators</td></tr>
-              <tr><td>😲</td><td><strong>surprised</strong></td><td>Surprised</td><td>Wide open mouth and eyes</td></tr>
-              <tr><td>😱</td><td><strong>shocked</strong></td><td>Shocked</td><td>Astonished face vector</td></tr>
-              <tr><td>🤔</td><td><strong>thinking</strong></td><td>Analyzing / Thinking</td><td>Raised eyebrow &amp; hand chin icon</td></tr>
-              <tr><td>😉</td><td><strong>winking</strong></td><td>Winking / Playful</td><td>One eye closed wink</td></tr>
-              <tr><td>😎</td><td><strong>cool</strong></td><td>Confident / Cool</td><td>Dark sunglasses vector overlay</td></tr>
-              <tr><td>😌</td><td><strong>relaxed</strong></td><td>Relaxed / Peaceful</td><td>Closed peaceful eyes</td></tr>
-              <tr><td>🤤</td><td><strong>delicious</strong></td><td>Delicious</td><td>Satisfied mouth vector</td></tr>
-              <tr><td>😘</td><td><strong>kissy</strong></td><td>Kissing / Friendly</td><td>Kiss blowing lip vector</td></tr>
-              <tr><td>😏</td><td><strong>confident</strong></td><td>Confident / Smirk</td><td>Asymmetrical smirk eyebrow</td></tr>
-              <tr><td>😴</td><td><strong>sleepy</strong></td><td>Standby / Sleepy</td><td>'Zzz' sleeping indicators</td></tr>
-              <tr><td>😜</td><td><strong>silly</strong></td><td>Silly / Playful</td><td>Sticking tongue out</td></tr>
-              <tr><td>🙄</td><td><strong>confused</strong></td><td>Confused / Uncertain</td><td>Upward rolling eyes</td></tr>
+              <tr>
+                <td>😶</td>
+                <td><strong>neutral</strong></td>
+                <td>Neutral / Calm</td>
+                <td>Default baseline facial expression</td>
+              </tr>
+              <tr>
+                <td>🙂</td>
+                <td><strong>happy</strong></td>
+                <td>Happy / Pleased</td>
+                <td>Gentle smiling eye curves</td>
+              </tr>
+              <tr>
+                <td>😆</td>
+                <td><strong>laughing</strong></td>
+                <td>Laughing / Amused</td>
+                <td>Squinting eyes with open mouth</td>
+              </tr>
+              <tr>
+                <td>😂</td>
+                <td><strong>funny</strong></td>
+                <td>Funny / Hilarious</td>
+                <td>Tears of joy facial vector</td>
+              </tr>
+              <tr>
+                <td>😔</td>
+                <td><strong>sad</strong></td>
+                <td>Sad / Apologetic</td>
+                <td>Downwards curved mouth</td>
+              </tr>
+              <tr>
+                <td>😠</td>
+                <td><strong>angry</strong></td>
+                <td>Angry / Annoyed</td>
+                <td>Slanted eyebrows vector</td>
+              </tr>
+              <tr>
+                <td>😭</td>
+                <td><strong>crying</strong></td>
+                <td>Crying / Upset</td>
+                <td>Vertical tear streams</td>
+              </tr>
+              <tr>
+                <td>😍</td>
+                <td><strong>loving</strong></td>
+                <td>Loving / Adoring</td>
+                <td>Heart-shaped eyes</td>
+              </tr>
+              <tr>
+                <td>😳</td>
+                <td><strong>embarrassed</strong></td>
+                <td>Embarrassed</td>
+                <td>Blushing cheek indicators</td>
+              </tr>
+              <tr>
+                <td>😲</td>
+                <td><strong>surprised</strong></td>
+                <td>Surprised</td>
+                <td>Wide open mouth and eyes</td>
+              </tr>
+              <tr>
+                <td>😱</td>
+                <td><strong>shocked</strong></td>
+                <td>Shocked</td>
+                <td>Astonished face vector</td>
+              </tr>
+              <tr>
+                <td>🤔</td>
+                <td><strong>thinking</strong></td>
+                <td>Analyzing / Thinking</td>
+                <td>Raised eyebrow &amp; hand chin icon</td>
+              </tr>
+              <tr>
+                <td>😉</td>
+                <td><strong>winking</strong></td>
+                <td>Winking / Playful</td>
+                <td>One eye closed wink</td>
+              </tr>
+              <tr>
+                <td>😎</td>
+                <td><strong>cool</strong></td>
+                <td>Confident / Cool</td>
+                <td>Dark sunglasses vector overlay</td>
+              </tr>
+              <tr>
+                <td>😌</td>
+                <td><strong>relaxed</strong></td>
+                <td>Relaxed / Peaceful</td>
+                <td>Closed peaceful eyes</td>
+              </tr>
+              <tr>
+                <td>🤤</td>
+                <td><strong>delicious</strong></td>
+                <td>Delicious</td>
+                <td>Satisfied mouth vector</td>
+              </tr>
+              <tr>
+                <td>😘</td>
+                <td><strong>kissy</strong></td>
+                <td>Kissing / Friendly</td>
+                <td>Kiss blowing lip vector</td>
+              </tr>
+              <tr>
+                <td>😏</td>
+                <td><strong>confident</strong></td>
+                <td>Confident / Smirk</td>
+                <td>Asymmetrical smirk eyebrow</td>
+              </tr>
+              <tr>
+                <td>😴</td>
+                <td><strong>sleepy</strong></td>
+                <td>Standby / Sleepy</td>
+                <td>'Zzz' sleeping indicators</td>
+              </tr>
+              <tr>
+                <td>😜</td>
+                <td><strong>silly</strong></td>
+                <td>Silly / Playful</td>
+                <td>Sticking tongue out</td>
+              </tr>
+              <tr>
+                <td>🙄</td>
+                <td><strong>confused</strong></td>
+                <td>Confused / Uncertain</td>
+                <td>Upward rolling eyes</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -641,7 +815,8 @@ Field Definitions:
 
       <!-- SUB-SECTION 3.5: INTERACTIVE JSON INSPECTOR -->
       <div id="json-inspector" style="margin-bottom: 36px; padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #e0f2fe; color: #0369a1;">Section 3.5</span>
           Interactive JSON Protocol Payload Inspector &amp; Schema Breakdown
         </h3>
@@ -699,7 +874,8 @@ Field Definitions:
                   <span class="code-title" id="inspectorJsonTitle">Device &rarr; Server: Hello Handshake Request</span>
                   <button class="btn-copy-code" onclick="copyCode(this)">Copy JSON</button>
                 </div>
-                <pre class="code-content" id="inspectorJsonDisplay" style="flex: 1; overflow-y: auto; font-size: 0.8rem; line-height: 1.5; margin: 0; background: #09090b; color: #f8fafc; padding: 14px; border-radius: 0 0 6px 6px;"></pre>
+                <pre class="code-content" id="inspectorJsonDisplay"
+                  style="flex: 1; overflow-y: auto; font-size: 0.8rem; line-height: 1.5; margin: 0; background: #09090b; color: #f8fafc; padding: 14px; border-radius: 0 0 6px 6px;"></pre>
               </div>
             </div>
 
@@ -708,14 +884,17 @@ Field Definitions:
               <div class="json-meta-box">
                 <div class="json-meta-title">
                   <span id="inspectorMsgName">hello (Client Request)</span>
-                  <span class="tab-badge" id="inspectorDirection" style="background: #e0f2fe; color: #0369a1;">Device &rarr; Server</span>
+                  <span class="tab-badge" id="inspectorDirection" style="background: #e0f2fe; color: #0369a1;">Device
+                    &rarr; Server</span>
                 </div>
                 <div class="json-meta-desc" id="inspectorMsgDesc">
-                  Sent by ESP32 upon MQTT connection to negotiate audio codecs, declare hardware capabilities (e.g. MCP tool support), and request UDP audio channel credentials.
+                  Sent by ESP32 upon MQTT connection to negotiate audio codecs, declare hardware capabilities (e.g. MCP
+                  tool support), and request UDP audio channel credentials.
                 </div>
               </div>
 
-              <div style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
+              <div
+                style="font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase;">
                 Parameter Field Specification:
               </div>
 
@@ -741,12 +920,15 @@ Field Definitions:
 
       <!-- SUB-SECTION 3.6: DEVELOPMENT OVERVIEW -->
       <div id="dev-overview" style="padding-top: 12px;">
-        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <h3
+          style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span class="tab-badge" style="background: #f1f5f9; color: #475569;">Section 3.6</span>
           Development Overview &amp; Firmware Source Structure
         </h3>
         <p style="color: var(--text-secondary); line-height: 1.6;">
-          The Xiaozhi ESP32 C++ codebase is modularized under <code>main/</code> into <code>boards/</code> (hardware target pinouts), <code>protocols/</code> (WebSocket &amp; MQTT+UDP handlers), <code>assets/locales/</code> (voice prompt packages), and <code>mcp_server.cc</code> (Model Context Protocol hardware execution engine).
+          The Xiaozhi ESP32 C++ codebase is modularized under <code>main/</code> into <code>boards/</code> (hardware
+          target pinouts), <code>protocols/</code> (WebSocket &amp; MQTT+UDP handlers), <code>assets/locales/</code>
+          (voice prompt packages), and <code>mcp_server.cc</code> (Model Context Protocol hardware execution engine).
         </p>
       </div>
     </section>
@@ -756,7 +938,8 @@ Field Definitions:
       <div class="doc-section-header">
         <div class="doc-section-title">
           <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           4. System Architecture Overview
         </div>
@@ -764,16 +947,19 @@ Field Definitions:
       </div>
 
       <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-        The Prayas AI Node combines local hardware components (INMP441 Mic, MAX98357A Amp, SSD1306 Display, OV2640 Camera) with dual-channel network transport to provide real-time voice, vision, and robot actuators.
+        The Prayas AI Node combines local hardware components (INMP441 Mic, MAX98357A Amp, SSD1306 Display, OV2640
+        Camera) with dual-channel network transport to provide real-time voice, vision, and robot actuators.
       </p>
 
       <div class="feature-grid">
         <div class="feature-card">
           <div class="feature-card-title">Dedicated ESP32-S3-CAM Hardware Page</div>
           <div class="feature-card-desc" style="margin-bottom: 14px;">
-            For complete DVP camera pinouts (D0-D7, XCLK, PCLK, VSYNC, HREF), I2S shared audio pins, LDO power supply decoupling, and SIMD JPEG hardware acceleration specs, view the standalone camera hub.
+            For complete DVP camera pinouts (D0-D7, XCLK, PCLK, VSYNC, HREF), I2S shared audio pins, LDO power supply
+            decoupling, and SIMD JPEG hardware acceleration specs, view the standalone camera hub.
           </div>
-          <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark" style="background: #be185d; border-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+          <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark"
+            style="background: #be185d; border-color: #db2777; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
             OPEN ESP32-S3-CAM PAGE &rsaquo;
           </a>
         </div>

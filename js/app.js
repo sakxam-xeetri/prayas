@@ -30,6 +30,13 @@ const INITIAL_BOM_DATA = [
   { id: 's7', node: 'node-02', name: 'JST Harnesses', spec: 'Servo Signal Connectors', qty: 8, unitPrice: 30, status: 'In Stock' },
   { id: 's8', node: 'node-02', name: 'Wire As Required', spec: 'Power Wiring Heavy Duty', qty: 1, unitPrice: 200, status: 'In Stock' },
 
+  // NODE 03 SENSOR NODE
+  { id: 'sn1', node: 'node-03', name: 'Arduino Nano', spec: 'ATmega328P Sensor Co-Processor', qty: 1, unitPrice: 450, status: 'In Stock' },
+  { id: 'sn2', node: 'node-03', name: 'MPU6050 Gyroscope', spec: '6-DOF IMU Sensor Module', qty: 1, unitPrice: 250, status: 'In Stock' },
+  { id: 'sn3', node: 'node-03', name: 'DHT11 Sensor', spec: 'Temperature & Humidity Sensor', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn4', node: 'node-03', name: 'Perfboard (Sensors)', spec: 'Compact Breakout Board', qty: 1, unitPrice: 60, status: 'In Stock' },
+  { id: 'sn5', node: 'node-03', name: 'JST Wires', spec: 'I2C Sensor Harness', qty: 3, unitPrice: 30, status: 'In Stock' },
+
   // NODE 04 CONTROL & DISPLAY NODE
   { id: 'cd1', node: 'node-04', name: 'ESP32 Main Host', spec: 'Dashboard & Web Controller Host', qty: 1, unitPrice: 700, status: 'In Stock' },
   { id: 'cd2', node: 'node-04', name: '3.5 TFT Display', spec: 'Touchscreen Color LCD Module', qty: 1, unitPrice: 1800, status: 'In Stock' },
@@ -74,7 +81,7 @@ const INITIAL_BOM_DATA = [
 const NODE_DETAILS = {
   'all': {
     name: 'All Robot Nodes & Drivetrain',
-    desc: 'Complete overview of active subsystems forming the Prayas V1 Humanoid platform.',
+    desc: 'Complete overview of all 7 subsystems forming the Prayas V1 Humanoid platform.',
     steps: [
       { title: '1. Multi-Node Distributed Bus', text: 'Subsystems communicate via dual CAN-bus and high-speed UART links.' },
       { title: '2. Dedicated Power Rails', text: 'Central 3S 12.6V battery split into 5V 20A motor/servo rail and 5V 3A logic rails.' },
@@ -100,6 +107,16 @@ const NODE_DETAILS = {
       { title: '2. High Torque Servos', text: 'Seven MG995 metal gear servos drive shoulder rotation, elbow flex, and neck tilt.' },
       { title: '3. Dedicated 5V 10A Power Rail', text: 'High amp terminal block prevents logic voltage drops during heavy servo load.' },
       { title: '4. Extension Harnesses', text: '30cm extensions with JST connectors pass through arm joints cleanly.' }
+    ]
+  },
+  'node-03': {
+    name: 'Node 03: Telemetry & Sensors',
+    desc: 'Collects orientation, acceleration, temperature, and environmental telemetry.',
+    steps: [
+      { title: '1. ATmega328P Co-Processor', text: 'Arduino Nano handles real-time sensor polling without delaying ESP32 controllers.' },
+      { title: '2. 6-DOF Balance IMU', text: 'MPU6050 gyroscope and accelerometer detects robot tilt and slope inclination.' },
+      { title: '3. Climate Monitoring', text: 'DHT11 sensor provides digital temperature and humidity measurements.' },
+      { title: '4. Compact Bus Interface', text: 'Communicates via I2C bus with low power footprint on dedicated perfboard.' }
     ]
   },
   'node-04': {
@@ -162,7 +179,7 @@ async function initApp() {
   loadBOMData();
   bindEvents();
   renderApp();
-  
+
   // Restore saved project master status
   const masterStatus = localStorage.getItem('prayas_project_master_status');
   const masterSelect = document.getElementById('projectMasterStatus');
@@ -176,7 +193,7 @@ async function initApp() {
   // Auto-connect Supabase
   const targetUrl = localStorage.getItem('prayas_sb_url') || 'https://yjfxryxpcdmbhxrpough.supabase.co';
   const targetKey = localStorage.getItem('prayas_sb_key') || 'sb_publishable_Oqf1-qlUG3db1chllcTEOQ_7kcgPCbr';
-  
+
   if (targetUrl && targetKey) {
     const urlInput = document.getElementById('sbUrl');
     const keyInput = document.getElementById('sbKey');
@@ -191,9 +208,7 @@ function loadBOMData() {
   const saved = localStorage.getItem('prayas_bom_data');
   if (saved) {
     try {
-      const parsed = JSON.parse(saved);
-      // Filter out disconnected node-03 items
-      bomItems = parsed.filter(item => item.node !== 'node-03');
+      bomItems = JSON.parse(saved);
     } catch (e) {
       console.error('Error parsing stored BOM data', e);
       bomItems = [...INITIAL_BOM_DATA];
@@ -313,8 +328,8 @@ function renderMetrics() {
 function getFilteredItems() {
   return bomItems.filter(item => {
     const matchesNode = (activeNode === 'all') || (item.node === activeNode);
-    const matchesSearch = !searchQuery || 
-      item.name.toLowerCase().includes(searchQuery) || 
+    const matchesSearch = !searchQuery ||
+      item.name.toLowerCase().includes(searchQuery) ||
       item.spec.toLowerCase().includes(searchQuery) ||
       getNodeLabel(item.node).toLowerCase().includes(searchQuery);
     return matchesNode && matchesSearch;
@@ -392,7 +407,7 @@ function renderTable() {
 function renderSideInfo() {
   const info = NODE_DETAILS[activeNode] || NODE_DETAILS['all'];
   const stepsContainer = document.getElementById('sideStepsList');
-  
+
   if (!stepsContainer) return;
 
   stepsContainer.innerHTML = info.steps.map(step => `
@@ -409,7 +424,7 @@ function renderSideInfo() {
 // Filter Tab switching handler
 function switchTab(nodeKey, btnElement) {
   activeNode = nodeKey;
-  
+
   // Update Tab active styling
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   if (btnElement) {
@@ -545,7 +560,7 @@ function exportToCSV() {
   const link = document.createElement('a');
   const url = URL.createObjectURL(blob);
   link.setAttribute('href', url);
-  link.setAttribute('download', `Prayas_V1_BOM_${new Date().toISOString().slice(0,10)}.csv`);
+  link.setAttribute('download', `Prayas_V1_BOM_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -633,7 +648,7 @@ function updateStatus(id, newStatus) {
 function updateProjectMasterStatus(newStatus) {
   localStorage.setItem('prayas_project_master_status', newStatus);
   updateStageIcon(newStatus);
-  
+
   if (isCloudConnected && supabaseClient) {
     supabaseClient.from('project_settings').upsert({ key: 'master_status', value: newStatus }).then();
   }

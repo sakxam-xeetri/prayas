@@ -1498,6 +1498,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM_Nepali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nepali Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../03_Hardware/Materials_Tree/" class="md-nav__link">
         
   
@@ -2625,9 +2653,10 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Purpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#1-coordinate-frame-definitions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2635,6 +2664,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2689,17 +2723,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#hand-orientation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hand Orientation
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2718,10 +2741,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-calculate-elbow-pitch-theta_2" class="md-nav__link">
+  <a href="#step-1-calculate-elbow-pitch-theta_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Calculate Elbow Pitch (\(\theta_2\))
+        Step 1: Calculate Elbow Pitch (\(\theta_3\))
       
     </span>
   </a>
@@ -2729,10 +2752,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-calculate-shoulder-pitch-theta_1" class="md-nav__link">
+  <a href="#step-2-calculate-shoulder-rollabduction-theta_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Calculate Shoulder Pitch (\(\theta_1\))
+        Step 2: Calculate Shoulder Roll/Abduction (\(\theta_2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-calculate-shoulder-pitch-theta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Calculate Shoulder Pitch (\(\theta_1\))
       
     </span>
   </a>
@@ -4604,9 +4638,10 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Purpose">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#1-coordinate-frame-definitions" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4614,6 +4649,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4668,17 +4708,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#hand-orientation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hand Orientation
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -4697,10 +4726,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1-calculate-elbow-pitch-theta_2" class="md-nav__link">
+  <a href="#step-1-calculate-elbow-pitch-theta_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Calculate Elbow Pitch (\(\theta_2\))
+        Step 1: Calculate Elbow Pitch (\(\theta_3\))
       
     </span>
   </a>
@@ -4708,10 +4737,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-calculate-shoulder-pitch-theta_1" class="md-nav__link">
+  <a href="#step-2-calculate-shoulder-rollabduction-theta_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Calculate Shoulder Pitch (\(\theta_1\))
+        Step 2: Calculate Shoulder Roll/Abduction (\(\theta_2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-calculate-shoulder-pitch-theta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Calculate Shoulder Pitch (\(\theta_1\))
       
     </span>
   </a>
@@ -4754,9 +4794,10 @@
 <h1 id="arm-kinematics-coordinate-frames-3-dof">Arm Kinematics &amp; Coordinate Frames (3-DOF)<a class="headerlink" href="#arm-kinematics-coordinate-frames-3-dof" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
 <p>This document details the mathematical kinematic model for the 3-DOF right and left robotic arms of PRAYAS V1. It provides Denavit-Hartenberg (DH) parameters, forward kinematics (FK) transformation matrices, and analytical inverse kinematics (IK) solutions to translate target Cartesian coordinates back to servo joint angles.</p>
+<p><img alt="Arm Design Overview" src="../../assets/img/draft/hand.png" style="display: block; margin: 0 auto;" width="800" /></p>
 <hr />
-<h2 id="1-coordinate-frame-definitions">1. Coordinate Frame Definitions<a class="headerlink" href="#1-coordinate-frame-definitions" title="Permanent link">&para;</a></h2>
-<p>Each arm has 3 Degrees of Freedom (Shoulder Pitch, Elbow Pitch, and Wrist Roll) actuated by TowerPro MG995 servos. The coordinate frames are defined relative to the robot's base frame where:
+<h3 id="1-coordinate-frame-definitions">1. Coordinate Frame Definitions<a class="headerlink" href="#1-coordinate-frame-definitions" title="Permanent link">&para;</a></h3>
+<p>Each arm has 3 Degrees of Freedom (J1: Shoulder Pitch, J2: Shoulder Roll/Abduction, and J3: Elbow Pitch) actuated by TowerPro MG995 servos. The coordinate frames are defined relative to the robot's base frame where:
 *   <strong><span class="arithmatex">\(X_{base}\)</span></strong>: Points forward (anterior direction).
 *   <strong><span class="arithmatex">\(Y_{base}\)</span></strong>: Points horizontally to the right (forming a right-handed system for the right arm).
 *   <strong><span class="arithmatex">\(Z_{base}\)</span></strong>: Points vertically upwards.</p>
@@ -4768,14 +4809,14 @@
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        o──────► Y (Right)
 </span></code></pre></div>
 <p>The joint movements and axes of rotation are aligned as follows:
-1.  <strong>Shoulder Pitch (<span class="arithmatex">\(\theta_1\)</span>)</strong>: Rotates around a horizontal axis parallel to <span class="arithmatex">\(Y_{base}\)</span>. When <span class="arithmatex">\(\theta_1 = 0^\circ\)</span> (home), the upper arm points straight down along <span class="arithmatex">\(-Z_{base}\)</span>. Increasing <span class="arithmatex">\(\theta_1\)</span> swings the arm forward.
-2.  <strong>Elbow Pitch (<span class="arithmatex">\(\theta_2\)</span>)</strong>: Rotates around a horizontal axis parallel to <span class="arithmatex">\(Y_{base}\)</span> (and <span class="arithmatex">\(Y_{shoulder}\)</span>). When <span class="arithmatex">\(\theta_2 = 0^\circ\)</span> (home), the forearm is fully extended (collinear with the upper arm). Increasing <span class="arithmatex">\(\theta_2\)</span> flexes (bends) the elbow forward.
-3.  <strong>Wrist Roll (<span class="arithmatex">\(\theta_3\)</span>)</strong>: Rotates around the longitudinal axis of the forearm (Link 2). When the arm is fully extended at home, this axis lies along <span class="arithmatex">\(-Z_{base}\)</span>.</p>
+1.  <strong>Shoulder Pitch (J1, <span class="arithmatex">\(\theta_1\)</span>)</strong>: Rotates about a horizontal axis parallel to <span class="arithmatex">\(Y_{base}\)</span>. When <span class="arithmatex">\(\theta_1 = 0^\circ\)</span> (home), the upper arm points straight down along <span class="arithmatex">\(-Z_{base}\)</span>. Increasing <span class="arithmatex">\(\theta_1\)</span> swings the arm forward.
+2.  <strong>Shoulder Roll/Abduction (J2, <span class="arithmatex">\(\theta_2\)</span>)</strong>: Rotates about the horizontal axis perpendicular to the pitch axis (pointing forward when J1 is at <span class="arithmatex">\(0^\circ\)</span>). When <span class="arithmatex">\(\theta_2 = 0^\circ\)</span> (home), the upper arm hangs straight down along <span class="arithmatex">\(-Z_{base}\)</span>. Increasing <span class="arithmatex">\(\theta_2\)</span> swings the arm outward to the side.
+3.  <strong>Elbow Pitch (J3, <span class="arithmatex">\(\theta_3\)</span>)</strong>: Rotates about a horizontal axis parallel to the shoulder pitch axis in the local frame. When <span class="arithmatex">\(\theta_3 = 0^\circ\)</span> (home), the forearm is fully extended (collinear with the upper arm). Increasing <span class="arithmatex">\(\theta_3\)</span> flexes (bends) the elbow forward.</p>
 <hr />
 <h2 id="2-denavit-hartenberg-dh-parameters">2. Denavit-Hartenberg (DH) Parameters<a class="headerlink" href="#2-denavit-hartenberg-dh-parameters" title="Permanent link">&para;</a></h2>
 <p>We model the right arm kinematics using the standard Denavit-Hartenberg convention. The link dimensions are:
 *   <strong>Link 1 (Upper Arm, Shoulder to Elbow)</strong>: <span class="arithmatex">\(a_1 = 250\text{ mm}\)</span>
-*   <strong>Link 2 (Forearm, Elbow to Wrist)</strong>: <span class="arithmatex">\(a_2 = 220\text{ mm}\)</span></p>
+*   <strong>Link 2 (Forearm, Elbow to Hand)</strong>: <span class="arithmatex">\(a_2 = 220\text{ mm}\)</span></p>
 <h3 id="dh-parameter-table">DH Parameter Table<a class="headerlink" href="#dh-parameter-table" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -4791,62 +4832,60 @@
 <tbody>
 <tr>
 <td style="text-align: center;"><strong>1</strong></td>
-<td style="text-align: center;"><span class="arithmatex">\(\theta_{1,DH} = \theta_1 - 90^\circ\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(a_1 = 250\text{ mm}\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
-<td style="text-align: center;">Revolute (Shoulder Pitch)</td>
-</tr>
-<tr>
-<td style="text-align: center;"><strong>2</strong></td>
-<td style="text-align: center;"><span class="arithmatex">\(\theta_{2,DH} = \theta_2\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\theta_1\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(90^\circ\)</span></td>
-<td style="text-align: center;">Revolute (Elbow Pitch)</td>
+<td style="text-align: center;">Revolute (Shoulder Pitch J1)</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"><span class="arithmatex">\(\theta_2 - 90^\circ\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(a_1 = 250\text{ mm}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(-90^\circ\)</span></td>
+<td style="text-align: center;">Revolute (Shoulder Roll J2)</td>
 </tr>
 <tr>
 <td style="text-align: center;"><strong>3</strong></td>
-<td style="text-align: center;"><span class="arithmatex">\(\theta_{3,DH} = \theta_3\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(d_3 = 220\text{ mm}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\theta_3\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(0\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(a_2 = 220\text{ mm}\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
-<td style="text-align: center;">Revolute (Wrist Roll)</td>
+<td style="text-align: center;">Revolute (Elbow Pitch J3)</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h2 id="3-forward-kinematics-fk">3. Forward Kinematics (FK)<a class="headerlink" href="#3-forward-kinematics-fk" title="Permanent link">&para;</a></h2>
-<p>The homogeneous transformation matrix <span class="arithmatex">\(T_i^{i-1}\)</span> for each link is defined by the standard DH matrix:
-$<span class="arithmatex">\(T_i^{i-1} = \begin{bmatrix} \cos\theta_i &amp; -\sin\theta_i\cos\alpha_i &amp; \sin\theta_i\sin\alpha_i &amp; a_i\cos\theta_i \\ \sin\theta_i &amp; \cos\theta_i\cos\alpha_i &amp; -\cos\theta_i\sin\alpha_i &amp; a_i\sin\theta_i \\ 0 &amp; \sin\alpha_i &amp; \cos\alpha_i &amp; d_i \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span>$</p>
 <h3 id="direct-geometric-positions">Direct Geometric Positions<a class="headerlink" href="#direct-geometric-positions" title="Permanent link">&para;</a></h3>
-<p>For physical implementation and control, the coordinates of the wrist center <span class="arithmatex">\((x, y, z)\)</span> relative to the shoulder joint origin <span class="arithmatex">\((0, 0, 0)\)</span> are computed directly using the joint angles:</p>
-<div class="arithmatex">\[x = a_1 \sin\theta_1 + a_2 \sin(\theta_1 + \theta_2)$$
-$$y = 0$$
-$$z = -a_1 \cos\theta_1 - a_2 \cos(\theta_1 + \theta_2)\]</div>
-<h3 id="hand-orientation">Hand Orientation<a class="headerlink" href="#hand-orientation" title="Permanent link">&para;</a></h3>
-<p>The rotation matrix representing the orientation of the hand relative to the base is:
-$<span class="arithmatex">\(R_{hand} = R_{pitch}(\theta_1 + \theta_2) \cdot R_{roll}(\theta_3)\)</span>$</p>
-<div class="arithmatex">\[R_{hand} = \begin{bmatrix} \cos(\theta_1+\theta_2)\cos\theta_3 &amp; -\cos(\theta_1+\theta_2)\sin\theta_3 &amp; \sin(\theta_1+\theta_2) \\ \sin(\theta_1+\theta_2)\cos\theta_3 &amp; -\sin(\theta_1+\theta_2)\sin\theta_3 &amp; -\cos(\theta_1+\theta_2) \\ \sin\theta_3 &amp; \cos\theta_3 &amp; 0 \end{bmatrix}\]</div>
+<p>The coordinates of the hand center <span class="arithmatex">\((x, y, z)\)</span> relative to the shoulder origin <span class="arithmatex">\((0, 0, 0)\)</span> are computed using the joint angles:</p>
+<div class="arithmatex">\[x = a_1 \sin\theta_1 \cos\theta_2 + a_2 (\sin\theta_1 \cos\theta_2 \cos\theta_3 + \cos\theta_1 \sin\theta_3)$$
+$$y = a_1 \sin\theta_2 + a_2 \sin\theta_2 \cos\theta_3$$
+$$z = -a_1 \cos\theta_1 \cos\theta_2 - a_2 (\cos\theta_1 \cos\theta_2 \cos\theta_3 - \sin\theta_1 \sin\theta_3)\]</div>
 <hr />
 <h2 id="4-analytical-inverse-kinematics-ik">4. Analytical Inverse Kinematics (IK)<a class="headerlink" href="#4-analytical-inverse-kinematics-ik" title="Permanent link">&para;</a></h2>
-<p>Given target wrist coordinates <span class="arithmatex">\((x_t, z_t)\)</span> in the vertical pitch plane (<span class="arithmatex">\(y_t = 0\)</span>), the joint angles <span class="arithmatex">\(\theta_1\)</span> and <span class="arithmatex">\(\theta_2\)</span> are derived analytically:</p>
-<h3 id="step-1-calculate-elbow-pitch-theta_2">Step 1: Calculate Elbow Pitch (<span class="arithmatex">\(\theta_2\)</span>)<a class="headerlink" href="#step-1-calculate-elbow-pitch-theta_2" title="Permanent link">&para;</a></h3>
-<p>Using the Law of Cosines:
-$<span class="arithmatex">\(\cos\theta_2 = \frac{x_t^2 + z_t^2 - a_1^2 - a_2^2}{2 a_1 a_2}\)</span>$</p>
-<p>$<span class="arithmatex">\(\theta_2 = \arccos\left(\frac{x_t^2 + z_t^2 - a_1^2 - a_2^2}{2 a_1 a_2}\right)\)</span>$
-<em>(Note: Only the positive elbow-flexion angle <span class="arithmatex">\(\theta_2 \ge 0\)</span> is physically valid due to joint hinge limits).</em></p>
-<h3 id="step-2-calculate-shoulder-pitch-theta_1">Step 2: Calculate Shoulder Pitch (<span class="arithmatex">\(\theta_1\)</span>)<a class="headerlink" href="#step-2-calculate-shoulder-pitch-theta_1" title="Permanent link">&para;</a></h3>
+<p>Given target hand coordinates <span class="arithmatex">\((x_t, y_t, z_t)\)</span>, the joint angles <span class="arithmatex">\(\theta_1, \theta_2,\)</span> and <span class="arithmatex">\(\theta_3\)</span> are derived analytically:</p>
+<h3 id="step-1-calculate-elbow-pitch-theta_3">Step 1: Calculate Elbow Pitch (<span class="arithmatex">\(\theta_3\)</span>)<a class="headerlink" href="#step-1-calculate-elbow-pitch-theta_3" title="Permanent link">&para;</a></h3>
+<p>The distance from the shoulder origin to the hand depends solely on the elbow bend angle <span class="arithmatex">\(\theta_3\)</span>:
+$<span class="arithmatex">\(D^2 = x_t^2 + y_t^2 + z_t^2\)</span>$</p>
+<div class="arithmatex">\[\cos\theta_3 = \frac{D^2 - a_1^2 - a_2^2}{2 a_1 a_2}\]</div>
+<p>$<span class="arithmatex">\(\theta_3 = \arccos\left(\frac{x_t^2 + y_t^2 + z_t^2 - a_1^2 - a_2^2}{2 a_1 a_2}\right)\)</span>$
+<em>(Note: Only the positive elbow-flexion angle <span class="arithmatex">\(\theta_3 \ge 0\)</span> is physically valid due to joint hinge limits).</em></p>
+<h3 id="step-2-calculate-shoulder-rollabduction-theta_2">Step 2: Calculate Shoulder Roll/Abduction (<span class="arithmatex">\(\theta_2\)</span>)<a class="headerlink" href="#step-2-calculate-shoulder-rollabduction-theta_2" title="Permanent link">&para;</a></h3>
+<p>Using the forward kinematics equation for the lateral coordinate <span class="arithmatex">\(y_t\)</span>:
+$<span class="arithmatex">\(\theta_2 = \arcsin\left(\frac{y_t}{a_1 + a_2 \cos\theta_3}\right)\)</span>$</p>
+<h3 id="step-3-calculate-shoulder-pitch-theta_1">Step 3: Calculate Shoulder Pitch (<span class="arithmatex">\(\theta_1\)</span>)<a class="headerlink" href="#step-3-calculate-shoulder-pitch-theta_1" title="Permanent link">&para;</a></h3>
 <p>Define intermediate variables:
-$<span class="arithmatex">\(k_1 = a_1 + a_2 \cos\theta_2\)</span>$
-$<span class="arithmatex">\(k_2 = a_2 \sin\theta_2\)</span>$</p>
-<p>Solving the system yields the unique solution:
+$<span class="arithmatex">\(k_1 = \cos\theta_2 (a_1 + a_2 \cos\theta_3)\)</span>$
+$<span class="arithmatex">\(k_2 = a_2 \sin\theta_3\)</span>$</p>
+<p>Solving the remaining trigonometric system yields the unique quadrant-aware solution:
 $<span class="arithmatex">\(\theta_1 = \text{atan2}(k_1 x_t + k_2 z_t, \, k_2 x_t - k_1 z_t)\)</span>$</p>
 <hr />
 <h2 id="5-singularity-and-boundary-conditions">5. Singularity and Boundary Conditions<a class="headerlink" href="#5-singularity-and-boundary-conditions" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Workspace Boundary</strong>: The maximum physical reach is <span class="arithmatex">\(R_{max} = a_1 + a_2 = 470\text{ mm}\)</span>. If <span class="arithmatex">\(\sqrt{x_t^2 + z_t^2} &gt; 470\text{ mm}\)</span>, the target point is unreachable, resulting in an undefined state.</li>
-<li><strong>Singularity</strong>: When <span class="arithmatex">\(\sqrt{x_t^2 + z_t^2} = 0\)</span>, the arm is folded back onto itself. Control scripts must prevent path commands within a safety radius of <span class="arithmatex">\(R_{min} = 50\text{ mm}\)</span> from the shoulder origin.</li>
+<li><strong>Workspace Boundary</strong>: The maximum physical reach is <span class="arithmatex">\(R_{max} = a_1 + a_2 = 470\text{ mm}\)</span>. If <span class="arithmatex">\(\sqrt{x_t^2 + y_t^2 + z_t^2} &gt; 470\text{ mm}\)</span>, the target point is unreachable.</li>
+<li><strong>Singularity</strong>: When the arm is completely folded <span class="arithmatex">\(\theta_3 = 180^\circ\)</span> (which is outside the mechanical limit), or the target lies at the origin. Control firmware must ensure target points lie outside a minimum safety radius of <span class="arithmatex">\(R_{min} = 50\text{ mm}\)</span> from the shoulder origin.</li>
 </ul>
 
 

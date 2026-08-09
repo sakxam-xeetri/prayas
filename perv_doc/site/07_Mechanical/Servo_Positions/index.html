@@ -1498,6 +1498,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM_Nepali/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nepali Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../03_Hardware/Materials_Tree/" class="md-nav__link">
         
   
@@ -4563,7 +4591,12 @@
 
 <h1 id="servo-positions-mechanical-limits">Servo Positions &amp; Mechanical Limits<a class="headerlink" href="#servo-positions-mechanical-limits" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the installation positions, reference coordinates, and angular travel limits of the 7 MG995 servos.</p>
+<p>This document details the installation positions, reference coordinates, and angular travel limits of the 7 MG995 servos according to the corrected 3-DOF arm design:
+*   <strong>Shoulder Joint 1 (Inside Torso)</strong>: Rotates the arm assembly forward/backward (Pitch).
+*   <strong>Shoulder Joint 2 (Outside Torso, on Bracket)</strong>: Rotates the arm outward/inward (Roll/Abduction).
+*   <strong>Elbow Joint (Mid-Arm Hinge)</strong>: Flexes and extends the forearm (Elbow Pitch).
+There are no wrist servos in this configuration.</p>
+<hr />
 <h2 id="servo-specifications-table">Servo Specifications Table<a class="headerlink" href="#servo-specifications-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -4587,91 +4620,83 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>1</strong></td>
-<td style="text-align: left;">Left Shoulder Pitch</td>
-<td style="text-align: left;">Left side of body frame</td>
+<td style="text-align: left;">Left Shoulder Pitch (J1)</td>
+<td style="text-align: left;">Inside Left Upper Torso</td>
 <td style="text-align: left;">Shaft facing left</td>
 <td style="text-align: center;"><span class="arithmatex">\(-45^\circ\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(+180^\circ\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>2</strong></td>
-<td style="text-align: left;">Left Elbow Pitch</td>
-<td style="text-align: left;">End of left upper arm</td>
+<td style="text-align: left;">Left Shoulder Roll (J2)</td>
+<td style="text-align: left;">Left Shoulder Outer Bracket</td>
+<td style="text-align: left;">Shaft facing forward</td>
+<td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(+90^\circ\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3</strong></td>
+<td style="text-align: left;">Left Elbow Pitch (J3)</td>
+<td style="text-align: left;">Left Elbow Joint Hinge</td>
 <td style="text-align: left;">Shaft facing left</td>
 <td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(+135^\circ\)</span></td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>3</strong></td>
-<td style="text-align: left;">Left Wrist Roll</td>
-<td style="text-align: left;">End of left forearm</td>
-<td style="text-align: left;">Shaft facing forward</td>
-<td style="text-align: center;"><span class="arithmatex">\(-90^\circ\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(+90^\circ\)</span></td>
-</tr>
-<tr>
 <td style="text-align: left;"><strong>4</strong></td>
-<td style="text-align: left;">Right Shoulder Pitch</td>
-<td style="text-align: left;">Right side of body frame</td>
+<td style="text-align: left;">Right Shoulder Pitch (J1)</td>
+<td style="text-align: left;">Inside Right Upper Torso</td>
 <td style="text-align: left;">Shaft facing right</td>
 <td style="text-align: center;"><span class="arithmatex">\(-45^\circ\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(+180^\circ\)</span></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>5</strong></td>
-<td style="text-align: left;">Right Elbow Pitch</td>
-<td style="text-align: left;">End of right upper arm</td>
+<td style="text-align: left;">Right Shoulder Roll (J2)</td>
+<td style="text-align: left;">Right Shoulder Outer Bracket</td>
+<td style="text-align: left;">Shaft facing forward</td>
+<td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(+90^\circ\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;">Right Elbow Pitch (J3)</td>
+<td style="text-align: left;">Right Elbow Joint Hinge</td>
 <td style="text-align: left;">Shaft facing right</td>
 <td style="text-align: center;"><span class="arithmatex">\(0^\circ\)</span></td>
 <td style="text-align: center;"><span class="arithmatex">\(+135^\circ\)</span></td>
 </tr>
-<tr>
-<td style="text-align: left;"><strong>6</strong></td>
-<td style="text-align: left;">Right Wrist Roll</td>
-<td style="text-align: left;">End of right forearm</td>
-<td style="text-align: left;">Shaft facing forward</td>
-<td style="text-align: center;"><span class="arithmatex">\(-90^\circ\)</span></td>
-<td style="text-align: center;"><span class="arithmatex">\(+90^\circ\)</span></td>
-</tr>
 </tbody>
 </table>
+<hr />
 <h2 id="arm-servo-layout">Arm Servo Layout<a class="headerlink" href="#arm-servo-layout" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                    ┌───────────────────┐
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                    │      BODY         │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    │    (Torso)        │
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                    └───┬───────────┬───┘
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                   ┌────┘           └────┐
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>            │  Servo 1    │       │  Servo 4    │
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            │  L-Shoulder │       │  R-Shoulder │
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            └──────┬──────┘       └──────┬──────┘
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                   │                      │
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            │  Upper Arm  │       │  Upper Arm  │
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>            │  (250mm)    │       │  (250mm)    │
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>            └──────┬──────┘       └──────┬──────┘
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                   │                      │
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>            │  Servo 2    │       │  Servo 5    │
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>            │  L-Elbow    │       │  R-Elbow    │
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>            └──────┬──────┘       └──────┬──────┘
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                   │                      │
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            │  Forearm    │       │  Forearm    │
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>            │  (220mm)    │       │  (220mm)    │
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>            └──────┬──────┘       └──────┬──────┘
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                   │                      │
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>            │  Servo 3    │       │  Servo 6    │
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>            │  L-Wrist    │       │  R-Wrist    │
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>            └──────┬──────┘       └──────┬──────┘
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>                   │                      │
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>            ┌──────┴──────┐       ┌──────┴──────┐
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>            │    Hand     │       │    Hand     │
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>            └─────────────┘       └─────────────┘
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                        -------------------
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                        |     BODY        |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                        |    (Torso)      |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                        |                 |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>          J1 (Body) |---| 1             1 |---| J1 (Body)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                    │                         │
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>          J2 (Roll) 2                         2 J2 (Roll)
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                    │                         │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                    │                         │
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                    │ Upper Arm               │ Upper Arm
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                    │ (250mm)                 │ (250mm)
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                    │                         │
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                    │                         │
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>         J3 (Elbow) 3                         3 J3 (Elbow)
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                    │                         │
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                    │ Forearm                 │ Forearm
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                    │ (220mm)                 │ (220mm)
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>                    │                         │
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>                    ▼                         ▼
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                  Hand                      Hand
 </span></code></pre></div>
+<hr />
 <h2 id="alignment-and-offsets">Alignment and Offsets<a class="headerlink" href="#alignment-and-offsets" title="Permanent link">&para;</a></h2>
-<p>During assembly, the servos must be set to their mid-point positions (<span class="arithmatex">\(90^\circ\)</span>) before attaching the horns to align the limbs with the robot's zero-position references.</p>
+<p>During assembly, the servos must be set to their mid-point positions (<span class="arithmatex">\(90^\circ\)</span>) before attaching the horns to align the limbs with the robot's zero-position references.
+*   <strong>J1 (Pitch)</strong> at <span class="arithmatex">\(90^\circ\)</span> aligns the upper arm vertically downwards.
+*   <strong>J2 (Roll)</strong> at <span class="arithmatex">\(90^\circ\)</span> aligns the arm vertically downwards with <span class="arithmatex">\(0^\circ\)</span> roll (abduction).
+*   <strong>J3 (Elbow)</strong> at <span class="arithmatex">\(90^\circ\)</span> positions the forearm bent forward by <span class="arithmatex">\(90^\circ\)</span>.</p>
 
 
 
