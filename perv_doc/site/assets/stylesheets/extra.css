@@ -1,0 +1,205 @@
+/* PRAYAS V1 Engineering Documentation Extra Styles */
+
+:root {
+  --doc-primary: #3f51b5;
+  --doc-accent: #ff5722;
+  --doc-surface: rgba(255, 255, 255, 0.03);
+  --doc-border: rgba(128, 128, 128, 0.2);
+  --doc-text-muted: #888888;
+}
+
+[data-md-color-scheme="slate"] {
+  --doc-surface: rgba(255, 255, 255, 0.04);
+  --doc-border: rgba(255, 255, 255, 0.12);
+  --doc-text-muted: #a0a0a0;
+}
+
+/* Document Metadata Header Box */
+.doc-meta-box {
+  background: var(--doc-surface);
+  border: 1px solid var(--doc-border);
+  border-left: 4px solid var(--doc-primary);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 16px 0 24px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  font-size: 0.88rem;
+}
+
+.doc-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-meta-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--doc-text-muted);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.doc-meta-value {
+  font-weight: 600;
+  font-family: var(--md-code-font), monospace;
+}
+
+.doc-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.doc-badge-approved {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.doc-badge-spec {
+  background: rgba(63, 81, 181, 0.15);
+  color: #5c6bc0;
+  border: 1px solid rgba(63, 81, 181, 0.3);
+}
+
+/* SVG Inline Icon Styling */
+.doc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: -0.2em;
+  width: 1.25em;
+  height: 1.25em;
+  fill: currentColor;
+  margin-right: 0.4em;
+}
+
+.doc-icon-lg {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5em;
+}
+
+.doc-icon-accent {
+  color: var(--doc-accent);
+}
+
+.doc-icon-primary {
+  color: var(--doc-primary);
+}
+
+/* Feature Capability Cards */
+.capability-list {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.capability-item {
+  background: var(--doc-surface);
+  border: 1px solid var(--doc-border);
+  border-radius: 8px;
+  padding: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.capability-item:hover {
+  border-color: var(--doc-primary);
+  transform: translateY(-2px);
+}
+
+.capability-title {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.02rem;
+  margin-bottom: 8px;
+  color: var(--md-typeset-a-color);
+}
+
+/* Node Spec Cards */
+.node-card {
+  border: 1px solid var(--doc-border);
+  border-radius: 8px;
+  background: var(--doc-surface);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--doc-border);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.node-tag {
+  font-family: var(--md-code-font), monospace;
+  font-size: 0.78rem;
+  background: rgba(63, 81, 181, 0.12);
+  color: var(--doc-primary);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+/* Section Header SVGs */
+h2 .doc-icon, h3 .doc-icon {
+  margin-right: 0.4em;
+}
+
+/* Documentation Index Cards */
+.doc-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.doc-index-card {
+  border: 1px solid var(--doc-border);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--doc-surface);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doc-index-card:hover {
+  border-color: var(--doc-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.doc-index-card h4 {
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.doc-index-card h4 a {
+  color: var(--doc-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.doc-index-card h4 a:hover {
+  text-decoration: underline;
+}
+
+.doc-index-card p {
+  font-size: 0.85em;
+  margin: 0;
+  color: var(--doc-text-muted);
+  line-height: 1.45;
+}
