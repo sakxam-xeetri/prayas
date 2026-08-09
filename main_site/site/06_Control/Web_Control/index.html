@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#web-control-panel" class="md-skip">
+        <a href="#web-control-systems-local-remote" class="md-skip">
           Skip to content
         </a>
       
@@ -2401,10 +2401,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#web-dashboard-features" class="md-nav__link">
+  <a href="#1-dual-tier-web-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Web Dashboard Features
+        1. Dual-Tier Web Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-protocol-assignment-division-of-labor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Protocol Assignment &amp; Division of Labor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-local-web-control-interface-master-onboard-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Local Web Control Interface (Master Onboard Server)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Local Web Control Interface (Master Onboard Server)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-control-panel-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard Control Panel Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-live-telemetry-streaming-over-websockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Live Telemetry Streaming over WebSockets
       
     </span>
   </a>
@@ -4548,10 +4598,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#web-dashboard-features" class="md-nav__link">
+  <a href="#1-dual-tier-web-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Web Dashboard Features
+        1. Dual-Tier Web Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-protocol-assignment-division-of-labor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Protocol Assignment &amp; Division of Labor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-local-web-control-interface-master-onboard-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Local Web Control Interface (Master Onboard Server)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Local Web Control Interface (Master Onboard Server)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-control-panel-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dashboard Control Panel Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-live-telemetry-streaming-over-websockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Live Telemetry Streaming over WebSockets
       
     </span>
   </a>
@@ -4575,14 +4675,92 @@
 
 
 
-<h1 id="web-control-panel">Web Control Panel<a class="headerlink" href="#web-control-panel" title="Permanent link">&para;</a></h1>
+<h1 id="web-control-systems-local-remote">Web Control Systems (Local &amp; Remote)<a class="headerlink" href="#web-control-systems-local-remote" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the configuration and features of the local Web Control Panel, which allows direct control of the robot over a local area network (LAN).</p>
-<h2 id="web-dashboard-features">Web Dashboard Features<a class="headerlink" href="#web-dashboard-features" title="Permanent link">&para;</a></h2>
-<p>When the Master Node is in Local Access Point Mode (or connected to local Wi-Fi), it serves a lightweight web interface:
-*   <strong>Virtual Joysticks</strong>: Two virtual joysticks (using <code>nipplejs</code> on the frontend) allow operators to control base movement and head positioning using a mobile phone or PC.
-*   <strong>Telemetry Feeds</strong>: Displays real-time battery voltage, current draw, and E18-D80NK IR proximity sensor triggering states (Left, Center, Right).
-*   <strong>Video Feed</strong>: Displays a live JPEG stream from the ESP32-CAM on port 81.</p>
+<p>This document details the dual web control architectures (Local Wi-Fi Onboard Server and Remote Cloud Web Interface), protocol assignments, and live WebSocket teleoperation pipelines of the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-dual-tier-web-architecture">1. Dual-Tier Web Architecture<a class="headerlink" href="#1-dual-tier-web-architecture" title="Permanent link">&para;</a></h2>
+<p>PRAYAS supports two distinct web teleoperation pathways depending on operator proximity:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+-----------------------------------------------------------------------------------+
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>| LOCAL WEB CONTROL (Within Wi-Fi Range)                                            |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>| PHONE / LAPTOP  ---&gt;  Wi-Fi (AP/STA)  ---&gt;  MASTER ESP32  ---&gt;  ESP-NOW  ---&gt; NODES |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>+-----------------------------------------------------------------------------------+
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>| REMOTE WEB CONTROL (Global Internet Operation)                                     |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| REMOTE BROWSER  ---&gt;  HTTPS  ---&gt;  VPS WEB APP  ---&gt;  WSS  ---&gt;  MQTT  ---&gt; MASTER |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>+-----------------------------------------------------------------------------------+
+</span></code></pre></div>
+<hr />
+<h2 id="2-protocol-assignment-division-of-labor">2. Protocol Assignment &amp; Division of Labor<a class="headerlink" href="#2-protocol-assignment-division-of-labor" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Protocol</th>
+<th style="text-align: left;">Transport Target</th>
+<th style="text-align: left;">Optimal Use Cases</th>
+<th style="text-align: left;">Technical Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>WebSocket (<code>ws://</code>)</strong></td>
+<td style="text-align: left;">Browser <span class="arithmatex">\(\leftrightarrow\)</span> Master / VPS</td>
+<td style="text-align: left;">Live joystick teleoperation, continuous speed streaming, 10Hz telemetry</td>
+<td style="text-align: left;">Persistent 2-way connection; eliminates HTTP header overhead per packet</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>HTTPS / HTTP</strong></td>
+<td style="text-align: left;">Browser <span class="arithmatex">\(\leftrightarrow\)</span> Master / VPS</td>
+<td style="text-align: left;">User login, dashboard static assets, parameter config, OTA updates</td>
+<td style="text-align: left;">Request-response model suited for static resources and authentication</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MQTT (<code>mqtts://</code>)</strong></td>
+<td style="text-align: left;">VPS <span class="arithmatex">\(\leftrightarrow\)</span> Master ESP32</td>
+<td style="text-align: left;">Remote command relay and telemetry aggregation</td>
+<td style="text-align: left;">Light-weight pub/sub protocol designed for constrained microcontrollers</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-local-web-control-interface-master-onboard-server">3. Local Web Control Interface (Master Onboard Server)<a class="headerlink" href="#3-local-web-control-interface-master-onboard-server" title="Permanent link">&para;</a></h2>
+<p>When operating locally, the Master ESP32 hosts an onboard web dashboard over Wi-Fi (Access Point <code>PRAYAS-AP</code> or Station mode):</p>
+<ul>
+<li><strong>HTTP REST Server Port</strong>: <code>80</code> (<code>http://192.168.4.1/api/v1/*</code>)</li>
+<li><strong>WebSocket Teleoperation Port</strong>: <code>81</code> (<code>ws://192.168.4.1:81/ws</code>)</li>
+</ul>
+<h3 id="dashboard-control-panel-features">Dashboard Control Panel Features<a class="headerlink" href="#dashboard-control-panel-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Virtual directional joystick &amp; speed slider (streams <code>FORWARD, SPEED=120</code> over WebSocket).</li>
+<li>Live telemetry indicators: Battery voltage (<span class="arithmatex">\(11.8 \text{V}\)</span>), motor current (<span class="arithmatex">\(4.2 \text{A}\)</span>), operating mode (<code>WEB</code>).</li>
+<li>Node health status lights: Motor Node <code>ONLINE</code>, Servo Node <code>ONLINE</code>, AI Node <code>ONLINE</code>.</li>
+<li>Instant Emergency Stop button (sends high-priority <code>ESTOP</code> payload).</li>
+</ul>
+<hr />
+<h2 id="4-live-telemetry-streaming-over-websockets">4. Live Telemetry Streaming over WebSockets<a class="headerlink" href="#4-live-telemetry-streaming-over-websockets" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>                Web Browser
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>                /         \
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>               /           \
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>          Commands       Telemetry
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>             ↓               ↑
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>             └──── WebSocket ─┘
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>                      │
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>                      ▼
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>               PRAYAS Master ESP32
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                      │
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>                   ESP-NOW
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>                      │
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>               Robot Subsystems
+</span></code></pre></div>
+<p>Continuous telemetry payloads streamed to the browser interface include:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;battery_v&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">11.8</span><span class="p">,</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;motor_a&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">4.2</span><span class="p">,</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">130</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">&quot;mode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WEB&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">&quot;obstacle&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CLEAR&quot;</span><span class="p">,</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="nt">&quot;nodes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;motor&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ONLINE&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;servo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ONLINE&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;ai&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ONLINE&quot;</span><span class="p">}</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</span></code></pre></div>
 
 
 

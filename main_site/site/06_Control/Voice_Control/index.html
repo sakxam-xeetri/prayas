@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#voice-control-interface" class="md-skip">
+        <a href="#voice-ai-control-system" class="md-skip">
           Skip to content
         </a>
       
@@ -2345,10 +2345,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#voice-commands-map" class="md-nav__link">
+  <a href="#1-system-architecture-constraints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Voice Commands Map
+        1. System Architecture &amp; Constraints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-hardware-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Hardware Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-natural-language-intent-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Natural Language Intent Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-end-to-end-execution-sequence-turn-your-head-left" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. End-to-End Execution Sequence: "Turn your head left"
       
     </span>
   </a>
@@ -4548,10 +4581,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#voice-commands-map" class="md-nav__link">
+  <a href="#1-system-architecture-constraints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Voice Commands Map
+        1. System Architecture &amp; Constraints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-hardware-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Hardware Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-natural-language-intent-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Natural Language Intent Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-end-to-end-execution-sequence-turn-your-head-left" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. End-to-End Execution Sequence: "Turn your head left"
       
     </span>
   </a>
@@ -4575,31 +4641,131 @@
 
 
 
-<h1 id="voice-control-interface">Voice Control Interface<a class="headerlink" href="#voice-control-interface" title="Permanent link">&para;</a></h1>
+<h1 id="voice-ai-control-system">Voice &amp; AI Control System<a class="headerlink" href="#voice-ai-control-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document describes the mapping of voice commands to physical movements and gestures in PRAYAS V1.</p>
-<h2 id="voice-commands-map">Voice Commands Map<a class="headerlink" href="#voice-commands-map" title="Permanent link">&para;</a></h2>
-<p>Voice inputs processed by the AI Node (ESP32-S3) are categorized into intents and parameters, which are then routed to the Master Node over UART/ESP-NOW:</p>
-<ul>
-<li><strong>Command</strong>: "Move forward half a meter."<ul>
-<li><em>Intent</em>: <code>MOVE_DISTANCE</code></li>
-<li><em>Target Subsystem</em>: Motor Node</li>
-<li><em>Action Parameters</em>: <code>{ distance: 0.5, speed: 0.2 }</code></li>
-</ul>
-</li>
-<li><strong>Command</strong>: "Turn right 90 degrees."<ul>
-<li><em>Intent</em>: <code>ROTATE_ANGLE</code></li>
-<li><em>Target Subsystem</em>: Motor Node</li>
-<li><em>Action Parameters</em>: <code>{ angle: 90.0, speed: 0.3 }</code></li>
-</ul>
-</li>
-<li><strong>Command</strong>: "Stop immediately!"<ul>
-<li><em>Intent</em>: <code>ESTOP</code></li>
-<li><em>Target Subsystem</em>: Motor &amp; Servo Nodes</li>
-<li><em>Action Parameters</em>: <code>{ instant: true }</code></li>
-</ul>
-</li>
-</ul>
+<p>This document details the voice interaction pipeline, natural language intent parsing, hardware audio interfaces, and command forwarding architecture of the <strong>ESP32-S3-CAM AI Node</strong> in the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-system-architecture-constraints">1. System Architecture &amp; Constraints<a class="headerlink" href="#1-system-architecture-constraints" title="Permanent link">&para;</a></h2>
+<p>Voice control is powered by a dedicated <strong>ESP32-S3-CAM AI Node</strong> running the <strong>Xiaozhi AI Voice Framework</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>USER SPEAKS  ---&gt;  INMP441 MIC  ---&gt;  AI NODE (ESP32-S3)  ---&gt;  Xiaozhi AI / Cloud LLM
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                                       |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                                              Intent Parser
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                                       |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                              High-Level Command
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                                       |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                                                    ESP-NOW
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                                                       |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>TARGET SUBSYSTEM  &lt;---  ESP-NOW  &lt;---  COMMAND MANAGER  &lt;---  MASTER ESP32
+</span></code></pre></div>
+<blockquote>
+<p>[!WARNING]
+<strong>Strict Architectural Isolation</strong>: The AI Node is strictly forbidden from directly controlling motor drivers, servos, or power relays. All action intents MUST be transmitted to the Master ESP32 via ESP-NOW for priority validation and safety pre-screening.</p>
+</blockquote>
+<hr />
+<h2 id="2-hardware-interfaces">2. Hardware Interfaces<a class="headerlink" href="#2-hardware-interfaces" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Interface Bus</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>INMP441 Digital Microphone</strong></td>
+<td style="text-align: left;">I2S Bus</td>
+<td style="text-align: left;">Low-noise 24-bit digital audio sampling</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MAX98357A I2S Class-D Amp</strong></td>
+<td style="text-align: left;">I2S Bus</td>
+<td style="text-align: left;">High-efficiency 3W speaker audio output for TTS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2.4" SPI TFT Display</strong></td>
+<td style="text-align: left;">SPI Bus</td>
+<td style="text-align: left;">Dynamic face animation rendering &amp; voice assistant UI</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>OV2640 Camera Module</strong></td>
+<td style="text-align: left;">DVP Parallel</td>
+<td style="text-align: left;">Visual Q&amp;A snapshots &amp; cognitive vision input</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ESP32-S3-WROOM-1</strong></td>
+<td style="text-align: left;">8MB PSRAM / 8MB Flash</td>
+<td style="text-align: left;">Local VAD, WebSocket streaming, intent matching</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-natural-language-intent-mapping">3. Natural Language Intent Mapping<a class="headerlink" href="#3-natural-language-intent-mapping" title="Permanent link">&para;</a></h2>
+<p>The Xiaozhi AI framework parses user speech into standardized high-level PRAYAS commands:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Natural Language Input</th>
+<th style="text-align: left;">Parsed Action Intent</th>
+<th style="text-align: left;">Target Subsystem</th>
+<th style="text-align: left;">Master Command Forwarded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><em>"Move forward slowly"</em></td>
+<td style="text-align: left;"><code>MOVE</code></td>
+<td style="text-align: left;">Motor Node (<code>0x02</code>)</td>
+<td style="text-align: left;"><code>DIR = FORWARD, SPEED = 80</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>"Turn your head left"</em></td>
+<td style="text-align: left;"><code>HEAD_LEFT</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+<td style="text-align: left;"><code>WORKFLOW = HEAD_LEFT</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>"Lower your arm"</em></td>
+<td style="text-align: left;"><code>HAND_DOWN</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+<td style="text-align: left;"><code>WORKFLOW = HAND_DOWN</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>"Greet our guest"</em></td>
+<td style="text-align: left;"><code>GREETING</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+<td style="text-align: left;"><code>WORKFLOW = GREETING</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>"Stop immediately"</em></td>
+<td style="text-align: left;"><code>ESTOP</code></td>
+<td style="text-align: left;">All Subsystems</td>
+<td style="text-align: left;"><code>COMMAND = ESTOP</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-end-to-end-execution-sequence-turn-your-head-left">4. End-to-End Execution Sequence: "Turn your head left"<a class="headerlink" href="#4-end-to-end-execution-sequence-turn-your-head-left" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[USER] &quot;Turn your head left.&quot;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  ▼  (Digital Audio via I2S)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[INMP441 MIC] Captures audio stream
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  │
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  ▼  (WebSocket Audio Frame)
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[ESP32-S3 AI NODE] Performs VAD &amp; streams to Xiaozhi LLM
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  │
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  ▼  (Intent Resolution: HEAD_LEFT)
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>[INTENT PARSER] Constructs PRAYAS_Packet_t{source: 0x05, dest: 0x01, cmd: CMD_SERVO_WORKFLOW, val: HEAD_LEFT}
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  │
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  ▼  (ESP-NOW Wireless Frame)
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>[PRAYAS MASTER ESP32] Receives frame -&gt; Control Manager verifies mode (VOICE) &amp; priority (Tier 6)
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  │
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>  ▼  (ESP-NOW Forward to 0x03)
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>[SERVO NODE ESP32] Receives workflow trigger -&gt; Executes smooth cubic spline on PCA9685 Channel 0
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>  │
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>  ▼
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>[HEAD ROTATION COMPLETE] Servo Node returns STATUS_WORKFLOW_COMPLETE to Master
+</span></code></pre></div>
 
 
 

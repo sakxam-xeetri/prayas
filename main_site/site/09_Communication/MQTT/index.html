@@ -3200,10 +3200,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#broker-settings" class="md-nav__link">
+  <a href="#1-role-in-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Broker Settings
+        1. Role in Architecture
       
     </span>
   </a>
@@ -3211,10 +3211,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#topic-mapping-table" class="md-nav__link">
+  <a href="#2-infrastructure-broker-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topic Mapping Table
+        2. Infrastructure &amp; Broker Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-topic-hierarchy-payload-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topic Hierarchy &amp; Payload Schemas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-end-to-end-control-flow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. End-to-End Control Flow Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-internet-disconnection-fallback-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Internet Disconnection &amp; Fallback Behavior
       
     </span>
   </a>
@@ -4559,10 +4592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#broker-settings" class="md-nav__link">
+  <a href="#1-role-in-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Broker Settings
+        1. Role in Architecture
       
     </span>
   </a>
@@ -4570,10 +4603,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#topic-mapping-table" class="md-nav__link">
+  <a href="#2-infrastructure-broker-parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Topic Mapping Table
+        2. Infrastructure &amp; Broker Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-topic-hierarchy-payload-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Topic Hierarchy &amp; Payload Schemas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-end-to-end-control-flow-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. End-to-End Control Flow Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-internet-disconnection-fallback-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Internet Disconnection &amp; Fallback Behavior
       
     </span>
   </a>
@@ -4599,23 +4665,63 @@
 
 <h1 id="mqtt-broker-cloud-integration">MQTT Broker &amp; Cloud Integration<a class="headerlink" href="#mqtt-broker-cloud-integration" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the configuration and topics used for MQTT communication between the Master Node and the cloud broker.</p>
-<h2 id="broker-settings">Broker Settings<a class="headerlink" href="#broker-settings" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Broker Host</strong>: Deployed on a Virtual Private Server (VPS) at <code>mqtt.prayas-robotics.org</code>.</li>
-<li><strong>Port</strong>: 1883 (Standard TCP), 8883 (Secure TLS/SSL).</li>
-<li><strong>Quality of Service (QoS)</strong>:<ul>
-<li>QoS 0 (At most once): Used for high-frequency telemetry updates.</li>
-<li>QoS 1 (At least once): Used for command messages and configuration updates.</li>
-</ul>
-</li>
-</ul>
-<h2 id="topic-mapping-table">Topic Mapping Table<a class="headerlink" href="#topic-mapping-table" title="Permanent link">&para;</a></h2>
+<p>This document specifies the cloud infrastructure, publish/subscribe topic structure, Quality of Service (QoS) mappings, and remote messaging paradigms for the <strong>MQTT (Message Queuing Telemetry Transport)</strong> communication layer in the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-role-in-architecture">1. Role in Architecture<a class="headerlink" href="#1-role-in-architecture" title="Permanent link">&para;</a></h2>
+<p>MQTT serves as the internet-facing messaging layer bridging off-robot cloud services, web applications, and remote operators with the <strong>PRAYAS Master ESP32</strong>.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>REMOTE BROWSER / APP  ---&gt;  HTTPS / WSS  ---&gt;  CLOUD VPS SERVER  ---&gt;  MQTT BROKER  ---&gt;  MASTER ESP32  ---&gt;  ESP-NOW  ---&gt; NODES
+</span></code></pre></div>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Safety Loop Decoupling</strong>: The MQTT broker and Cloud VPS are explicitly excluded from the robot's real-time motor safety loop. If internet connectivity drops or latency spikes, the Master ESP32 and Motor Node local hardware safety mechanisms continue operating without interruption.</p>
+</blockquote>
+<hr />
+<h2 id="2-infrastructure-broker-parameters">2. Infrastructure &amp; Broker Parameters<a class="headerlink" href="#2-infrastructure-broker-parameters" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Configuration / Specification</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Broker Endpoint</strong></td>
+<td style="text-align: left;"><code>mqtt.prayas-robotics.org</code></td>
+<td style="text-align: left;">Virtual Private Server (VPS) hosted Mosquitto MQTT Broker</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Non-TLS Port</strong></td>
+<td style="text-align: left;"><code>1883</code></td>
+<td style="text-align: left;">Unencrypted TCP (restricted to local testing)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TLS/SSL Port</strong></td>
+<td style="text-align: left;"><code>8883</code></td>
+<td style="text-align: left;">MQTTS encrypted via TLS 1.3 for secure internet teleoperation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Keep-Alive Interval</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(15 \text{ seconds}\)</span></td>
+<td style="text-align: left;">Maximum allowed silence threshold before LWT trigger</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Last Will &amp; Testament</strong></td>
+<td style="text-align: left;">Topic: <code>prayas/status/master</code></td>
+<td style="text-align: left;">Payload: <code>{"status":"OFFLINE","reason":"Connection Lost"}</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-topic-hierarchy-payload-schemas">3. Topic Hierarchy &amp; Payload Schemas<a class="headerlink" href="#3-topic-hierarchy-payload-schemas" title="Permanent link">&para;</a></h2>
+<p>PRAYAS organizes remote telemetry and command channels into a structured, namespaced topic tree:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">MQTT Topic</th>
 <th style="text-align: center;">Direction</th>
+<th style="text-align: center;">QoS</th>
 <th style="text-align: left;">Payload Type</th>
 <th style="text-align: left;">Description</th>
 </tr>
@@ -4624,29 +4730,80 @@
 <tr>
 <td style="text-align: left;"><code>prayas/telemetry/state</code></td>
 <td style="text-align: center;">Publish</td>
+<td style="text-align: center;">QoS 0</td>
 <td style="text-align: left;">JSON</td>
-<td style="text-align: left;">Publishes battery levels, sensor statuses, and node states at 5 Hz.</td>
+<td style="text-align: left;">Real-time battery, IMU, enclosure temp, and node health (<span class="arithmatex">\(5 \text{ Hz}\)</span>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>prayas/command/move</code></td>
 <td style="text-align: center;">Subscribe</td>
+<td style="text-align: center;">QoS 1</td>
 <td style="text-align: left;">JSON</td>
-<td style="text-align: left;">Receives linear and angular velocity commands for the base.</td>
+<td style="text-align: left;">Base locomotion directional requests (<code>FORWARD</code>, <code>LEFT</code>, <code>SPEED</code>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>prayas/command/gesture</code></td>
 <td style="text-align: center;">Subscribe</td>
+<td style="text-align: center;">QoS 1</td>
 <td style="text-align: left;">JSON</td>
-<td style="text-align: left;">Receives gesture command IDs (e.g. Wave, Point, Bow).</td>
+<td style="text-align: left;">Kinematic pose &amp; workflow triggers (<code>HAND_DOWN</code>, <code>WAVE</code>, <code>GREETING</code>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>prayas/command/estop</code></td>
 <td style="text-align: center;">Subscribe</td>
+<td style="text-align: center;">QoS 1</td>
 <td style="text-align: left;">JSON</td>
-<td style="text-align: left;">Receives immediate emergency stop commands.</td>
+<td style="text-align: left;">Supreme emergency stop override command</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>prayas/status/alerts</code></td>
+<td style="text-align: center;">Publish</td>
+<td style="text-align: center;">QoS 1</td>
+<td style="text-align: left;">JSON</td>
+<td style="text-align: left;">Asynchronous system warnings (Obstacle Trip, Over-Current, Low Battery)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>prayas/config/update</code></td>
+<td style="text-align: center;">Subscribe</td>
+<td style="text-align: center;">QoS 1</td>
+<td style="text-align: left;">JSON</td>
+<td style="text-align: left;">Remote configuration updates and parameter tuning</td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="4-end-to-end-control-flow-example">4. End-to-End Control Flow Example<a class="headerlink" href="#4-end-to-end-control-flow-example" title="Permanent link">&para;</a></h2>
+<p>When a remote user presses "Forward" on a web dashboard located across the internet:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[REMOTE WEB APP] User presses Joystick &quot;FORWARD&quot;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>       |
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       v  (HTTPS / WSS Payload)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[CLOUD VPS] Translates event to JSON
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>       |
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>       v  (Publish to MQTT Topic: prayas/command/move, Payload: {&quot;cmd&quot;:&quot;MOVE&quot;,&quot;dir&quot;:&quot;FORWARD&quot;,&quot;speed&quot;:120})
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[MQTT BROKER] Relays packet to subscribed client
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>       |
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>       v
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>[PRAYAS MASTER ESP32] MQTTPoolingTask receives payload -&gt; Normalizes into PRAYAS_Command_t
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>       |
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>       v
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>[MASTER CONTROL MANAGER] Validates Operating Mode (REMOTE) &amp; Priority -&gt; Transmits ESP-NOW Packet
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>       |
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>       v  (ESP-NOW Packet, Latency &lt; 5ms)
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>[MOTOR NODE ESP32] Checks local IR obstacle sensors -&gt; Drives BTS7960 PWM duty cycles
+</span></code></pre></div>
+<hr />
+<h2 id="5-internet-disconnection-fallback-behavior">5. Internet Disconnection &amp; Fallback Behavior<a class="headerlink" href="#5-internet-disconnection-fallback-behavior" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    InternetLoss{Internet / VPS Connection Lost?}
+
+    InternetLoss --&gt;|YES| MasterDetect[Master MQTT Keep-Alive Times Out]
+    MasterDetect --&gt; ModeFallback[Master Switches Mode: REMOTE -&gt; SAFE / MANUAL]
+    ModeFallback --&gt; LocalActive[Local Gamepad &amp; Local Web AP Control Remain 100% Operational]
+
+    InternetLoss --&gt;|NO| NormalOps[MQTT Streams Telemetry @ 5Hz &amp; Receives Remote Cmds]</code></pre>
+<ul>
+<li><strong>Local Resilience</strong>: Disconnection from the cloud VPS has <strong>zero impact</strong> on local physical controller (Gamepad) or local Wi-Fi web dashboard operation.</li>
+</ul>
 
 
 

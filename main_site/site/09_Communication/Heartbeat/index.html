@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#heartbeat-safety-watchdogs" class="md-skip">
+        <a href="#heartbeat-safety-watchdog-timers" class="md-skip">
           Skip to content
         </a>
       
@@ -3256,10 +3256,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#heartbeat-mechanism" class="md-nav__link">
+  <a href="#1-multi-tier-watchdog-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Heartbeat Mechanism
+        1. Multi-Tier Watchdog Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-heartbeat-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Heartbeat Specifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-motor-node-local-hardware-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Motor Node Local Hardware Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-heartbeat-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Heartbeat State Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-fail-safe-recovery-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fail-Safe Recovery Behavior
       
     </span>
   </a>
@@ -4548,10 +4592,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#heartbeat-mechanism" class="md-nav__link">
+  <a href="#1-multi-tier-watchdog-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Heartbeat Mechanism
+        1. Multi-Tier Watchdog Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-heartbeat-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Heartbeat Specifications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-motor-node-local-hardware-watchdog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Motor Node Local Hardware Watchdog
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-heartbeat-state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Heartbeat State Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-fail-safe-recovery-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Fail-Safe Recovery Behavior
       
     </span>
   </a>
@@ -4575,18 +4663,100 @@
 
 
 
-<h1 id="heartbeat-safety-watchdogs">Heartbeat &amp; Safety Watchdogs<a class="headerlink" href="#heartbeat-safety-watchdogs" title="Permanent link">&para;</a></h1>
+<h1 id="heartbeat-safety-watchdog-timers">Heartbeat &amp; Safety Watchdog Timers<a class="headerlink" href="#heartbeat-safety-watchdog-timers" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the heartbeat watchdogs used to detect communication failures and automatically trigger safety halts.</p>
-<h2 id="heartbeat-mechanism">Heartbeat Mechanism<a class="headerlink" href="#heartbeat-mechanism" title="Permanent link">&para;</a></h2>
-<p>The Master Node broadcasts a heartbeat packet to all sub-nodes every 200 ms:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  Master Node  ───(ESP-NOW: MSG_TYPE_HEARTBEAT)───&gt;  Sub-Nodes (Motor, Servo)
+<p>This document details the periodic heartbeat signalling mechanism, timeout thresholds, and local hardware watchdog timers used to detect communication loss and automatically trigger safety halts across the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-multi-tier-watchdog-architecture">1. Multi-Tier Watchdog Architecture<a class="headerlink" href="#1-multi-tier-watchdog-architecture" title="Permanent link">&para;</a></h2>
+<p>To prevent runaway robot conditions caused by radio interference, firmware hangs, or lost wireless frames, PRAYAS enforces safety watchdogs at two distinct system levels:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[MASTER ESP32 NODE]  &lt;---(10Hz Heartbeats)---&gt;  [SUBSYSTEM NODES (Motor, Servo, AI)]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        |                                                 |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  Monitors Node Health                             Independent Local
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  (Timeout: 500 ms)                                Hardware Watchdog
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        |                                          (Timeout: 300 ms)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        v                                                 v
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Mark Node OFFLINE                                 Instant Motor Halt (PWM 0%)
 </span></code></pre></div>
-<ul>
-<li><strong>Heartbeat Frequency</strong>: 200 ms.</li>
-<li><strong>Timeout Threshold</strong>: 500 ms.</li>
-<li><strong>Fail-Safe Action</strong>: If a sub-node does not receive a heartbeat packet within 500 ms, it immediately enters a <strong>Safe Halt State</strong> (motors stopped, servos held in current positions).</li>
-</ul>
+<hr />
+<h2 id="2-heartbeat-specifications">2. Heartbeat Specifications<a class="headerlink" href="#2-heartbeat-specifications" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Specification</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Heartbeat Frequency</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(10 \text{ Hz}\)</span> (<span class="arithmatex">\(100 \text{ ms}\)</span> interval)</td>
+<td style="text-align: left;">Provides rapid connection state feedback without saturating 2.4 GHz channel</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Packet Command ID</strong></td>
+<td style="text-align: left;"><code>CMD_HEARTBEAT</code> (<code>0x01</code>)</td>
+<td style="text-align: left;">Light-weight 8-byte payload frame</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Master Node Timeout</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(500 \text{ ms}\)</span> (5 missed heartbeats)</td>
+<td style="text-align: left;">Master flags target node <code>OFFLINE</code> and notifies web telemetry</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Motor Node Watchdog</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(300 \text{ ms}\)</span> (3 missed heartbeats)</td>
+<td style="text-align: left;"><strong>Local Hardware Halt</strong>: Instantly disables BTS7960 motor drivers</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-motor-node-local-hardware-watchdog">3. Motor Node Local Hardware Watchdog<a class="headerlink" href="#3-motor-node-local-hardware-watchdog" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>[!CAUTION]
+The Motor Node's safety watchdog executes locally on Core 1 of the Motor ESP32. It operates independently of Wi-Fi routers, cloud VPS servers, or Master Node processing state.</p>
+</blockquote>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Motor Node FreeRTOS Watchdog Task Execution</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">vSafetyWatchdogTask</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">pvParameters</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">TickType_t</span><span class="w"> </span><span class="n">lastValidPacketTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xTaskGetTickCount</span><span class="p">();</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(;;)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="c1">// Check time elapsed since last valid ESP-NOW command or heartbeat</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">((</span><span class="n">xTaskGetTickCount</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lastValidPacketTime</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="mi">300</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">            </span><span class="c1">// EMERGENCY SAFETY HALT</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">            </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_LEFT_CHANNEL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">            </span><span class="n">ledcWrite</span><span class="p">(</span><span class="n">PWM_RIGHT_CHANNEL</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">            </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BTS7960_R_EN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">            </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">BTS7960_L_EN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">            </span><span class="n">systemState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">STATE_SAFE_HALT</span><span class="p">;</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="n">vTaskDelay</span><span class="p">(</span><span class="n">pdMS_TO_TICKS</span><span class="p">(</span><span class="mi">50</span><span class="p">));</span><span class="w"> </span><span class="c1">// Poll at 20 Hz</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="4-heartbeat-state-machine">4. Heartbeat State Machine<a class="headerlink" href="#4-heartbeat-state-machine" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NODE_ONLINE
+
+    NODE_ONLINE --&gt; HEARTBEAT_OK : Heartbeat Received &lt; 100ms
+    HEARTBEAT_OK --&gt; NODE_ONLINE
+
+    NODE_ONLINE --&gt; WARN_MISSED : No Packet for &gt; 200ms
+    WARN_MISSED --&gt; NODE_ONLINE : Packet Received
+
+    WARN_MISSED --&gt; MOTOR_HALT : No Packet for &gt; 300ms (Motor Node Local)
+    WARN_MISSED --&gt; MASTER_OFFLINE : No Packet for &gt; 500ms (Master State Tracker)
+
+    MOTOR_HALT --&gt; SAFE_MODE : Lock Drivetrain
+    MASTER_OFFLINE --&gt; RECOVERY_MODE : Attempt Channel Re-sync</code></pre>
+<hr />
+<h2 id="5-fail-safe-recovery-behavior">5. Fail-Safe Recovery Behavior<a class="headerlink" href="#5-fail-safe-recovery-behavior" title="Permanent link">&para;</a></h2>
+<p>When a disconnected node re-establishes communication:
+1. Node sends 3 consecutive <code>CMD_HEARTBEAT</code> frames with valid CRC16 checksums.
+2. Master Node clears <code>OFFLINE</code> flag and updates telemetry dashboard.
+3. Node state transitions from <code>SAFE</code> to <code>MANUAL</code> only after explicit command clearance from Master Control Manager.</p>
 
 
 

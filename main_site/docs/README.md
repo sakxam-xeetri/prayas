@@ -124,8 +124,8 @@ graph TD
 ## <svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m2 4v12h8V6H8m1 2h6v2H9V8m0 4h6v2H9v-2Z"/></svg> Distributed Node Breakdown
 
 ### 1. Master Gateway Node `[NODE-01_MASTER]` (ESP32)
-* **Role**: Primary central gateway and command arbiter.
-* **Responsibilities**: Handles ESP-NOW peer synchronization, processes incoming MQTT commands from the web dashboard, performs control arbitration (Safety/E-Stop > Gamepad > Voice AI > Auto Idle), and broadcasts target velocity/pose states to execution nodes.
+* **Role**: Primary central gateway and command arbiter (PRAYAS Control Manager).
+* **Responsibilities**: Handles ESP-NOW peer synchronization, processes incoming inputs from 5 control modalities (Voice, Remote, Gamepad, Local Web, Autonomous), performs 7-tier control arbitration (E-Stop > Local Safety > Gamepad > Remote > Local Web > Voice AI > Autonomous), and broadcasts target velocity/pose states to execution nodes.
 
 ### 2. Motor Locomotion Controller `[NODE-02_MOTOR]` (ESP32)
 * **Role**: High-speed locomotion controller.

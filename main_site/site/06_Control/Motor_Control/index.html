@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#motor-control-tuning-drive-dynamics" class="md-skip">
+        <a href="#motor-control-system-locomotion" class="md-skip">
           Skip to content
         </a>
       
@@ -2457,10 +2457,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#drive-dynamics-kinematics" class="md-nav__link">
+  <a href="#1-subsystem-hardware-specification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drive Dynamics &amp; Kinematics
+        1. Subsystem Hardware Specification
       
     </span>
   </a>
@@ -2468,10 +2468,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#speed-ramping-linear-acceleration" class="md-nav__link">
+  <a href="#2-inbound-command-set-master-rightarrow-motor-node" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Speed Ramping (Linear Acceleration)
+        2. Inbound Command Set (Master \(\rightarrow\) Motor Node)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-local-motor-safety-interlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Local Motor Safety Interlock
       
     </span>
   </a>
@@ -4559,10 +4570,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#drive-dynamics-kinematics" class="md-nav__link">
+  <a href="#1-subsystem-hardware-specification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drive Dynamics &amp; Kinematics
+        1. Subsystem Hardware Specification
       
     </span>
   </a>
@@ -4570,10 +4581,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#speed-ramping-linear-acceleration" class="md-nav__link">
+  <a href="#2-inbound-command-set-master-rightarrow-motor-node" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Speed Ramping (Linear Acceleration)
+        2. Inbound Command Set (Master \(\rightarrow\) Motor Node)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-local-motor-safety-interlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Local Motor Safety Interlock
       
     </span>
   </a>
@@ -4597,23 +4619,75 @@
 
 
 
-<h1 id="motor-control-tuning-drive-dynamics">Motor Control Tuning &amp; Drive Dynamics<a class="headerlink" href="#motor-control-tuning-drive-dynamics" title="Permanent link">&para;</a></h1>
+<h1 id="motor-control-system-locomotion">Motor Control System &amp; Locomotion<a class="headerlink" href="#motor-control-system-locomotion" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the motor control loops, PWM generation, acceleration ramps, and turning calculations for PRAYAS V1.</p>
-<h2 id="drive-dynamics-kinematics">Drive Dynamics &amp; Kinematics<a class="headerlink" href="#drive-dynamics-kinematics" title="Permanent link">&para;</a></h2>
-<p>PRAYAS V1 uses a differential drive configuration. Given the robot's track width (<span class="arithmatex">\(L = 320  ext{ mm}\)</span>) and wheel radius (<span class="arithmatex">\(R = 50    ext{ mm}\)</span>), the target rotational speeds for the left (<span class="arithmatex">\(v_L\)</span>) and right (<span class="arithmatex">\(v_R\)</span>) wheels are calculated from target linear (<span class="arithmatex">\(v\)</span>) and angular (<span class="arithmatex">\(\omega\)</span>) velocities:</p>
-<div class="arithmatex">\[v_L = v - rac{\omega \cdot L}{2}$$
-$$v_R = v + rac{\omega \cdot L}{2}\]</div>
-<h2 id="speed-ramping-linear-acceleration">Speed Ramping (Linear Acceleration)<a class="headerlink" href="#speed-ramping-linear-acceleration" title="Permanent link">&para;</a></h2>
-<p>To prevent the high-center-of-gravity torso (1.2m height) from tipping during acceleration, target wheel speeds are ramped gradually using a simple linear acceleration profile:</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  Velocity
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     ▲
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Max ─┼───────/──────────────\───────
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>     │      /                     │     /                   0  ─┴────/────────────────────\────► Time
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        Acc Ramp             Dec Ramp
+<p>This document specifies the differential drive kinematics, motor driver interfacing, hardware safety interlocks, and command execution pipelines of the <strong>Motor Locomotion Node (ESP32)</strong> in the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-subsystem-hardware-specification">1. Subsystem Hardware Specification<a class="headerlink" href="#1-subsystem-hardware-specification" title="Permanent link">&para;</a></h2>
+<p>The Motor Node is a dedicated microcontroller node responsible for real-time 4WD locomotion and local physical hazard prevention.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Hardware Component</th>
+<th style="text-align: left;">Quantity / Spec</th>
+<th style="text-align: left;">Functional Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Microcontroller</strong></td>
+<td style="text-align: left;">ESP32 DevKitC v4 (<code>0x02</code>)</td>
+<td style="text-align: left;">Real-time differential kinematics &amp; safety watchdog</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DC Gear Motors</strong></td>
+<td style="text-align: left;">4 × Johnson 12V 200 RPM</td>
+<td style="text-align: left;">High-torque 4WD drivetrain (<span class="arithmatex">\(10 \text{ cm} \times 4 \text{ cm}\)</span> wheels)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Motor Drivers</strong></td>
+<td style="text-align: left;">2 × BTS7960 43A H-Bridges</td>
+<td style="text-align: left;">High-current PWM motor direction &amp; speed control (<span class="arithmatex">\(20 \text{ kHz}\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Proximity Sensors</strong></td>
+<td style="text-align: left;">4 × E18-D80NK IR Sensors</td>
+<td style="text-align: left;">Front-Left, Front-Right, Rear-Left, Rear-Right obstacle detection</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Current Sensor</strong></td>
+<td style="text-align: left;">1 × INA219 Monitor (I2C)</td>
+<td style="text-align: left;">Over-current protection and motor load monitoring</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-inbound-command-set-master-rightarrow-motor-node">2. Inbound Command Set (Master <span class="arithmatex">\(\rightarrow\)</span> Motor Node)<a class="headerlink" href="#2-inbound-command-set-master-rightarrow-motor-node" title="Permanent link">&para;</a></h2>
+<p>The Motor Node accepts standardized ESP-NOW commands from the Master Node:</p>
+<p><code>FORWARD</code>, <code>BACKWARD</code>, <code>LEFT</code>, <code>RIGHT</code>, <code>FORWARD_LEFT</code>, <code>FORWARD_RIGHT</code>, <code>BACKWARD_LEFT</code>, <code>BACKWARD_RIGHT</code>, <code>STOP</code>, <code>SPEED_CONTROL</code>, <code>MODE_CHANGE</code>, <code>OBSTACLE_MODE</code>, <code>EMERGENCY_STOP</code>.</p>
+<hr />
+<h2 id="3-local-motor-safety-interlock">3. Local Motor Safety Interlock<a class="headerlink" href="#3-local-motor-safety-interlock" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>[!CAUTION]
+To eliminate wireless latency risks during physical collision hazards, <strong>obstacle detection and motor emergency stopping are executed locally on the Motor Node</strong>.</p>
+</blockquote>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MASTER ESP32  ---(FORWARD / SPEED 180)---&gt;  MOTOR NODE ESP32
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                        Check 4x IR Sensors
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                       +------------------------+------------------------+
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                       |                                                 |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                  [CLEAR]                                           [OBSTACLE]
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                       |                                                 |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                 Execute Motion                                     HALT MOTORS (PWM 0%)
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                                                         |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                                            Report STATUS -&gt; MASTER
 </span></code></pre></div>
-*   <strong>Acceleration Limit</strong>: Maximum acceleration is capped at <span class="arithmatex">\(0.4  ext{ m/s}^2\)</span>.
-*   <strong>Deceleration Limit</strong>: Maximum deceleration is capped at <span class="arithmatex">\(0.6  ext{ m/s}^2\)</span> during normal operations, and <span class="arithmatex">\(1.5 ext{ m/s}^2\)</span> during emergency stops.</p>
+<ul>
+<li><strong>Local IR Trip</strong>: Overrides Master requests instantly and halts BTS7960 PWM outputs.</li>
+<li><strong>Current Trip</strong>: If INA219 current exceeds <span class="arithmatex">\(15 \text{ A}\)</span> for <span class="arithmatex">\(&gt; 200 \text{ ms}\)</span>, Motor Node shuts down driver outputs locally to prevent motor burn-out.</li>
+<li><strong>300ms Hardware Watchdog</strong>: Halts motors if valid ESP-NOW control packets are absent for <span class="arithmatex">\(&gt; 300 \text{ ms}\)</span>.</li>
+</ul>
 
 
 

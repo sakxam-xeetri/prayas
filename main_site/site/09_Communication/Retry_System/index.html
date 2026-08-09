@@ -3312,10 +3312,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#esp-now-transmission-verification" class="md-nav__link">
+  <a href="#1-transmission-verification-protocol" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP-NOW Transmission Verification
+        1. Transmission Verification Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-retry-operational-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Retry Operational Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-communication-frame-exchange-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Communication Frame Exchange Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-failure-degradation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Failure Degradation Rules
       
     </span>
   </a>
@@ -4548,10 +4581,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#esp-now-transmission-verification" class="md-nav__link">
+  <a href="#1-transmission-verification-protocol" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP-NOW Transmission Verification
+        1. Transmission Verification Protocol
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-retry-operational-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Retry Operational Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-communication-frame-exchange-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Communication Frame Exchange Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-failure-degradation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Failure Degradation Rules
       
     </span>
   </a>
@@ -4577,20 +4643,71 @@
 
 <h1 id="transmission-retry-system">Transmission Retry System<a class="headerlink" href="#transmission-retry-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the transmission retry logic used to ensure reliable delivery of critical commands.</p>
-<h2 id="esp-now-transmission-verification">ESP-NOW Transmission Verification<a class="headerlink" href="#esp-now-transmission-verification" title="Permanent link">&para;</a></h2>
-<p>Unlike standard Wi-Fi, ESP-NOW does not establish a persistent connection. To ensure critical packets (like gesture triggers or state changes) are delivered, the Master Node uses a confirm-and-retry mechanism:</p>
+<p>This document specifies the sequence-numbered ACK/NACK confirmation protocol, timeout parameters, and retry logic used to ensure reliable packet delivery across the wireless ESP-NOW internal network.</p>
+<hr />
+<h2 id="1-transmission-verification-protocol">1. Transmission Verification Protocol<a class="headerlink" href="#1-transmission-verification-protocol" title="Permanent link">&para;</a></h2>
+<p>Standard ESP-NOW is a connectionless physical layer protocol. To ensure critical configuration changes, pose triggers, and locomotion requests are not lost due to transient radio interference, the <strong>PRAYAS Master ESP32</strong> implements an explicit <strong>Sequence-Numbered ACK/NACK Protocol</strong>.</p>
 <pre class="mermaid"><code>stateDiagram-v2
-    [*] --&gt; SEND_PACKET
-    SEND_PACKET --&gt; WAIT_ACK : Packet Sent
+    [*] --&gt; SEND_COMMAND
+    SEND_COMMAND --&gt; WAIT_FOR_ACK : Packet Transmitted (seqNumber: N)
 
-    WAIT_ACK --&gt; SUCCESS : ACK Received
+    WAIT_FOR_ACK --&gt; ACK_SUCCESS : ACK Frame Received (seqNumber: N)
 
-    WAIT_ACK --&gt; RETRY_PACKET : Timeout (10 ms) &amp; Retry &lt; 3
-    RETRY_PACKET --&gt; WAIT_ACK
+    WAIT_FOR_ACK --&gt; TIMEOUT_RETRY : Timeout (100 ms) &amp; Retry Count &lt; 3
+    TIMEOUT_RETRY --&gt; SEND_COMMAND : Increment Retry Counter
 
-    WAIT_ACK --&gt; DISCONNECT_FAULT : Timeout (10 ms) &amp; Retry &gt;= 3
-    DISCONNECT_FAULT --&gt; [*]</code></pre>
+    WAIT_FOR_ACK --&gt; FAULT_CASCADE : Timeout (100 ms) &amp; Retry Count &gt;= 3
+    FAULT_CASCADE --&gt; [*] : Flag Node OFFLINE &amp; Alert Master</code></pre>
+<hr />
+<h2 id="2-retry-operational-parameters">2. Retry Operational Parameters<a class="headerlink" href="#2-retry-operational-parameters" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Specification</th>
+<th style="text-align: left;">Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ACK Timeout Window</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(100 \text{ ms}\)</span></td>
+<td style="text-align: left;">Accounts for maximum peer processing time + round-trip propagation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Max Retry Attempts</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(3 \text{ Retries}\)</span> (Total 4 Transmissions)</td>
+<td style="text-align: left;">Prevents blocking the Master Control Manager loop</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sequence Counter</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(0 \text{ to } 255\)</span> (<code>uint8_t</code> rolling counter)</td>
+<td style="text-align: left;">Associates specific ACK/NACK responses with original command frames</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Packet Target Types</strong></td>
+<td style="text-align: left;"><code>CMD_MOVE</code>, <code>CMD_SERVO_POSE</code>, <code>CMD_SERVO_WORKFLOW</code>, <code>CMD_MODE_CHANGE</code></td>
+<td style="text-align: left;">High-frequency telemetry packets (<code>CMD_HEARTBEAT</code>) do not require retries</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-communication-frame-exchange-example">3. Communication Frame Exchange Example<a class="headerlink" href="#3-communication-frame-exchange-example" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MASTER ESP32 (0x01)                                              SERVO NODE (0x03)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      |                                                                 |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>      |--- (PRAYAS_Packet: CMD_SERVO_WORKFLOW, VAL: HAND_DOWN, seq: 42) -&gt;|
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      |                                                                 |  [Validates CRC16]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      |&lt;-- (PRAYAS_Packet: ACK_RECEIVED, seq: 42) -----------------------|
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      |                                                                 |  [Executes Trajectory]
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>      |                                                                 |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      |&lt;-- (PRAYAS_Packet: STATUS_WORKFLOW_COMPLETE, seq: 42) ----------|
+</span></code></pre></div>
+<hr />
+<h2 id="4-failure-degradation-rules">4. Failure Degradation Rules<a class="headerlink" href="#4-failure-degradation-rules" title="Permanent link">&para;</a></h2>
+<p>If all 3 retry attempts fail:
+1. <strong>Node State Update</strong>: Master Control Manager marks node <code>OFFLINE</code>.
+2. <strong>Safety Interlock</strong>: If the target was the <strong>Motor Node</strong>, Master halts any active locomotion routines.
+3. <strong>Telemetry Alert</strong>: Asynchronous fault message is published to <code>prayas/status/alerts</code> over MQTT.</p>
 
 
 

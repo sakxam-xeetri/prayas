@@ -3284,10 +3284,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#state-synchronization-flow" class="md-nav__link">
+  <a href="#1-centralized-state-authority" class="md-nav__link">
     <span class="md-ellipsis">
       
-        State Synchronization Flow
+        1. Centralized State Authority
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-operating-modes-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Operating Modes Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-sequence-counter-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Sequence Counter Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-multi-step-workflow-state-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Multi-Step Workflow State Sync
       
     </span>
   </a>
@@ -4548,10 +4581,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#state-synchronization-flow" class="md-nav__link">
+  <a href="#1-centralized-state-authority" class="md-nav__link">
     <span class="md-ellipsis">
       
-        State Synchronization Flow
+        1. Centralized State Authority
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-operating-modes-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Operating Modes Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-sequence-counter-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Sequence Counter Synchronization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-multi-step-workflow-state-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Multi-Step Workflow State Sync
       
     </span>
   </a>
@@ -4577,20 +4643,120 @@
 
 <h1 id="state-synchronization">State Synchronization<a class="headerlink" href="#state-synchronization" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document describes the state synchronization mechanism, which ensures all nodes have a consistent view of the robot's current state.</p>
-<h2 id="state-synchronization-flow">State Synchronization Flow<a class="headerlink" href="#state-synchronization-flow" title="Permanent link">&para;</a></h2>
-<p>To prevent inconsistent states (such as the robot trying to drive while in a calibration mode), the Master Node maintains the master state and periodically broadcasts it to all sub-nodes:</p>
+<p>This document details the state synchronization protocol used to maintain a consistent global state across all specialized microcontroller nodes in the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-centralized-state-authority">1. Centralized State Authority<a class="headerlink" href="#1-centralized-state-authority" title="Permanent link">&para;</a></h2>
+<p>To prevent state conflicts (e.g. the AI Node attempting motion gestures while the Motor Node is executing an emergency stop), the <strong>Master ESP32 Node</strong> acts as the single source of truth for global robot state and operating mode.</p>
 <pre class="mermaid"><code>sequenceDiagram
-    participant Master as Master Node
-    participant Motor as Motor Node
-    participant Servo as Servo Node
+    participant Web as Web / Cloud VPS
+    participant Master as Master Control Manager (0x01)
+    participant Motor as Motor Node (0x02)
+    participant Servo as Servo Node (0x03)
 
-    Master-&gt;&gt;Motor: State Broadcast: STATE_IDLE
-    Master-&gt;&gt;Servo: State Broadcast: STATE_IDLE
-    Note over Master, Motor: User triggers move command
-    Master-&gt;&gt;Motor: Send Speed Command
-    Master-&gt;&gt;Motor: State Broadcast: STATE_MOVING
-    Master-&gt;&gt;Servo: State Broadcast: STATE_MOVING</code></pre>
+    Note over Master: State: SAFE
+    Web-&gt;&gt;Master: Request Mode Change (MANUAL)
+    Note over Master: Validate &amp; Set Mode: MANUAL
+    Master-&gt;&gt;Motor: Broadcast ESP-NOW: MODE_CHANGE (MANUAL)
+    Master-&gt;&gt;Servo: Broadcast ESP-NOW: MODE_CHANGE (MANUAL)
+    Motor--&gt;&gt;Master: ACK (seq: 104)
+    Servo--&gt;&gt;Master: ACK (seq: 104)
+    Note over Motor, Servo: Nodes Authorized for MANUAL Operations</code></pre>
+<hr />
+<h2 id="2-operating-modes-matrix">2. Operating Modes Matrix<a class="headerlink" href="#2-operating-modes-matrix" title="Permanent link">&para;</a></h2>
+<p>The Master Node synchronizes 9 discrete operating modes across all nodes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Operating Mode</th>
+<th style="text-align: left;">Master Authorization</th>
+<th style="text-align: left;">Drivetrain Status</th>
+<th style="text-align: left;">Kinematic Gesture Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>SAFE</code></td>
+<td style="text-align: left;">System Diagnostics Only</td>
+<td style="text-align: left;">Motors Disabled (0% PWM)</td>
+<td style="text-align: left;">Servos Paralyzed in Neutral Pose</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>MANUAL</code></td>
+<td style="text-align: left;">Physical Gamepad Direct</td>
+<td style="text-align: left;">Full Velocity Authority</td>
+<td style="text-align: left;">Manual Joystick / Preset Poses</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>REMOTE</code></td>
+<td style="text-align: left;">Cloud VPS / MQTT Broker</td>
+<td style="text-align: left;">Speed Capped at 80% Max</td>
+<td style="text-align: left;">Preset Remote Gesture Triggers</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>VOICE</code></td>
+<td style="text-align: left;">Xiaozhi AI Intent Parser</td>
+<td style="text-align: left;">Voice Action Locomotion</td>
+<td style="text-align: left;">Voice-Correlated Gestures &amp; Head Yaw</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>WEB</code></td>
+<td style="text-align: left;">Local Wi-Fi Web Dashboard</td>
+<td style="text-align: left;">Full Manual Authority</td>
+<td style="text-align: left;">Full Individual Joint Angle Sliders</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>AUTONOMOUS</code></td>
+<td style="text-align: left;">Internal Pathing Logic</td>
+<td style="text-align: left;">Autonomous Obstacle Navigation</td>
+<td style="text-align: left;">Head Scanning Trajectories</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>EMERGENCY_STOP</code></td>
+<td style="text-align: left;"><strong>NONE</strong> (Hardware Halt)</td>
+<td style="text-align: left;">Instant Duty Cutoff (0%)</td>
+<td style="text-align: left;">Servos Abort Trajectories &amp; Lock</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>FAULT</code></td>
+<td style="text-align: left;">Subsystem Error Active</td>
+<td style="text-align: left;">Drivetrain Disabled</td>
+<td style="text-align: left;">Kinematics Locked</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>OTA_UPDATE</code></td>
+<td style="text-align: left;">Flashing Subsystem Only</td>
+<td style="text-align: left;">Actuators Disabled</td>
+<td style="text-align: left;">Actuators Disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-sequence-counter-synchronization">3. Sequence Counter Synchronization<a class="headerlink" href="#3-sequence-counter-synchronization" title="Permanent link">&para;</a></h2>
+<p>To guarantee that duplicate or delayed wireless packets are discarded, every packet frame contains an 8-bit monotonically increasing sequence counter (<code>seqNumber</code>):</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Subsystem Node Packet Reception Rule</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">process_incoming_packet</span><span class="p">(</span><span class="n">PRAYAS_Packet_t</span><span class="w"> </span><span class="o">*</span><span class="n">pkt</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">lastSeqNumber</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="c1">// Check for duplicate or out-of-order packet</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">seqNumber</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">lastSeqNumber</span><span class="p">[</span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">sourceID</span><span class="p">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">       </span><span class="p">(</span><span class="n">lastSeqNumber</span><span class="p">[</span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">sourceID</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">seqNumber</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="c1">// Drop duplicate packet frame</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span><span class="w"> </span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">lastSeqNumber</span><span class="p">[</span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">sourceID</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pkt</span><span class="o">-&gt;</span><span class="n">seqNumber</span><span class="p">;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="n">execute_command</span><span class="p">(</span><span class="n">pkt</span><span class="p">);</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="4-multi-step-workflow-state-sync">4. Multi-Step Workflow State Sync<a class="headerlink" href="#4-multi-step-workflow-state-sync" title="Permanent link">&para;</a></h2>
+<p>For long-running kinematic actions (e.g. <code>HAND_DOWN</code>, <code>GREETING</code>, <code>WAVE</code>), the Servo Node streams progress notifications back to Master:</p>
+<ol>
+<li><strong>Trigger</strong>: Master <span class="arithmatex">\(\rightarrow\)</span> Servo Node: <code>CMD_SERVO_WORKFLOW</code> (<code>HAND_DOWN</code>).</li>
+<li><strong>ACK</strong>: Servo Node <span class="arithmatex">\(\rightarrow\)</span> Master: <code>ACK_RECEIVED</code>.</li>
+<li><strong>Execution</strong>: Servo Node interpolates trajectory steps locally.</li>
+<li><strong>Completion</strong>: Servo Node <span class="arithmatex">\(\rightarrow\)</span> Master: <code>STATUS_WORKFLOW_COMPLETE</code>.</li>
+</ol>
 
 
 

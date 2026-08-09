@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#inter-node-message-protocol" class="md-skip">
+        <a href="#inter-node-message-protocol-serialization" class="md-skip">
           Skip to content
         </a>
       
@@ -3228,10 +3228,71 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#communication-modes" class="md-nav__link">
+  <a href="#1-complete-communication-protocol-stack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Communication Modes
+        1. Complete Communication Protocol Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-command-abstraction-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Command Abstraction Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dual-transport-serialization-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Dual Transport Serialization Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Dual Transport Serialization Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-a-binary-c-struct-esp-now-internal-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format A: Binary C-Struct (ESP-NOW Internal Network)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-b-json-text-payloads-mqtt-websockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format B: JSON Text Payloads (MQTT &amp; WebSockets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-packet-validation-crc16-integrity-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Packet Validation &amp; CRC16 Integrity Check
       
     </span>
   </a>
@@ -4548,10 +4609,71 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#communication-modes" class="md-nav__link">
+  <a href="#1-complete-communication-protocol-stack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Communication Modes
+        1. Complete Communication Protocol Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-command-abstraction-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Command Abstraction Principle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-dual-transport-serialization-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Dual Transport Serialization Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Dual Transport Serialization Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-a-binary-c-struct-esp-now-internal-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format A: Binary C-Struct (ESP-NOW Internal Network)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format-b-json-text-payloads-mqtt-websockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Format B: JSON Text Payloads (MQTT &amp; WebSockets)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-packet-validation-crc16-integrity-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Packet Validation &amp; CRC16 Integrity Check
       
     </span>
   </a>
@@ -4575,14 +4697,145 @@
 
 
 
-<h1 id="inter-node-message-protocol">Inter-Node Message Protocol<a class="headerlink" href="#inter-node-message-protocol" title="Permanent link">&para;</a></h1>
+<h1 id="inter-node-message-protocol-serialization">Inter-Node Message Protocol &amp; Serialization<a class="headerlink" href="#inter-node-message-protocol-serialization" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document defines the packet serialization and deserialization formats used for communication between the nodes.</p>
-<h2 id="communication-modes">Communication Modes<a class="headerlink" href="#communication-modes" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>High-Frequency Control Loop (ESP-NOW)</strong>: Used for time-critical commands (such as motor velocities and servo angles). Packets are serialized as raw binary structs to minimize processing overhead.</li>
-<li><strong>Telemetry and Web Communication (JSON)</strong>: Used for configuration files, debug logs, and dashboard telemetry. Packets are formatted as JSON text strings to simplify integration with web technologies.</li>
-</ol>
+<p>This document defines the data serialization formats, packet frame headers, command abstractions, and protocol stack mappings used throughout the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-complete-communication-protocol-stack">1. Complete Communication Protocol Stack<a class="headerlink" href="#1-complete-communication-protocol-stack" title="Permanent link">&para;</a></h2>
+<p>PRAYAS separates high-level application messaging from physical peripheral buses across three functional layers:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+-----------------------------------------------------------------------------------+
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>| APPLICATION / REMOTE LAYER    | HTTPS (REST API) | WebSockets (Live) | MQTT (v3.1.1)|
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>+-------------------------------+------------------+-------------------+------------+
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| ROBOT NETWORK LAYER           | ESP-NOW (2.4 GHz Low-Latency Protocol)            |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>+-------------------------------+------------------+-------------------+------------+
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| HARDWARE PERIPHERAL LAYER     | I2C  |  SPI  |  I2S  |  UART  |  GPIO / PWM       |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>+-----------------------------------------------------------------------------------+
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">Protocol</th>
+<th style="text-align: left;">Physical Medium</th>
+<th style="text-align: left;">Mapping / Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Application</strong></td>
+<td style="text-align: left;">HTTPS</td>
+<td style="text-align: left;">Wi-Fi / IP Network</td>
+<td style="text-align: left;">Web dashboard static hosting, REST API, authentication</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Application</strong></td>
+<td style="text-align: left;">WebSocket</td>
+<td style="text-align: left;">Wi-Fi / IP Network</td>
+<td style="text-align: left;">Live teleoperation joystick &amp; continuous telemetry streaming</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Application</strong></td>
+<td style="text-align: left;">MQTT</td>
+<td style="text-align: left;">Wi-Fi / Cellular VPS</td>
+<td style="text-align: left;">Cloud teleoperation, remote commands, telemetry aggregation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Robot Network</strong></td>
+<td style="text-align: left;">ESP-NOW</td>
+<td style="text-align: left;">802.11 LR 2.4 GHz</td>
+<td style="text-align: left;">Inter-node real-time control bus (<span class="arithmatex">\(&lt; 5 \text{ ms}\)</span> latency)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">I2C</td>
+<td style="text-align: left;">Dual-Wire Serial Bus</td>
+<td style="text-align: left;">PCA9685 servo driver, INA219 current sensor, MPU6050 IMU</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">SPI</td>
+<td style="text-align: left;">4-Wire Synchronous</td>
+<td style="text-align: left;">2.4" TFT display screen on AI Node</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">I2S</td>
+<td style="text-align: left;">Digital Audio Bus</td>
+<td style="text-align: left;">INMP441 microphone &amp; MAX98357A audio amplifier</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">UART</td>
+<td style="text-align: left;">Full-Duplex Serial</td>
+<td style="text-align: left;">Arduino Nano Sensor Node <span class="arithmatex">\(\leftrightarrow\)</span> Master ESP32 bridge</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">GPIO / PWM</td>
+<td style="text-align: left;">Direct Digital Lines</td>
+<td style="text-align: left;">BTS7960 motor drivers, E18-D80NK IR proximity sensors</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-command-abstraction-principle">2. Command Abstraction Principle<a class="headerlink" href="#2-command-abstraction-principle" title="Permanent link">&para;</a></h2>
+<p>To ensure modular decoupling, control modalities (Voice AI, Remote MQTT, Gamepad, Local Web, Autonomous) <strong>must never transmit raw pin voltages, motor PWM duty cycles, or raw servo microsecond values</strong>.</p>
+<p>Instead, every input modality generates a standardized high-level <strong>PRAYAS Command</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[INPUT SOURCE] Voice AI Intent / Remote Joystick / Gamepad Key
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>       |
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>       v
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[ABSTRACTION] Standardized PRAYAS Command (e.g., CMD_MOVE, DIR_FORWARD, SPEED_120)
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>       |
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>       v
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[MASTER CONTROL MANAGER] Validates Priority &amp; Route -&gt; Transmits ESP-NOW Payload
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>       |
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>       v
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>[TARGET NODE] Executes local kinematics &amp; hardware safety checks
+</span></code></pre></div>
+<hr />
+<h2 id="3-dual-transport-serialization-formats">3. Dual Transport Serialization Formats<a class="headerlink" href="#3-dual-transport-serialization-formats" title="Permanent link">&para;</a></h2>
+<h3 id="format-a-binary-c-struct-esp-now-internal-network">Format A: Binary C-Struct (ESP-NOW Internal Network)<a class="headerlink" href="#format-a-binary-c-struct-esp-now-internal-network" title="Permanent link">&para;</a></h3>
+<p>Used for time-critical, high-frequency inter-node communication between ESP32 controllers. Serialized directly as packed binary structures to eliminate JSON parsing latency.</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">sourceID</span><span class="p">;</span><span class="w">       </span><span class="c1">// Source Node ID (0x01 - 0x06)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">destID</span><span class="p">;</span><span class="w">         </span><span class="c1">// Destination Node ID (0x01 - 0x06)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">commandID</span><span class="p">;</span><span class="w">      </span><span class="c1">// Command Enumeration (1 byte)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">modeID</span><span class="p">;</span><span class="w">         </span><span class="c1">// Operating Mode (1 byte)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">seqNumber</span><span class="p">;</span><span class="w">      </span><span class="c1">// Monotonically increasing sequence counter</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">payloadLen</span><span class="p">;</span><span class="w">     </span><span class="c1">// Active payload length in bytes</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">payload</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span><span class="w">    </span><span class="c1">// Command-specific binary data</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">checksum</span><span class="p">;</span><span class="w">       </span><span class="c1">// CRC16 verification checksum</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span><span class="w"> </span><span class="n">PRAYAS_Packet_t</span><span class="p">;</span>
+</span></code></pre></div>
+<h3 id="format-b-json-text-payloads-mqtt-websockets">Format B: JSON Text Payloads (MQTT &amp; WebSockets)<a class="headerlink" href="#format-b-json-text-payloads-mqtt-websockets" title="Permanent link">&para;</a></h3>
+<p>Used for web dashboard teleoperation, cloud logging, and remote status monitoring to maintain compatibility with modern web technologies.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REMOTE_WEB&quot;</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;dest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MASTER&quot;</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MOVE&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nt">&quot;seq&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1042</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="nt">&quot;payload&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">&quot;direction&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FORWARD&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<hr />
+<h2 id="4-packet-validation-crc16-integrity-check">4. Packet Validation &amp; CRC16 Integrity Check<a class="headerlink" href="#4-packet-validation-crc16-integrity-check" title="Permanent link">&para;</a></h2>
+<p>Every binary frame received over ESP-NOW passes through CRC16 validation before being processed by the <strong>PRAYAS Control Manager</strong>:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">uint16_t</span><span class="w"> </span><span class="nf">calculate_crc16</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">crc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFFFF</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">len</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="n">crc</span><span class="w"> </span><span class="o">^=</span><span class="w"> </span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">8</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">crc</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="mh">0x0001</span><span class="p">)</span><span class="w"> </span><span class="n">crc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">crc</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="mh">0xA001</span><span class="p">;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="n">crc</span><span class="w"> </span><span class="o">&gt;&gt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">crc</span><span class="p">;</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>If <code>calculated_crc != packet.checksum</code>, the frame is dropped immediately, and a NACK response is returned.</p>
 
 
 

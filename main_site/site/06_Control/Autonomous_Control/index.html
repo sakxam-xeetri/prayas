@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autonomous-locomotion-pathing" class="md-skip">
+        <a href="#autonomous-control-system" class="md-skip">
           Skip to content
         </a>
       
@@ -2429,10 +2429,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#obstacle-avoidance-flowchart" class="md-nav__link">
+  <a href="#1-autonomous-control-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Obstacle Avoidance Flowchart
+        1. Autonomous Control Architecture
       
     </span>
   </a>
@@ -2440,10 +2440,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#odometry-path-tracking" class="md-nav__link">
+  <a href="#2-sensor-integration-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Odometry &amp; Path Tracking
+        2. Sensor Integration Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-autonomous-obstacle-avoidance-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Autonomous Obstacle Avoidance Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-priority-safety-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Priority &amp; Safety Rules
       
     </span>
   </a>
@@ -4559,10 +4581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#obstacle-avoidance-flowchart" class="md-nav__link">
+  <a href="#1-autonomous-control-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Obstacle Avoidance Flowchart
+        1. Autonomous Control Architecture
       
     </span>
   </a>
@@ -4570,10 +4592,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#odometry-path-tracking" class="md-nav__link">
+  <a href="#2-sensor-integration-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Odometry &amp; Path Tracking
+        2. Sensor Integration Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-autonomous-obstacle-avoidance-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Autonomous Obstacle Avoidance Workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-priority-safety-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Priority &amp; Safety Rules
       
     </span>
   </a>
@@ -4597,27 +4641,92 @@
 
 
 
-<h1 id="autonomous-locomotion-pathing">Autonomous Locomotion &amp; Pathing<a class="headerlink" href="#autonomous-locomotion-pathing" title="Permanent link">&para;</a></h1>
+<h1 id="autonomous-control-system">Autonomous Control System<a class="headerlink" href="#autonomous-control-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the autonomous locomotion, path planning, and obstacle avoidance systems of PRAYAS V1.</p>
-<h2 id="obstacle-avoidance-flowchart">Obstacle Avoidance Flowchart<a class="headerlink" href="#obstacle-avoidance-flowchart" title="Permanent link">&para;</a></h2>
-<p>Locomotion tasks default to a safety-monitored behavior using the three base-mounted E18-D80NK adjustable infrared proximity sensors (Left, Center, Right):</p>
+<p>This document specifies the autonomous decision routines, sensor integration pipelines, and local safety interlocks of the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-autonomous-control-architecture">1. Autonomous Control Architecture<a class="headerlink" href="#1-autonomous-control-architecture" title="Permanent link">&para;</a></h2>
+<p>Autonomous routines (obstacle avoidance, environmental monitoring, wander behaviors) execute inside the <strong>Master Control Manager</strong> on the Master ESP32 Node:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  SENSORS (IMU / Temp / IR)       VISION SNAPSHOTS
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>             │                           │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>             ▼                           ▼
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        SENSOR NODE                   AI NODE
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       (Arduino Nano)              (ESP32-S3-CAM)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>             │                           │
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>             └─────────────┬─────────────┘
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                           │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                           v
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                +---------------------+
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                |    PRAYAS MASTER    |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                |  DECISION ENGINE    |
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                +----------+----------+
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                           │
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                        ESP-NOW
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                           │
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>         +-----------------+-----------------+
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>         │                                   │
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>         v                                   v
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    MOTOR NODE                          SERVO NODE
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  (Checks Safety)                    (Head/Arm Trajectories)
+</span></code></pre></div>
+<hr />
+<h2 id="2-sensor-integration-pipeline">2. Sensor Integration Pipeline<a class="headerlink" href="#2-sensor-integration-pipeline" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Sensor Hardware</th>
+<th style="text-align: left;">Node</th>
+<th style="text-align: left;">Data Streamed</th>
+<th style="text-align: left;">Purpose in Autonomous Mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MPU6050 IMU</strong></td>
+<td style="text-align: left;">Sensor Node (<code>0x04</code>)</td>
+<td style="text-align: left;">Pitch, Roll, Yaw rate (<span class="arithmatex">\(10 \text{ Hz}\)</span>)</td>
+<td style="text-align: left;">Tilting/tip-over detection &amp; inclination compensation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DHT11 Sensor</strong></td>
+<td style="text-align: left;">Sensor Node (<code>0x04</code>)</td>
+<td style="text-align: left;">Enclosure Temp &amp; Humidity (<span class="arithmatex">\(1 \text{ Hz}\)</span>)</td>
+<td style="text-align: left;">Thermal protection monitoring</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>4x E18-D80NK IR</strong></td>
+<td style="text-align: left;">Motor Node (<code>0x02</code>)</td>
+<td style="text-align: left;">Digital Obstacle Trip Flags</td>
+<td style="text-align: left;">Zero-latency local hardware collision prevention</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>OV2640 Camera</strong></td>
+<td style="text-align: left;">AI Node (<code>0x05</code>)</td>
+<td style="text-align: left;">Visual Q&amp;A / Object Frames</td>
+<td style="text-align: left;">Visual obstacle classification &amp; human detection</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-autonomous-obstacle-avoidance-workflow">3. Autonomous Obstacle Avoidance Workflow<a class="headerlink" href="#3-autonomous-obstacle-avoidance-workflow" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
-    Start([Start Pathing]) --&gt; ReadSensors[Read 3x E18-D80NK IR Sensors]
-    ReadSensors --&gt; CheckIR{Is Left, Center, or Right LOW?}
+    AutoStart[Autonomous Mode Active] --&gt; DriveFwd[Master Issues: MOVE FORWARD, SPEED = 80]
+    DriveFwd --&gt; CheckSensors{Obstacle Detected?}
 
-    CheckIR -- Yes --&gt; StopBase[Halt Motors]
-    StopBase --&gt; BackUp[Reverse 10cm]
-    BackUp --&gt; SpinBase[Rotate 45 degrees away from trigger]
-    SpinBase --&gt; ReadSensors
+    CheckSensors --&gt;|NO| DriveFwd
+    CheckSensors --&gt;|YES: Motor IR / Vision| MotorHalt[Motor Node Local Safety Triggers Halt]
 
-    CheckIR -- No --&gt; DriveForward[Drive toward target coordinates]
-    DriveForward --&gt; ReadSensors</code></pre>
-<h2 id="odometry-path-tracking">Odometry &amp; Path Tracking<a class="headerlink" href="#odometry-path-tracking" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Open-Loop Target Pathing</strong>: In V1, the robot estimates its position using wheel rotation duration and velocity profiles.</li>
-<li><strong>Odometry Limitations</strong>: Without wheel encoders, slippage on smooth floors can cause positioning errors (drift) of up to 15% over a 5-meter drive.</li>
-</ul>
+    MotorHalt --&gt; ReportMaster[Motor Node Sends OBSTACLE_DETECTED to Master]
+    ReportMaster --&gt; ScanHead[Master Requests Servo Node: HEAD_LEFT / HEAD_RIGHT Scan]
+    ScanHead --&gt; SelectPath[Master Decision Engine Calculates Clear Direction]
+    SelectPath --&gt; TurnBase[Master Issues: MOVE TURN_LEFT]
+    TurnBase --&gt; DriveFwd</code></pre>
+<hr />
+<h2 id="4-priority-safety-rules">4. Priority &amp; Safety Rules<a class="headerlink" href="#4-priority-safety-rules" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Lowest Priority Tier</strong>: Autonomous directives operate at <strong>Tier 7 (Lowest)</strong>. Any manual input (Gamepad, Remote, Local Web, or Voice AI) instantly overrides autonomous movement.</li>
+<li><strong>Local Safety Enforcement</strong>: Even in autonomous mode, the <strong>Motor Node retains local authority</strong> to halt BTS7960 motor outputs instantly if an IR proximity sensor trips, bypassing any Master decision delays.</li>
+</ol>
 
 
 

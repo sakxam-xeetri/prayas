@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#remote-control-interface-internetwan" class="md-skip">
+        <a href="#remote-internet-control-system" class="md-skip">
           Skip to content
         </a>
       
@@ -2373,10 +2373,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#1-remote-teleoperation-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        1. Remote Teleoperation Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Remote Teleoperation Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infrastructure Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-remote-command-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Remote Command Set
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-disconnection-offline-fault-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Disconnection &amp; Offline Fault Isolation
       
     </span>
   </a>
@@ -4548,10 +4587,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#1-remote-teleoperation-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        1. Remote Teleoperation Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Remote Teleoperation Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infrastructure-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infrastructure Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-remote-command-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Remote Command Set
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-disconnection-offline-fault-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Disconnection &amp; Offline Fault Isolation
       
     </span>
   </a>
@@ -4575,21 +4653,101 @@
 
 
 
-<h1 id="remote-control-interface-internetwan">Remote Control Interface (Internet/WAN)<a class="headerlink" href="#remote-control-interface-internetwan" title="Permanent link">&para;</a></h1>
+<h1 id="remote-internet-control-system">Remote Internet Control System<a class="headerlink" href="#remote-internet-control-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details how PRAYAS V1 is operated remotely over WAN/Internet connections, explaining the routing of latency-sensitive control commands.</p>
-<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h2>
-<p>To control the robot from a remote location, commands are routed through a cloud-hosted VPS running an MQTT broker:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  [ Operator Web Client ] ───(MQTT over Secure Websockets)───&gt; [ VPS Broker ]
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                                      │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                                            (MQTT / Wi-Fi)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                                      ▼
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                              [ Master Node ]
+<p>This document specifies the remote teleoperation architecture, cloud relay endpoints, command sets, and internet fault isolation mechanisms of the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-remote-teleoperation-architecture">1. Remote Teleoperation Architecture<a class="headerlink" href="#1-remote-teleoperation-architecture" title="Permanent link">&para;</a></h2>
+<p>Remote internet control allows operators to control PRAYAS from any location globally using an off-robot <strong>Virtual Private Server (VPS)</strong> as a central messaging bridge.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>REMOTE OPERATOR  ---&gt;  INTERNET  ---&gt;  VPS BROKER (MQTT)  ---&gt;  MASTER ESP32  ---&gt;  ESP-NOW  ---&gt;  ROBOT NODES
 </span></code></pre></div>
+<h3 id="infrastructure-components">Infrastructure Components<a class="headerlink" href="#infrastructure-components" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Keep-Alive Ping</strong>: The remote operator's client sends a keep-alive message every 100 ms. If the Master Node does not receive this ping for more than 400 ms, it assumes the connection is lost and halts the robot.</li>
-<li><strong>Command Latency</strong>: Commands typically have a round-trip latency of <strong>60–150 ms</strong> depending on the network, which is sufficient for safe indoor navigation.</li>
+<li><strong>Virtual Private Server (VPS)</strong>: Hosts the Mosquitto MQTT Broker (<code>mqtt.prayas-robotics.org</code>).</li>
+<li><strong>MQTTS Protocol</strong>: Port <code>8883</code> encrypted via TLS 1.3 to prevent command tampering over public networks.</li>
+<li><strong>Master Gateway Task</strong>: <code>vMQTTPoolingTask</code> running on Core 0 of the Master ESP32.</li>
 </ul>
+<hr />
+<h2 id="2-remote-command-set">2. Remote Command Set<a class="headerlink" href="#2-remote-command-set" title="Permanent link">&para;</a></h2>
+<p>Remote operators issue standardized commands over the <code>prayas/command/*</code> MQTT topic namespace:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Remote Command ID</th>
+<th style="text-align: left;">JSON Payload</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Locomotion</strong></td>
+<td style="text-align: left;"><code>MOVE</code></td>
+<td style="text-align: left;"><code>{"cmd":"MOVE","dir":"FORWARD","speed":120}</code></td>
+<td style="text-align: left;">Base differential drive motion</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Locomotion</strong></td>
+<td style="text-align: left;"><code>STOP</code></td>
+<td style="text-align: left;"><code>{"cmd":"MOVE","dir":"STOP","speed":0}</code></td>
+<td style="text-align: left;">Smooth base deceleration stop</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Speed Cap</strong></td>
+<td style="text-align: left;"><code>SET_SPEED</code></td>
+<td style="text-align: left;"><code>{"cmd":"SPEED","max_pwm":180}</code></td>
+<td style="text-align: left;">Caps max linear speed (default 80% remote max)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kinematics</strong></td>
+<td style="text-align: left;"><code>HEAD_LEFT</code></td>
+<td style="text-align: left;"><code>{"cmd":"GESTURE","action":"HEAD_LEFT"}</code></td>
+<td style="text-align: left;">Triggers 2-DOF head pan sequence</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kinematics</strong></td>
+<td style="text-align: left;"><code>HEAD_RIGHT</code></td>
+<td style="text-align: left;"><code>{"cmd":"GESTURE","action":"HEAD_RIGHT"}</code></td>
+<td style="text-align: left;">Triggers 2-DOF head pan sequence</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kinematics</strong></td>
+<td style="text-align: left;"><code>HAND_UP</code></td>
+<td style="text-align: left;"><code>{"cmd":"GESTURE","action":"HAND_UP"}</code></td>
+<td style="text-align: left;">Articulates arm raise sequence</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kinematics</strong></td>
+<td style="text-align: left;"><code>HAND_DOWN</code></td>
+<td style="text-align: left;"><code>{"cmd":"GESTURE","action":"HAND_DOWN"}</code></td>
+<td style="text-align: left;">Articulates arm lower sequence</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Safety</strong></td>
+<td style="text-align: left;"><code>ESTOP</code></td>
+<td style="text-align: left;"><code>{"cmd":"ESTOP","source":"REMOTE_USER"}</code></td>
+<td style="text-align: left;">Instantly cuts motor PWM to 0%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-disconnection-offline-fault-isolation">3. Disconnection &amp; Offline Fault Isolation<a class="headerlink" href="#3-disconnection-offline-fault-isolation" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>[!IMPORTANT]
+<strong>Cloud Decoupling Principle</strong>: The VPS/MQTT layer is strictly isolated from critical motor safety loops. If internet access drops or packet latency exceeds <span class="arithmatex">\(500 \text{ ms}\)</span>:</p>
+</blockquote>
+<pre class="mermaid"><code>flowchart TD
+    CloudLoss{Internet / VPS Drop Detected}
+
+    CloudLoss --&gt;|YES| MasterSwitch[Master Control Manager Drops REMOTE Mode]
+    MasterSwitch --&gt; Fallback[Reverts System to SAFE / Local Manual Mode]
+    Fallback --&gt; LocalReady[Local Gamepad &amp; Local Web Control Remain 100% Functional]
+
+    CloudLoss --&gt;|NO| ActiveRemote[Normal Remote Teleoperation &amp; 5Hz Telemetry Active]</code></pre>
+<ol>
+<li><strong>Master Keep-Alive Timeout</strong>: If Master loses MQTT broker heartbeat for <span class="arithmatex">\(&gt; 15 \text{ seconds}\)</span>, it drops <code>REMOTE</code> mode.</li>
+<li><strong>Local Safety Continues</strong>: Local IR obstacle sensors and Motor Node watchdog timers operate at 100% capacity without internet connection.</li>
+</ol>
 
 
 

@@ -2513,10 +2513,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#priority-arbitration-model" class="md-nav__link">
+  <a href="#1-multi-input-control-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Priority Arbitration Model
+        1. Multi-Input Control Architecture
       
     </span>
   </a>
@@ -2524,10 +2524,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arbitration-logic" class="md-nav__link">
+  <a href="#2-strict-7-tier-priority-hierarchy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arbitration Logic
+        2. Strict 7-Tier Priority Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-conflict-resolution-matrix-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Conflict Resolution Matrix &amp; Scenarios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-active-manual-control-lock-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Active Manual Control Lock Window
       
     </span>
   </a>
@@ -4559,10 +4581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#priority-arbitration-model" class="md-nav__link">
+  <a href="#1-multi-input-control-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Priority Arbitration Model
+        1. Multi-Input Control Architecture
       
     </span>
   </a>
@@ -4570,10 +4592,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#arbitration-logic" class="md-nav__link">
+  <a href="#2-strict-7-tier-priority-hierarchy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arbitration Logic
+        2. Strict 7-Tier Priority Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-conflict-resolution-matrix-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Conflict Resolution Matrix &amp; Scenarios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-active-manual-control-lock-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Active Manual Control Lock Window
       
     </span>
   </a>
@@ -4599,20 +4643,87 @@
 
 <h1 id="control-priority-arbitration-system">Control Priority &amp; Arbitration System<a class="headerlink" href="#control-priority-arbitration-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document explains the control priority hierarchy of PRAYAS V1, detailing how overlapping commands from different control sources (Gamepad, Voice, Web, Autonomous) are resolved.</p>
-<h2 id="priority-arbitration-model">Priority Arbitration Model<a class="headerlink" href="#priority-arbitration-model" title="Permanent link">&para;</a></h2>
-<p>The Master Node processes commands according to a strict priority hierarchy:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  Priority 1: Emergency Stop (E-Stop) Payload  (Overrides all inputs)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  Priority 2: Gamepad Manual Override Commands
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  Priority 3: Web Dashboard Manual Overrides
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  Priority 4: AI Voice Intent Commands
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  Priority 5: Autonomous Locomotion / Obstacle Avoidance Pathing
+<p>This document specifies the multi-source input arbitration model, priority hierarchy, and conflict resolution logic executed by the central <strong>PRAYAS Master ESP32 Control Manager</strong>.</p>
+<hr />
+<h2 id="1-multi-input-control-architecture">1. Multi-Input Control Architecture<a class="headerlink" href="#1-multi-input-control-architecture" title="Permanent link">&para;</a></h2>
+<p>PRAYAS supports <strong>five distinct control modalities</strong> (Voice AI, Remote Internet, Gamepad, Local Web, Autonomous). To eliminate race conditions, contradictory movement commands, or unauthorized motion, <strong>all control sources must feed into the Master Control Manager</strong>. Direct control of motor or servo nodes by any individual input source is strictly prohibited.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> VOICE / AI      REMOTE INTERNET     GAME CONTROLLER     LOCAL WEB     AUTONOMOUS SYSTEM
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     |                  |                   |                |                 |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>     +------------------+-------------------+----------------+-----------------+
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                            |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                            v
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                 +--------------------+
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                 |  PRAYAS MASTER     |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                 |  CONTROL MANAGER   |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                                 |  (ESP32)           |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                 +---------+----------+
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                           |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                  COMMAND VALIDATION
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                           |
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                  PRIORITY MANAGEMENT
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                                           |
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                                      SAFETY CHECK
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                                           |
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>                                       ESP-NOW
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>                                           |
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                                   ROBOT SUBSYSTEMS
 </span></code></pre></div>
-<h2 id="arbitration-logic">Arbitration Logic<a class="headerlink" href="#arbitration-logic" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Active Control Window</strong>: When a manual control input (Gamepad or Web Panel) is received, the Master Node locks the system for <strong>3.0 seconds</strong>, ignoring lower-priority autonomous commands.</li>
-<li><strong>Watchdog Release</strong>: If no manual input is received within the 3.0-second window, control reverts to the autonomous navigation task.</li>
-</ul>
+<hr />
+<h2 id="2-strict-7-tier-priority-hierarchy">2. Strict 7-Tier Priority Hierarchy<a class="headerlink" href="#2-strict-7-tier-priority-hierarchy" title="Permanent link">&para;</a></h2>
+<p>When overlapping commands are received simultaneously, the Master Control Manager evaluates them against a <strong>deterministic 7-tier priority hierarchy</strong>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>  [HIGHEST]  1. EMERGENCY STOP (Global Hardware/Software E-Stop Override)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>             2. LOCAL SAFETY / OBSTACLE OVERRIDE (Motor Node IR / INA219 Trip)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>             3. PHYSICAL CONTROLLER (Gamepad Direct Radio Input)
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>             4. REMOTE CONTROL (Cloud VPS / MQTT Remote Commands)
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>             5. LOCAL WEB CONTROL (WebSocket / HTTP Master Dashboard)
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>             6. VOICE / AI CONTROL (Xiaozhi Natural Language Intent Commands)
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>   [LOWEST]  7. AUTONOMOUS CONTROL (Internal Locomotion / Wander Routines)
+</span></code></pre></div>
+<hr />
+<h2 id="3-conflict-resolution-matrix-scenarios">3. Conflict Resolution Matrix &amp; Scenarios<a class="headerlink" href="#3-conflict-resolution-matrix-scenarios" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Active Source A</th>
+<th style="text-align: left;">Incoming Request B</th>
+<th style="text-align: left;">Arbitrated Output</th>
+<th style="text-align: left;">Engineering Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Voice AI (<code>FORWARD</code>)</td>
+<td style="text-align: left;">Gamepad (<code>STOP</code>)</td>
+<td style="text-align: left;"><strong>STOP</strong></td>
+<td style="text-align: left;">Physical Gamepad (Tier 3) preempts Voice AI (Tier 6)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Local Web (<code>FORWARD 180</code>)</td>
+<td style="text-align: left;">Motor IR Trip (<code>OBSTACLE</code>)</td>
+<td style="text-align: left;"><strong>LOCAL MOTOR HALT</strong></td>
+<td style="text-align: left;">Local Safety (Tier 2) preempts Local Web (Tier 5)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Autonomous (<code>NAVIGATE</code>)</td>
+<td style="text-align: left;">Remote MQTT (<code>LEFT</code>)</td>
+<td style="text-align: left;"><strong>TURN LEFT</strong></td>
+<td style="text-align: left;">Remote Control (Tier 4) preempts Autonomous (Tier 7)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Any Mode (<code>FORWARD</code>)</td>
+<td style="text-align: left;">Emergency Stop (<code>ESTOP</code>)</td>
+<td style="text-align: left;"><strong>IMMEDIATE PWM HALT (0%)</strong></td>
+<td style="text-align: left;">Emergency Stop (Tier 1) immediately halts all actuators</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-active-manual-control-lock-window">4. Active Manual Control Lock Window<a class="headerlink" href="#4-active-manual-control-lock-window" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Lock Trigger</strong>: When a manual control input (Gamepad, Remote, or Local Web) is accepted by Master, the Master Control Manager locks active locomotion authority to that source for a <strong>3.0-second active window</strong>.</li>
+<li><strong>Preemption</strong>: Commands from lower-tier sources (Voice AI or Autonomous) received during an active lock window are rejected.</li>
+<li><strong>Watchdog Release</strong>: If no further manual packets are received within <span class="arithmatex">\(3.0 \text{ seconds}\)</span>, the lock expires, and control reverts to Autonomous or Idle <code>SAFE</code> mode.</li>
+</ol>
 
 
 

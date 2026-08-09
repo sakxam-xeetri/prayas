@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gamepad-control-integration" class="md-skip">
+        <a href="#physical-gamepad-control-system" class="md-skip">
           Skip to content
         </a>
       
@@ -2317,30 +2317,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gamepad-mapping-specification" class="md-nav__link">
+  <a href="#1-system-architecture-latency" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gamepad Mapping Specification
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Gamepad Mapping Specification">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#controller-button-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Controller Button Layout
+        1. System Architecture &amp; Latency
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#2-priority-arbitration-ranking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Priority &amp; Arbitration Ranking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gamepad-key-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Gamepad Key Mapping Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-operational-safety-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Operational Safety Features
+      
+    </span>
+  </a>
   
 </li>
       
@@ -4565,30 +4581,46 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gamepad-mapping-specification" class="md-nav__link">
+  <a href="#1-system-architecture-latency" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Gamepad Mapping Specification
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Gamepad Mapping Specification">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#controller-button-layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Controller Button Layout
+        1. System Architecture &amp; Latency
       
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#2-priority-arbitration-ranking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Priority &amp; Arbitration Ranking
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-gamepad-key-mapping-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Gamepad Key Mapping Table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-operational-safety-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Operational Safety Features
+      
+    </span>
+  </a>
   
 </li>
       
@@ -4609,74 +4641,101 @@
 
 
 
-<h1 id="gamepad-control-integration">Gamepad Control Integration<a class="headerlink" href="#gamepad-control-integration" title="Permanent link">&para;</a></h1>
+<h1 id="physical-gamepad-control-system">Physical Gamepad Control System<a class="headerlink" href="#physical-gamepad-control-system" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the configuration, button mappings, and signal routing for manual gamepad control of PRAYAS V1.</p>
-<h2 id="gamepad-mapping-specification">Gamepad Mapping Specification<a class="headerlink" href="#gamepad-mapping-specification" title="Permanent link">&para;</a></h2>
-<p>The robot supports standard Bluetooth gamepads (e.g., PS4, Xbox, or generic BLE controllers) paired either directly with the Master Node (BLE) or routed via the Web Dashboard (HTML5 Gamepad API).</p>
-<h3 id="controller-button-layout">Controller Button Layout<a class="headerlink" href="#controller-button-layout" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>         [L2] analog brake                [R2] analog throttle
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>         [L1] action trigger              [R1] action trigger
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>             (up)                             [Y] Point
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        (left)  (right)                  [X] Wave    [B] Bow
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>            (down)                            [A] Neutral
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            [L-Stick]                        [R-Stick]
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        Base Locomotion                  Head Pitch/Yaw
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        (Linear &amp; Angular)               (Camera Pan)
+<p>This document specifies the direct manual teleoperation, button mapping, joystick response, and hardware interfaces for local <strong>Physical Gamepad Controllers</strong> used with the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-system-architecture-latency">1. System Architecture &amp; Latency<a class="headerlink" href="#1-system-architecture-latency" title="Permanent link">&para;</a></h2>
+<p>Physical controller teleoperation provides the lowest-latency manual control interface for PRAYAS.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>GAMEPAD CONTROLLER  ---&gt;  MASTER ESP32  ---&gt;  ESP-NOW  ---&gt;  MOTOR / SERVO NODES
 </span></code></pre></div>
+<ul>
+<li><strong>Communication Medium</strong>: Direct 2.4 GHz RF receiver or Bluetooth HID link connected to Master Node hardware port.</li>
+<li><strong>Round-Trip Latency</strong>: <span class="arithmatex">\(&lt; 10 \text{ ms}\)</span> (Input <span class="arithmatex">\(\rightarrow\)</span> Master <span class="arithmatex">\(\rightarrow\)</span> Motor PWM Output).</li>
+<li><strong>Cloud Dependency</strong>: <strong>NONE</strong>. Operates completely offline without internet or VPS infrastructure.</li>
+</ul>
+<hr />
+<h2 id="2-priority-arbitration-ranking">2. Priority &amp; Arbitration Ranking<a class="headerlink" href="#2-priority-arbitration-ranking" title="Permanent link">&para;</a></h2>
+<p>The Physical Gamepad operates at <strong>Tier 3 Priority</strong> (High Manual Priority) in the Master Control Manager:</p>
+<ul>
+<li><strong>Preempts</strong>: Remote Internet Control (Tier 4), Local Web Control (Tier 5), Voice AI Control (Tier 6), and Autonomous Control (Tier 7).</li>
+<li><strong>Preempted By</strong>: Emergency Stop (Tier 1) and Local Motor Safety / Obstacle Trips (Tier 2).</li>
+</ul>
+<hr />
+<h2 id="3-gamepad-key-mapping-table">3. Gamepad Key Mapping Table<a class="headerlink" href="#3-gamepad-key-mapping-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Input Element</th>
-<th style="text-align: left;">Controller Output</th>
-<th style="text-align: left;">Master Command Mapping</th>
+<th style="text-align: left;">Gamepad Button / Stick</th>
+<th style="text-align: left;">Target Axis / Action</th>
+<th style="text-align: left;">Output Command Forwarded</th>
+<th style="text-align: left;">Target Node</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Left Stick Y-Axis</strong></td>
-<td style="text-align: left;"><span class="arithmatex">\(-1.0\)</span> to <span class="arithmatex">\(+1.0\)</span></td>
-<td style="text-align: left;">Linear base speed (<span class="arithmatex">\(v_x\)</span>), forward/backward</td>
+<td style="text-align: left;"><strong>Left Joystick (Y-Axis)</strong></td>
+<td style="text-align: left;">Base Linear Motion</td>
+<td style="text-align: left;"><code>MOVE FORWARD</code> / <code>MOVE BACKWARD</code></td>
+<td style="text-align: left;">Motor Node (<code>0x02</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Left Stick X-Axis</strong></td>
-<td style="text-align: left;"><span class="arithmatex">\(-1.0\)</span> to <span class="arithmatex">\(+1.0\)</span></td>
-<td style="text-align: left;">Angular base speed (<span class="arithmatex">\(\omega_z\)</span>), yaw rotation</td>
+<td style="text-align: left;"><strong>Left Joystick (X-Axis)</strong></td>
+<td style="text-align: left;">Base Angular Turning</td>
+<td style="text-align: left;"><code>MOVE LEFT</code> / <code>MOVE RIGHT</code></td>
+<td style="text-align: left;">Motor Node (<code>0x02</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Right Stick Y-Axis</strong></td>
-<td style="text-align: left;"><span class="arithmatex">\(-1.0\)</span> to <span class="arithmatex">\(+1.0\)</span></td>
-<td style="text-align: left;">Neck Pitch angle increment</td>
+<td style="text-align: left;"><strong>Right Joystick (X/Y)</strong></td>
+<td style="text-align: left;">2-DOF Head Pan/Tilt</td>
+<td style="text-align: left;"><code>HEAD_PAN(x)</code>, <code>HEAD_TILT(y)</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Right Stick X-Axis</strong></td>
-<td style="text-align: left;"><span class="arithmatex">\(-1.0\)</span> to <span class="arithmatex">\(+1.0\)</span></td>
-<td style="text-align: left;">Neck Yaw angle increment</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Button X</strong></td>
-<td style="text-align: left;">Trigger (Digital)</td>
-<td style="text-align: left;">Waves left hand (<code>TRIGGER_GESTURE_1</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Button Y</strong></td>
-<td style="text-align: left;">Trigger (Digital)</td>
-<td style="text-align: left;">Points forward with right arm (<code>TRIGGER_GESTURE_2</code>)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Button B</strong></td>
-<td style="text-align: left;">Trigger (Digital)</td>
-<td style="text-align: left;">Lowers head and arms in a bow posture</td>
+<td style="text-align: left;"><strong>Trigger L2 / R2</strong></td>
+<td style="text-align: left;">Dynamic Speed Scaler</td>
+<td style="text-align: left;"><code>SPEED_SCALE (0–255 PWM)</code></td>
+<td style="text-align: left;">Motor Node (<code>0x02</code>)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Button A</strong></td>
-<td style="text-align: left;">Trigger (Digital)</td>
-<td style="text-align: left;">Commands all joints to return to home positions</td>
+<td style="text-align: left;">Neutral Park Pose</td>
+<td style="text-align: left;"><code>SERVO_POSE (REST)</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Button B</strong></td>
+<td style="text-align: left;">Wave Gesture Workflow</td>
+<td style="text-align: left;"><code>SERVO_WORKFLOW (WAVE)</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Button X</strong></td>
+<td style="text-align: left;">Greeting Gesture</td>
+<td style="text-align: left;"><code>SERVO_WORKFLOW (GREETING)</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Button Y</strong></td>
+<td style="text-align: left;">Articulate Arms Up</td>
+<td style="text-align: left;"><code>SERVO_WORKFLOW (HAND_UP)</code></td>
+<td style="text-align: left;">Servo Node (<code>0x03</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Button SELECT / START</strong></td>
+<td style="text-align: left;">Instant Emergency Stop</td>
+<td style="text-align: left;"><code>ESTOP</code></td>
+<td style="text-align: left;">All Nodes</td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="4-operational-safety-features">4. Operational Safety Features<a class="headerlink" href="#4-operational-safety-features" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Deadzone Filtering</strong>: <span class="arithmatex">\(\pm 10\%\)</span> deadzone applied to analog joysticks to prevent unwanted drift.</li>
+<li><strong>Smooth Acceleration Ramping</strong>: Motor Node applies linear PWM acceleration ramps to prevent sudden gear backlash or tipping.</li>
+<li><strong>Dedicated E-Stop Key</strong>: Pressing SELECT+START triggers an immediate hardware PWM cutoff (<span class="arithmatex">\(0\%\)</span>) across both BTS7960 drivers.</li>
+</ol>
 
 
 

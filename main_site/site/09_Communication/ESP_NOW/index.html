@@ -3172,10 +3172,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#protocol-characteristics" class="md-nav__link">
+  <a href="#1-protocol-architecture-characteristics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Protocol Characteristics
+        1. Protocol Architecture &amp; Characteristics
       
     </span>
   </a>
@@ -3183,10 +3183,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#shared-data-structures" class="md-nav__link">
+  <a href="#2-target-peer-links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Shared Data Structures
+        2. Target Peer Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-node-identification-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Node Identification Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-shared-binary-c-struct-frame-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Shared Binary C-Struct Frame Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-transmission-verification-retry-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Transmission Verification &amp; Retry Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-watchdog-fail-safe-interlocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Watchdog &amp; Fail-Safe Interlocks
       
     </span>
   </a>
@@ -4559,10 +4603,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#protocol-characteristics" class="md-nav__link">
+  <a href="#1-protocol-architecture-characteristics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Protocol Characteristics
+        1. Protocol Architecture &amp; Characteristics
       
     </span>
   </a>
@@ -4570,10 +4614,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#shared-data-structures" class="md-nav__link">
+  <a href="#2-target-peer-links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Shared Data Structures
+        2. Target Peer Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-node-identification-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Node Identification Mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-shared-binary-c-struct-frame-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Shared Binary C-Struct Frame Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-transmission-verification-retry-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Transmission Verification &amp; Retry Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-watchdog-fail-safe-interlocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Watchdog &amp; Fail-Safe Interlocks
       
     </span>
   </a>
@@ -4599,30 +4687,192 @@
 
 <h1 id="esp-now-direct-peer-to-peer-protocol">ESP-NOW Direct Peer-to-Peer Protocol<a class="headerlink" href="#esp-now-direct-peer-to-peer-protocol" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>This document details the implementation and packet format of the ESP-NOW communication protocol used for low-latency inter-node communication.</p>
-<h2 id="protocol-characteristics">Protocol Characteristics<a class="headerlink" href="#protocol-characteristics" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Type</strong>: Connectionless, peer-to-peer 802.11 physical layer wireless packets.</li>
-<li><strong>Frequency Band</strong>: Fixed to Wi-Fi Channel 6 (<span class="arithmatex">\(2437 ext{ MHz}\)</span>).</li>
-<li><strong>Target Latency</strong>: &lt; 5 ms.</li>
-<li><strong>Max Payload</strong>: 250 bytes per packet.</li>
-</ul>
-<h2 id="shared-data-structures">Shared Data Structures<a class="headerlink" href="#shared-data-structures" title="Permanent link">&para;</a></h2>
-<p>All nodes share a common data structure defined in a shared header file <code>esp_now_protocol.h</code>:</p>
-<div class="language-cpp highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">MSG_TYPE_HEARTBEAT</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">MSG_TYPE_MOTOR_CMD</span><span class="p">,</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">MSG_TYPE_SERVO_CMD</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">MSG_TYPE_SENSOR_DATA</span><span class="p">,</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">MSG_TYPE_ESTOP</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span><span class="w"> </span><span class="n">MessageType</span><span class="p">;</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">message_type</span><span class="p">;</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">timestamp</span><span class="p">;</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">payload</span><span class="p">[</span><span class="mi">240</span><span class="p">];</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">}</span><span class="w"> </span><span class="n">ESPNowPacket</span><span class="p">;</span>
+<p>This document specifies the implementation, packet frame structure, node addressing, and operational parameters of the <strong>ESP-NOW communication protocol</strong> used as the primary low-latency internal network for the <strong>PRAYAS V1 Humanoid Robot</strong>.</p>
+<hr />
+<h2 id="1-protocol-architecture-characteristics">1. Protocol Architecture &amp; Characteristics<a class="headerlink" href="#1-protocol-architecture-characteristics" title="Permanent link">&para;</a></h2>
+<p>ESP-NOW is a connectionless, peer-to-peer 2.4 GHz wireless communication protocol developed by Espressif, operating directly on the IEEE 802.11 MAC/physical layer without requiring Wi-Fi access point association or internet connectivity.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Specification</th>
+<th style="text-align: left;">Engineering Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Protocol Type</strong></td>
+<td style="text-align: left;">Direct 802.11 Action Frame MAC Layer</td>
+<td style="text-align: left;">Eliminates TCP/IP handshake overhead and routing delays</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Operating Frequency</strong></td>
+<td style="text-align: left;">2.4 GHz ISM Band</td>
+<td style="text-align: left;">Fixed Wi-Fi Channel 6 (<span class="arithmatex">\(2437 \text{ MHz}\)</span>) to prevent channel hopping</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Transmission Latency</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(&lt; 5 \text{ ms}\)</span> (Master <span class="arithmatex">\(\leftrightarrow\)</span> Node)</td>
+<td style="text-align: left;">Guarantees deterministic real-time motor and servo control loops</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Max Payload Size</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(250 \text{ Bytes}\)</span> per packet frame</td>
+<td style="text-align: left;">Fits all <code>PRAYAS_Packet_t</code> control and telemetry payloads</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Security / Encryption</strong></td>
+<td style="text-align: left;">Primary Master key CCMP encryption</td>
+<td style="text-align: left;">Prevents unauthorized spoofing of motor/servo drive signals</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Router Dependency</strong></td>
+<td style="text-align: left;"><strong>NONE</strong> (Zero Cloud / AP Dependency)</td>
+<td style="text-align: left;">Robot remains 100% operational during internet/Wi-Fi outages</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-target-peer-links">2. Target Peer Links<a class="headerlink" href="#2-target-peer-links" title="Permanent link">&para;</a></h2>
+<p>ESP-NOW forms the internal "nervous system" linking the <strong>PRAYAS Master ESP32</strong> to all subsystem controllers:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                         +-----------------------+
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                         |     PRAYAS MASTER     |
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                         |        (0x01)         |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                         +-----------+-----------+
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                     |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                  ESP-NOW
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                    (Fixed Ch 6 / Latency &lt; 5ms)
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                     |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>          +--------------------------+--------------------------+
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          |                          |                          |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          v                          v                          v
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  +---------------+          +---------------+          +---------------+
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  |  MOTOR NODE   |          |  SERVO NODE   |          |    AI NODE    |
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  |    (0x02)     |          |    (0x03)     |          |    (0x05)     |
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  +---------------+          +---------------+          +---------------+
 </span></code></pre></div>
+<ul>
+<li><strong>Master Node (<code>0x01</code>) <span class="arithmatex">\(\leftrightarrow\)</span> Motor Node (<code>0x02</code>)</strong>: Drives 4WD locomotion, speed targets, and obstacle statuses.</li>
+<li><strong>Master Node (<code>0x01</code>) <span class="arithmatex">\(\leftrightarrow\)</span> Servo Node (<code>0x03</code>)</strong>: Transmits pose IDs and multi-step workflow execution commands.</li>
+<li><strong>Master Node (<code>0x01</code>) <span class="arithmatex">\(\leftrightarrow\)</span> AI Node (<code>0x05</code>)</strong>: Receives natural language intent commands parsed by Xiaozhi AI framework.</li>
+</ul>
+<hr />
+<h2 id="3-node-identification-mapping">3. Node Identification Mapping<a class="headerlink" href="#3-node-identification-mapping" title="Permanent link">&para;</a></h2>
+<p>Every ESP-NOW packet contains explicit source and destination identifiers to ensure deterministic routing:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Node Name</th>
+<th style="text-align: left;">Controller Hardware</th>
+<th style="text-align: left;">Unique Node ID</th>
+<th style="text-align: left;">MAC Address Filter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>MASTER</strong></td>
+<td style="text-align: left;">ESP32 DevKitC v4</td>
+<td style="text-align: left;"><code>0x01</code></td>
+<td style="text-align: left;"><code>24:6F:28:XX:XX:01</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MOTOR</strong></td>
+<td style="text-align: left;">ESP32 DevKitC v4</td>
+<td style="text-align: left;"><code>0x02</code></td>
+<td style="text-align: left;"><code>24:6F:28:XX:XX:02</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SERVO</strong></td>
+<td style="text-align: left;">ESP32 DevKitC v4</td>
+<td style="text-align: left;"><code>0x03</code></td>
+<td style="text-align: left;"><code>24:6F:28:XX:XX:03</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>SENSOR</strong></td>
+<td style="text-align: left;">Arduino Nano (via Serial Bridge)</td>
+<td style="text-align: left;"><code>0x04</code></td>
+<td style="text-align: left;">Routed via Master UART</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI</strong></td>
+<td style="text-align: left;">ESP32-S3-CAM</td>
+<td style="text-align: left;"><code>0x05</code></td>
+<td style="text-align: left;"><code>24:6F:28:XX:XX:05</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DISPLAY</strong></td>
+<td style="text-align: left;">Master Integrated Status OLED</td>
+<td style="text-align: left;"><code>0x06</code></td>
+<td style="text-align: left;">Internal Master I2C</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-shared-binary-c-struct-frame-layout">4. Shared Binary C-Struct Frame Layout<a class="headerlink" href="#4-shared-binary-c-struct-frame-layout" title="Permanent link">&para;</a></h2>
+<p>All ESP-NOW nodes utilize a packed, standardized C-struct byte layout to prevent memory alignment padding and minimize processing overhead:</p>
+<div class="language-c highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">#ifndef PRAYAS_ESP_NOW_PROTOCOL_H</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="cp">#define PRAYAS_ESP_NOW_PROTOCOL_H</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdint.h&gt;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">// Standard Node Identifiers</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="cp">#define NODE_ID_MASTER   0x01</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="cp">#define NODE_ID_MOTOR    0x02</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="cp">#define NODE_ID_SERVO    0x03</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="cp">#define NODE_ID_SENSOR   0x04</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="cp">#define NODE_ID_AI       0x05</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="cp">#define NODE_ID_DISPLAY  0x06</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">// Command Identifiers</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">typedef</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">CMD_HEARTBEAT</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="n">CMD_MOVE</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="mh">0x02</span><span class="p">,</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">CMD_SERVO_POSE</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="mh">0x03</span><span class="p">,</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">CMD_SERVO_WORKFLOW</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mh">0x04</span><span class="p">,</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">CMD_SENSOR_TELEMETRY</span><span class="o">=</span><span class="w"> </span><span class="mh">0x05</span><span class="p">,</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">CMD_MODE_CHANGE</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mh">0x06</span><span class="p">,</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">CMD_ESTOP</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="mh">0xFF</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="p">}</span><span class="w"> </span><span class="n">PrayasCommand_t</span><span class="p">;</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1">// ESP-NOW Shared Binary Packet Layout</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">__attribute__</span><span class="p">((</span><span class="n">packed</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">sourceID</span><span class="p">;</span><span class="w">       </span><span class="c1">// Sender Node ID (0x01 - 0x06)</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">destID</span><span class="p">;</span><span class="w">         </span><span class="c1">// Target Node ID (0x01 - 0x06)</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">commandID</span><span class="p">;</span><span class="w">      </span><span class="c1">// Command Enumeration (PrayasCommand_t)</span>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">modeID</span><span class="p">;</span><span class="w">         </span><span class="c1">// Active System Mode (MANUAL, VOICE, etc.)</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">seqNumber</span><span class="p">;</span><span class="w">      </span><span class="c1">// Monotonically increasing sequence counter</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">payloadLen</span><span class="p">;</span><span class="w">     </span><span class="c1">// Byte length of active payload (0–64)</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="kt">uint8_t</span><span class="w">  </span><span class="n">payload</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span><span class="w">    </span><span class="c1">// Raw Command / Sensor Data Payload</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="kt">uint16_t</span><span class="w"> </span><span class="n">checksum</span><span class="p">;</span><span class="w">       </span><span class="c1">// CRC16 Data Integrity Checksum</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="p">}</span><span class="w"> </span><span class="n">PRAYAS_Packet_t</span><span class="p">;</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="cp">#endif </span><span class="c1">// PRAYAS_ESP_NOW_PROTOCOL_H</span>
+</span></code></pre></div>
+<hr />
+<h2 id="5-transmission-verification-retry-logic">5. Transmission Verification &amp; Retry Logic<a class="headerlink" href="#5-transmission-verification-retry-logic" title="Permanent link">&para;</a></h2>
+<p>ESP-NOW operates without persistent connections. To ensure reliable packet delivery for critical commands (e.g. gesture triggers, mode switches), the Master Node employs a confirmation and retry sequence:</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; TRANSMIT_FRAME
+    TRANSMIT_FRAME --&gt; WAIT_ACK : Packet Sent Over Air
+
+    WAIT_ACK --&gt; SUCCESS : ACK Received (seqNumber Match)
+
+    WAIT_ACK --&gt; RETRY_FRAME : Timeout (100 ms) &amp; Retry &lt; 3
+    RETRY_FRAME --&gt; WAIT_ACK
+
+    WAIT_ACK --&gt; REPORT_FAULT : Timeout (100 ms) &amp; Retry &gt;= 3
+    REPORT_FAULT --&gt; [*]</code></pre>
+<ul>
+<li><strong>ACK Timeout</strong>: <span class="arithmatex">\(100 \text{ ms}\)</span>.</li>
+<li><strong>Max Retry Attempts</strong>: <span class="arithmatex">\(3\)</span> attempts before marking peer node <code>OFFLINE</code>.</li>
+</ul>
+<hr />
+<h2 id="6-watchdog-fail-safe-interlocks">6. Watchdog &amp; Fail-Safe Interlocks<a class="headerlink" href="#6-watchdog-fail-safe-interlocks" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Periodic Heartbeat</strong>: Every node broadcasts a <span class="arithmatex">\(10 \text{ Hz}\)</span> (<code>CMD_HEARTBEAT</code>) frame to the Master Node.</li>
+<li><strong>Master Timeout</strong>: If Master loses heartbeat packets from a node for <span class="arithmatex">\(&gt; 500 \text{ ms}\)</span>, the node state transitions to <code>OFFLINE</code>.</li>
+<li><strong>Local Motor Watchdog</strong>: The Motor Node runs a hardware timer that automatically halts all BTS7960 motor outputs if valid commands/heartbeats are absent for <span class="arithmatex">\(&gt; 300 \text{ ms}\)</span>.</li>
+</ol>
 
 
 
