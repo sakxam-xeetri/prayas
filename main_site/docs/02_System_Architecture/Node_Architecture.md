@@ -7,8 +7,8 @@ This document defines the roles, hardware assignments, firmware tasks, and confi
 
 | Node Name | Controller Hardware | Primary Responsibility | Interface Channels |
 | :--- | :--- | :--- | :--- |
-| **Master Node** | ESP32-WROOM-32E | Coordinates the system, processes MQTT commands, routes data to sub-nodes. | Wi-Fi (MQTT), ESP-NOW, UART |
-| **Motor Node** | ESP32-WROOM-32E | Real-time differential motor control, PWM scaling, safety braking. | ESP-NOW, GPIO (PWM, EN) |
+| **Master Node** | ESP32-WROOM-32E | Coordinates system, drives integrated status OLED display (I2C), processes MQTT, routes ESP-NOW. | Wi-Fi (MQTT), ESP-NOW, I2C, UART |
+| **Motor Node** | ESP32-WROOM-32E | Real-time 4WD motor control (4x 10cm x 4cm wheels), PWM scaling, 4-sensor IR safety braking. | ESP-NOW, GPIO (PWM, EN, 4x IR) |
 | **Servo Node** | ESP32-WROOM-32E | Generates joint angles and animations for arms/head. | ESP-NOW, I2C (PCA9685) |
 | **AI Node** | ESP32-S3 CAM | Runs Xiaozhi AI voice framework, drives SPI TFT display, snapshot vision, I2S audio. | Wi-Fi (WebSocket), I2S Audio, SPI, UART |
 | **Camera Node** | ESP32-CAM | Dedicated live dashboard video stream server. | Wi-Fi (WebSockets / HTTP) |
@@ -26,12 +26,13 @@ This document defines the roles, hardware assignments, firmware tasks, and confi
     *   `vMQTTPoolingTask` (Priority 3): Handles Wi-Fi connection and parses incoming commands.
     *   `vESPNOWRoutingTask` (Priority 4): Processes and formats ESP-NOW packets, and updates the states of sub-nodes.
     *   `vHeartbeatTask` (Priority 5): Broadcasts a heartbeat ping to all active nodes every 200 ms.
+    *   `vOLEDStatusDisplayTask` (Priority 2): Renders system status, RSSI, battery voltage, and drive mode on the 0.96"/1.3" OLED via I2C.
 
 ### Motor Node
 *   **Processor**: Tensilica Xtensa Dual-Core 32-bit LX6 at 240 MHz.
 *   **Key Tasks**:
-    *   `vMotorDriveTask` (Priority 5): Calculates kinematics and updates PWM frequencies (20 kHz) to BTS7960 drivers.
-    *   `vSafetyWatchdogTask` (Priority 6): Monitors heartbeat packets and E18-D80NK IR proximity sensors, initiating an emergency brake if an obstacle triggers any of the 3 IR sensors.
+    *   `vMotorDriveTask` (Priority 5): Calculates 4WD differential kinematics for 10 cm x 4 cm wheels and updates PWM frequencies (20 kHz) to BTS7960 drivers.
+    *   `vSafetyWatchdogTask` (Priority 6): Monitors heartbeat packets and 4x E18-D80NK IR proximity sensors (FL, FR, RL, RR), initiating an emergency brake if an obstacle triggers any sensor.
 
 ### Servo Node
 *   **Processor**: Tensilica Xtensa Dual-Core 32-bit LX6 at 240 MHz.

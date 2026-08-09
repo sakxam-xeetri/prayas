@@ -6,14 +6,14 @@
 The Motor Controller Node is the hardware subsystem responsible for driving the locomotion base of the PRAYAS robot. It processes motion directives and drives the wheels accordingly while monitoring localized proximity sensors to prevent physical collisions.
 
 ### What this Node Controls
-*   **Motors**: Actuates the 4 wheels using H-bridge drivers.
-*   **Sensors**: Interfaces with 3 infrared obstacle sensors to monitor the path immediately in front of the robot.
+*   **Motors**: Actuates the 4 wheels (10 cm Diameter, 4 cm Width) using H-bridge drivers in a 4x4 differential drive setup.
+*   **Sensors**: Interfaces with **4 infrared obstacle sensors** (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.
 
 ### Responsibilities of the Node
 *   Receive directional and speed commands.
 *   Translate these commands into electrical signals that control motor speed and direction.
-*   Sample the infrared sensors continuously.
-*   Halt all motion immediately if an obstacle is detected in the travel path.
+*   Sample all 4 infrared sensors continuously.
+*   Halt all motion immediately if an obstacle is detected in any direction of travel.
 
 ---
 
@@ -23,13 +23,14 @@ The table below lists all components required to assemble the Motor Node:
 
 | Component Name | Quantity | Specification | Purpose |
 | :--- | :---: | :--- | :--- |
-| **ESP32 Dev Board** | 1 | ESP32-WROOM-32E DevKit (38 Pins) | Microcontroller that reads sensors and generates control signals. |
-| **BTS7960 Motor Driver** | 2 | 43A High-Current Dual H-Bridge Module | Interfaces between ESP32 signals and high-current Johnson motors. |
-| **Johnson 12V DC Motors** | 4 | 12V Nominal, 200 RPM Geared DC Motors | Electric geared motors that provide traction and drive the wheels. |
-| **E18-D80NK IR Sensors** | 3 | Adjustable Range (3–80 cm), Active LOW | Proximity sensors used to detect obstacles in front of the robot. |
-| **Power Input Connector**| 1 | XT60 Connector (Male/Female pair) | Connects the main 12V battery pack securely to the power lines. |
-| **Screw Terminal Blocks**| Assorted| 5.08 mm Pitch PCB Screw Terminals | Allows secure, solderless cable connections for power distribution. |
-| **Connecting Wires** | Assorted| 14 AWG (Power lines) / 24 AWG (Signal lines) | Carries electric current and logic signals between components. |
+| **ESP32 Dev Board** | 1 | ESP32-WROOM-32E DevKit (38 Pins) | Microcontroller reading sensors & driving H-bridges. |
+| **BTS7960 Motor Driver** | 2 | 43A High-Current Dual H-Bridge Module | Interfaces between ESP32 signals and Johnson DC motors. |
+| **Johnson 12V DC Motors** | 4 | 12V Nominal, 200 RPM Geared DC Motors | Electric geared motors driving the 4-wheel chassis. |
+| **Robot Wheels (10cm x 4cm)**| 4 | 10 cm Diameter, 4 cm Width, High-Traction Rubber | Wheels mounted to motor shafts via 100mm flange hubs. |
+| **E18-D80NK IR Sensors** | 4 | Adjustable Range (3–80 cm), Active LOW | Proximity sensors detecting obstacles (FL, FR, RL, RR). |
+| **Power Input Connector**| 1 | XT60 Connector (Male/Female pair) | Connects main 12V battery power. |
+| **Screw Terminal Blocks**| Assorted| 5.08 mm Pitch PCB Screw Terminals | Secure cable connections for power distribution. |
+| **Connecting Wires** | Assorted| 14 AWG (Power) / 24 AWG (Logic Signal) | Carries electric current and logic signals. |
 
 ---
 
@@ -49,20 +50,20 @@ The table below lists all components required to assemble the Motor Node:
 *   **Why it is used**: Johnson DC motors can draw several amperes under load. Standard motor drivers (like L298N) will overheat and fail. The BTS7960 is rated for up to 43A, providing a reliable and safe solution.
 *   **How it works inside PRAYAS**: It acts as an electronic switch. It receives weak logic signals from the ESP32 and switches the high-current 12V power from the battery to the motors.
 
-### Johnson 12V 200 RPM DC Motors
-*   **What it is**: A brushed DC motor attached to a metal spur gearbox.
+### Johnson 12V 200 RPM DC Motors & 10cm x 4cm Wheels
+*   **What it is**: Brushed DC motor attached to a metal spur gearbox driving a 10 cm diameter, 4 cm width high-traction rubber wheel.
     
     ![Johnson 12V DC Motor](../assets/img/jhonson motor.jpeg){ style="display: block; margin: 0 auto;" width="300" }
-*   **Why it is used**: DC motors rotate too fast and have too little torque on their own to move a heavy robot. The gearbox reduces the rotation speed to 200 RPM while multiplying the torque, allowing it to easily carry the 5–7 kg weight of PRAYAS.
+*   **Why it is used**: The gearbox reduces rotation speed to 200 RPM while multiplying torque. Combined with 10cm diameter / 4cm width wheels, it provides smooth indoor travel and obstacle clearance.
 *   **How it works inside PRAYAS**: Four motors drive the wheels. They are wired in parallel groups (two on the left, two on the right) to run a 4-wheel-drive differential chassis.
 
-### E18-D80NK IR Obstacle Sensors
-*   **What it is**: An infrared proximity sensor that emits a beam of light and detects its reflection from nearby objects.
+### E18-D80NK IR Obstacle Sensors (4-Sensor Array)
+*   **What it is**: Infrared proximity sensors emitting a modulated beam and detecting reflection from nearby obstacles.
     
     ![E18-D80NK IR Sensor](../assets/img/ed18_sensor.jpg){ style="display: block; margin: 0 auto;" width="250" }
     *   *Reference*: [E18-D80NK Datasheet Reference](https://handsontec.com/dataspecs/sensor/E18-D80NK%20IR%20Sensor.pdf)
-*   **Why it is used**: It provides cheap, reliable, and low-latency digital obstacle detection.
-*   **How it works inside PRAYAS**: Three sensors are mounted on the front bumper. If an obstacle comes within the detection threshold, the sensor pulls its output pin LOW, telling the ESP32 to immediately brake the motors.
+*   **Why it is used**: Provides instantaneous, hardware-level digital collision detection.
+*   **How it works inside PRAYAS**: Four sensors are mounted on the base deck corners: Front-Left (FL), Front-Right (FR), Rear-Left (RL), and Rear-Right (RR). If any sensor detects an obstacle within 20 cm, its output pin pulls LOW, signaling the ESP32 safety watchdog to immediately apply emergency dynamic braking.
 
 ---
 
@@ -94,32 +95,15 @@ Motor outputs are wired in parallel to drive the two motors on each side togethe
 | **Right Driver M+**| (+) Terminals | Right Front & Right Rear Motors | Drives the right side wheels forward |
 | **Right Driver M-**| (-) Terminals | Right Front & Right Rear Motors | Drives the right side wheels backward |
 
-### ESP32 to IR Sensors Connections
-Sensors require 5V power and return digital signals to the ESP32:
+### ESP32 to 4 IR Sensors Connections
+Sensors require 5V power and return digital signals to ESP32 input-only pins:
 
 | IR Sensor Module | Wire Color | ESP32 Pin | Pin Function |
 | :--- | :--- | :--- | :--- |
-| **Left IR Sensor** | Brown | **5V** | Power supply (+5V) |
-| | Blue | **GND** | Ground |
-| | Black | **GPIO 34** | Digital sensor output (Active LOW) |
-| **Center IR Sensor** | Brown | **5V** | Power supply (+5V) |
-| | Blue | **GND** | Ground |
-| | Black | **GPIO 35** | Digital sensor output (Active LOW) |
-| **Right IR Sensor**| Brown | **5V** | Power supply (+5V) |
-| | Blue | **GND** | Ground |
-| | Black | **GPIO 39** | Digital sensor output (Active LOW) |
-
-### Power Supply Connections
-Power routing from the battery to the drivers and the microcontroller:
-
-| From Source | Connection | To Destination | Wire Gauge | Description |
-| :--- | :--- | :--- | :---: | :--- |
-| **Battery (+)** | XT60 Connector | 15A Inline Fuse → Switch | 14 AWG | Main battery positive feed |
-| **Switch Output**| Split to 3 paths | Left Driver B+, Right Driver B+, Regulator Input (+) | 14 AWG / 22 AWG | Switched 12V power |
-| **Battery (-)** | XT60 Connector | Common Ground Point | 14 AWG | Main battery negative reference |
-| **Common Ground**| Split to 3 paths | Left Driver B-, Right Driver B-, Regulator Input (-) | 14 AWG / 22 AWG | Ground distribution |
-| **Regulator Out (+)**| Red Wire | ESP32 Vin / 5V Pin | 22 AWG | Regulated 5V logic supply |
-| **Regulator Out (-)**| Black Wire | ESP32 GND Pin | 22 AWG | Logic ground return |
+| **Front-Left IR Sensor** | Brown / Blue / Black | **5V / GND / GPIO 34** | Digital sensor output (Active LOW, GPI 34) |
+| **Front-Right IR Sensor**| Brown / Blue / Black | **5V / GND / GPIO 35** | Digital sensor output (Active LOW, GPI 35) |
+| **Rear-Left IR Sensor**  | Brown / Blue / Black | **5V / GND / GPIO 36** | Digital sensor output (Active LOW, GPI 36) |
+| **Rear-Right IR Sensor** | Brown / Blue / Black | **5V / GND / GPIO 39** | Digital sensor output (Active LOW, GPI 39) |
 
 ---
 
@@ -129,15 +113,16 @@ The table below lists all ESP32 pins used in this node:
 
 | GPIO | Connected To | Pin Mode | Purpose | Safe Boot Handling |
 | :--- | :--- | :---: | :--- | :--- |
-| **GPIO 12** | Left Driver L_PWM | Output | Left forward speed (PWM) | **Boot Strap Pin (MTDI)**: Must be LOW at boot. The H-bridge's internal pull-down keeps this safe. |
+| **GPIO 12** | Left Driver L_PWM | Output | Left forward speed (PWM) | **Boot Strap Pin (MTDI)**: Must be LOW at boot. |
 | **GPIO 13** | Left Driver R_PWM | Output | Left reverse speed (PWM) | Safe to use. |
 | **GPIO 14** | Left Driver EN | Output | Left driver enable control | Safe to use. |
 | **GPIO 25** | Right Driver L_PWM | Output | Right forward speed (PWM) | Safe to use. |
 | **GPIO 26** | Right Driver R_PWM | Output | Right reverse speed (PWM) | Safe to use. |
 | **GPIO 27** | Right Driver EN | Output | Right driver enable control | Safe to use. |
-| **GPIO 34** | Left IR Proximity Out | Input | Left obstacle sensor input | Input-only pin. Requires pull-up. |
-| **GPIO 35** | Center IR Proximity Out| Input | Center obstacle sensor input | Input-only pin. Requires pull-up. |
-| **GPIO 39** | Right IR Proximity Out | Input | Right obstacle sensor input | Input-only pin. Requires pull-up. |
+| **GPIO 34** | Front-Left IR Out | Input | FL obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
+| **GPIO 35** | Front-Right IR Out| Input | FR obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
+| **GPIO 36** | Rear-Left IR Out  | Input | RL obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
+| **GPIO 39** | Rear-Right IR Out | Input | RR obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
 | **GPIO 2** | Onboard LED | Output | Status indicator (blinking) | **Boot Strap Pin**: Must be LOW or floating at boot. |
 
 ---

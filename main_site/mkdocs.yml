@@ -92,7 +92,7 @@ nav:
       - Camera Node: 03_Hardware/Camera_Node.md
       - Sensor Node (GPS, IMU, LCD): 03_Hardware/Sensor_Node.md
       - Power Node (Not Needed): 03_Hardware/Power_Node.md
-      - Display Node: 03_Hardware/Display_Node.md
+      - Display System (Master Node Integrated): 03_Hardware/Display_Node.md
       - Audio System: 03_Hardware/Audio_System.md
       - Battery System: 03_Hardware/Battery_System.md
       - Mechanical System: 03_Hardware/Mechanical_System.md

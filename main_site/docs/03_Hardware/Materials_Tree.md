@@ -10,24 +10,25 @@ This document presents the complete Bill of Materials for PRAYAS V1 organized as
 ```
 PRAYAS V1 Humanoid Robot
 │
-├── 1. MASTER NODE
+├── 1. MASTER NODE (WITH INTEGRATED STATUS DISPLAY)
 │   ├── ESP32-WROOM-32E DevKit (38-Pin) ──────────── Qty: 1 ─── $4.50
-│   ├── Jumper Wires (Male-to-Male, 24 AWG) ──────── Qty: 20 ── $2.00
+│   ├── SSD1306/SH1106 OLED Display (0.96"/1.3") ──── Qty: 1 ─── $3.50
+│   ├── Jumper Wires (Male-to-Male/Female, 24 AWG) ── Qty: 20 ── $2.00
 │   ├── Pin Headers (2.54mm, Male) ────────────────── Qty: 2pk ─ $1.00
 │   └── Mounting Hardware (M3 Standoffs + Screws) ──── Qty: 4 ─── $1.00
-│                                                          Subtotal: $8.50
+│                                                          Subtotal: $12.00
 │
-├── 2. MOTOR NODE
+├── 2. MOTOR NODE (4WD 10x4cm WHEELS & 4x IR)
 │   ├── ESP32-WROOM-32E DevKit (38-Pin) ──────────── Qty: 1 ─── $4.50
 │   ├── BTS7960 43A Dual H-Bridge Driver ──────────── Qty: 2 ─── $17.00
 │   ├── Johnson 12V 200RPM Geared DC Motor ────────── Qty: 4 ─── $60.00
-│   ├── Robot Wheel (10cm Dia, Rubber Tread) ──────── Qty: 4 ─── $24.00
+│   ├── Robot Wheel (10cm Dia, 4cm Width Rubber) ──── Qty: 4 ─── $24.00
 │   ├── Wheel Flange Hub Bracket (100mm) ──────────── Qty: 4 ─── $10.00
-│   ├── E18-D80NK IR Proximity Sensor ─────────────── Qty: 3 ─── $13.50
-│   ├── Jumper Wires (Male-to-Male, 24 AWG) ──────── Qty: 30 ── $3.00
+│   ├── E18-D80NK IR Proximity Sensor (FL,FR,RL,RR) ─ Qty: 4 ─── $18.00
+│   ├── Jumper Wires (Male-to-Male/Female, 24 AWG) ── Qty: 30 ── $3.00
 │   ├── Screw Terminal Block (5.08mm, 2-Pin) ──────── Qty: 4 ─── $2.00
 │   └── Mounting Hardware (M4 Screws + L-Brackets) ── Qty: 8 ─── $3.00
-│                                                          Subtotal: $137.00
+│                                                          Subtotal: $141.50
 │
 ├── 3. SERVO NODE
 │   ├── ESP32-WROOM-32E DevKit (38-Pin) ──────────── Qty: 1 ─── $4.50

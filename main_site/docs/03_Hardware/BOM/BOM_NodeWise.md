@@ -8,36 +8,37 @@ This document is the official procurement reference for PRAYAS V1. All component
 
 ---
 
-## Node 1 — Master Node
+## Node 1 — Master Node (with Integrated Status Display)
 
-> **Role**: Central coordinator. Bridges all sub-nodes via ESP-NOW and connects to the cloud via Wi-Fi/MQTT.
+> **Role**: Central coordinator & system status display. Bridges all sub-nodes via ESP-NOW, connects to cloud via Wi-Fi/MQTT, and drives local OLED status screen.
 
 | # | Component | Model / Spec | Qty | Unit Price (NPR) | Total (NPR) | Source / Notes |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
 | 1 | ESP32 Development Board | ESP32-WROOM-32E DevKit (38-Pin) | 1 | रू 750 | रू 750 | Daraz / local shop |
-| 2 | Jumper Wires (M-to-M) | 24 AWG, 20 cm, 40-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
-| 3 | Pin Headers (Male, 2.54 mm) | 40-pin strip, 2-pack | 1 pk | रू 50 | रू 50 | Lgivmocal surplus |
-| 4 | M3 Standoffs + Screws | Brass standoff kit (10mm) | 4 | रू 30 | रू 120 | Hardware store |
-| | | | | **Node 1 Subtotal** | **रू 1,120** | |
+| 2 | Status OLED Display | 0.96" / 1.3" SSD1306/SH1106 I2C OLED | 1 | रू 450 | रू 450 | Daraz.com.np |
+| 3 | Jumper Wires (M-to-M/F) | 24 AWG, 20 cm, 40-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
+| 4 | Pin Headers (Male, 2.54 mm) | 40-pin strip, 2-pack | 1 pk | रू 50 | रू 50 | Local surplus |
+| 5 | M3 Standoffs + Screws | Brass standoff kit (10mm) | 4 | रू 30 | रू 120 | Hardware store |
+| | | | | **Node 1 Subtotal** | **रू 1,570** | |
 
 ---
 
 ## Node 2 — Motor Node
 
-> **Role**: Differential drive controller. Drives 4 x DC motors and reads 3 x IR proximity sensors.
+> **Role**: 4WD Differential drive controller. Drives 4 x Johnson DC motors (10 cm x 4 cm wheels) and reads 4 x E18-D80NK IR proximity sensors (FL, FR, RL, RR).
 
 | # | Component | Model / Spec | Qty | Unit Price (NPR) | Total (NPR) | Source / Notes |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
 | 1 | ESP32 Development Board | ESP32-WROOM-32E DevKit (38-Pin) | 1 | रू 750 | रू 750 | Daraz / local shop |
 | 2 | BTS7960 Motor Driver Module | 43A Dual H-Bridge (High Current) | 2 | रू 850 | रू 1,700 | Daraz.com.np |
 | 3 | Johnson 12V 200 RPM DC Motor | 12V Geared DC Motor, Metal Gear | 4 | रू 1,800 | रू 7,200 | Kathmandu electronics market |
-| 4 | Robot Wheel (10 cm Dia) | Rubber Tread, 4 cm Width | 4 | रू 500 | रू 2,000 | Robotics shop / Daraz |
+| 4 | Robot Wheel (10 cm Dia x 4 cm W) | Rubber Tread, High Traction (4 cm W) | 4 | रू 500 | रू 2,000 | Robotics shop / Daraz |
 | 5 | Wheel Flange Hub Bracket | 100mm Customized Flange Hub | 4 | रू 350 | रू 1,400 | Local fabrication / Daraz |
-| 6 | E18-D80NK IR Proximity Sensor | Adjustable 3-80 cm, Active LOW | 3 | रू 550 | रू 1,650 | electronicshub.com.np |
-| 7 | Jumper Wires (M-to-M) | 24 AWG, 30-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
+| 6 | E18-D80NK IR Proximity Sensor | Adjustable 3-80 cm, Active LOW | 4 | रू 550 | रू 2,200 | electronicshub.com.np |
+| 7 | Jumper Wires (M-to-M/F) | 24 AWG, 30-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
 | 8 | Screw Terminal Block | 5.08 mm Pitch, 2-Pin PCB | 4 | रू 35 | रू 140 | Local shop |
 | 9 | M4 Screws + L-Brackets | M4 x 12mm + Aluminum L-Brackets | 8 | रू 50 | रू 400 | Hardware store |
-| | | | | **Node 2 Subtotal** | **रू 15,440** | |
+| | | | | **Node 2 Subtotal** | **रू 15,990** | |
 
 ---
 

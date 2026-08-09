@@ -11,7 +11,8 @@ The telemetry data published to `prayas/telemetry/state` includes the following 
 | `timestamp` | Integer | ms | Time elapsed since Master Node boot. |
 | `battery.voltage` | Float | V | Battery voltage read from the analog sensor (range $9.0	ext{V}$ to $12.6	ext{V}$). |
 | `battery.current` | Float | A | Current draw read from the ACS712 sensor. |
-| `sensors.proximity_left` | Boolean | - | Status of Left E18-D80NK IR Proximity sensor (true if triggered/LOW). |
-| `sensors.proximity_center`| Boolean | - | Status of Center E18-D80NK IR Proximity sensor (true if triggered/LOW). |
-| `sensors.proximity_right` | Boolean | - | Status of Right E18-D80NK IR Proximity sensor (true if triggered/LOW). |
+| `sensors.proximity_fl` | Boolean | - | Status of Front-Left E18-D80NK IR Proximity sensor (true if triggered/LOW). |
+| `sensors.proximity_fr` | Boolean | - | Status of Front-Right E18-D80NK IR Proximity sensor (true if triggered/LOW). |
+| `sensors.proximity_rl` | Boolean | - | Status of Rear-Left E18-D80NK IR Proximity sensor (true if triggered/LOW). |
+| `sensors.proximity_rr` | Boolean | - | Status of Rear-Right E18-D80NK IR Proximity sensor (true if triggered/LOW). |
 | `system_state` | String | - | Current state (e.g. `STATE_IDLE`, `STATE_MOVING`, `STATE_FAULT`). |

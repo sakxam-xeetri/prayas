@@ -16,10 +16,10 @@ graph TD
     UPPER[UPPER CHEST<br/>2x Cameras + AI Node<br/>Microphone]
     DISPLAY[3.5in TFT DISPLAY<br/>Logs + Control Panel]
     ARMS[LEFT & RIGHT ARMS<br/>3x MG995 Servos Each<br/>Shoulder + Elbow + Wrist]
-    BODY[BODY / TORSO<br/>Master Node + Servo Node<br/>Control Centre]
+    BODY[BODY / TORSO<br/>Master Node + Integrated OLED Display<br/>Servo Node Control Centre]
     SPEAKER[SPEAKER SECTION<br/>Speakers + MAX98357A<br/>Audio Output]
     PVC[PVC PIPE COLUMN<br/>4in Diameter, 70cm<br/>Cable Conduit]
-    BASE[MOTORIZED BASE<br/>3x IR Sensors + BMS Battery<br/>Motor Node + Drivers + Wheels]
+    BASE[MOTORIZED BASE<br/>4x IR Proximity Sensors + BMS Battery<br/>Motor Node + Drivers + 10x4cm Wheels]
 
     HEAD --> NECK
     NECK --> UPPER

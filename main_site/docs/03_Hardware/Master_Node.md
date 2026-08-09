@@ -8,13 +8,14 @@ The Master Coordinator Node serves as the brain of PRAYAS V1. It connects to ext
     
     ![ESP32 DevKitC v4 Pinout Diagram](../assets/img/esp32-devkitC-v4-pinout.png){ style="display: block; margin: 0 auto;" width="500" }
 
+*   **Integrated System Status Display**: SSD1306 / SH1106 0.96" OLED Display (128x64 pixels, I2C interface) mounted directly on the Master Node enclosure. Renders boot self-test logs, Wi-Fi RSSI, MQTT state, battery voltage, active drive mode, and fault codes.
 *   **Antenna**: Built-in PCB trace antenna (an external u.FL antenna version is recommended if inside a metal shield).
 
 ## GPIO Mapping
-*   **GPIO 16**: Rx2 (Connected to AI Node Tx)
-*   **GPIO 17**: Tx2 (Connected to AI Node Rx)
-*   **GPIO 21**: I2C SDA (Connected to local status display)
-*   **GPIO 22**: I2C SCL (Connected to local status display)
+*   **GPIO 16**: RX2 (UART Serial input from AI Node TX Pin 43)
+*   **GPIO 17**: TX2 (UART Serial output to AI Node RX Pin 44)
+*   **GPIO 21**: I2C SDA (Connected to SSD1306/SH1106 OLED Display SDA)
+*   **GPIO 22**: I2C SCL (Connected to SSD1306/SH1106 OLED Display SCL)
 
 ## State Machine
 

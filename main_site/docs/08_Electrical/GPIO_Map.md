@@ -6,10 +6,10 @@ This document provides a single-point-of-truth GPIO mapping table for all microc
 ## Complete GPIO Assignments
 
 ### 1. Master Coordinator Node (ESP32)
-*   **GPIO 16**: UART Rx2 (Connected to AI Node Tx)
-*   **GPIO 17**: UART Tx2 (Connected to AI Node Rx)
-*   **GPIO 21**: I2C SDA (OLED Display / Status Display)
-*   **GPIO 22**: I2C SCL (OLED Display / Status Display)
+*   **GPIO 16**: UART RX2 (Connected to AI Node TX Pin 43)
+*   **GPIO 17**: UART TX2 (Connected to AI Node RX Pin 44)
+*   **GPIO 21**: I2C SDA (Integrated Status OLED Display SSD1306/SH1106)
+*   **GPIO 22**: I2C SCL (Integrated Status OLED Display SSD1306/SH1106)
 
 ### 2. Motor Controller Node (ESP32)
 *   **GPIO 12**: Left Motor PWM Forward (L_PWM)
@@ -18,9 +18,10 @@ This document provides a single-point-of-truth GPIO mapping table for all microc
 *   **GPIO 25**: Right Motor PWM Forward (L_PWM)
 *   **GPIO 26**: Right Motor PWM Reverse (R_PWM)
 *   **GPIO 27**: Right Driver Enable (L_EN / R_EN)
-*   **GPIO 34**: Left IR Proximity Sensor Input (E18-D80NK, Active LOW)
-*   **GPIO 35**: Center IR Proximity Sensor Input (E18-D80NK, Active LOW)
-*   **GPIO 39**: Right IR Proximity Sensor Input (E18-D80NK, Active LOW)
+*   **GPIO 34**: Front-Left IR Proximity Sensor Input (E18-D80NK, Active LOW)
+*   **GPIO 35**: Front-Right IR Proximity Sensor Input (E18-D80NK, Active LOW)
+*   **GPIO 36**: Rear-Left IR Proximity Sensor Input (E18-D80NK, Active LOW)
+*   **GPIO 39**: Rear-Right IR Proximity Sensor Input (E18-D80NK, Active LOW)
 
 ### 3. Servo Controller Node (ESP32)
 *   **GPIO 21**: I2C SDA (Connected to PCA9685 SDA)

@@ -1314,7 +1314,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -1574,10 +1574,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#node-1-master-node" class="md-nav__link">
+  <a href="#node-1-master-node-with-integrated-status-display" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Node 1 — Master Node
+        Node 1 — Master Node (with Integrated Status Display)
       
     </span>
   </a>
@@ -4658,10 +4658,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#node-1-master-node" class="md-nav__link">
+  <a href="#node-1-master-node-with-integrated-status-display" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Node 1 — Master Node
+        Node 1 — Master Node (with Integrated Status Display)
       
     </span>
   </a>
@@ -4803,9 +4803,9 @@
 All NPR prices are adjusted to reflect actual local sourcing costs — some items cost more locally due to import duties; some are cheaper due to local surplus.</p>
 </blockquote>
 <hr />
-<h2 id="node-1-master-node">Node 1 — Master Node<a class="headerlink" href="#node-1-master-node" title="Permanent link">&para;</a></h2>
+<h2 id="node-1-master-node-with-integrated-status-display">Node 1 — Master Node (with Integrated Status Display)<a class="headerlink" href="#node-1-master-node-with-integrated-status-display" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Role</strong>: Central coordinator. Bridges all sub-nodes via ESP-NOW and connects to the cloud via Wi-Fi/MQTT.</p>
+<p><strong>Role</strong>: Central coordinator &amp; system status display. Bridges all sub-nodes via ESP-NOW, connects to cloud via Wi-Fi/MQTT, and drives local OLED status screen.</p>
 </blockquote>
 <table>
 <thead>
@@ -4831,7 +4831,16 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 </tr>
 <tr>
 <td style="text-align: center;">2</td>
-<td style="text-align: left;">Jumper Wires (M-to-M)</td>
+<td style="text-align: left;">Status OLED Display</td>
+<td style="text-align: left;">0.96" / 1.3" SSD1306/SH1106 I2C OLED</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">रू 450</td>
+<td style="text-align: center;">रू 450</td>
+<td style="text-align: left;">Daraz.com.np</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Jumper Wires (M-to-M/F)</td>
 <td style="text-align: left;">24 AWG, 20 cm, 40-piece pack</td>
 <td style="text-align: center;">1 pk</td>
 <td style="text-align: center;">रू 200</td>
@@ -4839,16 +4848,16 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 <td style="text-align: left;">Any electronics shop</td>
 </tr>
 <tr>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: left;">Pin Headers (Male, 2.54 mm)</td>
 <td style="text-align: left;">40-pin strip, 2-pack</td>
 <td style="text-align: center;">1 pk</td>
 <td style="text-align: center;">रू 50</td>
 <td style="text-align: center;">रू 50</td>
-<td style="text-align: left;">Lgivmocal surplus</td>
+<td style="text-align: left;">Local surplus</td>
 </tr>
 <tr>
-<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
 <td style="text-align: left;">M3 Standoffs + Screws</td>
 <td style="text-align: left;">Brass standoff kit (10mm)</td>
 <td style="text-align: center;">4</td>
@@ -4862,7 +4871,7 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 <td style="text-align: left;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"><strong>Node 1 Subtotal</strong></td>
-<td style="text-align: center;"><strong>रू 1,120</strong></td>
+<td style="text-align: center;"><strong>रू 1,570</strong></td>
 <td style="text-align: left;"></td>
 </tr>
 </tbody>
@@ -4870,7 +4879,7 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 <hr />
 <h2 id="node-2-motor-node">Node 2 — Motor Node<a class="headerlink" href="#node-2-motor-node" title="Permanent link">&para;</a></h2>
 <blockquote>
-<p><strong>Role</strong>: Differential drive controller. Drives 4 x DC motors and reads 3 x IR proximity sensors.</p>
+<p><strong>Role</strong>: 4WD Differential drive controller. Drives 4 x Johnson DC motors (10 cm x 4 cm wheels) and reads 4 x E18-D80NK IR proximity sensors (FL, FR, RL, RR).</p>
 </blockquote>
 <table>
 <thead>
@@ -4914,8 +4923,8 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 </tr>
 <tr>
 <td style="text-align: center;">4</td>
-<td style="text-align: left;">Robot Wheel (10 cm Dia)</td>
-<td style="text-align: left;">Rubber Tread, 4 cm Width</td>
+<td style="text-align: left;">Robot Wheel (10 cm Dia x 4 cm W)</td>
+<td style="text-align: left;">Rubber Tread, High Traction (4 cm W)</td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">रू 500</td>
 <td style="text-align: center;">रू 2,000</td>
@@ -4934,14 +4943,14 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 <td style="text-align: center;">6</td>
 <td style="text-align: left;">E18-D80NK IR Proximity Sensor</td>
 <td style="text-align: left;">Adjustable 3-80 cm, Active LOW</td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: center;">रू 550</td>
-<td style="text-align: center;">रू 1,650</td>
+<td style="text-align: center;">रू 2,200</td>
 <td style="text-align: left;">electronicshub.com.np</td>
 </tr>
 <tr>
 <td style="text-align: center;">7</td>
-<td style="text-align: left;">Jumper Wires (M-to-M)</td>
+<td style="text-align: left;">Jumper Wires (M-to-M/F)</td>
 <td style="text-align: left;">24 AWG, 30-piece pack</td>
 <td style="text-align: center;">1 pk</td>
 <td style="text-align: center;">रू 200</td>
@@ -4972,7 +4981,7 @@ All NPR prices are adjusted to reflect actual local sourcing costs — some item
 <td style="text-align: left;"></td>
 <td style="text-align: center;"></td>
 <td style="text-align: center;"><strong>Node 2 Subtotal</strong></td>
-<td style="text-align: center;"><strong>रू 15,440</strong></td>
+<td style="text-align: center;"><strong>रू 15,990</strong></td>
 <td style="text-align: left;"></td>
 </tr>
 </tbody>

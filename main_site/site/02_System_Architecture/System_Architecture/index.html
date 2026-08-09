@@ -1416,7 +1416,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -4650,8 +4650,8 @@
 <pre class="mermaid"><code>graph TD
     %% Controllers and Nodes
     subgraph Core Base
-        Master[Master ESP32 Node]
-        Motor[Motor ESP32 Node]
+        Master["Master ESP32 Node&lt;br/&gt;Integrated Status OLED Display"]
+        Motor["Motor ESP32 Node&lt;br/&gt;4x 10cm x 4cm Wheels &amp; 4x IR"]
         Sensor["Sensor Node (Arduino Nano)&lt;br/&gt;GPS, MPU6050, Humidity &amp; LCD"]
     end
 
@@ -4678,7 +4678,9 @@
     Master &lt;--&gt;|Wi-Fi / MQTT| Broker
 
     %% Device Connections
-    Motor --&gt;|PWM| Drivers[2x BTS7960 Drivers] --&gt;|12V| Motors[4x Johnson Motors]
+    Master --&gt;|I2C| StatusOLED[0.96"/1.3" Status OLED Display]
+    Motor --&gt;|PWM| Drivers[2x BTS7960 Drivers] --&gt;|12V| Motors[4x Johnson Motors &amp; 10x4cm Wheels]
+    Motor &lt;--|GPI| IRSensors[4x E18-D80NK IR Proximity Sensors]
     Servo --&gt;|I2C| PCA[PCA9685 PWM Driver] --&gt;|6V| Servos[7x MG995 Servos]
     AI --&gt;|SPI| SPIDisplay[2.4" SPI TFT Display]
     AI --&gt;|I2S| Speaker[3W Speaker / Amp]

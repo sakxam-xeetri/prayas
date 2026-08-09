@@ -1405,7 +1405,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -4625,7 +4625,7 @@
 <h2 id="hardware-used">Hardware Used<a class="headerlink" href="#hardware-used" title="Permanent link">&para;</a></h2>
 <p>The platform distributes processing across multiple microcontrollers to handle specific real-time tasks:</p>
 <ul>
-<li><strong>ESP32-WROOM-32E (Master, Motor, Servo Nodes)</strong>: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi and Bluetooth, and ESP-NOW support.</li>
+<li><strong>ESP32-WROOM-32E (Master, Motor, Servo Nodes)</strong>: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi, BT, and ESP-NOW. Master Node drives an integrated <strong>SSD1306 OLED Status Display</strong> over I2C. Motor Node controls 4WD differential locomotion (4x 10cm x 4cm wheels) and 4x IR proximity sensors.</li>
 <li><strong>ESP32-S3 CAM (AI Node)</strong>: High-performance AI co-processor (dual-core Xtensa 32-bit LX7, 240 MHz, 8MB PSRAM, 8MB Flash) running <strong>Xiaozhi AI Framework</strong>, driving an integrated <strong>SPI TFT Display</strong> for face UI/status, OV2640 camera snapshot processing, and I2S audio streaming.</li>
 <li><strong>ESP32-CAM (Camera Node)</strong>: Dedicated OV2640 camera board serving a high-frame-rate WebSocket video stream to the Web Dashboard.</li>
 <li><strong>Arduino Nano (Sensor Node)</strong>: Compact ATmega328P MCU (16 MHz) reading GPS module NMEA data, MPU6050 6-axis IMU, humidity sensor, and driving a local 16x2 / 20x4 I2C LCD telemetry screen.</li>
@@ -4673,21 +4673,21 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Display Interface</strong></td>
-<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">I2C (OLED on Master)</td>
 <td style="text-align: left;">Hardware SPI (ST7789 TFT)</td>
 <td style="text-align: left;">N/A</td>
 <td style="text-align: left;">I2C (16x2/20x4 LCD)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Sensors &amp; Vision</strong></td>
-<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">4x IR Sensors (Motor)</td>
 <td style="text-align: left;">OV2640 Camera + I2S Mic</td>
 <td style="text-align: left;">OV2640 Camera</td>
 <td style="text-align: left;">GPS, MPU6050, Humidity</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Primary Task</strong></td>
-<td style="text-align: left;">Control &amp; Kinematics</td>
+<td style="text-align: left;">Mesh Gateway &amp; 4WD Drive</td>
 <td style="text-align: left;">Xiaozhi AI, Speech &amp; SPI UI</td>
 <td style="text-align: left;">Web Video Stream</td>
 <td style="text-align: left;">GPS, IMU, Humidity &amp; LCD</td>

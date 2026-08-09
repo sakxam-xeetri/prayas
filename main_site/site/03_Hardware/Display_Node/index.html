@@ -27,7 +27,7 @@
     
     
       
-        <title>Display Node - PRAYAS V1 Documentation</title>
+        <title>Display System (Master Node Integrated) - PRAYAS V1 Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#display-subsystems-dual-display-architecture" class="md-skip">
+        <a href="#display-architecture-subsystems-master-node-integrated" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Display Node
+              Display System (Master Node Integrated)
             
           </span>
         </div>
@@ -1323,7 +1323,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -1341,7 +1341,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -1390,10 +1390,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-ai-node-spi-tft-display-face-ui-conversational-status" class="md-nav__link">
+  <a href="#1-master-node-status-oled-display-system-diagnostics-connectivity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. AI Node SPI TFT Display (Face UI &amp; Conversational Status)
+        1. Master Node Status OLED Display (System Diagnostics &amp; Connectivity)
       
     </span>
   </a>
@@ -1401,10 +1401,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-sensor-node-character-lcd-display-physical-telemetry" class="md-nav__link">
+  <a href="#2-ai-node-spi-tft-display-face-ui-speech-visualizer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Sensor Node Character LCD Display (Physical Telemetry)
+        2. AI Node SPI TFT Display (Face UI &amp; Speech Visualizer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-sensor-node-character-lcd-display-physical-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Sensor Node Character LCD Display (Physical Telemetry)
       
     </span>
   </a>
@@ -4588,10 +4599,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-ai-node-spi-tft-display-face-ui-conversational-status" class="md-nav__link">
+  <a href="#1-master-node-status-oled-display-system-diagnostics-connectivity" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. AI Node SPI TFT Display (Face UI &amp; Conversational Status)
+        1. Master Node Status OLED Display (System Diagnostics &amp; Connectivity)
       
     </span>
   </a>
@@ -4599,10 +4610,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-sensor-node-character-lcd-display-physical-telemetry" class="md-nav__link">
+  <a href="#2-ai-node-spi-tft-display-face-ui-speech-visualizer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Sensor Node Character LCD Display (Physical Telemetry)
+        2. AI Node SPI TFT Display (Face UI &amp; Speech Visualizer)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-sensor-node-character-lcd-display-physical-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Sensor Node Character LCD Display (Physical Telemetry)
       
     </span>
   </a>
@@ -4631,36 +4653,44 @@
 
 
 
-<h1 id="display-subsystems-dual-display-architecture">Display Subsystems (Dual Display Architecture)<a class="headerlink" href="#display-subsystems-dual-display-architecture" title="Permanent link">&para;</a></h1>
+<h1 id="display-architecture-subsystems-master-node-integrated">Display Architecture &amp; Subsystems (Master Node Integrated)<a class="headerlink" href="#display-architecture-subsystems-master-node-integrated" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>PRAYAS V1 employs a <strong>Dual Display Strategy</strong> integrated directly into the specialized node microcontrollers rather than using a separate, standalone display MCU.</p>
+<p>PRAYAS V1 employs an <strong>Integrated Multi-Display Architecture</strong> where display screens are driven directly by the core node microcontrollers (<strong>Master Node</strong>, <strong>AI Node</strong>, and <strong>Sensor Node</strong>) rather than using a separate, standalone display MCU.</p>
 <h2 id="display-hardware-breakdown">Display Hardware Breakdown<a class="headerlink" href="#display-hardware-breakdown" title="Permanent link">&para;</a></h2>
-<h3 id="1-ai-node-spi-tft-display-face-ui-conversational-status">1. AI Node SPI TFT Display (Face UI &amp; Conversational Status)<a class="headerlink" href="#1-ai-node-spi-tft-display-face-ui-conversational-status" title="Permanent link">&para;</a></h3>
+<h3 id="1-master-node-status-oled-display-system-diagnostics-connectivity">1. Master Node Status OLED Display (System Diagnostics &amp; Connectivity)<a class="headerlink" href="#1-master-node-status-oled-display-system-diagnostics-connectivity" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Hardware</strong>: 2.4-inch SPI TFT LCD Module (240x320 pixels, ST7789 / ILI9341 driver).</li>
-<li><strong>Controller</strong>: Driven directly by the <strong>ESP32-S3 CAM (AI Node)</strong> via hardware SPI (SCK, MOSI, CS, DC, RST).</li>
-<li><strong>Role</strong>: Displays dynamic facial expressions (eyes, expressions), voice assistant wake-word state, cloud connection status, and conversation speech visualizer.</li>
-</ul>
-<h3 id="2-sensor-node-character-lcd-display-physical-telemetry">2. Sensor Node Character LCD Display (Physical Telemetry)<a class="headerlink" href="#2-sensor-node-character-lcd-display-physical-telemetry" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Hardware</strong>: 16x2 or 20x4 Character LCD with PCF8574 I2C I/O Expander.</li>
-<li><strong>Controller</strong>: Driven by the <strong>Arduino Nano (Sensor Node)</strong> via I2C (pins A4/A5, I2C address <code>0x27</code> / <code>0x3F</code>).</li>
-<li><strong>Role</strong>: Displays real-time local text metrics on the robot body:<ul>
-<li>Row 1: GPS Fix State &amp; Satellite Count.</li>
-<li>Row 2: GPS Latitude &amp; Longitude coordinates.</li>
-<li>Row 3: MPU6050 Pitch &amp; Roll angles.</li>
-<li>Row 4: Ambient Temperature &amp; Relative Humidity.</li>
+<li><strong>Hardware</strong>: 0.96-inch or 1.3-inch OLED Display Module (128x64 pixels, monochrome SSD1306 / SH1106 driver).</li>
+<li><strong>Controller</strong>: Driven directly by the <strong>ESP32 Master Coordinator Node</strong> via I2C (<code>SDA</code>: GPIO 21, <code>SCL</code>: GPIO 22, I2C address <code>0x3C</code>).</li>
+<li><strong>Role</strong>: Displays critical system-level diagnostics and telemetry:<ul>
+<li>System Boot &amp; ESP-NOW Mesh Initialization state.</li>
+<li>Wi-Fi SSID, RSSI signal strength (dBm), and IP address.</li>
+<li>MQTT Broker connection status (<code>CONNECTED</code> / <code>DISCONNECTED</code>).</li>
+<li>Main battery pack voltage level (V) and state-of-charge (%).</li>
+<li>Active Control Mode (<code>GAMEPAD</code> / <code>VOICE_AI</code> / <code>AUTONOMOUS</code> / <code>E-STOP</code>).</li>
 </ul>
 </li>
 </ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌───────────────────────────────────────┐  ┌───────────────────────────────────────┐
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│     AI Node SPI TFT Display (2.4&quot;)    │  │    Sensor Node I2C LCD Display (20x4) │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  (Driven by ESP32-S3 CAM via SPI)     │  │    (Driven by Arduino Nano via I2C)   │
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│ ┌───────────────────────────────────┐ │  │ ┌───────────────────────────────────┐ │
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│ │   [Dynamic Animated Face Eyes]    │ │  │ │ GPS: 27.7172N, 85.3240E (7 SAT)   │ │
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│ │   Xiaozhi AI: Listening...        │ │  │ │ Pitch: +2.1 deg | Roll: -0.4 deg  │ │
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│ └───────────────────────────────────┘ │  │ │ Temp: 24.5C     | Humid: 55% RH   │ │
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>└───────────────────────────────────────┘  └───────────────────────────────────────┘
+<h3 id="2-ai-node-spi-tft-display-face-ui-speech-visualizer">2. AI Node SPI TFT Display (Face UI &amp; Speech Visualizer)<a class="headerlink" href="#2-ai-node-spi-tft-display-face-ui-speech-visualizer" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Hardware</strong>: 2.4-inch SPI TFT LCD Module (240x320 resolution, ST7789 / ILI9341 driver).</li>
+<li><strong>Controller</strong>: Driven by the <strong>ESP32-S3 CAM (AI Node)</strong> via hardware SPI (SCK, MOSI, CS, DC, RST).</li>
+<li><strong>Role</strong>: Displays animated eyes for human-robot interaction, speech waveform visualizer, and Xiaozhi AI assistant state (<code>LISTENING</code>, <code>THINKING</code>, <code>SPEAKING</code>).</li>
+</ul>
+<h3 id="3-sensor-node-character-lcd-display-physical-telemetry">3. Sensor Node Character LCD Display (Physical Telemetry)<a class="headerlink" href="#3-sensor-node-character-lcd-display-physical-telemetry" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Hardware</strong>: 16x2 or 20x4 Character LCD with PCF8574 I2C adapter.</li>
+<li><strong>Controller</strong>: Driven by the <strong>Arduino Nano (Sensor Node)</strong> via I2C (<code>A4</code>/<code>A5</code>).</li>
+<li><strong>Role</strong>: Displays outdoor GPS coordinates (Lat/Lon/Sats), MPU6050 pitch/roll tilt, and ambient temperature/humidity.</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌───────────────────────────────────────┐  ┌───────────────────────────────────────┐  ┌───────────────────────────────────────┐
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│      Master Node OLED Display (1.3&quot;)  │  │     AI Node SPI TFT Display (2.4&quot;)    │  │    Sensor Node I2C LCD Display (20x4) │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  (Driven by Master ESP32 via I2C)     │  │  (Driven by ESP32-S3 CAM via SPI)     │  │    (Driven by Arduino Nano via I2C)   │
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│ ┌───────────────────────────────────┐ │  │ ┌───────────────────────────────────┐ │  │ ┌───────────────────────────────────┐ │
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│ │ PRAYAS V1 | MQTT: CONNECTED      │ │  │ │   [Dynamic Animated Face Eyes]    │ │  │ │ GPS: 27.7172N, 85.3240E (7 SAT)   │ │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│ │ Batt: 12.2V | WiFi: -58dBm        │ │  │ │   Xiaozhi AI: Listening...        │ │  │ │ Pitch: +2.1 deg | Roll: -0.4 deg  │ │
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│ │ Mode: GAMEPAD_TELEOP              │ │  │ └───────────────────────────────────┘ │  │ │ Temp: 24.5C     | Humid: 55% RH   │ │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│ └───────────────────────────────────┘ │  └───────────────────────────────────────┘  └───────────────────────────────────────┘
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>└───────────────────────────────────────┘
 </span></code></pre></div>
 
 

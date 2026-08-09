@@ -27,9 +27,8 @@ The new BOM includes:
 | Camera Module | ESP32-CAM (with OV2640) | 1 | $6.50 | $6.50 |
 | Sensor Node MCU | Arduino Nano (ATmega328P) | 1 | $4.50 | $4.50 |
 | GPS Module | NEO-6M GPS Receiver + Patch Antenna | 1 | $8.00 | $8.00 |
-| PWM Servo Driver | PCA9685 16-Channel I2C Module | 1 | $4.00 | $4.00 |
-| Audio Codec Module | ES8311 breakout board | 1 | $3.50 | $3.50 |
-| Proximity Sensors | E18-D80NK Adjustable IR Sensor | 3 | $4.50 | $13.50 |
+| Status OLED Display | 0.96" / 1.3" SSD1306/SH1106 I2C Screen | 1 | $3.50 | $3.50 |
+| Proximity Sensors | E18-D80NK Adjustable IR Sensor (FL, FR, RL, RR) | 4 | $4.50 | $18.00 |
 
 ### 2. Drivetrain & Actuators
 | Item Description | Sourcing Model | Qty | Unit Price (USD) | Total Price (USD) |

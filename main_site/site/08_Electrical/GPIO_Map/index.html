@@ -1311,7 +1311,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -4703,10 +4703,10 @@
 <h2 id="complete-gpio-assignments">Complete GPIO Assignments<a class="headerlink" href="#complete-gpio-assignments" title="Permanent link">&para;</a></h2>
 <h3 id="1-master-coordinator-node-esp32">1. Master Coordinator Node (ESP32)<a class="headerlink" href="#1-master-coordinator-node-esp32" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>GPIO 16</strong>: UART Rx2 (Connected to AI Node Tx)</li>
-<li><strong>GPIO 17</strong>: UART Tx2 (Connected to AI Node Rx)</li>
-<li><strong>GPIO 21</strong>: I2C SDA (OLED Display / Status Display)</li>
-<li><strong>GPIO 22</strong>: I2C SCL (OLED Display / Status Display)</li>
+<li><strong>GPIO 16</strong>: UART RX2 (Connected to AI Node TX Pin 43)</li>
+<li><strong>GPIO 17</strong>: UART TX2 (Connected to AI Node RX Pin 44)</li>
+<li><strong>GPIO 21</strong>: I2C SDA (Integrated Status OLED Display SSD1306/SH1106)</li>
+<li><strong>GPIO 22</strong>: I2C SCL (Integrated Status OLED Display SSD1306/SH1106)</li>
 </ul>
 <h3 id="2-motor-controller-node-esp32">2. Motor Controller Node (ESP32)<a class="headerlink" href="#2-motor-controller-node-esp32" title="Permanent link">&para;</a></h3>
 <ul>
@@ -4716,9 +4716,10 @@
 <li><strong>GPIO 25</strong>: Right Motor PWM Forward (L_PWM)</li>
 <li><strong>GPIO 26</strong>: Right Motor PWM Reverse (R_PWM)</li>
 <li><strong>GPIO 27</strong>: Right Driver Enable (L_EN / R_EN)</li>
-<li><strong>GPIO 34</strong>: Left IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
-<li><strong>GPIO 35</strong>: Center IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
-<li><strong>GPIO 39</strong>: Right IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
+<li><strong>GPIO 34</strong>: Front-Left IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
+<li><strong>GPIO 35</strong>: Front-Right IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
+<li><strong>GPIO 36</strong>: Rear-Left IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
+<li><strong>GPIO 39</strong>: Rear-Right IR Proximity Sensor Input (E18-D80NK, Active LOW)</li>
 </ul>
 <h3 id="3-servo-controller-node-esp32">3. Servo Controller Node (ESP32)<a class="headerlink" href="#3-servo-controller-node-esp32" title="Permanent link">&para;</a></h3>
 <ul>

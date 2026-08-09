@@ -12,8 +12,8 @@ PRAYAS V1 uses a **Distributed ESP32 Node Architecture**. Rather than centralizi
 graph TD
     %% Controllers and Nodes
     subgraph Core Base
-        Master[Master ESP32 Node]
-        Motor[Motor ESP32 Node]
+        Master["Master ESP32 Node<br/>Integrated Status OLED Display"]
+        Motor["Motor ESP32 Node<br/>4x 10cm x 4cm Wheels & 4x IR"]
         Sensor["Sensor Node (Arduino Nano)<br/>GPS, MPU6050, Humidity & LCD"]
     end
 
@@ -40,7 +40,9 @@ graph TD
     Master <-->|Wi-Fi / MQTT| Broker
 
     %% Device Connections
-    Motor -->|PWM| Drivers[2x BTS7960 Drivers] -->|12V| Motors[4x Johnson Motors]
+    Master -->|I2C| StatusOLED[0.96"/1.3" Status OLED Display]
+    Motor -->|PWM| Drivers[2x BTS7960 Drivers] -->|12V| Motors[4x Johnson Motors & 10x4cm Wheels]
+    Motor <--|GPI| IRSensors[4x E18-D80NK IR Proximity Sensors]
     Servo -->|I2C| PCA[PCA9685 PWM Driver] -->|6V| Servos[7x MG995 Servos]
     AI -->|SPI| SPIDisplay[2.4" SPI TFT Display]
     AI -->|I2S| Speaker[3W Speaker / Amp]

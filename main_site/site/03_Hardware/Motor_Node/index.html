@@ -1266,10 +1266,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#johnson-12v-200-rpm-dc-motors" class="md-nav__link">
+  <a href="#johnson-12v-200-rpm-dc-motors-10cm-x-4cm-wheels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Johnson 12V 200 RPM DC Motors
+        Johnson 12V 200 RPM DC Motors &amp; 10cm x 4cm Wheels
       
     </span>
   </a>
@@ -1277,10 +1277,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#e18-d80nk-ir-obstacle-sensors" class="md-nav__link">
+  <a href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" class="md-nav__link">
     <span class="md-ellipsis">
       
-        E18-D80NK IR Obstacle Sensors
+        E18-D80NK IR Obstacle Sensors (4-Sensor Array)
       
     </span>
   </a>
@@ -1327,21 +1327,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-to-ir-sensors-connections" class="md-nav__link">
+  <a href="#esp32-to-4-ir-sensors-connections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 to IR Sensors Connections
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#power-supply-connections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Power Supply Connections
+        ESP32 to 4 IR Sensors Connections
       
     </span>
   </a>
@@ -1716,7 +1705,7 @@
   <span class="md-ellipsis">
     
   
-    Display Node
+    Display System (Master Node Integrated)
   
 
     
@@ -4965,10 +4954,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#johnson-12v-200-rpm-dc-motors" class="md-nav__link">
+  <a href="#johnson-12v-200-rpm-dc-motors-10cm-x-4cm-wheels" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Johnson 12V 200 RPM DC Motors
+        Johnson 12V 200 RPM DC Motors &amp; 10cm x 4cm Wheels
       
     </span>
   </a>
@@ -4976,10 +4965,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#e18-d80nk-ir-obstacle-sensors" class="md-nav__link">
+  <a href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" class="md-nav__link">
     <span class="md-ellipsis">
       
-        E18-D80NK IR Obstacle Sensors
+        E18-D80NK IR Obstacle Sensors (4-Sensor Array)
       
     </span>
   </a>
@@ -5026,21 +5015,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-to-ir-sensors-connections" class="md-nav__link">
+  <a href="#esp32-to-4-ir-sensors-connections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 to IR Sensors Connections
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#power-supply-connections" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Power Supply Connections
+        ESP32 to 4 IR Sensors Connections
       
     </span>
   </a>
@@ -5247,15 +5225,15 @@
 <p>The Motor Controller Node is the hardware subsystem responsible for driving the locomotion base of the PRAYAS robot. It processes motion directives and drives the wheels accordingly while monitoring localized proximity sensors to prevent physical collisions.</p>
 <h3 id="what-this-node-controls">What this Node Controls<a class="headerlink" href="#what-this-node-controls" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Motors</strong>: Actuates the 4 wheels using H-bridge drivers.</li>
-<li><strong>Sensors</strong>: Interfaces with 3 infrared obstacle sensors to monitor the path immediately in front of the robot.</li>
+<li><strong>Motors</strong>: Actuates the 4 wheels (10 cm Diameter, 4 cm Width) using H-bridge drivers in a 4x4 differential drive setup.</li>
+<li><strong>Sensors</strong>: Interfaces with <strong>4 infrared obstacle sensors</strong> (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.</li>
 </ul>
 <h3 id="responsibilities-of-the-node">Responsibilities of the Node<a class="headerlink" href="#responsibilities-of-the-node" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Receive directional and speed commands.</li>
 <li>Translate these commands into electrical signals that control motor speed and direction.</li>
-<li>Sample the infrared sensors continuously.</li>
-<li>Halt all motion immediately if an obstacle is detected in the travel path.</li>
+<li>Sample all 4 infrared sensors continuously.</li>
+<li>Halt all motion immediately if an obstacle is detected in any direction of travel.</li>
 </ul>
 <hr />
 <h2 id="2-components-required">2. Components Required<a class="headerlink" href="#2-components-required" title="Permanent link">&para;</a></h2>
@@ -5274,43 +5252,49 @@
 <td style="text-align: left;"><strong>ESP32 Dev Board</strong></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">ESP32-WROOM-32E DevKit (38 Pins)</td>
-<td style="text-align: left;">Microcontroller that reads sensors and generates control signals.</td>
+<td style="text-align: left;">Microcontroller reading sensors &amp; driving H-bridges.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>BTS7960 Motor Driver</strong></td>
 <td style="text-align: center;">2</td>
 <td style="text-align: left;">43A High-Current Dual H-Bridge Module</td>
-<td style="text-align: left;">Interfaces between ESP32 signals and high-current Johnson motors.</td>
+<td style="text-align: left;">Interfaces between ESP32 signals and Johnson DC motors.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Johnson 12V DC Motors</strong></td>
 <td style="text-align: center;">4</td>
 <td style="text-align: left;">12V Nominal, 200 RPM Geared DC Motors</td>
-<td style="text-align: left;">Electric geared motors that provide traction and drive the wheels.</td>
+<td style="text-align: left;">Electric geared motors driving the 4-wheel chassis.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Robot Wheels (10cm x 4cm)</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">10 cm Diameter, 4 cm Width, High-Traction Rubber</td>
+<td style="text-align: left;">Wheels mounted to motor shafts via 100mm flange hubs.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>E18-D80NK IR Sensors</strong></td>
-<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
 <td style="text-align: left;">Adjustable Range (3–80 cm), Active LOW</td>
-<td style="text-align: left;">Proximity sensors used to detect obstacles in front of the robot.</td>
+<td style="text-align: left;">Proximity sensors detecting obstacles (FL, FR, RL, RR).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Power Input Connector</strong></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: left;">XT60 Connector (Male/Female pair)</td>
-<td style="text-align: left;">Connects the main 12V battery pack securely to the power lines.</td>
+<td style="text-align: left;">Connects main 12V battery power.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Screw Terminal Blocks</strong></td>
 <td style="text-align: center;">Assorted</td>
 <td style="text-align: left;">5.08 mm Pitch PCB Screw Terminals</td>
-<td style="text-align: left;">Allows secure, solderless cable connections for power distribution.</td>
+<td style="text-align: left;">Secure cable connections for power distribution.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Connecting Wires</strong></td>
 <td style="text-align: center;">Assorted</td>
-<td style="text-align: left;">14 AWG (Power lines) / 24 AWG (Signal lines)</td>
-<td style="text-align: left;">Carries electric current and logic signals between components.</td>
+<td style="text-align: left;">14 AWG (Power) / 24 AWG (Logic Signal)</td>
+<td style="text-align: left;">Carries electric current and logic signals.</td>
 </tr>
 </tbody>
 </table>
@@ -5334,23 +5318,23 @@
 *   <strong>How it works inside PRAYAS</strong>: It acts as an electronic switch. It receives weak logic signals from the ESP32 and switches the high-current 12V power from the battery to the motors.</p>
 </li>
 </ul>
-<h3 id="johnson-12v-200-rpm-dc-motors">Johnson 12V 200 RPM DC Motors<a class="headerlink" href="#johnson-12v-200-rpm-dc-motors" title="Permanent link">&para;</a></h3>
+<h3 id="johnson-12v-200-rpm-dc-motors-10cm-x-4cm-wheels">Johnson 12V 200 RPM DC Motors &amp; 10cm x 4cm Wheels<a class="headerlink" href="#johnson-12v-200-rpm-dc-motors-10cm-x-4cm-wheels" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><strong>What it is</strong>: A brushed DC motor attached to a metal spur gearbox.</p>
+<p><strong>What it is</strong>: Brushed DC motor attached to a metal spur gearbox driving a 10 cm diameter, 4 cm width high-traction rubber wheel.</p>
 <p><img alt="Johnson 12V DC Motor" src="../../assets/img/jhonson%20motor.jpeg" style="display: block; margin: 0 auto;" width="300" />
-*   <strong>Why it is used</strong>: DC motors rotate too fast and have too little torque on their own to move a heavy robot. The gearbox reduces the rotation speed to 200 RPM while multiplying the torque, allowing it to easily carry the 5–7 kg weight of PRAYAS.
+*   <strong>Why it is used</strong>: The gearbox reduces rotation speed to 200 RPM while multiplying torque. Combined with 10cm diameter / 4cm width wheels, it provides smooth indoor travel and obstacle clearance.
 *   <strong>How it works inside PRAYAS</strong>: Four motors drive the wheels. They are wired in parallel groups (two on the left, two on the right) to run a 4-wheel-drive differential chassis.</p>
 </li>
 </ul>
-<h3 id="e18-d80nk-ir-obstacle-sensors">E18-D80NK IR Obstacle Sensors<a class="headerlink" href="#e18-d80nk-ir-obstacle-sensors" title="Permanent link">&para;</a></h3>
+<h3 id="e18-d80nk-ir-obstacle-sensors-4-sensor-array">E18-D80NK IR Obstacle Sensors (4-Sensor Array)<a class="headerlink" href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
-<p><strong>What it is</strong>: An infrared proximity sensor that emits a beam of light and detects its reflection from nearby objects.</p>
+<p><strong>What it is</strong>: Infrared proximity sensors emitting a modulated beam and detecting reflection from nearby obstacles.</p>
 <p><img alt="E18-D80NK IR Sensor" src="../../assets/img/ed18_sensor.jpg" style="display: block; margin: 0 auto;" width="250" />
 *   <em>Reference</em>: <a href="https://handsontec.com/dataspecs/sensor/E18-D80NK%20IR%20Sensor.pdf">E18-D80NK Datasheet Reference</a>
-*   <strong>Why it is used</strong>: It provides cheap, reliable, and low-latency digital obstacle detection.
-*   <strong>How it works inside PRAYAS</strong>: Three sensors are mounted on the front bumper. If an obstacle comes within the detection threshold, the sensor pulls its output pin LOW, telling the ESP32 to immediately brake the motors.</p>
+*   <strong>Why it is used</strong>: Provides instantaneous, hardware-level digital collision detection.
+*   <strong>How it works inside PRAYAS</strong>: Four sensors are mounted on the base deck corners: Front-Left (FL), Front-Right (FR), Rear-Left (RL), and Rear-Right (RR). If any sensor detects an obstacle within 20 cm, its output pin pulls LOW, signaling the ESP32 safety watchdog to immediately apply emergency dynamic braking.</p>
 </li>
 </ul>
 <hr />
@@ -5456,8 +5440,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="esp32-to-ir-sensors-connections">ESP32 to IR Sensors Connections<a class="headerlink" href="#esp32-to-ir-sensors-connections" title="Permanent link">&para;</a></h3>
-<p>Sensors require 5V power and return digital signals to the ESP32:</p>
+<h3 id="esp32-to-4-ir-sensors-connections">ESP32 to 4 IR Sensors Connections<a class="headerlink" href="#esp32-to-4-ir-sensors-connections" title="Permanent link">&para;</a></h3>
+<p>Sensors require 5V power and return digital signals to ESP32 input-only pins:</p>
 <table>
 <thead>
 <tr>
@@ -5469,115 +5453,28 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Left IR Sensor</strong></td>
-<td style="text-align: left;">Brown</td>
-<td style="text-align: left;"><strong>5V</strong></td>
-<td style="text-align: left;">Power supply (+5V)</td>
+<td style="text-align: left;"><strong>Front-Left IR Sensor</strong></td>
+<td style="text-align: left;">Brown / Blue / Black</td>
+<td style="text-align: left;"><strong>5V / GND / GPIO 34</strong></td>
+<td style="text-align: left;">Digital sensor output (Active LOW, GPI 34)</td>
 </tr>
 <tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Blue</td>
-<td style="text-align: left;"><strong>GND</strong></td>
-<td style="text-align: left;">Ground</td>
+<td style="text-align: left;"><strong>Front-Right IR Sensor</strong></td>
+<td style="text-align: left;">Brown / Blue / Black</td>
+<td style="text-align: left;"><strong>5V / GND / GPIO 35</strong></td>
+<td style="text-align: left;">Digital sensor output (Active LOW, GPI 35)</td>
 </tr>
 <tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Black</td>
-<td style="text-align: left;"><strong>GPIO 34</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW)</td>
+<td style="text-align: left;"><strong>Rear-Left IR Sensor</strong></td>
+<td style="text-align: left;">Brown / Blue / Black</td>
+<td style="text-align: left;"><strong>5V / GND / GPIO 36</strong></td>
+<td style="text-align: left;">Digital sensor output (Active LOW, GPI 36)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Center IR Sensor</strong></td>
-<td style="text-align: left;">Brown</td>
-<td style="text-align: left;"><strong>5V</strong></td>
-<td style="text-align: left;">Power supply (+5V)</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Blue</td>
-<td style="text-align: left;"><strong>GND</strong></td>
-<td style="text-align: left;">Ground</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Black</td>
-<td style="text-align: left;"><strong>GPIO 35</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Right IR Sensor</strong></td>
-<td style="text-align: left;">Brown</td>
-<td style="text-align: left;"><strong>5V</strong></td>
-<td style="text-align: left;">Power supply (+5V)</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Blue</td>
-<td style="text-align: left;"><strong>GND</strong></td>
-<td style="text-align: left;">Ground</td>
-</tr>
-<tr>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">Black</td>
-<td style="text-align: left;"><strong>GPIO 39</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW)</td>
-</tr>
-</tbody>
-</table>
-<h3 id="power-supply-connections">Power Supply Connections<a class="headerlink" href="#power-supply-connections" title="Permanent link">&para;</a></h3>
-<p>Power routing from the battery to the drivers and the microcontroller:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">From Source</th>
-<th style="text-align: left;">Connection</th>
-<th style="text-align: left;">To Destination</th>
-<th style="text-align: center;">Wire Gauge</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Battery (+)</strong></td>
-<td style="text-align: left;">XT60 Connector</td>
-<td style="text-align: left;">15A Inline Fuse → Switch</td>
-<td style="text-align: center;">14 AWG</td>
-<td style="text-align: left;">Main battery positive feed</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Switch Output</strong></td>
-<td style="text-align: left;">Split to 3 paths</td>
-<td style="text-align: left;">Left Driver B+, Right Driver B+, Regulator Input (+)</td>
-<td style="text-align: center;">14 AWG / 22 AWG</td>
-<td style="text-align: left;">Switched 12V power</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Battery (-)</strong></td>
-<td style="text-align: left;">XT60 Connector</td>
-<td style="text-align: left;">Common Ground Point</td>
-<td style="text-align: center;">14 AWG</td>
-<td style="text-align: left;">Main battery negative reference</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Common Ground</strong></td>
-<td style="text-align: left;">Split to 3 paths</td>
-<td style="text-align: left;">Left Driver B-, Right Driver B-, Regulator Input (-)</td>
-<td style="text-align: center;">14 AWG / 22 AWG</td>
-<td style="text-align: left;">Ground distribution</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Regulator Out (+)</strong></td>
-<td style="text-align: left;">Red Wire</td>
-<td style="text-align: left;">ESP32 Vin / 5V Pin</td>
-<td style="text-align: center;">22 AWG</td>
-<td style="text-align: left;">Regulated 5V logic supply</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Regulator Out (-)</strong></td>
-<td style="text-align: left;">Black Wire</td>
-<td style="text-align: left;">ESP32 GND Pin</td>
-<td style="text-align: center;">22 AWG</td>
-<td style="text-align: left;">Logic ground return</td>
+<td style="text-align: left;"><strong>Rear-Right IR Sensor</strong></td>
+<td style="text-align: left;">Brown / Blue / Black</td>
+<td style="text-align: left;"><strong>5V / GND / GPIO 39</strong></td>
+<td style="text-align: left;">Digital sensor output (Active LOW, GPI 39)</td>
 </tr>
 </tbody>
 </table>
@@ -5600,7 +5497,7 @@
 <td style="text-align: left;">Left Driver L_PWM</td>
 <td style="text-align: center;">Output</td>
 <td style="text-align: left;">Left forward speed (PWM)</td>
-<td style="text-align: left;"><strong>Boot Strap Pin (MTDI)</strong>: Must be LOW at boot. The H-bridge's internal pull-down keeps this safe.</td>
+<td style="text-align: left;"><strong>Boot Strap Pin (MTDI)</strong>: Must be LOW at boot.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 13</strong></td>
@@ -5639,24 +5536,31 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 34</strong></td>
-<td style="text-align: left;">Left IR Proximity Out</td>
+<td style="text-align: left;">Front-Left IR Out</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">Left obstacle sensor input</td>
-<td style="text-align: left;">Input-only pin. Requires pull-up.</td>
+<td style="text-align: left;">FL obstacle sensor input</td>
+<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 35</strong></td>
-<td style="text-align: left;">Center IR Proximity Out</td>
+<td style="text-align: left;">Front-Right IR Out</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">Center obstacle sensor input</td>
-<td style="text-align: left;">Input-only pin. Requires pull-up.</td>
+<td style="text-align: left;">FR obstacle sensor input</td>
+<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 36</strong></td>
+<td style="text-align: left;">Rear-Left IR Out</td>
+<td style="text-align: center;">Input</td>
+<td style="text-align: left;">RL obstacle sensor input</td>
+<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 39</strong></td>
-<td style="text-align: left;">Right IR Proximity Out</td>
+<td style="text-align: left;">Rear-Right IR Out</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">Right obstacle sensor input</td>
-<td style="text-align: left;">Input-only pin. Requires pull-up.</td>
+<td style="text-align: left;">RR obstacle sensor input</td>
+<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 2</strong></td>
