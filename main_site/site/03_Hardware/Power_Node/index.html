@@ -27,7 +27,7 @@
     
     
       
-        <title>Power Node - PRAYAS V1 Documentation</title>
+        <title>Power Node (Not Needed) - PRAYAS V1 Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#power-management-node" class="md-skip">
+        <a href="#power-management-node-not-needed" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Power Node
+              Power Node (Not Needed)
             
           </span>
         </div>
@@ -1202,7 +1202,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1258,7 +1258,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1295,7 +1295,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1313,7 +1313,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1339,10 +1339,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#purpose" class="md-nav__link">
+  <a href="#passive-power-protection-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Purpose
+        Passive Power Protection Architecture
       
     </span>
   </a>
@@ -1350,43 +1350,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware-used" class="md-nav__link">
+  <a href="#benefits-of-removing-the-power-node" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hardware Used
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gpio-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GPIO Mapping
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#battery-safety-cut-off-logic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Battery Safety Cut-off Logic
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-improvements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Future Improvements
+        Benefits of Removing the Power Node
       
     </span>
   </a>
@@ -1585,6 +1552,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4542,10 +4537,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#purpose" class="md-nav__link">
+  <a href="#passive-power-protection-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Purpose
+        Passive Power Protection Architecture
       
     </span>
   </a>
@@ -4553,43 +4548,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware-used" class="md-nav__link">
+  <a href="#benefits-of-removing-the-power-node" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hardware Used
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gpio-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GPIO Mapping
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#battery-safety-cut-off-logic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Battery Safety Cut-off Logic
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-improvements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Future Improvements
+        Benefits of Removing the Power Node
       
     </span>
   </a>
@@ -4613,31 +4575,23 @@
 
 
 
-<h1 id="power-management-node">Power Management Node<a class="headerlink" href="#power-management-node" title="Permanent link">&para;</a></h1>
-<h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>The Power Node monitors battery state-of-charge, voltage rails, and current draw, and shuts down subsystems in the event of low battery voltage to prevent cell damage.</p>
-<h2 id="hardware-used">Hardware Used<a class="headerlink" href="#hardware-used" title="Permanent link">&para;</a></h2>
+<h1 id="power-management-node-not-needed">Power Management Node (Not Needed)<a class="headerlink" href="#power-management-node-not-needed" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>[!NOTE]
+<strong>Architecture Update: Dedicated Power Node Eliminated</strong>
+In PRAYAS V1, a dedicated microcontroller for power management is <strong>not needed</strong>. Power regulation, distribution, and battery protection are handled directly by passive hardware and built-in protection circuits, streamlining the distributed node network to 5 active microcontrollers (Master, Motor, Servo, AI Node, Sensor Node).</p>
+</blockquote>
+<h2 id="passive-power-protection-architecture">Passive Power Protection Architecture<a class="headerlink" href="#passive-power-protection-architecture" title="Permanent link">&para;</a></h2>
+<p>Rather than requiring a dedicated active microcontroller node to poll voltage sensors and drive relays:
+1.  <strong>Hardware BMS/PCM</strong>: The 3S LiPo battery pack integrates a 3S 30A Battery Management System (BMS) board featuring automatic low-voltage cutoff (at 3.0V/cell), over-current shutdown, and short-circuit protection natively in hardware.
+2.  <strong>Upstream Fusing</strong>: A 15A main automotive blade fuse on the high-current motor rail prevents short-circuit hazards.
+3.  <strong>Buck Regulator Isolation</strong>: Independent buck converters supply 6V for servos and 5V for logic microcontrollers without needing active microcontroller switching.
+4.  <strong>Passive Voltage Monitoring</strong>: If battery telemetry is desired on the Web Dashboard, an analog voltage divider is wired directly to an ADC pin on the <strong>ESP32 Master Node</strong> without needing a separate node MCU.</p>
+<h2 id="benefits-of-removing-the-power-node">Benefits of Removing the Power Node<a class="headerlink" href="#benefits-of-removing-the-power-node" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Voltage Sensor</strong>: Voltage Divider Circuit (10k / 2.2k resistors) connected to an ESP32 ADC pin.</li>
-<li><strong>Current Sensor</strong>: ACS712-20A Hall-Effect Linear Current Sensor.</li>
-<li><strong>Relay/MOSFET Switch</strong>: P-channel MOSFET (or relay) to cut power to motor and servo regulators.</li>
-</ul>
-<h2 id="gpio-mapping">GPIO Mapping<a class="headerlink" href="#gpio-mapping" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>GPIO 32 (ADC1_CH4)</strong>: Voltage divider input (analog read).</li>
-<li><strong>GPIO 33 (ADC1_CH5)</strong>: ACS712 analog read.</li>
-<li><strong>GPIO 18</strong>: Main Power Relay Control (Output).</li>
-</ul>
-<h2 id="battery-safety-cut-off-logic">Battery Safety Cut-off Logic<a class="headerlink" href="#battery-safety-cut-off-logic" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>       [ Read Battery Voltage ]
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                  │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        Is Voltage &lt; 10.2V? (3.4V per cell)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                 ├── Yes ──&gt; [ Disable Relay / Cut Power ]
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                 └── No  ──&gt; [ Continue Monitoring ]
-</span></code></pre></div>
-<h2 id="future-improvements">Future Improvements<a class="headerlink" href="#future-improvements" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Replace the analog voltage divider and ACS712 sensor with an <strong>INA219 I2C Power Monitor</strong> to improve resolution and reduce analog read noise.</li>
+<li><strong>Reduced Overhead</strong>: Eliminates 1 microcontroller node, reducing ESP-NOW wireless traffic and power consumption.</li>
+<li><strong>Faster Fail-safe</strong>: BMS protection ICs disconnect power in microseconds during a fault, far faster than software polling loops on an ESP32.</li>
+<li><strong>Simplified Wiring</strong>: Eliminates extra UART/ESP-NOW communication buses and relay control lines.</li>
 </ul>
 
 

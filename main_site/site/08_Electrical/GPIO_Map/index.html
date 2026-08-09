@@ -1199,7 +1199,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1255,7 +1255,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1283,7 +1283,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1480,6 +1480,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -2904,10 +2932,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-ai-voice-node-seeed-studio-xiao-esp32-s3-sense" class="md-nav__link">
+  <a href="#4-ai-voice-vision-node-esp32-s3-cam" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. AI Voice Node (Seeed Studio XIAO ESP32-S3 Sense)
+        4. AI Voice &amp; Vision Node (ESP32-S3 CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sensor-node-arduino-nano-atmega328p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Sensor Node (Arduino Nano ATmega328P)
       
     </span>
   </a>
@@ -4615,10 +4654,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-ai-voice-node-seeed-studio-xiao-esp32-s3-sense" class="md-nav__link">
+  <a href="#4-ai-voice-vision-node-esp32-s3-cam" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. AI Voice Node (Seeed Studio XIAO ESP32-S3 Sense)
+        4. AI Voice &amp; Vision Node (ESP32-S3 CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-sensor-node-arduino-nano-atmega328p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Sensor Node (Arduino Nano ATmega328P)
       
     </span>
   </a>
@@ -4676,15 +4726,57 @@
 <li><strong>GPIO 22</strong>: I2C SCL (Connected to PCA9685 SCL)</li>
 <li><strong>GPIO 19</strong>: Hardware Output Enable (OE) (PCA9685 - active LOW)</li>
 </ul>
-<h3 id="4-ai-voice-node-seeed-studio-xiao-esp32-s3-sense">4. AI Voice Node (Seeed Studio XIAO ESP32-S3 Sense)<a class="headerlink" href="#4-ai-voice-node-seeed-studio-xiao-esp32-s3-sense" title="Permanent link">&para;</a></h3>
+<h3 id="4-ai-voice-vision-node-esp32-s3-cam">4. AI Voice &amp; Vision Node (ESP32-S3 CAM)<a class="headerlink" href="#4-ai-voice-vision-node-esp32-s3-cam" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>GPIO 41 &amp; 42</strong>: Dedicated internal I2S pins for on-board MEMS Microphone (MSM261D3526H1CPM)</li>
-<li><strong>On-board Camera Bus</strong>: Connected to integrated camera module slot via internal GPIOs</li>
-<li><strong>GPIO 2 (Pin D8)</strong>: I2S Serial Data Out (To ES8311 DAC SDIN)</li>
-<li><strong>GPIO 8 (Pin D7)</strong>: I2S Serial Clock (To ES8311 BCLK)</li>
-<li><strong>GPIO 9 (Pin D9)</strong>: I2S Word Select / LRCK (To ES8311 WS)</li>
-<li><strong>GPIO 43 (Pin D1)</strong>: UART Tx (Connected to Master Node GPIO 16)</li>
-<li><strong>GPIO 44 (Pin D2)</strong>: UART Rx (Connected to Master Node GPIO 17)</li>
+<li><strong>SPI Display (2.4" TFT)</strong>:<ul>
+<li><strong>GPIO 15</strong>: SPI SCK (Clock)</li>
+<li><strong>GPIO 13</strong>: SPI MOSI (Data)</li>
+<li><strong>GPIO 14</strong>: SPI CS (Chip Select)</li>
+<li><strong>GPIO 21</strong>: SPI DC (Data/Command)</li>
+<li><strong>GPIO 47</strong>: Display Reset (RST)</li>
+<li><strong>GPIO 48</strong>: Backlight Control (BLK)</li>
+</ul>
+</li>
+<li><strong>I2S Audio System</strong>:<ul>
+<li><strong>GPIO 1</strong>: I2S SDOUT (Speaker Data to MAX98357A / ES8311 DIN)</li>
+<li><strong>GPIO 2</strong>: I2S BCLK (Bit Clock for Mic &amp; Amp)</li>
+<li><strong>GPIO 42</strong>: I2S WS (Word Select / LRCK for Mic &amp; Amp)</li>
+<li><strong>GPIO 41</strong>: I2S SDIN (Microphone Data from INMP441)</li>
+</ul>
+</li>
+<li><strong>Camera DVP Bus</strong>: Internal DVP camera socket (Y2-Y9, PCLK, VSYNC, HREF, XCLK)</li>
+<li><strong>Master UART</strong>:<ul>
+<li><strong>GPIO 43</strong>: UART TX (To Master Node RX2 GPIO 16)</li>
+<li><strong>GPIO 44</strong>: UART RX (To Master Node TX2 GPIO 17)</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-sensor-node-arduino-nano-atmega328p">5. Sensor Node (Arduino Nano ATmega328P)<a class="headerlink" href="#5-sensor-node-arduino-nano-atmega328p" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GPS Receiver (NEO-6M / NEO-M8N)</strong>:<ul>
+<li><strong>Pin D2</strong>: SoftwareSerial RX (Connected to GPS TX)</li>
+<li><strong>Pin D3</strong>: SoftwareSerial TX (Connected to GPS RX)</li>
+</ul>
+</li>
+<li><strong>Inertial Measurement Unit (MPU6050)</strong>:<ul>
+<li><strong>Pin A4</strong>: I2C SDA</li>
+<li><strong>Pin A5</strong>: I2C SCL</li>
+</ul>
+</li>
+<li><strong>Humidity &amp; Temp Sensor (DHT11 / DHT22 / SHT30)</strong>:<ul>
+<li><strong>Pin D4</strong>: Digital Data Line (with 4.7kΩ pull-up resistor to 5V)</li>
+</ul>
+</li>
+<li><strong>Local Telemetry Display (16x2 / 20x4 I2C LCD)</strong>:<ul>
+<li><strong>Pin A4</strong>: Shared I2C SDA (PCF8574 backpack)</li>
+<li><strong>Pin A5</strong>: Shared I2C SCL (PCF8574 backpack)</li>
+</ul>
+</li>
+<li><strong>Master UART Output</strong>:<ul>
+<li><strong>Pin TX (D1)</strong>: Hardware Serial TX (To Master Node UART RX)</li>
+<li><strong>Pin RX (D0)</strong>: Hardware Serial RX (To Master Node UART TX)</li>
+</ul>
+</li>
 </ul>
 
 

@@ -14,14 +14,13 @@ graph TD
     subgraph Core Base
         Master[Master ESP32 Node]
         Motor[Motor ESP32 Node]
-        Power[Power ESP32 Node]
-        Sensor[Sensor Node: Arduino Nano]
+        Sensor["Sensor Node (Arduino Nano)<br/>GPS, MPU6050, Humidity & LCD"]
     end
 
     subgraph Humanoid Torso
         Servo[Servo ESP32 Node]
         Camera[Camera ESP32-CAM Node]
-        AI[AI ESP32-S3 Node]
+        AI["AI Node (ESP32-S3 CAM)<br/>Xiaozhi AI & SPI Display"]
     end
 
     %% External Systems
@@ -32,10 +31,9 @@ graph TD
     %% Communication Links
     Master <-->|ESP-NOW| Motor
     Master <-->|ESP-NOW| Servo
-    Master <-->|ESP-NOW| Sensor
-    Master <-->|ESP-NOW| Power
+    Master <-->|UART Serial| Sensor
 
-    AI <-->|UART / MQTT| Master
+    AI <-->|UART / WebSocket| Master
     Camera <-->|WebSocket Stream| Web
     Gamepad <-->|Bluetooth/WebSocket| Web
     Web <-->|MQTT| Broker
@@ -44,8 +42,10 @@ graph TD
     %% Device Connections
     Motor -->|PWM| Drivers[2x BTS7960 Drivers] -->|12V| Motors[4x Johnson Motors]
     Servo -->|I2C| PCA[PCA9685 PWM Driver] -->|6V| Servos[7x MG995 Servos]
-    AI -->|Analog| Speaker[Speaker]
-    AI <--|Analog| Mic[Microphone]
+    AI -->|SPI| SPIDisplay[2.4" SPI TFT Display]
+    AI -->|I2S| Speaker[3W Speaker / Amp]
+    AI <--|I2S| Mic[INMP441 Mic]
+    Sensor -->|I2C| SensorLCD[16x2 / 20x4 I2C LCD]
 ```
 
 ## Power Architecture Flow

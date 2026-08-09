@@ -1304,7 +1304,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1360,7 +1360,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1388,7 +1388,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1585,6 +1585,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4624,14 +4652,13 @@
     subgraph Core Base
         Master[Master ESP32 Node]
         Motor[Motor ESP32 Node]
-        Power[Power ESP32 Node]
-        Sensor[Sensor Node: Arduino Nano]
+        Sensor["Sensor Node (Arduino Nano)&lt;br/&gt;GPS, MPU6050, Humidity &amp; LCD"]
     end
 
     subgraph Humanoid Torso
         Servo[Servo ESP32 Node]
         Camera[Camera ESP32-CAM Node]
-        AI[AI ESP32-S3 Node]
+        AI["AI Node (ESP32-S3 CAM)&lt;br/&gt;Xiaozhi AI &amp; SPI Display"]
     end
 
     %% External Systems
@@ -4642,10 +4669,9 @@
     %% Communication Links
     Master &lt;--&gt;|ESP-NOW| Motor
     Master &lt;--&gt;|ESP-NOW| Servo
-    Master &lt;--&gt;|ESP-NOW| Sensor
-    Master &lt;--&gt;|ESP-NOW| Power
+    Master &lt;--&gt;|UART Serial| Sensor
 
-    AI &lt;--&gt;|UART / MQTT| Master
+    AI &lt;--&gt;|UART / WebSocket| Master
     Camera &lt;--&gt;|WebSocket Stream| Web
     Gamepad &lt;--&gt;|Bluetooth/WebSocket| Web
     Web &lt;--&gt;|MQTT| Broker
@@ -4654,8 +4680,10 @@
     %% Device Connections
     Motor --&gt;|PWM| Drivers[2x BTS7960 Drivers] --&gt;|12V| Motors[4x Johnson Motors]
     Servo --&gt;|I2C| PCA[PCA9685 PWM Driver] --&gt;|6V| Servos[7x MG995 Servos]
-    AI --&gt;|Analog| Speaker[Speaker]
-    AI &lt;--|Analog| Mic[Microphone]</code></pre>
+    AI --&gt;|SPI| SPIDisplay[2.4" SPI TFT Display]
+    AI --&gt;|I2S| Speaker[3W Speaker / Amp]
+    AI &lt;--|I2S| Mic[INMP441 Mic]
+    Sensor --&gt;|I2C| SensorLCD[16x2 / 20x4 I2C LCD]</code></pre>
 <h2 id="power-architecture-flow">Power Architecture Flow<a class="headerlink" href="#power-architecture-flow" title="Permanent link">&para;</a></h2>
 <p>The battery supplies power to three separate regulation rails to prevent electrical noise from the motors and servos from resetting the microcontrollers:</p>
 <pre class="mermaid"><code>graph LR

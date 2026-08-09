@@ -24,18 +24,18 @@ The system employs a **Distributed ESP32 Architecture** to divide operational co
 *   **Master Node**: Directs and synchronizes all peripheral nodes.
 *   **Motor Node**: Dedicated real-time differential drive control.
 *   **Servo Node**: I2C multi-channel gesture and posture control.
-*   **AI Node**: Edge-to-cloud speech and command processing.
-*   **Camera Node**: Local RTSP/WebSocket video stream.
-*   **Sensor Node**: Multi-sensor reading and telemetry packaging.
+*   **AI Node**: Edge-to-cloud Xiaozhi AI speech processing, snapshot vision, & SPI TFT display UI.
+*   **Camera Node**: Local WebSocket JPEG video stream.
+*   **Sensor Node**: GPS positioning, IMU balance monitoring, humidity sensing, & local I2C LCD readout.
 
 ## Responsibilities
 *   **Base Mobility**: Safe indoor navigation, obstacle avoidance, and precise motor speed profiling.
 *   **Gestural Interaction**: Human-like arm movements, head tracking, and automated physical signaling.
 *   **Natural Language Interaction**: Real-time voice conversation, cloud LLM-driven intelligence, and tool execution via MCP.
-*   **Environmental Awareness**: Telemetry logs, obstacle detection, and live video streaming.
+*   **Environmental Awareness**: Telemetry logs, GPS location tracking, obstacle detection, and live video streaming.
 
 ## Technical Baseline
-*   **Main Controllers**: ESP32, ESP32-S3, ESP32-CAM, Arduino Nano 33 BLE Sense.
+*   **Main Controllers**: ESP32-WROOM-32E, ESP32-S3 CAM, ESP32-CAM, Arduino Nano ATmega328P.
 *   **Wireless Protocols**: ESP-NOW (inter-node peer-to-peer), MQTT/WebSockets (node-to-cloud).
 *   **Chassis Materials**: 12mm Plywood, 4" PVC, 3D printed PETG/PLA+, Aluminum rod reinforcements, Sunboard.
 *   **Drivetrain**: 4x Johnson 12V 200RPM Geared Motors, 2x BTS7960 Drivers.

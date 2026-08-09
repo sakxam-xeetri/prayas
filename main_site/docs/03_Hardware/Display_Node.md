@@ -1,19 +1,32 @@
-# Display Node
+# Display Subsystems (Dual Display Architecture)
 
 ## Purpose
-The Display Node provides a visual interface on the robot, displaying status information, battery charge levels, connection states, and simple facial expressions.
+PRAYAS V1 employs a **Dual Display Strategy** integrated directly into the specialized node microcontrollers rather than using a separate, standalone display MCU.
 
-## Hardware Used
-*   **Display**: SSD1306 0.96-inch OLED Display (128x64 pixels, I2C interface) or a larger 2.4-inch SPI TFT display.
-*   **MCU**: Shares the Master ESP32 I2C bus.
+## Display Hardware Breakdown
 
-## Connection Diagram
-*   **VCC**: 3.3V Logic Rail
-*   **GND**: Logic Ground
-*   **SDA**: Master Node GPIO 21
-*   **SCL**: Master Node GPIO 22
+### 1. AI Node SPI TFT Display (Face UI & Conversational Status)
+*   **Hardware**: 2.4-inch SPI TFT LCD Module (240x320 pixels, ST7789 / ILI9341 driver).
+*   **Controller**: Driven directly by the **ESP32-S3 CAM (AI Node)** via hardware SPI (SCK, MOSI, CS, DC, RST).
+*   **Role**: Displays dynamic facial expressions (eyes, expressions), voice assistant wake-word state, cloud connection status, and conversation speech visualizer.
 
-## Display States & Screens
-*   **Boot Screen**: Displays the PRAYAS logo and system self-test statuses.
-*   **Normal Screen**: Displays battery voltage, Wi-Fi signal strength (RSSI), and active mode (e.g. Auto / Gamepad).
-*   **Expression Screen**: Displays animated eyes that respond to voice and movements.
+### 2. Sensor Node Character LCD Display (Physical Telemetry)
+*   **Hardware**: 16x2 or 20x4 Character LCD with PCF8574 I2C I/O Expander.
+*   **Controller**: Driven by the **Arduino Nano (Sensor Node)** via I2C (pins A4/A5, I2C address `0x27` / `0x3F`).
+*   **Role**: Displays real-time local text metrics on the robot body:
+    *   Row 1: GPS Fix State & Satellite Count.
+    *   Row 2: GPS Latitude & Longitude coordinates.
+    *   Row 3: MPU6050 Pitch & Roll angles.
+    *   Row 4: Ambient Temperature & Relative Humidity.
+
+```
+┌───────────────────────────────────────┐  ┌───────────────────────────────────────┐
+│     AI Node SPI TFT Display (2.4")    │  │    Sensor Node I2C LCD Display (20x4) │
+│  (Driven by ESP32-S3 CAM via SPI)     │  │    (Driven by Arduino Nano via I2C)   │
+│ ┌───────────────────────────────────┐ │  │ ┌───────────────────────────────────┐ │
+│ │   [Dynamic Animated Face Eyes]    │ │  │ │ GPS: 27.7172N, 85.3240E (7 SAT)   │ │
+│ │   Xiaozhi AI: Listening...        │ │  │ │ Pitch: +2.1 deg | Roll: -0.4 deg  │ │
+│ └───────────────────────────────────┘ │  │ │ Temp: 24.5C     | Humid: 55% RH   │ │
+└───────────────────────────────────────┘  └───────────────────────────────────────┘
+```
+

@@ -1338,7 +1338,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1394,7 +1394,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1422,7 +1422,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1619,6 +1619,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4685,15 +4713,16 @@
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
 <p>This document details the communication structure of PRAYAS V1, explaining how the nodes communicate locally via ESP-NOW and externally via MQTT and WebSockets.</p>
 <h2 id="communication-channels">Communication Channels<a class="headerlink" href="#communication-channels" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    Cloud VPS / Dashboard &lt;──────────[ MQTT (Wi-Fi) ]──────────&gt; [ Master Node ]
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                                     │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                                             [ ESP-NOW (2.4 GHz) ]
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                                     │
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                               ┌─────────────────────┼─────────────────────┐
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                               ▼                     ▼                     ▼
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                         [ Motor Node ]        [ Servo Node ]       [ Sensor Node ]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    Cloud VPS / Dashboard &lt;──────────[ MQTT / WS (Wi-Fi) ]───────&gt; [ Master Node &amp; AI Node ]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                                          │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                                                 ┌────────┴────────┐
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                       [ ESP-NOW ]               [ UART Serial ]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                           │                           │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                    ┌──────┴──────┐             ┌──────┴──────┐
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                                    ▼             ▼             ▼             ▼
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                             [ Motor Node ] [ Servo Node ] [ Sensor Node ] [ AI Node ]
 </span></code></pre></div>
-<p>---lll</p>
+<hr />
 <h2 id="1-local-communication-esp-now">1. Local Communication (ESP-NOW)<a class="headerlink" href="#1-local-communication-esp-now" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Protocol</strong>: Connectionless, peer-to-peer 802.11 physical layer wireless packets.</li>

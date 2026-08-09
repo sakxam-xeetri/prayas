@@ -22,9 +22,11 @@ The new BOM includes:
 | Item Description | Sourcing Model | Qty | Unit Price (USD) | Total Price (USD) |
 | :--- | :--- | :---: | :---: | :---: |
 | ESP32 Development Board | ESP32-WROOM-32E (30-pin) | 4 | $4.50 | $18.00 |
-| AI Voice Controller Board | Seeed Studio XIAO ESP32-S3 Sense | 1 | $16.00 | $16.00 |
+| AI Voice & Vision Controller | ESP32-S3 CAM (with OV2640 & 8MB PSRAM) | 1 | $12.00 | $12.00 |
+| SPI TFT Display | 2.4" ST7789 Color LCD Screen | 1 | $7.50 | $7.50 |
 | Camera Module | ESP32-CAM (with OV2640) | 1 | $6.50 | $6.50 |
-| Sensor Hub | Arduino Nano 33 BLE Sense | 1 | $35.00 | $35.00 |
+| Sensor Node MCU | Arduino Nano (ATmega328P) | 1 | $4.50 | $4.50 |
+| GPS Module | NEO-6M GPS Receiver + Patch Antenna | 1 | $8.00 | $8.00 |
 | PWM Servo Driver | PCA9685 16-Channel I2C Module | 1 | $4.00 | $4.00 |
 | Audio Codec Module | ES8311 breakout board | 1 | $3.50 | $3.50 |
 | Proximity Sensors | E18-D80NK Adjustable IR Sensor | 3 | $4.50 | $13.50 |

@@ -1008,6 +1008,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ai-node-esp32-s3-cam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Node (ESP32-S3 CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-node-arduino-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Node (Arduino Nano)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1321,7 +1343,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1377,7 +1399,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1405,7 +1427,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1602,6 +1624,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4625,6 +4675,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ai-node-esp32-s3-cam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Node (ESP32-S3 CAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sensor-node-arduino-nano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sensor Node (Arduino Nano)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4681,27 +4753,27 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>AI Node</strong></td>
-<td style="text-align: left;">Seeed Studio XIAO ESP32-S3 Sense</td>
-<td style="text-align: left;">Speech pipeline, intent mapping, object detection, and visual Q&amp;A.</td>
-<td style="text-align: left;">Wi-Fi (TCP/UDP), I2S Audio, Camera</td>
+<td style="text-align: left;">ESP32-S3 CAM</td>
+<td style="text-align: left;">Runs Xiaozhi AI voice framework, drives SPI TFT display, snapshot vision, I2S audio.</td>
+<td style="text-align: left;">Wi-Fi (WebSocket), I2S Audio, SPI, UART</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Camera Node</strong></td>
 <td style="text-align: left;">ESP32-CAM</td>
-<td style="text-align: left;">Dedicated live video feed stream.</td>
+<td style="text-align: left;">Dedicated live dashboard video stream server.</td>
 <td style="text-align: left;">Wi-Fi (WebSockets / HTTP)</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Sensor Node</strong></td>
-<td style="text-align: left;">Arduino Nano 33 BLE</td>
-<td style="text-align: left;">Parses IMU data and environmental sensors.</td>
-<td style="text-align: left;">UART / ESP-NOW, I2C, GPIO</td>
+<td style="text-align: left;">Arduino Nano</td>
+<td style="text-align: left;">Reads GPS, MPU6050 IMU, humidity sensor, drives local I2C LCD screen.</td>
+<td style="text-align: left;">UART, I2C, Digital GPIO</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Power Node</strong></td>
-<td style="text-align: left;">ESP32-WROOM-32E (or logic chip)</td>
-<td style="text-align: left;">Battery voltage, current sensing, and low-voltage shutdowns.</td>
-<td style="text-align: left;">ESP-NOW, ADC</td>
+<td style="text-align: left;"><em>Not Needed (Passive)</em></td>
+<td style="text-align: left;">Power protection &amp; cutoff handled by hardware 3S BMS &amp; PDB fuses.</td>
+<td style="text-align: left;">Passive Hardware Protection</td>
 </tr>
 </tbody>
 </table>
@@ -4733,6 +4805,28 @@
 <li><strong>Key Tasks</strong>:<ul>
 <li><code>vServoUpdateTask</code> (Priority 4): Writes joint angles to the PCA9685 via I2C at 50 Hz.</li>
 <li><code>vGestureEngineTask</code> (Priority 3): Generates interpolated joint trajectories (sine ramp transitions) for smooth, natural movements.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ai-node-esp32-s3-cam">AI Node (ESP32-S3 CAM)<a class="headerlink" href="#ai-node-esp32-s3-cam" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Processor</strong>: Tensilica Xtensa Dual-Core 32-bit LX7 at 240 MHz (8MB PSRAM, 8MB Flash).</li>
+<li><strong>Firmware</strong>: <strong>Xiaozhi AI Voice Framework</strong>.</li>
+<li><strong>Key Tasks</strong>:<ul>
+<li><code>vSpeechAudioStreamTask</code>: Performs local VAD, streams I2S audio packets over secure WebSockets, and plays back received TTS stream.</li>
+<li><code>vSPITFTRenderTask</code>: Renders dynamic face animations, eye movements, and voice assistant UI onto the 2.4" SPI TFT LCD.</li>
+<li><code>vVisualAnalysisTask</code>: Captures OV2640 camera snapshots for cognitive visual Q&amp;A.</li>
+</ul>
+</li>
+</ul>
+<h3 id="sensor-node-arduino-nano">Sensor Node (Arduino Nano)<a class="headerlink" href="#sensor-node-arduino-nano" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Processor</strong>: ATmega328P 8-bit MCU at 16 MHz.</li>
+<li><strong>Key Tasks</strong>:<ul>
+<li><code>GPSReadTask</code>: Parses NMEA sentences (GPRMC/GPGGA) from the GPS receiver over serial.</li>
+<li><code>IMUOrientationTask</code>: Reads MPU6050 accelerometer &amp; gyro registers over I2C, calculating pitch/roll angles.</li>
+<li><code>LCDUpdateTask</code>: Updates the 16x2 / 20x4 I2C LCD character screen with live GPS fix, pitch/roll, and temp/humidity.</li>
+<li><code>UARTSerialOutputTask</code>: Packages sensor telemetry into JSON format and streams to Master Node.</li>
 </ul>
 </li>
 </ul>

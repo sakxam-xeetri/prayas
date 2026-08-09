@@ -47,7 +47,7 @@ PRAYAS V1 is an open-source, modular humanoid upper-body robot mounted on a heav
     </a>
     <p style="font-size: 0.9em; margin-top: 12px; color: #888; text-align: left; line-height: 1.5;">
       <strong>Figure 2: Humanoid Structural & CAD Model (<code>prayas(2).png</code>)</strong><br/>
-      Close-up reference model highlighting the 7x MG995 high-torque servo actuator joint placements (shoulder pitch/roll, elbow flex, neck pan/tilt), Seeed XIAO ESP32-S3 AI Node, head camera, and internal wiring channels.
+      Close-up reference model highlighting the 7x MG995 high-torque servo actuator joint placements (shoulder pitch/roll, elbow flex, neck pan/tilt), ESP32-S3 CAM AI Node, SPI display screen, head camera, and internal wiring channels.
     </p>
   </div>
 
@@ -58,7 +58,7 @@ PRAYAS V1 is an open-source, modular humanoid upper-body robot mounted on a heav
 ## <svg class="doc-icon doc-icon-accent" viewBox="0 0 24 24"><path d="M11 15H6l7-14v8h5l-7 14v-8Z"/></svg> Key System Capabilities
 
 * **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m2 4v12h8V6H8m1 2h6v2H9V8m0 4h6v2H9v-2Z"/></svg> Modular Distributed Architecture**: System responsibilities are decentralized across dedicated microcontrollers (Master, Motor, Servo, AI, Camera, Sensor) to guarantee deterministic real-time motion control without CPU contention.
-* **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2A3 3 0 0 0 9 5v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 10 0h2Z"/></svg> Real-Time Conversational AI**: Xiaozhi AI Voice framework integration operating on a dedicated ESP32-S3 Sense node with I2S audio, cloud LLM bidirectional streaming, low-latency Speech-to-Text (STT), and Text-to-Speech (TTS).
+* **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2A3 3 0 0 0 9 5v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 10 0h2Z"/></svg> Real-Time Conversational AI**: Xiaozhi AI Voice framework integration operating on a dedicated ESP32-S3 CAM node with an integrated SPI TFT display, I2S audio, cloud LLM bidirectional streaming, low-latency Speech-to-Text (STT), and Text-to-Speech (TTS).
 * **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M21 9h-6V7a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V10a1 1 0 0 0-1-1m-8 0h-2V7h2v2Z"/></svg> Multi-DOF Expressive Gestures**: 7 × High-torque MG995 metal gear servos managed via PCA9685 I2C driver for smooth trajectory-planned gestures (greeting, pointing, node status signals).
 * **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-10 10a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8Z"/></svg> High-Torque 4WD Differential Drivetrain**: 4 × Johnson 12V 200 RPM metal DC gear motors driven by dual 43A BTS7960 H-Bridge drivers for high payload capacity and indoor maneuverability.
 * **<svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9a9 9 0 0 0 9 9a9 9 0 0 0 9-9a9 9 0 0 0-9-9m0 16a7 7 0 0 1-7-7a7 7 0 0 1 7-7a7 7 0 0 1 7 7a7 7 0 0 1-7 7Z"/></svg> Dual-Protocol Wireless Communications**: ESP-NOW peer-to-peer mesh for sub-10ms inter-node real-time control commands, paired with Wi-Fi / MQTT for web dashboard telemetry and remote override.
@@ -77,9 +77,9 @@ PRAYAS V1 is an open-source, modular humanoid upper-body robot mounted on a heav
 | **Upper Body Kinematics** | 7x MG995 Servos (13 kg·cm @ 6V) | 3-DOF Left Arm, 3-DOF Right Arm, 1-DOF Neck Yaw |
 | **PWM Actuation Controller** | PCA9685 16-Channel 12-bit I2C Module | Interfaced to Servo Control Node (ESP32) |
 | **Primary Gateway Processor** | ESP32 DevKitC v4 (Dual-Core 240 MHz) | ESP-NOW hub, command arbiter, MQTT gateway |
-| **Voice & AI Processing Unit** | Seeed Studio XIAO ESP32-S3 Sense | Embedded PSRAM, I2S Mic, MAX98357A I2S Amp |
+| **Voice & AI Processing Unit** | ESP32-S3 CAM (Xiaozhi AI Framework) | Embedded 8MB PSRAM, 2.4" SPI TFT Display, I2S Mic/Amp |
 | **Visual Vision Sensor** | ESP32-CAM (OV2640 2MP Sensor) | MJPEG streaming @ 15–30 fps via HTTP |
-| **Telemetry Sensor Controller** | Arduino Nano v3 (ATmega328P @ 16 MHz) | HC-SR04 ultrasonic, IR sensors, battery ADC |
+| **Telemetry Sensor Controller** | Arduino Nano v3 (ATmega328P @ 16 MHz) | GPS receiver, MPU6050 IMU, Humidity, 20x4 I2C LCD |
 | **Main Power Cell** | 3S 6800 mAh Li-Ion Battery Pack (11.1V–12.6V) | High-current XT60 dual disconnect switch |
 | **DC Voltage Regulation** | High-efficiency LM2596 / XL4015 Bucks | 6.0V @ 10A (Servos), 5.0V @ 5A (Logic) |
 
@@ -93,7 +93,7 @@ graph TD
     User <--> Web[Web Dashboard Teleoperation Panel]
     
     subgraph AI_Layer ["AI & Vision Processing Layer"]
-        Voice <--> AI_Node[AI Node: XIAO ESP32-S3 Sense]
+        Voice <--> AI_Node[AI Node: ESP32-S3 CAM & SPI Display]
         Cam_Node[Camera Node: ESP32-CAM] --> Web
     end
 

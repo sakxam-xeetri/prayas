@@ -146,29 +146,23 @@ The upper chest houses the vision system, AI processing node, and voice input sy
 │                UPPER CHEST                        │
 │                                                   │
 │  ┌────────────────┐    ┌────────────────┐        │
-│  │  ESP32-CAM     │    │ XIAO ESP32-S3  │        │
-│  │  (Camera Node) │    │ Sense (AI Node)│        │
+│  │  ESP32-CAM     │    │ ESP32-S3 CAM   │        │
+│  │  (Camera Node) │    │  (AI Node)     │        │
 │  │  OV2640 Sensor │    │  OV2640 Camera │        │
-│  │                │    │  INMP441 Mic   │        │
+│  │                │    │  SPI TFT Disp  │        │
 │  │  Purpose:      │    │  Purpose:      │        │
-│  │  Live Video    │    │  Voice + Vision│        │
-│  │  Streaming     │    │  Processing    │        │
+│  │  Live Video    │    │  Xiaozhi AI &  │        │
+│  │  Streaming     │    │  Face Screen UI│        │
 │  └────────────────┘    └────────────────┘        │
 │                                                   │
 │  ┌──────────────────────────────────────────┐    │
-│  │         Camera Holes (Separated)          │    │
-│  │   [ESP32-CAM Hole]    [XIAO Cam Hole]    │    │
+│  │         SPI TFT Display (2.4" ST7789)    │    │
+│  │   [Face Expressions & Voice AI UI]       │    │
 │  └──────────────────────────────────────────┘    │
 │                                                   │
 │  ┌──────────────────────────────────────────┐    │
-│  │         AI STATUS LEDs (3x)               │    │
-│  │   [LISTENING]  [THINKING]  [SPEAKING]     │    │
-│  │    (Blue)       (Amber)      (Green)      │    │
-│  └──────────────────────────────────────────┘    │
-│                                                   │
-│  ┌──────────────────────────────────────────┐    │
-│  │         Microphone Port                   │    │
-│  │   [INMP441 Mic - Exposed to Air]          │    │
+│  │         Sensor Node I2C LCD (20x4)       │    │
+│  │   [GPS Coordinates, IMU, Temp & Humid]   │    │
 │  └──────────────────────────────────────────┘    │
 └──────────────────────────────────────────────────┘
 ```
@@ -178,12 +172,12 @@ The upper chest houses the vision system, AI processing node, and voice input sy
 | Component | Location | Purpose |
 | :--- | :--- | :--- |
 | **ESP32-CAM** | Left chest compartment | Dedicated live video streaming to web dashboard (12–15 fps MJPEG) |
-| **XIAO ESP32-S3 Sense** | Right chest compartment | AI Node — voice processing, object detection, face tracking, visual Q&A |
-| **INMP441 Microphone** | Front-center, exposed | Omnidirectional digital microphone for voice assistant input |
-| **AI LED 1 — Listening** | Front, left of mic port | Blue LED — glows when AI is actively listening for voice input |
-| **AI LED 2 — Thinking** | Front, center of mic port | Amber LED — glows when AI is processing speech or computing a response |
-| **AI LED 3 — Speaking** | Front, right of mic port | Green LED — glows when AI is playing TTS audio through the speaker |
-| **Camera Holes (2)** | Front face, separated | Allow both cameras to see forward without obstruction |
+| **ESP32-S3 CAM** | Right chest compartment | AI Node — Xiaozhi AI voice processing, SPI display driver, snapshot vision |
+| **2.4" SPI TFT Display** | Upper head/chest center | Renders animated facial expressions, speech visualizer, and connection UI |
+| **20x4 I2C LCD Display** | Lower chest / chassis | Local character LCD showing real-time GPS position, pitch/roll, and temp/humidity |
+| **GPS Module (NEO-6M)** | Top neck / upper deck | Active patch antenna mounted for clear sky line-of-sight satellite reception |
+| **MPU6050 IMU** | Center of Gravity (COG) | 6-axis accelerometer/gyroscope for tilt and fall detection |
+| **Humidity Sensor** | Front chassis, ventilated | Measures ambient air temperature and relative humidity |
 
 ### AI Status LED Behavior
 
@@ -228,10 +222,10 @@ The three LEDs provide immediate visual feedback about the AI Node's current sta
 | **AI LED 3** | Green | Pulsing ON | GPIO D2 | AI is speaking — TTS audio streaming back through speaker |
 
 > [!NOTE]
-> **LED Wiring**: Each LED is wired with a 220Ω current-limiting resistor in series. The anode (+) connects to the XIAO ESP32-S3 GPIO pin, and the cathode (−) connects to GND. When the GPIO pin is set HIGH, the LED glows; when LOW, the LED turns off.
+> **LED Wiring**: Each LED is wired with a 220Ω current-limiting resistor in series. The anode (+) connects to the ESP32-S3 CAM GPIO pin, and the cathode (−) connects to GND. When the GPIO pin is set HIGH, the LED glows; when LOW, the LED turns off.
 
 > [!IMPORTANT]
-> **Thermal Isolation**: The ESP32-CAM and XIAO ESP32-S3 are placed in separate compartments to prevent combined heat buildup. Each compartment should have ventilation slots on the rear panel.
+> **Thermal Isolation**: The ESP32-CAM and ESP32-S3 CAM are placed in separate compartments to prevent combined heat buildup. Each compartment should have ventilation slots on the rear panel.
 
 ---
 
@@ -549,7 +543,7 @@ The motorized base houses the drivetrain, battery system, obstacle avoidance sen
 ├─────────────────────────────┤
 │      NECK SERVO              │  ← MG995 (Pan ±90°)
 ├─────────────────────────────┤
-│      UPPER CHEST             │  ← ESP32-CAM, XIAO ESP32-S3
+│      UPPER CHEST             │  ← ESP32-CAM, ESP32-S3 CAM
 │      (2 Cameras + AI + Mic) │     INMP441 Microphone
 ├─────────────────────────────┤
 │      TFT DISPLAY             │  ← 3.5" TFT (Logs + Controls)
@@ -580,9 +574,9 @@ The motorized base houses the drivetrain, battery system, obstacle avoidance sen
 
 | Section | Key Components | Total Items |
 | :--- | :--- | :---: |
-| **Head** | Arduino Nano, MPU6050, DHT11, LCD, LEDs | 6 |
+| **Head** | Arduino Nano, GPS, MPU6050, Humidity, LCD Display | 6 |
 | **Neck** | MG995 Servo | 1 |
-| **Upper Chest** | ESP32-CAM, XIAO ESP32-S3, INMP441 Mic, 3x AI Status LEDs | 6 |
+| **Upper Chest** | ESP32-CAM, ESP32-S3 CAM, SPI TFT, INMP441 Mic | 6 |
 | **Display** | 3.5" TFT Display | 1 |
 | **Arms** | 6x MG995 Servos | 6 |
 | **Torso** | Master ESP32, Servo ESP32, PCA9685 | 3 |

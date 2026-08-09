@@ -27,7 +27,7 @@
     
     
       
-        <title>AI Node - PRAYAS V1 Documentation</title>
+        <title>AI Node (ESP32-S3 CAM & SPI Display) - PRAYAS V1 Documentation</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ai-voice-node" class="md-skip">
+        <a href="#ai-voice-node-esp32-s3-cam" class="md-skip">
           Skip to content
         </a>
       
@@ -114,7 +114,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AI Node
+              AI Node (ESP32-S3 CAM & SPI Display)
             
           </span>
         </div>
@@ -1211,7 +1211,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1229,7 +1229,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1266,10 +1266,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware-used" class="md-nav__link">
+  <a href="#hardware-components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hardware Used
+        Hardware Components
       
     </span>
   </a>
@@ -1277,10 +1277,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gpio-mapping" class="md-nav__link">
+  <a href="#gpio-mapping-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GPIO Mapping
+        GPIO Mapping Table
       
     </span>
   </a>
@@ -1288,10 +1288,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#speech-pipeline-block-diagram" class="md-nav__link">
+  <a href="#ai-node-system-block-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Speech Pipeline Block Diagram
+        AI Node System Block Diagram
       
     </span>
   </a>
@@ -1299,10 +1299,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#failure-cases-recovery" class="md-nav__link">
+  <a href="#failure-handling-recovery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Failure Cases &amp; Recovery
+        Failure Handling &amp; Recovery
       
     </span>
   </a>
@@ -1360,7 +1360,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1388,7 +1388,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1585,6 +1585,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4553,10 +4581,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#hardware-used" class="md-nav__link">
+  <a href="#hardware-components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Hardware Used
+        Hardware Components
       
     </span>
   </a>
@@ -4564,10 +4592,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gpio-mapping" class="md-nav__link">
+  <a href="#gpio-mapping-table" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GPIO Mapping
+        GPIO Mapping Table
       
     </span>
   </a>
@@ -4575,10 +4603,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#speech-pipeline-block-diagram" class="md-nav__link">
+  <a href="#ai-node-system-block-diagram" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Speech Pipeline Block Diagram
+        AI Node System Block Diagram
       
     </span>
   </a>
@@ -4586,10 +4614,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#failure-cases-recovery" class="md-nav__link">
+  <a href="#failure-handling-recovery" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Failure Cases &amp; Recovery
+        Failure Handling &amp; Recovery
       
     </span>
   </a>
@@ -4613,87 +4641,123 @@
 
 
 
-<h1 id="ai-voice-node">AI &amp; Voice Node<a class="headerlink" href="#ai-voice-node" title="Permanent link">&para;</a></h1>
+<h1 id="ai-voice-node-esp32-s3-cam">AI &amp; Voice Node (ESP32-S3 CAM)<a class="headerlink" href="#ai-voice-node-esp32-s3-cam" title="Permanent link">&para;</a></h1>
 <h2 id="purpose">Purpose<a class="headerlink" href="#purpose" title="Permanent link">&para;</a></h2>
-<p>The AI Node processes voice interaction, handles conversational flows via the Xiaozhi framework, and interfaces with cloud LLM systems using the Model Context Protocol (MCP).</p>
-<h2 id="hardware-used">Hardware Used<a class="headerlink" href="#hardware-used" title="Permanent link">&para;</a></h2>
+<p>The AI Node serves as the cognitive intelligence and speech hub of the PRAYAS V1 robot. It runs the <strong>Xiaozhi AI Framework</strong>, processes real-time bidirectional voice interactions, executes vision queries using an onboard camera, interfaces with cloud LLM systems via WebSocket/MCP, and drives an integrated <strong>SPI TFT Display</strong> for visual facial expressions and UI state updates.</p>
+<h2 id="hardware-components">Hardware Components<a class="headerlink" href="#hardware-components" title="Permanent link">&para;</a></h2>
 <ul>
-<li>
-<p><strong>MCU</strong>: Seeed Studio XIAO ESP32-S3 Sense (Dual-core Xtensa 32-bit LX7, 240 MHz, 8MB PSRAM, 8MB Flash) — <a href="https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html">Official Seeed Studio Product Details</a>.</p>
-<p><img alt="Seeed Studio XIAO ESP32-S3 Sense" src="../../assets/img/xhaioesp32s3sense.jpg" style="display: block; margin: 0 auto;" width="300" /></p>
-</li>
-<li>
-<p><strong>Integrated Camera</strong>: OV2640 Camera Module (plug-in board included with the XIAO Sense) used for local object detection, visual classifications, and general Q&amp;A assistant tasks.</p>
-</li>
-<li><strong>Integrated Microphone</strong>: On-board digital MSM261D3526H1CPM MEMS microphone (used for voice capture, although external I2S devices can be attached).</li>
-<li><strong>DAC/Codec</strong>: ES8311 I2S Audio Codec.</li>
-<li><strong>Speaker</strong>: 3W 8-Ohm Speaker.</li>
+<li><strong>MCU</strong>: ESP32-S3 CAM Module (Dual-core Xtensa 32-bit LX7, 240 MHz, 8MB PSRAM, 8MB/16MB Flash) with built-in Wi-Fi 802.11 b/g/n and Bluetooth 5 (LE).</li>
+<li><strong>AI Framework</strong>: <strong>Xiaozhi AI Voice Framework</strong> — handles local VAD (Voice Activity Detection), wake word engine, audio compression, and cloud LLM/TTS WebSocket streaming.</li>
+<li><strong>Integrated Display</strong>: 2.4" SPI TFT LCD Display (240x320 resolution, ST7789/ILI9341 controller) driven via hardware SPI pins. Displays live facial expressions, speech status, battery/Wi-Fi icons, and system notifications.</li>
+<li><strong>Camera Module</strong>: OV2640 2-Megapixel CMOS camera module connected directly to the ESP32-S3 DVP camera interface for visual object identification and cognitive vision tasks.</li>
+<li><strong>Microphone</strong>: INMP441 Omnidirectional I2S Digital MEMS Microphone for high-clarity voice capture.</li>
+<li><strong>Audio Output / DAC</strong>: MAX98357A / ES8311 I2S Mono Audio Amplifier powering a 3W 8-Ohm Speaker.</li>
 </ul>
 <blockquote>
 <p>[!IMPORTANT]
-<strong>Vision System Division of Labor</strong>:
-PRAYAS V1 separates vision processing into two separate hardware pathways:
-1.  <strong>AI Node Camera (XIAO ESP32-S3 Sense)</strong>: Processes raw image data locally or streams it to cloud endpoints for object recognition, face matching, visual Q&amp;A, and cognitive spatial analysis.
-2.  <strong>Camera Node (ESP32-CAM)</strong>: Dedicated entirely to serving a continuous JPEG WebSockets video stream to the Web Dashboard. This prevents cognitive AI vision queries from interrupting the real-time operator video feed.</p>
+<strong>Dual Display &amp; Dual Camera Architecture</strong>:
+1.  <strong>AI Node Display (SPI TFT)</strong>: Handles face expressions, speech animation waves, and interactive menu UI rendered directly by the ESP32-S3 CAM.
+2.  <strong>Sensor Node Display (I2C LCD)</strong>: Dedicated text LCD displaying raw physical metrics (GPS coordinates, IMU pitch/roll, ambient humidity/temp).
+3.  <strong>Vision Division</strong>: The onboard OV2640 camera on the ESP32-S3 CAM performs snapshot visual analysis for Xiaozhi AI, while a separate ESP32-CAM streams continuous WebSockets video to the Web Dashboard.</p>
 </blockquote>
-<h2 id="gpio-mapping">GPIO Mapping<a class="headerlink" href="#gpio-mapping" title="Permanent link">&para;</a></h2>
+<h2 id="gpio-mapping-table">GPIO Mapping Table<a class="headerlink" href="#gpio-mapping-table" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">GPIO Pin</th>
+<th style="text-align: left;">Pin Name / GPIO</th>
 <th style="text-align: left;">Pin Function</th>
-<th style="text-align: left;">Target Component</th>
+<th style="text-align: left;">Connected Hardware Subsystem</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td style="text-align: left;"><strong>GPIO 15</strong></td>
+<td style="text-align: left;">SPI SCK (Clock)</td>
+<td style="text-align: left;">SPI Display SCL/SCK</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 13</strong></td>
+<td style="text-align: left;">SPI MOSI (Data)</td>
+<td style="text-align: left;">SPI Display SDA/MOSI</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 14</strong></td>
+<td style="text-align: left;">SPI CS (Chip Select)</td>
+<td style="text-align: left;">SPI Display CS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 21</strong></td>
+<td style="text-align: left;">SPI DC (Data/Command)</td>
+<td style="text-align: left;">SPI Display DC</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 47</strong></td>
+<td style="text-align: left;">Display Reset (RST)</td>
+<td style="text-align: left;">SPI Display RES/RST</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 48</strong></td>
+<td style="text-align: left;">Display Backlight (BLK)</td>
+<td style="text-align: left;">SPI Display BLK / LED Control</td>
+</tr>
+<tr>
 <td style="text-align: left;"><strong>GPIO 1</strong></td>
-<td style="text-align: left;">I2S Serial Data Out (SDOUT)</td>
-<td style="text-align: left;">ES8311 DAC SDIN</td>
+<td style="text-align: left;">I2S SDOUT (Speaker Data)</td>
+<td style="text-align: left;">MAX98357A / ES8311 DIN</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 2</strong></td>
-<td style="text-align: left;">I2S Serial Clock (BCLK)</td>
-<td style="text-align: left;">ES8311 / INMP441 BCLK</td>
+<td style="text-align: left;">I2S BCLK (Bit Clock)</td>
+<td style="text-align: left;">INMP441 &amp; MAX98357A BCLK</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 3</strong></td>
-<td style="text-align: left;">I2S Word Select (LRCK)</td>
-<td style="text-align: left;">ES8311 / INMP441 WS</td>
+<td style="text-align: left;"><strong>GPIO 42</strong></td>
+<td style="text-align: left;">I2S WS (LRCK / Word Select)</td>
+<td style="text-align: left;">INMP441 &amp; MAX98357A WS/LRCK</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 4</strong></td>
-<td style="text-align: left;">I2S Serial Data In (SDIN)</td>
-<td style="text-align: left;">INMP441 SD Out</td>
+<td style="text-align: left;"><strong>GPIO 41</strong></td>
+<td style="text-align: left;">I2S SDIN (Mic Data Input)</td>
+<td style="text-align: left;">INMP441 SD</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 18</strong></td>
-<td style="text-align: left;">UART Tx (To Master Rx2)</td>
-<td style="text-align: left;">Master Node GPIO 16</td>
+<td style="text-align: left;"><strong>GPIO 43</strong></td>
+<td style="text-align: left;">UART TX (Serial Out)</td>
+<td style="text-align: left;">Master Node RX2 (GPIO 16)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 19</strong></td>
-<td style="text-align: left;">UART Rx (To Master Tx2)</td>
-<td style="text-align: left;">Master Node GPIO 17</td>
+<td style="text-align: left;"><strong>GPIO 44</strong></td>
+<td style="text-align: left;">UART RX (Serial In)</td>
+<td style="text-align: left;">Master Node TX2 (GPIO 17)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Camera DVP Pins</strong></td>
+<td style="text-align: left;">DVP Video Bus (Y2-Y9, PCLK, VSYNC, HREF, XCLK)</td>
+<td style="text-align: left;">Onboard OV2640 Camera Socket</td>
 </tr>
 </tbody>
 </table>
-<h2 id="speech-pipeline-block-diagram">Speech Pipeline Block Diagram<a class="headerlink" href="#speech-pipeline-block-diagram" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  [ INMP441 Mic ] ──(I2S Digital)──&gt; [ ESP32-S3 Node ]
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                            │
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                    (VAD &amp; Wake Word)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                            │ (Wi-Fi TCP)
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                            ▼
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                   [ Cloud TTS / LLM ]
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                            │ (Wi-Fi TCP)
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                            ▼
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  [ ES8311 Codec ] &lt;──(I2S Digital)── [ ESP32-S3 Node ]
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          │
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  [ 3W Speaker ]
+<h2 id="ai-node-system-block-diagram">AI Node System Block Diagram<a class="headerlink" href="#ai-node-system-block-diagram" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                       ┌─────────────────────────────────────────┐
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                       │          ESP32-S3 CAM AI NODE           │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                       │          (Xiaozhi AI Framework)         │
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                       └────┬───────────────────────────────┬────┘
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                            │                               │
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       (SPI Bus)            │                               │ (I2S Bus)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>   ┌───▼──────────────────┐ │                               │ ┌─────────────────────────┐
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>   │ 2.4&quot; SPI TFT Display │ │                               │ │ INMP441 Digital Mic     │
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   │ (Face UI &amp; Status)   │ │                               │ └─────────────────────────┘
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>   └──────────────────────┘ │                               │
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                            │                               │ ┌─────────────────────────┐
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>     ┌──────────────────┐   │                               └►│ MAX98357A I2S Amp       │
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>     │ OV2640 Camera    │◄──┘                                 │ ──► 3W Speaker          │
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>     │ (Snapshot Visual)│                                     └─────────────────────────┘
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>     └──────────────────┘
 </span></code></pre></div>
-<h2 id="failure-cases-recovery">Failure Cases &amp; Recovery<a class="headerlink" href="#failure-cases-recovery" title="Permanent link">&para;</a></h2>
+<h2 id="failure-handling-recovery">Failure Handling &amp; Recovery<a class="headerlink" href="#failure-handling-recovery" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>High Speech Latency</strong>: If the cloud response takes longer than 2.0 seconds, the AI Node plays a local audio response (e.g. "Processing command...") to update the user.</li>
+<li><strong>Cloud Latency Timeout</strong>: If cloud LLM response exceeds 2.0s, the SPI TFT displays a "Thinking / Processing" indicator and a local audio feedback tone is emitted.</li>
+<li><strong>Display Frame Jitter</strong>: SPI TFT transfers use DMA channels to prevent display writes from interrupting I2S voice streaming audio buffers.</li>
 </ul>
 
 

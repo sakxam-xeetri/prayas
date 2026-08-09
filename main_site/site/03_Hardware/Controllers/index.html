@@ -1293,7 +1293,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1349,7 +1349,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1377,7 +1377,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1574,6 +1574,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4597,10 +4625,11 @@
 <h2 id="hardware-used">Hardware Used<a class="headerlink" href="#hardware-used" title="Permanent link">&para;</a></h2>
 <p>The platform distributes processing across multiple microcontrollers to handle specific real-time tasks:</p>
 <ul>
-<li><strong>ESP32-WROOM-32E (Master, Motor, Servo, Power Nodes)</strong>: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi and Bluetooth, and ESP-NOW support.</li>
-<li><strong>Seeed Studio XIAO ESP32-S3 Sense (AI Node)</strong>: Compact development board based on ESP32-S3 (dual-core Xtensa 32-bit LX7 processor, 240 MHz, 8MB PSRAM, 8MB Flash). Includes an integrated camera module (OV2640) and digital microphone. The on-board camera is allocated for AI tasks (object detection, visual scene analysis, and Q&amp;A assistance), whereas the standalone ESP32-CAM is used strictly for the Web Dashboard live video feed.</li>
-<li><strong>ESP32-CAM (Camera Node)</strong>: Dedicated OV2640 camera interface board, used strictly as a low-power, high-frame-rate video streaming server for dashboard live feeds.</li>
-<li><strong>Arduino Nano 33 BLE Sense (Sensor Node)</strong>: Features a 64 MHz ARM Cortex-M4 (nRF52840) with low power consumption and onboard sensors (IMU, microphone, gesture/light/color sensors).</li>
+<li><strong>ESP32-WROOM-32E (Master, Motor, Servo Nodes)</strong>: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi and Bluetooth, and ESP-NOW support.</li>
+<li><strong>ESP32-S3 CAM (AI Node)</strong>: High-performance AI co-processor (dual-core Xtensa 32-bit LX7, 240 MHz, 8MB PSRAM, 8MB Flash) running <strong>Xiaozhi AI Framework</strong>, driving an integrated <strong>SPI TFT Display</strong> for face UI/status, OV2640 camera snapshot processing, and I2S audio streaming.</li>
+<li><strong>ESP32-CAM (Camera Node)</strong>: Dedicated OV2640 camera board serving a high-frame-rate WebSocket video stream to the Web Dashboard.</li>
+<li><strong>Arduino Nano (Sensor Node)</strong>: Compact ATmega328P MCU (16 MHz) reading GPS module NMEA data, MPU6050 6-axis IMU, humidity sensor, and driving a local 16x2 / 20x4 I2C LCD telemetry screen.</li>
+<li><strong>Power Management</strong>: <strong>Not Needed</strong> as an active MCU node; handled passively via BMS circuit and PDB fuses.</li>
 </ul>
 <h2 id="comparative-specifications-table">Comparative Specifications Table<a class="headerlink" href="#comparative-specifications-table" title="Permanent link">&para;</a></h2>
 <table>
@@ -4608,9 +4637,9 @@
 <tr>
 <th style="text-align: left;">Parameter</th>
 <th style="text-align: left;">ESP32-WROOM-32E</th>
-<th style="text-align: left;">XIAO ESP32-S3 Sense</th>
+<th style="text-align: left;">ESP32-S3 CAM (AI Node)</th>
 <th style="text-align: left;">ESP32-CAM</th>
-<th style="text-align: left;">Nano 33 BLE Sense</th>
+<th style="text-align: left;">Arduino Nano (Sensor Node)</th>
 </tr>
 </thead>
 <tbody>
@@ -4619,49 +4648,49 @@
 <td style="text-align: left;">Tensilica Xtensa LX6</td>
 <td style="text-align: left;">Tensilica Xtensa LX7</td>
 <td style="text-align: left;">Tensilica Xtensa LX6</td>
-<td style="text-align: left;">ARM Cortex-M4F</td>
+<td style="text-align: left;">ATmega328P 8-bit</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Core Speed</strong></td>
 <td style="text-align: left;">240 MHz (Dual)</td>
 <td style="text-align: left;">240 MHz (Dual)</td>
 <td style="text-align: left;">240 MHz (Dual)</td>
-<td style="text-align: left;">64 MHz (Single)</td>
+<td style="text-align: left;">16 MHz (Single)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>SRAM</strong></td>
-<td style="text-align: left;">520 KB</td>
-<td style="text-align: left;">512 KB internal + 8MB</td>
-<td style="text-align: left;">520 KB internal + 4MB</td>
-<td style="text-align: left;">256 KB</td>
+<td style="text-align: left;"><strong>SRAM / PSRAM</strong></td>
+<td style="text-align: left;">520 KB SRAM</td>
+<td style="text-align: left;">512 KB SRAM + 8MB PSRAM</td>
+<td style="text-align: left;">520 KB SRAM + 4MB PSRAM</td>
+<td style="text-align: left;">2 KB SRAM</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Flash</strong></td>
 <td style="text-align: left;">4 MB</td>
 <td style="text-align: left;">8 MB</td>
 <td style="text-align: left;">4 MB</td>
-<td style="text-align: left;">1 MB</td>
+<td style="text-align: left;">32 KB</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>WiFi</strong></td>
-<td style="text-align: left;">802.11 b/g/n (150 Mbps)</td>
-<td style="text-align: left;">802.11 b/g/n (150 Mbps)</td>
-<td style="text-align: left;">802.11 b/g/n</td>
-<td style="text-align: left;">None</td>
+<td style="text-align: left;"><strong>Display Interface</strong></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">Hardware SPI (ST7789 TFT)</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">I2C (16x2/20x4 LCD)</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Bluetooth</strong></td>
-<td style="text-align: left;">BLE v4.2 BR/EDR</td>
-<td style="text-align: left;">BLE v5.0 / Mesh</td>
-<td style="text-align: left;">BLE v4.2 BR/EDR</td>
-<td style="text-align: left;">BLE v5.0</td>
+<td style="text-align: left;"><strong>Sensors &amp; Vision</strong></td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">OV2640 Camera + I2S Mic</td>
+<td style="text-align: left;">OV2640 Camera</td>
+<td style="text-align: left;">GPS, MPU6050, Humidity</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Primary Task</strong></td>
-<td style="text-align: left;">Real-time Motor/Servos</td>
-<td style="text-align: left;">AI, Speech &amp; Vision AI</td>
-<td style="text-align: left;">Dedicated Video Stream</td>
-<td style="text-align: left;">IMU &amp; Environment</td>
+<td style="text-align: left;">Control &amp; Kinematics</td>
+<td style="text-align: left;">Xiaozhi AI, Speech &amp; SPI UI</td>
+<td style="text-align: left;">Web Video Stream</td>
+<td style="text-align: left;">GPS, IMU, Humidity &amp; LCD</td>
 </tr>
 </tbody>
 </table>

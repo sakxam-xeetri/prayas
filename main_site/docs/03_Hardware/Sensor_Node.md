@@ -3,81 +3,82 @@
 ## 1. Sensor Node Overview
 
 ### Purpose
-The Sensor Node is the dedicated hardware subsystem of the PRAYAS robot responsible for collecting real-time environmental and inertial data. It monitors the robot's physical orientation, detects motion and tilt events, and measures ambient temperature and humidity to support safe navigation and situational awareness.
+The Sensor Node is the dedicated hardware subsystem of the PRAYAS robot responsible for collecting real-time environmental, position/navigation, and inertial data. It monitors the robot's physical orientation, detects motion and tilt events, measures ambient temperature and humidity, reads GPS satellite coordinates, and drives an onboard **I2C LCD Display** for local telemetry readout.
 
 ### Responsibilities
-*   **Motion Sensing**: Reads 3-axis accelerometer and 3-axis gyroscope data to determine the robot's orientation, tilt angle, and movement state.
-*   **Environmental Monitoring**: Measures ambient temperature and humidity to track internal and external conditions.
-*   **Data Packaging**: Combines all sensor readings into a structured data packet.
-*   **Data Transmission**: Sends the packaged sensor data to the ESP32 Master Node over a UART serial connection.
+*   **Motion & Orientation Sensing**: Reads 3-axis accelerometer and 3-axis gyroscope data from the MPU6050 to determine orientation, pitch/roll tilt angles, and fall detection.
+*   **Geospatial Positioning**: Reads latitude, longitude, altitude, velocity, and UTC time data from a GPS module (NEO-6M / NEO-M8N).
+*   **Environmental Monitoring**: Measures ambient temperature and relative humidity via a digital humidity sensor (DHT11 / DHT22 / SHT30).
+*   **Local Telemetry Display**: Formats and outputs live sensor metrics to a 16x2 / 20x4 I2C LCD display mounted on the robot chassis.
+*   **Data Packaging & Transmission**: Combines sensor readings into a JSON telemetry packet transmitted to the ESP32 Master Node over UART.
 
 ### Inputs
-*   **Logic Power**: 5V DC supply from the Power Distribution Board.
-*   **Sensor Signals**: Raw analog and digital readings from the MPU6050 and DHT11 sensors.
+*   **Logic Power**: 5V DC supply from the main Power Distribution Board.
+*   **Sensor Signals**: 
+    *   GPS NMEA sentences over SoftwareSerial / UART (GPS Module TX).
+    *   I2C bus signals (SDA/SCL) from MPU6050 IMU.
+    *   Digital pulse data from Humidity Sensor.
 
 ### Outputs
-*   **UART Serial Data**: JSON-formatted sensor payload transmitted to the Master Node.
+*   **I2C LCD Screen Output**: Live 4-row / 2-row readout of GPS fix, Pitch/Roll, and Temp/Humidity.
+*   **UART Serial Data**: Packaged telemetry payload transmitted to the Master Node.
 
 ### Why a Dedicated Sensor Node is Used
-Sensor readings require consistent sampling intervals and uninterrupted processing. If the sensor reading tasks were combined with motor control or servo PWM generation on the same microcontroller, timing conflicts could corrupt sensor data or introduce jitter. Isolating the sensors to a dedicated Arduino Nano ensures reliable, jitter-free data acquisition independent of other real-time workloads on the ESP32 nodes.
+Sensor sampling (specifically NMEA parsing and I2C sensor polling) requires consistent timing intervals. Isolating these tasks to a dedicated Arduino Nano MCU guarantees jitter-free sensor sampling while freeing up the main ESP32 processors for real-time motor kinematics and AI voice streaming.
 
-### Advantages of Using Arduino Nano for Sensor Management
-*   **Simplicity**: The Arduino Nano uses a straightforward ATmega328P processor with well-established I2C and UART libraries, making sensor integration fast and reliable.
-*   **Low Cost**: At approximately $4–5, the Arduino Nano is one of the most affordable microcontrollers available, reducing the overall system cost.
-*   **Compact Form Factor**: Its small size (45 × 18 mm) allows it to be mounted directly next to the sensors on the robot chassis, minimizing wire length and signal noise.
-*   **5V Logic Compatibility**: The MPU6050 and DHT11 both operate at 5V logic, matching the Arduino Nano's native voltage level without requiring level shifters.
-*   **Dedicated Role**: Running a single focused task (sensor reading) on its own MCU eliminates resource contention with the ESP32 nodes.
-
-### Data Collected by this Node
-| Data Type | Sensor | Description |
+### Data Collected & Displayed by this Node
+| Data Type | Hardware Device | Description |
 | :--- | :--- | :--- |
-| **Acceleration (X, Y, Z)** | MPU6050 | Linear acceleration along each axis in m/s². |
-| **Gyroscope (X, Y, Z)** | MPU6050 | Angular velocity around each axis in °/s. |
-| **Pitch** | MPU6050 (derived) | Forward/backward tilt angle of the robot. |
-| **Roll** | MPU6050 (derived) | Left/right tilt angle of the robot. |
-| **Temperature** | DHT11 | Ambient air temperature in °C. |
-| **Humidity** | DHT11 | Relative humidity in %RH. |
+| **GPS Position (Lat, Lon)** | NEO-6M / NEO-M8N GPS | Latitude & Longitude in decimal degrees. |
+| **GPS Fix & Satellites** | NEO-6M / NEO-M8N GPS | Number of active satellites locked and 3D fix state. |
+| **Acceleration (X, Y, Z)** | MPU6050 IMU | Linear acceleration in m/s². |
+| **Gyroscope (X, Y, Z)** | MPU6050 IMU | Angular velocity around X/Y/Z axes in °/s. |
+| **Pitch & Roll** | MPU6050 IMU (derived) | Robot forward/backward tilt (Pitch) and side tilt (Roll). |
+| **Temperature** | DHT11 / DHT22 / SHT30 | Ambient air temperature in °C. |
+| **Humidity** | DHT11 / DHT22 / SHT30 | Ambient relative humidity in %RH. |
+| **Local Metrics Screen** | 16x2 / 20x4 I2C LCD | Text screen showing real-time sensor status on the robot body. |
 
 ---
 
 ## 2. Components Required
 
-The table below lists all components required to assemble the Sensor Node:
+The table below lists all components required for the Sensor Node:
 
 | Component Name | Quantity | Specification | Purpose |
 | :--- | :---: | :--- | :--- |
-| **Arduino Nano** | 1 | ATmega328P, 16 MHz, 32KB Flash, 2KB RAM | Microcontroller that reads sensors and transmits data to the Master Node. |
-| **MPU6050 Module** | 1 | InvenSense MPU6050, 6-axis (3-axis Accelerometer + 3-axis Gyroscope), I2C Interface | Measures the robot's orientation, acceleration, and angular velocity. |
-| **DHT11 Sensor** | 1 | Digital Temperature & Humidity Sensor, 3.3V–5V, Single-Wire Digital Interface | Measures ambient temperature and relative humidity. |
-| **UART Connection Wires** | 3 | 24 AWG jumper wires (TX, RX, GND) | Carries serial data between the Arduino Nano and the ESP32 Master Node. |
-| **Power Connector** | 1 | 2-pin JST-XH Connector (2.54 mm pitch) | Connects the 5V power supply from the distribution board to the Arduino Nano. |
-| **Mounting Hardware** | Assorted | M3 Nylon Standoffs (10 mm), Screws, and Nuts | Secures the Arduino Nano and sensor modules to the robot chassis. |
-| **Jumper Wires** | Assorted | 24 AWG Male-to-Male and Male-to-Female Dupont wires | Connects the MPU6050 and DHT11 to the Arduino Nano via I2C and digital pins. |
+| **Arduino Nano** | 1 | ATmega328P, 16 MHz, 32KB Flash, 2KB RAM | Microcontroller reading GPS, MPU6050, Humidity sensor, driving LCD. |
+| **GPS Module** | 1 | NEO-6M / NEO-M8N GPS receiver, UART interface, active patch antenna | Reads global positioning coordinates, velocity, and UTC time. |
+| **MPU6050 Module** | 1 | InvenSense MPU6050 6-axis IMU (3-axis Accel + 3-axis Gyro), I2C Interface | Measures orientation, pitch/roll, and motion events. |
+| **Humidity Sensor** | 1 | DHT11 / DHT22 / SHT30 Digital Temperature & Humidity Sensor | Measures ambient air temperature and relative humidity. |
+| **I2C LCD Display** | 1 | 16x2 or 20x4 HD44780 LCD with PCF8574 I2C Adapter (0x27 / 0x3F) | Displays real-time local telemetry readout directly on the robot chassis. |
+| **UART & I2C Wiring** | Assorted | 24 AWG Dupont wires (TX, RX, SDA, SCL, GND, 5V) | Connects modules to Arduino Nano. |
 
 ---
 
 ## 3. Component Description
 
 ### Arduino Nano
-*   **What it is**: A compact microcontroller development board based on the ATmega328P processor, running at 16 MHz with 32 KB of Flash memory and 2 KB of SRAM. It features built-in I2C (SDA/SCL) and UART (TX/RX) hardware interfaces.
-*   **Why it is used**: The Arduino Nano provides a simple, reliable, and low-cost platform for reading sensor data. Its native 5V logic matches the operating voltage of both the MPU6050 and DHT11, eliminating the need for voltage level shifters. Its compact size allows direct mounting alongside the sensors.
-*   **How it works inside PRAYAS**: It acts as the local data acquisition unit of the Sensor Node. It initializes both sensors over I2C and digital interfaces, reads sensor values at a fixed sampling rate, packages the data into a JSON string, and transmits it to the ESP32 Master Node over a UART serial connection.
+Acts as the central sensor controller. It initializes the MPU6050 and I2C LCD over I2C (A4/A5), reads GPS NMEA data over serial pins (D2/D3 SoftwareSerial or hardware RX/TX), polls the humidity sensor (D4), updates the LCD screen, and streams packaged JSON telemetry to the Master ESP32 over UART.
 
-### MPU6050 Module
-*   **What it is**: A 6-axis inertial measurement unit (IMU) made by InvenSense, combining a 3-axis accelerometer and a 3-axis gyroscope on a single chip. It communicates over I2C and operates at 3.3V–5V.
-*   **Why it is used**: The MPU6050 provides the acceleration and angular velocity data needed to monitor the robot's physical orientation. This data is essential for detecting tilt, instability, and falls — critical safety functions for a tall humanoid robot with a high center of gravity.
-*   **How it works inside PRAYAS**: Mounted near the robot's center of gravity, the MPU6050 continuously measures linear acceleration and rotational rate along all three axes. The Arduino Nano reads these values over I2C and derives pitch and roll angles to determine whether the robot is upright, tilted, or falling.
-*   **Expected Output Data**: Acceleration (X, Y, Z) in m/s², Angular Velocity (X, Y, Z) in °/s, derived Pitch in degrees, derived Roll in degrees.
+### GPS Module (NEO-6M / NEO-M8N)
+*   **What it is**: High-sensitivity satellite receiver module operating at 9600 baud.
+*   **Why it is used**: Provides outdoor spatial awareness, latitude/longitude positioning, speed over ground, and accurate satellite clock synchronization.
+*   **Expected Output**: Latitude, Longitude, Altitude, Speed (km/h), Satellite Count, Fix Quality.
 
-### DHT11 Sensor
-*   **What it is**: A digital temperature and humidity sensor that outputs calibrated readings over a single-wire digital protocol. It measures temperature from 0°C to 50°C and humidity from 20% to 80% RH.
-*   **Why it is used**: Monitoring ambient temperature and humidity helps the robot assess its operating environment. High temperatures near electronics can indicate overheating, and humidity levels affect sensor accuracy and component longevity.
-*   **How it works inside PRAYAS**: Mounted on the robot's upper body exposed to ambient air, the DHT11 is read by the Arduino Nano every 2 seconds. The readings are packaged alongside the IMU data and sent to the Master Node for telemetry reporting and environmental awareness.
-*   **Expected Output Data**: Temperature in °C (±2°C accuracy), Relative Humidity in %RH (±5% accuracy).
+### MPU6050 IMU Module
+*   **What it is**: 6-axis motion tracking sensor with 3D accelerometer and 3D gyroscope.
+*   **Why it is used**: Monitors robot upright balance, pitch/roll tilt, and detects emergency fall events.
 
-### UART Connection Wires
-*   **What it is**: Three standard jumper wires (TX, RX, GND) that establish a serial communication link between the Arduino Nano and the ESP32 Master Node.
-*   **Why it is used**: UART serial is a lightweight, reliable, and universally supported communication protocol that requires only two data wires (TX and RX) plus a common ground reference.
+### Humidity & Temperature Sensor (DHT11 / DHT22)
+*   **What it is**: Calibrated digital temperature and relative humidity sensor.
+*   **Why it is used**: Monitors ambient room conditions and internal chassis thermal environment.
+
+### 16x2 / 20x4 I2C LCD Display
+*   **What it is**: High-contrast character LCD driven by a PCF8574 I2C expander.
+*   **Why it is used**: Provides human-readable local visual telemetry directly on the robot body without needing an external computer monitor or phone app.
+
+---
+
 *   **How it works inside PRAYAS**: The Arduino Nano transmits JSON-formatted sensor data through its TX pin. The ESP32 Master Node receives this data on its designated RX pin. A shared ground wire ensures a stable reference voltage for clean signal transmission.
 
 ---

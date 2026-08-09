@@ -22,5 +22,5 @@ Once the user's speech is converted to text, it is processed to determine the in
 | :--- | :--- | :--- | :--- |
 | **ROBOT_MOVE** | "Go forward a bit." | Motor Node | Sets target linear velocity. |
 | **ROBOT_GESTURE**| "Wave your left hand." | Servo Node | Triggers arm gesture. |
-| **SYSTEM_STATUS** | "How is your battery?" | Power Node | Speaks current battery charge level. |
+| **SYSTEM_STATUS** | "Where are you / How is the environment?" | Sensor Node / Master | Speaks GPS location, humidity, pitch/roll, and system state. |
 | **ROBOT_STOP** | "Stop moving now!" | Motor Node | Instantly stops the wheels. |

@@ -23,9 +23,9 @@ graph TD
     LogicRail[5V Logic Rail] --> Master[Master Node ESP32]
     LogicRail --> ServoLogic[Servo Node Logic]
     LogicRail --> MotorLogic[Motor Node Logic]
-    LogicRail --> AIS3[AI Node ESP32-S3]
+    LogicRail --> AIS3[AI Node ESP32-S3 CAM & SPI Display]
     LogicRail --> CAM[Camera Node ESP32-CAM]
-    LogicRail --> Sensor[Sensor Node Nano 33 BLE]
+    LogicRail --> Sensor[Sensor Node Arduino Nano GPS/LCD]
 ```
 
 ---

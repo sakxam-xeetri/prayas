@@ -6,21 +6,22 @@ This document provides a comparative analysis of the microcontrollers used in PR
 ## Hardware Used
 The platform distributes processing across multiple microcontrollers to handle specific real-time tasks:
 
-*   **ESP32-WROOM-32E (Master, Motor, Servo, Power Nodes)**: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi and Bluetooth, and ESP-NOW support.
-*   **Seeed Studio XIAO ESP32-S3 Sense (AI Node)**: Compact development board based on ESP32-S3 (dual-core Xtensa 32-bit LX7 processor, 240 MHz, 8MB PSRAM, 8MB Flash). Includes an integrated camera module (OV2640) and digital microphone. The on-board camera is allocated for AI tasks (object detection, visual scene analysis, and Q&A assistance), whereas the standalone ESP32-CAM is used strictly for the Web Dashboard live video feed.
-*   **ESP32-CAM (Camera Node)**: Dedicated OV2640 camera interface board, used strictly as a low-power, high-frame-rate video streaming server for dashboard live feeds.
-*   **Arduino Nano 33 BLE Sense (Sensor Node)**: Features a 64 MHz ARM Cortex-M4 (nRF52840) with low power consumption and onboard sensors (IMU, microphone, gesture/light/color sensors).
+*   **ESP32-WROOM-32E (Master, Motor, Servo Nodes)**: Chosen for its dual-core Xtensa 32-bit LX6 processor (240 MHz, 520 KB SRAM, 4MB Flash), built-in Wi-Fi and Bluetooth, and ESP-NOW support.
+*   **ESP32-S3 CAM (AI Node)**: High-performance AI co-processor (dual-core Xtensa 32-bit LX7, 240 MHz, 8MB PSRAM, 8MB Flash) running **Xiaozhi AI Framework**, driving an integrated **SPI TFT Display** for face UI/status, OV2640 camera snapshot processing, and I2S audio streaming.
+*   **ESP32-CAM (Camera Node)**: Dedicated OV2640 camera board serving a high-frame-rate WebSocket video stream to the Web Dashboard.
+*   **Arduino Nano (Sensor Node)**: Compact ATmega328P MCU (16 MHz) reading GPS module NMEA data, MPU6050 6-axis IMU, humidity sensor, and driving a local 16x2 / 20x4 I2C LCD telemetry screen.
+*   **Power Management**: **Not Needed** as an active MCU node; handled passively via BMS circuit and PDB fuses.
 
 ## Comparative Specifications Table
-| Parameter | ESP32-WROOM-32E | XIAO ESP32-S3 Sense | ESP32-CAM | Nano 33 BLE Sense |
+| Parameter | ESP32-WROOM-32E | ESP32-S3 CAM (AI Node) | ESP32-CAM | Arduino Nano (Sensor Node) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Core Architecture** | Tensilica Xtensa LX6 | Tensilica Xtensa LX7 | Tensilica Xtensa LX6 | ARM Cortex-M4F |
-| **Core Speed** | 240 MHz (Dual) | 240 MHz (Dual) | 240 MHz (Dual) | 64 MHz (Single) |
-| **SRAM** | 520 KB | 512 KB internal + 8MB | 520 KB internal + 4MB | 256 KB |
-| **Flash** | 4 MB | 8 MB | 4 MB | 1 MB |
-| **WiFi** | 802.11 b/g/n (150 Mbps)| 802.11 b/g/n (150 Mbps)| 802.11 b/g/n | None |
-| **Bluetooth** | BLE v4.2 BR/EDR | BLE v5.0 / Mesh | BLE v4.2 BR/EDR | BLE v5.0 |
-| **Primary Task** | Real-time Motor/Servos| AI, Speech & Vision AI| Dedicated Video Stream| IMU & Environment |
+| **Core Architecture** | Tensilica Xtensa LX6 | Tensilica Xtensa LX7 | Tensilica Xtensa LX6 | ATmega328P 8-bit |
+| **Core Speed** | 240 MHz (Dual) | 240 MHz (Dual) | 240 MHz (Dual) | 16 MHz (Single) |
+| **SRAM / PSRAM** | 520 KB SRAM | 512 KB SRAM + 8MB PSRAM| 520 KB SRAM + 4MB PSRAM| 2 KB SRAM |
+| **Flash** | 4 MB | 8 MB | 4 MB | 32 KB |
+| **Display Interface** | N/A | Hardware SPI (ST7789 TFT) | N/A | I2C (16x2/20x4 LCD) |
+| **Sensors & Vision** | N/A | OV2640 Camera + I2S Mic | OV2640 Camera | GPS, MPU6050, Humidity |
+| **Primary Task** | Control & Kinematics| Xiaozhi AI, Speech & SPI UI | Web Video Stream | GPS, IMU, Humidity & LCD |
 
 ## Limitations
 *   **Shared Radio**: On the ESP32-WROOM-32E, Wi-Fi and Bluetooth share the same 2.4 GHz antenna. Enabling both simultaneously can cause packet drops.

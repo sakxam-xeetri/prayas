@@ -1315,7 +1315,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1371,7 +1371,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1399,7 +1399,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1596,6 +1596,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4656,19 +4684,19 @@
 *   <strong>Master Node</strong>: Directs and synchronizes all peripheral nodes.
 *   <strong>Motor Node</strong>: Dedicated real-time differential drive control.
 *   <strong>Servo Node</strong>: I2C multi-channel gesture and posture control.
-*   <strong>AI Node</strong>: Edge-to-cloud speech and command processing.
-*   <strong>Camera Node</strong>: Local RTSP/WebSocket video stream.
-*   <strong>Sensor Node</strong>: Multi-sensor reading and telemetry packaging.</p>
+*   <strong>AI Node</strong>: Edge-to-cloud Xiaozhi AI speech processing, snapshot vision, &amp; SPI TFT display UI.
+*   <strong>Camera Node</strong>: Local WebSocket JPEG video stream.
+*   <strong>Sensor Node</strong>: GPS positioning, IMU balance monitoring, humidity sensing, &amp; local I2C LCD readout.</p>
 <h2 id="responsibilities">Responsibilities<a class="headerlink" href="#responsibilities" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Base Mobility</strong>: Safe indoor navigation, obstacle avoidance, and precise motor speed profiling.</li>
 <li><strong>Gestural Interaction</strong>: Human-like arm movements, head tracking, and automated physical signaling.</li>
 <li><strong>Natural Language Interaction</strong>: Real-time voice conversation, cloud LLM-driven intelligence, and tool execution via MCP.</li>
-<li><strong>Environmental Awareness</strong>: Telemetry logs, obstacle detection, and live video streaming.</li>
+<li><strong>Environmental Awareness</strong>: Telemetry logs, GPS location tracking, obstacle detection, and live video streaming.</li>
 </ul>
 <h2 id="technical-baseline">Technical Baseline<a class="headerlink" href="#technical-baseline" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Main Controllers</strong>: ESP32, ESP32-S3, ESP32-CAM, Arduino Nano 33 BLE Sense.</li>
+<li><strong>Main Controllers</strong>: ESP32-WROOM-32E, ESP32-S3 CAM, ESP32-CAM, Arduino Nano ATmega328P.</li>
 <li><strong>Wireless Protocols</strong>: ESP-NOW (inter-node peer-to-peer), MQTT/WebSockets (node-to-cloud).</li>
 <li><strong>Chassis Materials</strong>: 12mm Plywood, 4" PVC, 3D printed PETG/PLA+, Aluminum rod reinforcements, Sunboard.</li>
 <li><strong>Drivetrain</strong>: 4x Johnson 12V 200RPM Geared Motors, 2x BTS7960 Drivers.</li>

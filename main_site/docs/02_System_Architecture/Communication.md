@@ -6,16 +6,17 @@ This document details the communication structure of PRAYAS V1, explaining how t
 ## Communication Channels
 
 ```
-    Cloud VPS / Dashboard <──────────[ MQTT (Wi-Fi) ]──────────> [ Master Node ]
-                                                                     │
-                                                             [ ESP-NOW (2.4 GHz) ]
-                                                                     │
-                                               ┌─────────────────────┼─────────────────────┐
-                                               ▼                     ▼                     ▼
-                                         [ Motor Node ]        [ Servo Node ]       [ Sensor Node ]
+    Cloud VPS / Dashboard <──────────[ MQTT / WS (Wi-Fi) ]───────> [ Master Node & AI Node ]
+                                                                          │
+                                                                 ┌────────┴────────┐
+                                                       [ ESP-NOW ]               [ UART Serial ]
+                                                           │                           │
+                                                    ┌──────┴──────┐             ┌──────┴──────┐
+                                                    ▼             ▼             ▼             ▼
+                                             [ Motor Node ] [ Servo Node ] [ Sensor Node ] [ AI Node ]
 ```
 
----lll
+---
 
 ## 1. Local Communication (ESP-NOW)
 *   **Protocol**: Connectionless, peer-to-peer 802.11 physical layer wireless packets.

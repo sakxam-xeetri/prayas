@@ -41,9 +41,9 @@ PRAYAS V1 Humanoid Robot
 │   └── Mounting Hardware (M3 Standoffs + Screws) ──── Qty: 6 ─── $1.50
 │                                                          Subtotal: $64.00
 │
-├── 4. AI NODE
-│   ├── XIAO ESP32-S3 Sense ───────────────────────── Qty: 1 ─── $16.00
-│   ├── ES8311 I2S Audio Codec Breakout ────────────── Qty: 1 ─── $3.50
+├── 4. AI NODE (ESP32-S3 CAM & SPI DISPLAY)
+│   ├── ESP32-S3 CAM Module (OV2640 + 8MB PSRAM) ──── Qty: 1 ─── $12.00
+│   ├── 2.4" SPI TFT Display (ST7789 240x320) ──────── Qty: 1 ─── $7.50
 │   ├── INMP441 Omnidirectional I2S Microphone ─────── Qty: 1 ─── $2.50
 │   ├── MAX98357A I2S DAC + Class-D Amplifier ──────── Qty: 1 ─── $2.00
 │   ├── Speaker (8Ω, 3W) ──────────────────────────── Qty: 1 ─── $1.50
@@ -58,14 +58,15 @@ PRAYAS V1 Humanoid Robot
 │   └── Mounting Hardware (M2 Screws + Bracket) ────── Qty: 4 ─── $1.00
 │                                                          Subtotal: $11.50
 │
-├── 6. SENSOR NODE
+├── 6. SENSOR NODE (GPS, IMU, HUMIDITY & LCD)
 │   ├── Arduino Nano (ATmega328P) ──────────────────── Qty: 1 ─── $4.50
+│   ├── GPS Receiver Module (NEO-6M + Patch Antenna) ── Qty: 1 ─── $8.00
 │   ├── MPU6050 6-Axis IMU Module ──────────────────── Qty: 1 ─── $2.50
 │   ├── DHT11 Temperature & Humidity Sensor ────────── Qty: 1 ─── $1.00
-│   ├── Jumper Wires (Male-to-Male, 24 AWG) ──────── Qty: 15 ── $1.50
-│   ├── Jumper Wires (Male-to-Female, 24 AWG) ─────── Qty: 10 ── $1.00
+│   ├── 16x2 / 20x4 I2C LCD Display (PCF8574 Adapter) ── Qty: 1 ─── $4.50
+│   ├── Jumper Wires (Male-to-Female, 24 AWG) ─────── Qty: 20 ── $1.50
 │   └── Mounting Hardware (M3 Standoffs + Screws) ──── Qty: 4 ─── $1.00
-│                                                          Subtotal: $11.50
+│                                                          Subtotal: $23.00
 │
 ├── 7. POWER SYSTEM
 │   ├── 3S 6800mAh Li-ion 18650 Battery Pack ──────── Qty: 1 ─── $45.00
@@ -162,12 +163,14 @@ Servo Node
 
 ### AI Node
 ```
+### AI Node
+```
 AI Node
- └── XIAO ESP32-S3 Sense ── Voice & Vision processor
+ └── ESP32-S3 CAM ── Voice, display & vision processor
+      ├── 2.4" SPI TFT Display (ST7789) ── Face UI & AI status
       ├── INMP441 Microphone (I2S) ── Voice input
-      ├── ES8311 DAC (I2S) ── Audio output
-      │    └── MAX98357A Amplifier ── Speaker (8Ω 3W)
-      ├── OV2640 Camera ── Object detection, face tracking
+      ├── MAX98357A Amplifier ── 3W Speaker output
+      ├── OV2640 Camera ── Object detection, visual Q&A
       └── UART to Master Node (GPIO 43/44)
 ```
 
@@ -182,20 +185,18 @@ Camera Node
 ### Sensor Node
 ```
 Sensor Node
- └── Arduino Nano (ATmega328P) ── Data acquisition unit
-      ├── MPU6050 (I2C: SDA=A4, SCL=A5) ── 6-axis IMU
-      │    ├── Accelerometer (X, Y, Z)
-      │    ├── Gyroscope (X, Y, Z)
-      │    ├── Pitch (derived)
-      │    └── Roll (derived)
-      ├── DHT11 (Digital: D2) ── Temperature & Humidity
+ └── Arduino Nano (ATmega328P) ── Environmental & navigation unit
+      ├── GPS Module (UART: RX=D2, TX=D3) ── Satellites, Lat/Lon, Speed
+      ├── MPU6050 (I2C: SDA=A4, SCL=A5) ── 6-axis IMU (Pitch/Roll)
+      ├── DHT11 (Digital: D4) ── Temperature & Humidity
+      ├── 16x2 / 20x4 I2C LCD (SDA=A4, SCL=A5) ── Local telemetry readout
       └── UART TX (D1) → ESP32 Master Node (GPIO 16)
 ```
 
 ### Power System
 ```
 Power System
- └── 3S 6800mAh Li-ion Battery (11.1V nominal)
+ └── 3S 6800mAh Li-ion Battery (11.1V nominal) + 3S Hardware BMS
       ├── 15A Inline Fuse ── Main protection
       ├── Power Switch ── On/Off control
       │
@@ -210,10 +211,10 @@ Power System
            ├── Master ESP32
            ├── Motor ESP32
            ├── Servo ESP32
-           ├── AI Node (XIAO ESP32-S3)
+           ├── AI Node (ESP32-S3 CAM & SPI Display)
            ├── Camera Node (ESP32-CAM)
            ├── Sensor Node (Arduino Nano)
-           └── Sensors (MPU6050, DHT11, IR Sensors)
+           └── Displays & Sensors (SPI TFT, I2C LCD, GPS, MPU6050, DHT11)
 ```
 
 ### Structural & Mechanical

@@ -1382,7 +1382,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1438,7 +1438,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1466,7 +1466,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1663,6 +1663,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4818,7 +4846,7 @@
     </a>
     <p style="font-size: 0.9em; margin-top: 12px; color: #888; text-align: left; line-height: 1.5;">
       <strong>Figure 2: Humanoid Structural & CAD Model (<code>prayas(2).png</code>)</strong><br/>
-      Close-up reference model highlighting the 7x MG995 high-torque servo actuator joint placements (shoulder pitch/roll, elbow flex, neck pan/tilt), Seeed XIAO ESP32-S3 AI Node, head camera, and internal wiring channels.
+      Close-up reference model highlighting the 7x MG995 high-torque servo actuator joint placements (shoulder pitch/roll, elbow flex, neck pan/tilt), ESP32-S3 CAM AI Node, SPI display screen, head camera, and internal wiring channels.
     </p>
   </div>
 
@@ -4828,7 +4856,7 @@
 <h2 id="key-system-capabilities"><svg class="doc-icon doc-icon-accent" viewBox="0 0 24 24"><path d="M11 15H6l7-14v8h5l-7 14v-8Z"/></svg> Key System Capabilities<a class="headerlink" href="#key-system-capabilities" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2m2 4v12h8V6H8m1 2h6v2H9V8m0 4h6v2H9v-2Z"/></svg> Modular Distributed Architecture</strong>: System responsibilities are decentralized across dedicated microcontrollers (Master, Motor, Servo, AI, Camera, Sensor) to guarantee deterministic real-time motion control without CPU contention.</li>
-<li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2A3 3 0 0 0 9 5v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 10 0h2Z"/></svg> Real-Time Conversational AI</strong>: Xiaozhi AI Voice framework integration operating on a dedicated ESP32-S3 Sense node with I2S audio, cloud LLM bidirectional streaming, low-latency Speech-to-Text (STT), and Text-to-Speech (TTS).</li>
+<li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2A3 3 0 0 0 9 5v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 10 0h2Z"/></svg> Real-Time Conversational AI</strong>: Xiaozhi AI Voice framework integration operating on a dedicated ESP32-S3 CAM node with an integrated SPI TFT display, I2S audio, cloud LLM bidirectional streaming, low-latency Speech-to-Text (STT), and Text-to-Speech (TTS).</li>
 <li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M21 9h-6V7a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v2H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V10a1 1 0 0 0-1-1m-8 0h-2V7h2v2Z"/></svg> Multi-DOF Expressive Gestures</strong>: 7 × High-torque MG995 metal gear servos managed via PCA9685 I2C driver for smooth trajectory-planned gestures (greeting, pointing, node status signals).</li>
 <li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-10 10a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8Z"/></svg> High-Torque 4WD Differential Drivetrain</strong>: 4 × Johnson 12V 200 RPM metal DC gear motors driven by dual 43A BTS7960 H-Bridge drivers for high payload capacity and indoor maneuverability.</li>
 <li><strong><svg class="doc-icon doc-icon-primary" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0-9 9a9 9 0 0 0 9 9a9 9 0 0 0 9-9a9 9 0 0 0-9-9m0 16a7 7 0 0 1-7-7a7 7 0 0 1 7-7a7 7 0 0 1 7 7a7 7 0 0 1-7 7Z"/></svg> Dual-Protocol Wireless Communications</strong>: ESP-NOW peer-to-peer mesh for sub-10ms inter-node real-time control commands, paired with Wi-Fi / MQTT for web dashboard telemetry and remote override.</li>
@@ -4882,8 +4910,8 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Voice &amp; AI Processing Unit</strong></td>
-<td style="text-align: left;">Seeed Studio XIAO ESP32-S3 Sense</td>
-<td style="text-align: left;">Embedded PSRAM, I2S Mic, MAX98357A I2S Amp</td>
+<td style="text-align: left;">ESP32-S3 CAM (Xiaozhi AI Framework)</td>
+<td style="text-align: left;">Embedded 8MB PSRAM, 2.4" SPI TFT Display, I2S Mic/Amp</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Visual Vision Sensor</strong></td>
@@ -4893,7 +4921,7 @@
 <tr>
 <td style="text-align: left;"><strong>Telemetry Sensor Controller</strong></td>
 <td style="text-align: left;">Arduino Nano v3 (ATmega328P @ 16 MHz)</td>
-<td style="text-align: left;">HC-SR04 ultrasonic, IR sensors, battery ADC</td>
+<td style="text-align: left;">GPS receiver, MPU6050 IMU, Humidity, 20x4 I2C LCD</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Main Power Cell</strong></td>
@@ -4914,7 +4942,7 @@
     User &lt;--&gt; Web[Web Dashboard Teleoperation Panel]
 
     subgraph AI_Layer ["AI &amp; Vision Processing Layer"]
-        Voice &lt;--&gt; AI_Node[AI Node: XIAO ESP32-S3 Sense]
+        Voice &lt;--&gt; AI_Node[AI Node: ESP32-S3 CAM &amp; SPI Display]
         Cam_Node[Camera Node: ESP32-CAM] --&gt; Web
     end
 

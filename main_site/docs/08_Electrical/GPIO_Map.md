@@ -27,11 +27,37 @@ This document provides a single-point-of-truth GPIO mapping table for all microc
 *   **GPIO 22**: I2C SCL (Connected to PCA9685 SCL)
 *   **GPIO 19**: Hardware Output Enable (OE) (PCA9685 - active LOW)
 
-### 4. AI Voice Node (Seeed Studio XIAO ESP32-S3 Sense)
-*   **GPIO 41 & 42**: Dedicated internal I2S pins for on-board MEMS Microphone (MSM261D3526H1CPM)
-*   **On-board Camera Bus**: Connected to integrated camera module slot via internal GPIOs
-*   **GPIO 2 (Pin D8)**: I2S Serial Data Out (To ES8311 DAC SDIN)
-*   **GPIO 8 (Pin D7)**: I2S Serial Clock (To ES8311 BCLK)
-*   **GPIO 9 (Pin D9)**: I2S Word Select / LRCK (To ES8311 WS)
-*   **GPIO 43 (Pin D1)**: UART Tx (Connected to Master Node GPIO 16)
-*   **GPIO 44 (Pin D2)**: UART Rx (Connected to Master Node GPIO 17)
+### 4. AI Voice & Vision Node (ESP32-S3 CAM)
+*   **SPI Display (2.4" TFT)**:
+    *   **GPIO 15**: SPI SCK (Clock)
+    *   **GPIO 13**: SPI MOSI (Data)
+    *   **GPIO 14**: SPI CS (Chip Select)
+    *   **GPIO 21**: SPI DC (Data/Command)
+    *   **GPIO 47**: Display Reset (RST)
+    *   **GPIO 48**: Backlight Control (BLK)
+*   **I2S Audio System**:
+    *   **GPIO 1**: I2S SDOUT (Speaker Data to MAX98357A / ES8311 DIN)
+    *   **GPIO 2**: I2S BCLK (Bit Clock for Mic & Amp)
+    *   **GPIO 42**: I2S WS (Word Select / LRCK for Mic & Amp)
+    *   **GPIO 41**: I2S SDIN (Microphone Data from INMP441)
+*   **Camera DVP Bus**: Internal DVP camera socket (Y2-Y9, PCLK, VSYNC, HREF, XCLK)
+*   **Master UART**:
+    *   **GPIO 43**: UART TX (To Master Node RX2 GPIO 16)
+    *   **GPIO 44**: UART RX (To Master Node TX2 GPIO 17)
+
+### 5. Sensor Node (Arduino Nano ATmega328P)
+*   **GPS Receiver (NEO-6M / NEO-M8N)**:
+    *   **Pin D2**: SoftwareSerial RX (Connected to GPS TX)
+    *   **Pin D3**: SoftwareSerial TX (Connected to GPS RX)
+*   **Inertial Measurement Unit (MPU6050)**:
+    *   **Pin A4**: I2C SDA
+    *   **Pin A5**: I2C SCL
+*   **Humidity & Temp Sensor (DHT11 / DHT22 / SHT30)**:
+    *   **Pin D4**: Digital Data Line (with 4.7kΩ pull-up resistor to 5V)
+*   **Local Telemetry Display (16x2 / 20x4 I2C LCD)**:
+    *   **Pin A4**: Shared I2C SDA (PCF8574 backpack)
+    *   **Pin A5**: Shared I2C SCL (PCF8574 backpack)
+*   **Master UART Output**:
+    *   **Pin TX (D1)**: Hardware Serial TX (To Master Node UART RX)
+    *   **Pin RX (D0)**: Hardware Serial RX (To Master Node UART TX)
+

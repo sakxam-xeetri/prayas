@@ -1199,7 +1199,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1255,7 +1255,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1283,7 +1283,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1480,6 +1480,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03_Hardware/BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4640,8 +4668,9 @@
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       | PRAYAS MCP Server | (Runs on VPS / Master Node)
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>       +---------┬---------+
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                 │
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                 ├─ Tool Call: drive_robot(0.5, 0.0) ──&gt; Motor Node
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                 └─ Tool Call: get_battery_voltage()  ──&gt; Power Node
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                 ├─ Tool Call: drive_robot(0.5, 0.0) ──────────&gt; Motor Node
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                 ├─ Tool Call: trigger_gesture(&quot;wave&quot;) ───────&gt; Servo Node
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                 └─ Tool Call: get_sensor_telemetry() ─────────&gt; Sensor Node (GPS/IMU/Temp)
 </span></code></pre></div>
 <h2 id="available-mcp-tools">Available MCP Tools<a class="headerlink" href="#available-mcp-tools" title="Permanent link">&para;</a></h2>
 <h3 id="1-drive_robotlinear_x-angular_z">1. <code>drive_robot(linear_x, angular_z)</code><a class="headerlink" href="#1-drive_robotlinear_x-angular_z" title="Permanent link">&para;</a></h3>

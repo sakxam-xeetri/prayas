@@ -60,20 +60,20 @@ This document is the official procurement reference for PRAYAS V1. All component
 
 ---
 
-## Node 4 — AI Node
+## Node 4 — AI Node (ESP32-S3 CAM & SPI Display)
 
-> **Role**: Voice & vision processor. Handles speech input (INMP441 mic), audio output (MAX98357A + speaker), and runs local AI inference.
+> **Role**: Voice, display & vision processor. Runs Xiaozhi AI framework, drives 2.4" SPI TFT face UI, captures camera snapshot vision, handles INMP441 mic input and I2S speaker audio.
 
 | # | Component | Model / Spec | Qty | Unit Price (NPR) | Total (NPR) | Source / Notes |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
-| 1 | XIAO ESP32-S3 Sense | Seeed Studio XIAO ESP32-S3 (camera + mic) | 1 | रू 2,800 | रू 2,800 | Daraz / Seeed official |
-| 2 | ES8311 I2S Audio Codec | Breakout Board | 1 | रू 500 | रू 500 | Daraz / import |
+| 1 | ESP32-S3 CAM Board | ESP32-S3 (OV2640 camera + 8MB PSRAM) | 1 | रू 1,800 | रू 1,800 | Daraz / import |
+| 2 | 2.4" SPI TFT Display | 240x320 ST7789/ILI9341 SPI Color LCD | 1 | रू 1,100 | रू 1,100 | Daraz / electronicshub |
 | 3 | INMP441 I2S Microphone | Omnidirectional MEMS Microphone Module | 1 | रू 400 | रू 400 | Daraz.com.np |
 | 4 | MAX98357A I2S Amplifier | I2S DAC + Class-D Amp Breakout | 1 | रू 350 | रू 350 | Daraz / import |
 | 5 | Speaker (8 Ohm, 3 W) | 40mm Round Speaker | 1 | रू 200 | रू 200 | Local electronics shop |
 | 6 | Jumper Wires (F-to-F) | 24 AWG, 15-piece pack | 1 pk | रू 150 | रू 150 | Any electronics shop |
 | 7 | M2 Screws + Spacers | M2 x 6mm Nylon Spacer Kit | 4 | रू 30 | रू 120 | Hardware store |
-| | | | | **Node 4 Subtotal** | **रू 4,520** | |
+| | | | | **Node 4 Subtotal** | **रू 4,120** | |
 
 ---
 
@@ -93,17 +93,18 @@ This document is the official procurement reference for PRAYAS V1. All component
 
 ## Node 6 — Sensor Node
 
-> **Role**: Data acquisition unit. Reads MPU6050 IMU and DHT11 environmental sensor, transmits data to Master Node via UART.
+> **Role**: Environmental, positioning, & local display unit. Reads GPS, MPU6050 IMU, DHT11 humidity, drives local I2C LCD screen, and streams JSON telemetry to Master Node via UART.
 
 | # | Component | Model / Spec | Qty | Unit Price (NPR) | Total (NPR) | Source / Notes |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
 | 1 | Arduino Nano | ATmega328P, 16 MHz, Clone (CH340) | 1 | रू 650 | रू 650 | Daraz / local shop |
-| 2 | MPU6050 IMU Module | 6-Axis (Accel + Gyro), I2C | 1 | रू 350 | रू 350 | Daraz / electronicshub |
-| 3 | DHT11 Sensor Module | Temperature & Humidity, Digital | 1 | रू 150 | रू 150 | Any electronics shop |
-| 4 | Jumper Wires (M-to-M) | 24 AWG, 15-piece pack | 1 pk | रू 150 | रू 150 | Any electronics shop |
-| 5 | Jumper Wires (M-to-F) | 24 AWG, 10-piece pack | 1 pk | रू 150 | रू 150 | Any electronics shop |
-| 6 | M3 Standoffs + Screws | Brass, 10mm height | 4 | रू 30 | रू 120 | Hardware store |
-| | | | | **Node 6 Subtotal** | **रू 1,570** | |
+| 2 | GPS Receiver Module | NEO-6M / NEO-M8N GPS + Patch Antenna | 1 | रू 1,200 | रू 1,200 | Daraz / electronicshub |
+| 3 | MPU6050 IMU Module | 6-Axis (Accel + Gyro), I2C | 1 | रू 350 | रू 350 | Daraz / electronicshub |
+| 4 | DHT11 Humidity Sensor | Temperature & Humidity, Digital | 1 | रू 150 | रू 150 | Any electronics shop |
+| 5 | I2C Character LCD Display | 16x2 / 20x4 LCD + PCF8574 I2C Adapter | 1 | रू 650 | रू 650 | Daraz.com.np |
+| 6 | Jumper Wires (M-to-F/M-to-M) | 24 AWG, 20-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
+| 7 | M3 Standoffs + Screws | Brass, 10mm height | 4 | रू 30 | रू 120 | Hardware store |
+| | | | | **Node 6 Subtotal** | **रू 3,320** | |
 
 ---
 
@@ -185,6 +186,6 @@ This document is the official procurement reference for PRAYAS V1. All component
 > - **3D Filament**: Daraz, or local 3D print shops in Thamel / Lazimpat
 > - **Mechanical (plywood, PVC)**: Hardware shops near your area
 
-> **Import Notice**: Items like XIAO ESP32-S3, ES8311 codec, and MAX98357A may not be available locally and may require ordering from AliExpress or Amazon. Factor in 2-4 weeks shipping and potential customs duties (up to 15%) for items over NPR 10,000 total value.
+> **Import Notice**: Items like ESP32-S3 CAM, ST7789 SPI TFT display, and MAX98357A may not be available locally and may require ordering from AliExpress or Amazon. Factor in 2-4 weeks shipping and potential customs duties (up to 15%) for items over NPR 10,000 total value.
 
 > **Minimum Build Order**: For a functional prototype, prioritize Nodes 1, 2, 6, and 7 first. This gives you a working motorized base with sensor feedback. Estimated minimum build cost: approximately NPR 25,000.

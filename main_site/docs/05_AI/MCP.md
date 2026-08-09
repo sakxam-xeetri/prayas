@@ -17,8 +17,9 @@ The Model Context Protocol (MCP) defines a client-server architecture where the 
        | PRAYAS MCP Server | (Runs on VPS / Master Node)
        +---------┬---------+
                  │
-                 ├─ Tool Call: drive_robot(0.5, 0.0) ──> Motor Node
-                 └─ Tool Call: get_battery_voltage()  ──> Power Node
+                 ├─ Tool Call: drive_robot(0.5, 0.0) ──────────> Motor Node
+                 ├─ Tool Call: trigger_gesture("wave") ───────> Servo Node
+                 └─ Tool Call: get_sensor_telemetry() ─────────> Sensor Node (GPS/IMU/Temp)
 ```
 
 ## Available MCP Tools

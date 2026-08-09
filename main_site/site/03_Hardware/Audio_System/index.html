@@ -1202,7 +1202,7 @@
   <span class="md-ellipsis">
     
   
-    AI Node
+    AI Node (ESP32-S3 CAM & SPI Display)
   
 
     
@@ -1258,7 +1258,7 @@
   <span class="md-ellipsis">
     
   
-    Sensor Node
+    Sensor Node (GPS, IMU, LCD)
   
 
     
@@ -1286,7 +1286,7 @@
   <span class="md-ellipsis">
     
   
-    Power Node
+    Power Node (Not Needed)
   
 
     
@@ -1574,6 +1574,34 @@
     
   
     Bill of Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BOM/BOM_NodeWise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node-Wise Bill of Materials
   
 
     
@@ -4596,9 +4624,9 @@
 <p>This document details the audio hardware configuration used for voice recording and playback on the AI Node.</p>
 <h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>INMP441 Omnidirectional Microphone</strong>: Digital microphone with a 24-bit I2S interface, providing high SNR (61 dBA) and low power consumption. (Note: The Seeed Studio XIAO ESP32-S3 Sense on-board microphone is the primary voice input, but the external INMP441 can be wired via I2S).</li>
+<li><strong>INMP441 Omnidirectional Microphone</strong>: Digital MEMS microphone with a 24-bit I2S interface, providing high SNR (61 dBA) and low power consumption for clear voice input to the ESP32-S3 CAM.</li>
 <li>
-<p><strong>MAX98357A Low-Power Mono DAC/Amplifier</strong>: Decodes digital I2S audio streams from the ESP32-S3 and directly drives the 3W speaker. This combines the DAC and class-D amplifier into a single high-efficiency module — <a href="https://www.analog.com/media/en/technical-documentation/data-sheets/max98357a-max98357b.pdf">MAX98357A Datasheet Reference</a>.</p>
+<p><strong>MAX98357A Low-Power Mono DAC/Amplifier</strong>: Decodes digital I2S audio streams from the ESP32-S3 CAM and directly drives the 3W speaker. This combines the DAC and class-D amplifier into a single high-efficiency module — <a href="https://www.analog.com/media/en/technical-documentation/data-sheets/max98357a-max98357b.pdf">MAX98357A Datasheet Reference</a>.</p>
 <p><img alt="MAX98357A Audio DAC/Amp" src="../../assets/img/max5968audio%20dac.jpg" style="display: block; margin: 0 auto;" width="300" /></p>
 </li>
 <li>
@@ -4606,8 +4634,8 @@
 </li>
 </ol>
 <h2 id="schematic-layout">Schematic Layout<a class="headerlink" href="#schematic-layout" title="Permanent link">&para;</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> [ Seeed Studio XIAO S3 ] ─── I2S In (Digital) ───&gt; [ MSM261D3526H1CPM On-board Mic ]
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> [ Seeed Studio XIAO S3 ] ─── I2S Out (Digital) ──&gt; [ MAX98357A DAC/Amplifier ] ──(Analog)──&gt; [ 3W Speaker ]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a> [ INMP441 I2S Mic ] ───────── I2S In (Digital) ───&gt; [ ESP32-S3 CAM AI Node ]
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> [ ESP32-S3 CAM AI Node ] ──── I2S Out (Digital) ──&gt; [ MAX98357A DAC/Amplifier ] ──(Analog)──&gt; [ 3W Speaker ]
 </span></code></pre></div>
 <h2 id="performance-specs">Performance Specs<a class="headerlink" href="#performance-specs" title="Permanent link">&para;</a></h2>
 <ul>
