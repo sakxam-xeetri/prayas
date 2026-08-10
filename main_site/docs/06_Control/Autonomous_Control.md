@@ -41,7 +41,7 @@ Autonomous routines (obstacle avoidance, environmental monitoring, wander behavi
 | :--- | :--- | :--- | :--- |
 | **MPU6050 IMU** | Sensor Node (`0x04`) | Pitch, Roll, Yaw rate ($10 \text{ Hz}$) | Tilting/tip-over detection & inclination compensation |
 | **DHT11 Sensor** | Sensor Node (`0x04`) | Enclosure Temp & Humidity ($1 \text{ Hz}$) | Thermal protection monitoring |
-| **4x E18-D80NK IR** | Motor Node (`0x02`) | Digital Obstacle Trip Flags | Zero-latency local hardware collision prevention |
+| **4x HC-SR04 Ultrasonic** | Motor Node (`0x02`) | Distance Echo Signals (FL, FR, RL, RR) | Zero-latency local hardware collision prevention |
 | **OV2640 Camera** | AI Node (`0x05`) | Visual Q&A / Object Frames | Visual obstacle classification & human detection |
 
 ---

@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRAYAS CYRUS - Distributed Multi-Node Communication Architecture</title>
+  <meta name="description"
+    content="Comprehensive technical documentation and interactive simulator for PRAYAS CYRUS distributed multi-node communication, ESP-NOW mesh network, 5-input control architecture, and local safety systems.">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Main CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Custom Interactive Styles for Communication Architecture Site */
+    .comm-hero {
+      background: linear-gradient(135deg, #09090b 0%, #1e1b4b 50%, #0f172a 100%);
+      color: #ffffff;
+      padding: 40px;
+      margin-bottom: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .comm-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .comm-axiom-banner {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .axiom-card {
+      flex: 1;
+      min-width: 240px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 16px 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .axiom-card .title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #818cf8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .axiom-card .desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+    }
+
+    /* Diagram Canvas */
+    .mesh-container {
+      background: #09090b;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .mesh-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #27272a;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mesh-title {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mesh-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      position: relative;
+    }
+
+    .node-box {
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      padding: 16px;
+      color: #f4f4f5;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .node-box.active-pulse {
+      border-color: #6366f1;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .node-box.active-success {
+      border-color: #10b981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .node-box.active-warning {
+      border-color: #f59e0b;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+
+    .node-box.active-danger {
+      border-color: #ef4444;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .node-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #a1a1aa;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .node-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .node-subtext {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      line-height: 1.4;
+    }
+
+    .node-status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    /* Simulation Control Buttons */
+    .sim-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #27272a;
+    }
+
+    .sim-btn {
+      background: #27272a;
+      border: 1px solid #3f3f46;
+      color: #f4f4f5;
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .sim-btn:hover {
+      background: #3f3f46;
+      border-color: #52525b;
+      color: #ffffff;
+    }
+
+    .sim-btn.btn-danger {
+      background: #7f1d1d;
+      border-color: #991b1b;
+      color: #fecaca;
+    }
+
+    .sim-btn.btn-danger:hover {
+      background: #991b1b;
+      color: #ffffff;
+    }
+
+    /* Terminal Log Window */
+    .terminal-box {
+      background: #000000;
+      border: 1px solid #27272a;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #38bdf8;
+      padding: 16px;
+      height: 220px;
+      overflow-y: auto;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+
+    .log-time {
+      color: #64748b;
+    }
+
+    .log-src {
+      color: #a855f7;
+    }
+
+    .log-cmd {
+      color: #f59e0b;
+    }
+
+    .log-ok {
+      color: #10b981;
+    }
+
+    .log-err {
+      color: #ef4444;
+    }
+
+    /* Priority Grid */
+    .priority-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .priority-table th,
+    .priority-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    .priority-table th {
+      background: var(--bg-card-alt);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .priority-rank {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 4px 8px;
+      background: var(--accent-dark);
+      color: #ffffff;
+      font-size: 0.75rem;
+    }
+
+    /* Packet Inspector */
+    .packet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .packet-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+    }
+
+    .packet-input-group label {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .packet-input-group input,
+    .packet-input-group select {
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+    }
+
+    .code-block {
+      background: #09090b;
+      color: #e2e8f0;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      border: 1px solid #27272a;
+    }
+
+    .nav-pills-wrap {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .nav-pill-btn {
+      padding: 10px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      border-color: var(--accent-dark);
+      color: var(--accent-dark);
+    }
+
+    .nav-pill-btn.active {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+      color: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Header Section -->
+    <header style="padding-bottom: 24px;">
+      <div class="top-badge-wrapper"
+        style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="top-badge">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width:14px; height:14px; stroke: #6366f1;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a10 10 0 0114.142 0M1.757 8.929a15 15 0 0120.486 0" />
+            </svg>
+            PRAYAS V1 ROBOTICS • NODE 00: DISTRIBUTED NETWORK &amp; COMMUNICATION HUB
+          </span>
+          <span class="top-badge cloud-badge" style="background: #eef2ff; border-color: #c7d2fe; color: #4338ca;">
+            <span class="cloud-dot online"
+              style="background: #6366f1; box-shadow: 0 0 8px rgba(99,102,241,0.6);"></span>
+            ESP-NOW MESH &amp; MQTT HYBRID PROTOCOL ACTIVE
+          </span>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="index.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            BOM MANAGER
+          </a>
+          <a href="ai_node.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #0284c7; border-color: #0369a1; color: white;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: white;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            AI NODE MANUAL
+          </a>
+          <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #be185d; border-color: #9d174d; color: white;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: white;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 9a2 2 0 012-2h0.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            </svg>
+            ESP32-S3-CAM PAGE
+          </a>
+          <a href="PRAYAS_Funding_Proposal.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #059669; border-color: #047857; color: white;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: white;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            PROPOSAL
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Communication Hero Banner -->
+    <div class="comm-hero">
+      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em;">PRAYAS CYRUS
+        Communication &amp; Network Architecture</h1>
+      <p style="font-size: 1.1rem; color: #94a3b8; max-width: 900px; line-height: 1.6;">
+        A high-performance, fault-tolerant distributed multi-node robotics communication platform. Powered by an
+        independent <strong style="color: #818cf8;">ESP-NOW local wireless mesh</strong>, a central <strong
+          style="color: #38bdf8;">Master Control Manager</strong>, unified 5-input command routing, and immediate
+        <strong style="color: #f43f5e;">local safety overrides</strong>.
+      </p>
+
+      <div class="comm-axiom-banner">
+        <div class="axiom-card">
+          <div class="title">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px; height:16px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            Core Axiom #1
+          </div>
+          <div class="desc"><strong>Master decides WHAT. Node decides HOW.</strong> Node-level intelligence handles local
+            motor &amp; servo execution.</div>
+        </div>
+
+        <div class="axiom-card">
+          <div class="title" style="color: #f43f5e;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px; height:16px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Core Axiom #2
+          </div>
+          <div class="desc"><strong>Safety remains LOCAL.</strong> Motor Node hardware IR sensors override Master
+            commands instantly to prevent collisions.</div>
+        </div>
+
+        <div class="axiom-card">
+          <div class="title" style="color: #38bdf8;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:16px; height:16px;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Core Axiom #3
+          </div>
+          <div class="desc"><strong>Sub-10ms ESP-NOW.</strong> Local wireless mesh operates completely offline without
+            requiring an external Wi-Fi router.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Interactive Network Mesh Simulator -->
+    <div class="mesh-container">
+      <div class="mesh-header">
+        <div class="mesh-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:20px; height:20px; stroke:#818cf8;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+          </svg>
+          INTERACTIVE MULTI-NODE SIGNAL FLOW SIMULATOR
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; font-family: var(--font-mono); font-size: 0.8rem;">
+          <span style="color: #10b981;"><span class="node-status-dot"></span>MESH ONLINE</span>
+          <span style="color: #94a3b8;">LATENCY: <strong id="simLatency" style="color: #38bdf8;">3.2 ms</strong></span>
+          <span style="color: #94a3b8;">ACTIVE PROTOCOL: <strong style="color: #818cf8;">ESP-NOW 2.4GHz</strong></span>
+        </div>
+      </div>
+
+      <div class="mesh-grid">
+        <!-- 5 INPUT NODES (Cols 1-4) -->
+        <div style="grid-column: span 4; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #a1a1aa; font-weight: 700;">[INPUT
+            LAYER - 5 CONTROL SOURCES]</div>
+
+          <div class="node-box" id="node-input-voice">
+            <span class="node-tag">1. VOICE / AI</span>
+            <div class="node-name">ESP32-S3-CAM AI Node</div>
+            <div class="node-subtext">Mic + I2S Audio + Xiaozhi VQA LLM ➔ High-Level Command</div>
+          </div>
+
+          <div class="node-box" id="node-input-remote">
+            <span class="node-tag">2. REMOTE INTERNET</span>
+            <div class="node-name">Remote Web Dashboard</div>
+            <div class="node-subtext">Internet ➔ HTTPS/WebSocket ➔ VPS ➔ MQTT Broker</div>
+          </div>
+
+          <div class="node-box" id="node-input-pad">
+            <span class="node-tag">3. PHYSICAL CONTROLLER</span>
+            <div class="node-name">2.4GHz Wireless Gamepad</div>
+            <div class="node-subtext">Low-latency direct input receiver to Master</div>
+          </div>
+
+          <div class="node-box" id="node-input-web">
+            <span class="node-tag">4. LOCAL WEB UI</span>
+            <div class="node-name">ESP32 Hosted AP / Wi-Fi</div>
+            <div class="node-subtext">Phone/Laptop ➔ HTTP/WebSocket direct to Master</div>
+          </div>
+
+          <div class="node-box" id="node-input-auto">
+            <span class="node-tag">5. AUTONOMOUS LOGIC</span>
+            <div class="node-name">Nav &amp; Sensor Fusion</div>
+            <div class="node-subtext">MPU6050 + IR Sensors ➔ Wandering / Avoidance State</div>
+          </div>
+        </div>
+
+        <!-- MASTER CENTRAL COORDINATOR (Cols 5-8) -->
+        <div style="grid-column: span 4; display: flex; flex-direction: column; justify-content: center;">
+          <div
+            style="font-family: var(--font-mono); font-size: 0.75rem; color: #818cf8; font-weight: 700; margin-bottom: 10px;">
+            [COORDINATOR LAYER - NODE 0x01]</div>
+          <div class="node-box" id="node-master" style="padding: 24px; border-width: 2px;">
+            <span class="node-tag" style="color: #818cf8; font-size: 0.8rem;">CENTRAL COMMAND COORDINATOR</span>
+            <div class="node-name" style="font-size: 1.2rem; color: #818cf8;">PRAYAS MASTER ESP32</div>
+            <div style="margin-top: 8px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">
+              • <strong>Command Validation:</strong> Standardizes all inputs<br>
+              • <strong>Priority System:</strong> Emergency > Safety > Gamepad > Web<br>
+              • <strong>Mode Manager:</strong> MANUAL, VOICE, AUTO, SAFE<br>
+              • <strong>Heartbeat Watchdog:</strong> 500ms Node Monitor<br>
+              • <strong>ESP-NOW Packet Router:</strong> Broadcasts to Mesh
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBSYSTEM SUBSYSTEM NODES (Cols 9-12) -->
+        <div style="grid-column: span 4; display: flex; flex-direction: column; gap: 10px;">
+          <div style="font-family: var(--font-mono); font-size: 0.75rem; color: #10b981; font-weight: 700;">[ROBOT
+            EXECUTION MESH - ESP-NOW]</div>
+
+          <div class="node-box" id="node-sub-motor">
+            <span class="node-tag" style="color: #f43f5e;">NODE 0x02 • MOTOR NODE (ESP32)</span>
+            <div class="node-name">4x Motors + BTS7960</div>
+            <div class="node-subtext">IR Obstacle Sensors + INA219 Current Monitor. <strong style="color: #f43f5e;">Local
+                Hardware Safety Override</strong> active.</div>
+          </div>
+
+          <div class="node-box" id="node-sub-servo">
+            <span class="node-tag" style="color: #38bdf8;">NODE 0x03 • SERVO NODE (ESP32)</span>
+            <div class="node-name">7x MG995 + PCA9685</div>
+            <div class="node-subtext">Executes 3-level poses &amp; smooth workflows: <code
+                style="color: #38bdf8;">HAND_DOWN</code>, <code style="color: #38bdf8;">WAVE</code>, <code
+                style="color: #38bdf8;">GREETING</code>.</div>
+          </div>
+
+          <div class="node-box" id="node-sub-sensor">
+            <span class="node-tag" style="color: #f59e0b;">NODE 0x04 • SENSOR NODE (NANO)</span>
+            <div class="node-name">MPU6050 + DHT11</div>
+            <div class="node-subtext">Telemetry producer (IMU motion, Temp, Humidity). Sends state back to Master over
+              I2C/Serial.</div>
+          </div>
+
+          <div class="node-box" id="node-sub-display">
+            <span class="node-tag" style="color: #a855f7;">NODE 0x06 • DISPLAY NODE</span>
+            <div class="node-name">TFT LCD Status Panel</div>
+            <div class="node-subtext">Real-time status, battery voltage, face expressions &amp; system alerts.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulation Action Buttons -->
+      <div class="sim-controls">
+        <button class="sim-btn" onclick="triggerSimulation('voice_forward')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke:#38bdf8;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+          </svg>
+          Simulate Voice: "Move Forward"
+        </button>
+
+        <button class="sim-btn" onclick="triggerSimulation('gamepad_wave')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke:#a855f7;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+          </svg>
+          Simulate Gamepad: "Wave Pose"
+        </button>
+
+        <button class="sim-btn" onclick="triggerSimulation('remote_mqtt')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke:#818cf8;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z" />
+          </svg>
+          Simulate VPS/MQTT: "Look Left"
+        </button>
+
+        <button class="sim-btn" onclick="triggerSimulation('obstacle_override')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke:#f59e0b;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          Simulate Safety: IR Obstacle Detected!
+        </button>
+
+        <button class="sim-btn btn-danger" onclick="triggerSimulation('emergency_stop')">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke:white;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+          </svg>
+          EMERGENCY STOP (Priority 1)
+        </button>
+      </div>
+
+      <!-- Real-time Packet Console Log -->
+      <div class="terminal-box" id="simTerminal">
+        <div class="log-line"><span class="log-time">[00:00:00.000]</span> SYSTEM INIT: PRAYAS CYRUS Communication
+          Mesh initialized. ESP-NOW channel 6 bound. Master node 0x01 listening...</div>
+      </div>
+    </div>
+
+    <!-- Navigation Pills for Technical Sections -->
+    <div class="nav-pills-wrap">
+      <button class="nav-pill-btn active" onclick="switchSection('sec-inputs', this)">1. THE 5 CONTROL SOURCES</button>
+      <button class="nav-pill-btn" onclick="switchSection('sec-master', this)">2. MASTER CONTROL MANAGER &amp;
+        PRIORITY</button>
+      <button class="nav-pill-btn" onclick="switchSection('sec-espnow', this)">3. ESP-NOW MESH &amp; SUBSYSTEM
+        NODES</button>
+      <button class="nav-pill-btn" onclick="switchSection('sec-stack', this)">4. HYBRID PROTOCOL STACK</button>
+      <button class="nav-pill-btn" onclick="switchSection('sec-packet', this)">5. PACKET BUILDER &amp; SPEC</button>
+      <button class="nav-pill-btn" onclick="switchSection('sec-safety', this)">6. SAFETY &amp; WATCHDOGS</button>
+    </div>
+
+    <!-- SECTION 1: THE 5 CONTROL SOURCES -->
+    <div id="sec-inputs" class="tech-section">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">1. Unified
+        5-Input Control System Architecture</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        Rather than creating separate control paths for voice, web, or remote control, PRAYAS routes <strong>all 5
+          input methods into a single Master Command Manager</strong> running on the Master ESP32. Each control method
+        converts user intent into a standardized high-level PRAYAS command packet.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        <div
+          style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #0284c7;">A. Voice / AI Control</h3>
+            <span
+              style="font-family: var(--font-mono); font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 2px 8px;">ESP32-S3-CAM</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            The ESP32-S3-CAM AI Node listens via microphone and I2S audio interface, running Xiaozhi VQA LLM. When a speech
+            command like <em>"Look left and wave"</em> is parsed, the AI node generates high-level PRAYAS commands (<code
+              style="background: var(--bg-card-alt); padding: 2px 4px;">CMD=HEAD_LEFT</code>) and transmits them over
+            ESP-NOW to the Master.
+          </p>
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+            Flow: Mic ➔ I2S Audio ➔ AI Node ➔ High-Level Command ➔ ESP-NOW ➔ Master
+          </div>
+        </div>
+
+        <div
+          style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #4338ca;">B. Remote Internet Control</h3>
+            <span
+              style="font-family: var(--font-mono); font-size: 0.75rem; background: #e0e7ff; color: #3730a3; padding: 2px 8px;">VPS
+              + MQTT</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            Allows controlling PRAYAS from anywhere across the globe. Remote web browser sends commands via HTTPS/WebSocket to a
+            Cloud VPS hosting an MQTT broker (<code
+              style="background: var(--bg-card-alt); padding: 2px 4px;">prayas/cmd/motor</code>). The Master ESP32 subscribes to the
+            topic over Wi-Fi and executes the commands.
+          </p>
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+            Flow: Web Dashboard ➔ HTTPS ➔ VPS ➔ MQTT Broker ➔ Wi-Fi ➔ Master ESP32
+          </div>
+        </div>
+
+        <div
+          style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #7e22ce;">C. Physical / Gamepad Controller</h3>
+            <span
+              style="font-family: var(--font-mono); font-size: 0.75rem; background: #f3e8ff; color: #6b21a8; padding: 2px 8px;">Direct
+              2.4GHz</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            Provides ultra-low latency direct joystick control for field operation. The wireless receiver connects directly to
+            the Master ESP32 GPIO/UART. Requires zero internet access or external routers, ensuring instantaneous responsiveness.
+          </p>
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+            Flow: Gamepad Joystick ➔ Receiver ➔ Direct Serial/GPIO ➔ Master ESP32
+          </div>
+        </div>
+
+        <div
+          style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #047857;">D. Local Web Control UI</h3>
+            <span
+              style="font-family: var(--font-mono); font-size: 0.75rem; background: #ecfdf5; color: #065f46; padding: 2px 8px;">ESP32
+              Hosted AP</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            The Master ESP32 hosts its own local SoftAP Wi-Fi network and web server. Phones or laptops connect directly to <code
+              style="background: var(--bg-card-alt); padding: 2px 4px;">192.168.4.1</code> to access an interactive web dashboard with
+            joysticks, pose triggers, and live telemetry over WebSocket.
+          </p>
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+            Flow: Mobile Browser ➔ Local Wi-Fi ➔ ESP32 WebServer/WebSocket ➔ Master
+          </div>
+        </div>
+
+        <div
+          style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: #b45309;">E. Autonomous Wandering Logic</h3>
+            <span
+              style="font-family: var(--font-mono); font-size: 0.75rem; background: #fef3c7; color: #92400e; padding: 2px 8px;">Sensor
+              Fusion</span>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            When set to Autonomous Mode, the Master decision algorithm computes navigation paths based on real-time IMU data from the
+            Sensor Node (MPU6050), obstacle readings, and vision prompts from the AI camera node.
+          </p>
+          <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted);">
+            Flow: MPU6050 / Camera ➔ Sensor Node ➔ Decision Engine ➔ Master
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: MASTER CONTROL MANAGER & PRIORITY -->
+    <div id="sec-master" class="tech-section" style="display: none;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">2. Master
+        Control Manager &amp; Priority Hierarchy</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        To prevent conflicting inputs (e.g. AI attempting to walk forward while a physical controller sends a Stop
+        command), the Master ESP32 executes a strict <strong>Command Priority Engine</strong> and maintains global system
+        operating modes.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">Command Priority Engine</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+            Higher priority commands immediately preempt lower priority commands. Safety and physical controls always take precedence over voice and autonomous routines.
+          </p>
+
+          <table class="priority-table">
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Source / Event</th>
+                <th>Behavior &amp; Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="priority-rank" style="background: #ef4444;">PRIORITY 1</span></td>
+                <td><strong>EMERGENCY STOP</strong></td>
+                <td>Immediate hard stop across all 4 motors and lock servos into safe resting pose.</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #f97316;">PRIORITY 2</span></td>
+                <td><strong>LOCAL IR SAFETY</strong></td>
+                <td>Motor Node IR hardware sensor detects obstacle &lt;15cm. Overrides Master movement.</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #7e22ce;">PRIORITY 3</span></td>
+                <td><strong>PHYSICAL GAMEPAD</strong></td>
+                <td>Direct 2.4GHz controller manual joystick input preempts cloud and web commands.</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #4338ca;">PRIORITY 4</span></td>
+                <td><strong>REMOTE MQTT / VPS</strong></td>
+                <td>Internet remote web commands (joystick, mode toggle, pose triggers).</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #047857;">PRIORITY 5</span></td>
+                <td><strong>LOCAL WEB UI</strong></td>
+                <td>Local AP Wi-Fi control dashboard user interaction.</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #0284c7;">PRIORITY 6</span></td>
+                <td><strong>VOICE / AI NODE</strong></td>
+                <td>Xiaozhi AI high-level spoken motion commands (e.g. "Look right").</td>
+              </tr>
+              <tr>
+                <td><span class="priority-rank" style="background: #64748b;">PRIORITY 7</span></td>
+                <td><strong>AUTONOMOUS MODE</strong></td>
+                <td>Lowest priority. Autonomous wandering and obstacle avoidance routines.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">PRAYAS System Operating Modes</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 16px;">
+            The Master maintains global state. Only authorized inputs for the active mode are accepted for motor execution.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div
+              style="padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-family: var(--font-mono); color: var(--accent-dark);">MODE_MANUAL</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Direct manual gamepad control active.</div>
+              </div>
+              <span
+                style="font-family: var(--font-mono); font-size: 0.75rem; background: #f1f5f9; padding: 4px 8px;">DEFAULT</span>
+            </div>
+
+            <div
+              style="padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-family: var(--font-mono); color: #0284c7;">MODE_VOICE</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Voice &amp; AI natural language command parsing enabled.</div>
+              </div>
+              <span
+                style="font-family: var(--font-mono); font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 4px 8px;">AI
+                ACTIVE</span>
+            </div>
+
+            <div
+              style="padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-family: var(--font-mono); color: #b45309;">MODE_AUTONOMOUS</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Autonomous obstacle avoidance and path planning.</div>
+              </div>
+              <span
+                style="font-family: var(--font-mono); font-size: 0.75rem; background: #fef3c7; color: #92400e; padding: 4px 8px;">AUTO</span>
+            </div>
+
+            <div
+              style="padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="font-family: var(--font-mono); color: #ef4444;">MODE_EMERGENCY_STOP</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">All actuators disabled. System locked until reset.</div>
+              </div>
+              <span
+                style="font-family: var(--font-mono); font-size: 0.75rem; background: #fee2e2; color: #991b1b; padding: 4px 8px;">LOCKED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: ESP-NOW MESH & SUBSYSTEM NODES -->
+    <div id="sec-espnow" class="tech-section" style="display: none;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">3. ESP-NOW
+        Wireless Mesh &amp; Subsystem Execution</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        ESP-NOW is a connectionless 2.4GHz wireless protocol developed by Espressif. It allows quick, low-latency,
+        peer-to-peer packet transmission (sub-10ms latency) without requiring a Wi-Fi router.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: #f43f5e;">NODE 0x02 •
+            MOTOR NODE (ESP32)</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin: 8px 0;">4x Johnson Motors + BTS7960</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            Receives movement commands (<code style="background: var(--bg-card-alt); padding: 2px 4px;">FORWARD</code>,
+            <code style="background: var(--bg-card-alt); padding: 2px 4px;">BACKWARD</code>, <code
+              style="background: var(--bg-card-alt); padding: 2px 4px;">SPEED_CONTROL</code>). Manages PWM and direction
+            signals locally. Monitors INA219 current draw.
+          </p>
+          <div
+            style="background: #fef2f2; border: 1px solid #fecaca; padding: 10px; font-size: 0.82rem; color: #991b1b;">
+            <strong>Local Obstacle Protection:</strong> Even if Master sends <code style="color:#991b1b;">FORWARD</code>,
+            the Motor Node checks front IR sensors locally. If obstacle detected, it immediately halts motors and replies
+            <code style="color:#991b1b;">OBSTACLE_STOP</code> to Master.
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: #38bdf8;">NODE 0x03 •
+            SERVO NODE (ESP32)</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin: 8px 0;">7x MG995 Servos + PCA9685</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            Instead of receiving raw individual servo angles on every tick, the Servo Node stores 3-tier command abstractions:
+          </p>
+          <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 18px; line-height: 1.5;">
+            <li><strong>Level 1 (Position):</strong> Servo ID + Angle (Calibration)</li>
+            <li><strong>Level 2 (Pose):</strong> <code style="background: var(--bg-card-alt);">REST</code>, <code
+                style="background: var(--bg-card-alt);">HAND_DOWN</code>, <code
+                style="background: var(--bg-card-alt);">HEAD_CENTER</code></li>
+            <li><strong>Level 3 (Workflow):</strong> Multi-step smooth motion sequences (<code
+                style="background: var(--bg-card-alt);">WAVE</code>, <code
+                style="background: var(--bg-card-alt);">GREETING</code>).</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: #f59e0b;">NODE 0x04 •
+            SENSOR NODE (NANO)</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin: 8px 0;">MPU6050 IMU + DHT11</h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
+            Provides continuous telemetry to Master over I2C/Serial. Transmits accelerometer/gyroscope motion orientation, tilt angle, ambient temperature, and humidity readings.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+            Telemetry Payload: IMU Pitch/Roll, Temp °C, Humidity %, Motion Delta
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: HYBRID PROTOCOL STACK -->
+    <div id="sec-stack" class="tech-section" style="display: none;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">4. Hybrid
+        Communication Protocol Stack &amp; Layering</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        Every protocol in PRAYAS CYRUS is assigned a specific operational layer. High-level web protocols manage internet connectivity, ESP-NOW handles low-latency robot messaging, and peripheral buses manage hardware components.
+      </p>
+
+      <table class="priority-table" style="margin-bottom: 24px;">
+        <thead>
+          <tr>
+            <th>Protocol</th>
+            <th>PRAYAS Operational Layer</th>
+            <th>Primary Purpose &amp; Communication Path</th>
+            <th>Latency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong style="color: #818cf8; font-family: var(--font-mono);">ESP-NOW</strong></td>
+            <td>Robot Internal Mesh</td>
+            <td>Master ↔ Motor / Servo / AI Nodes. Real-time motion control, low-latency telemetry.</td>
+            <td>&lt; 5 ms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: #38bdf8; font-family: var(--font-mono);">MQTT</strong></td>
+            <td>Internet Telemetry &amp; Remote</td>
+            <td>Cloud VPS ↔ Master ESP32. Asynchronous status updates and remote internet commands.</td>
+            <td>50–150 ms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: #10b981; font-family: var(--font-mono);">WebSocket</strong></td>
+            <td>Live Control Channel</td>
+            <td>Browser ↔ VPS / Master. Real-time joystick streaming &amp; live telemetry dashboard graphs.</td>
+            <td>15–30 ms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: #a855f7; font-family: var(--font-mono);">HTTPS / REST</strong></td>
+            <td>Web Management Layer</td>
+            <td>Browser ➔ VPS API. Dashboard loading, user authentication, configuration &amp; OTA updates.</td>
+            <td>100–300 ms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: #f59e0b; font-family: var(--font-mono);">I2C Bus</strong></td>
+            <td>Hardware Peripheral</td>
+            <td>ESP32 ↔ PCA9685 Servo Driver, INA219 Current Sensor, MPU6050 IMU.</td>
+            <td>&lt; 1 ms</td>
+          </tr>
+          <tr>
+            <td><strong style="color: #ec4899; font-family: var(--font-mono);">I2S Audio</strong></td>
+            <td>AI Audio Hardware</td>
+            <td>ESP32-S3-CAM ↔ INMP441 Microphone &amp; MAX98357A Audio Amplifier. High-fidelity audio stream.</td>
+            <td>Direct DMA</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 5: PACKET BUILDER & SPEC -->
+    <div id="sec-packet" class="tech-section" style="display: none;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">5. ESP-NOW Binary
+        Packet Specification &amp; Generator</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        Instead of transmitting slow string representations, PRAYAS nodes exchange compact binary <code
+          style="background: var(--bg-card-alt); padding: 2px 6px;">PrayasPacket</code> structures over ESP-NOW for maximum speed and memory efficiency.
+      </p>
+
+      <div class="packet-grid">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">Interactive Packet Generator</h3>
+
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div class="packet-input-group">
+              <label>Source Node ID:</label>
+              <select id="pktSrc" onchange="updatePacketPreview()">
+                <option value="0x01">0x01 - Master ESP32</option>
+                <option value="0x02">0x02 - Motor Node</option>
+                <option value="0x03">0x03 - Servo Node</option>
+                <option value="0x04">0x04 - Sensor Node</option>
+                <option value="0x05">0x05 - AI Node</option>
+              </select>
+            </div>
+
+            <div class="packet-input-group">
+              <label>Destination Node ID:</label>
+              <select id="pktDst" onchange="updatePacketPreview()">
+                <option value="0x02">0x02 - Motor Node</option>
+                <option value="0x03">0x03 - Servo Node</option>
+                <option value="0x01">0x01 - Master ESP32</option>
+              </select>
+            </div>
+
+            <div class="packet-input-group">
+              <label>Command Code:</label>
+              <select id="pktCmd" onchange="updatePacketPreview()">
+                <option value="0x10">0x10 - MOVE_FORWARD</option>
+                <option value="0x11">0x11 - MOVE_BACKWARD</option>
+                <option value="0x20">0x20 - WORKFLOW_HAND_DOWN</option>
+                <option value="0x21">0x21 - WORKFLOW_WAVE</option>
+                <option value="0xFF">0xFF - EMERGENCY_STOP</option>
+              </select>
+            </div>
+
+            <div class="packet-input-group">
+              <label>Parameter Value 1 (Speed / Servo Angle):</label>
+              <input type="number" id="pktVal1" value="180" min="0" max="255" oninput="updatePacketPreview()">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px;">C++ Binary Struct Memory Dump</h3>
+          <pre class="code-block" id="pktCodeDump">// C++ Struct Layout (16 Bytes Total)
+struct PrayasPacket {
+    uint8_t  source;       // 0x01
+    uint8_t  destination;  // 0x02
+    uint8_t  command;      // 0x10
+    uint8_t  mode;         // 0x01 (MANUAL)
+    int16_t  value1;       // 180
+    int16_t  value2;       // 0
+    uint16_t sequence;     // 1042
+    uint32_t timestamp;    // 84920492 ms
+};</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: SAFETY & WATCHDOGS -->
+    <div id="sec-safety" class="tech-section" style="display: none;">
+      <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">6. Safety,
+        Watchdogs &amp; Fault Tolerance</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6;">
+        Operating 4 high-torque motors and 7 MG995 servos requires complete fail-safe mechanisms. Every node features an independent hardware/software watchdog to prevent unintended motion during packet loss or internet disconnection.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #ef4444; margin-bottom: 8px;">Heartbeat Watchdog (500ms)
+          </h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            The Motor Node expects a valid control packet or heartbeat ping from Master at least once every <strong>500 ms</strong>. If signal is lost, the Motor Node automatically cuts motor PWM power to 0, halts movement, and enters SAFE mode.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #047857; margin-bottom: 8px;">Offline Internet
+            Resilience</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            If internet or Cloud VPS disconnects, ESP-NOW internal robot mesh continues functioning seamlessly. Local gamepad, local Wi-Fi AP dashboard, voice AI, and local IR obstacle safety remain 100% operational offline.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 20px;">
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: #7e22ce; margin-bottom: 8px;">Command Acknowledgement
+          </h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            Long multi-step workflows (e.g. <code style="background: var(--bg-card-alt);">GREETING</code> pose) send an <code
+              style="background: var(--bg-card-alt);">ACK</code> back to Master upon receipt, followed by a <code
+              style="background: var(--bg-card-alt);">WORKFLOW_COMPLETE</code> status packet once finished.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // Tab switching for Technical Deep-Dive Sections
+    function switchSection(secId, btn) {
+      document.querySelectorAll('.tech-section').forEach(sec => sec.style.display = 'none');
+      document.querySelectorAll('.nav-pill-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(secId).style.display = 'block';
+      btn.classList.add('active');
+    }
+
+    // Simulation Engine
+    let seqCounter = 1000;
+
+    function triggerSimulation(type) {
+      const term = document.getElementById('simTerminal');
+      const timeStr = new Date().toISOString().substring(11, 23);
+      seqCounter++;
+
+      // Clear previous active classes
+      document.querySelectorAll('.node-box').forEach(el => {
+        el.classList.remove('active-pulse', 'active-success', 'active-warning', 'active-danger');
+      });
+
+      if (type === 'voice_forward') {
+        document.getElementById('node-input-voice').classList.add('active-pulse');
+        document.getElementById('node-master').classList.add('active-pulse');
+        document.getElementById('node-sub-motor').classList.add('active-success');
+
+        appendLog(term, timeStr, 'VOICE_AI', 'CMD=MOVE_FORWARD, SPEED=180', 'Master validated Priority 6. Forward command sent via ESP-NOW ➔ Motor Node 0x02. Executed OK.', 'ok');
+      }
+      else if (type === 'gamepad_wave') {
+        document.getElementById('node-input-pad').classList.add('active-pulse');
+        document.getElementById('node-master').classList.add('active-pulse');
+        document.getElementById('node-sub-servo').classList.add('active-success');
+
+        appendLog(term, timeStr, 'GAMEPAD_2.4G', 'CMD=WORKFLOW, VAL=WAVE', 'Master validated Priority 3. Servo Node 0x03 executing 4-step WAVE pose sequence.', 'ok');
+      }
+      else if (type === 'remote_mqtt') {
+        document.getElementById('node-input-remote').classList.add('active-pulse');
+        document.getElementById('node-master').classList.add('active-pulse');
+        document.getElementById('node-sub-servo').classList.add('active-success');
+
+        appendLog(term, timeStr, 'VPS_MQTT', 'TOPIC=prayas/cmd/servo {head: "LEFT"}', 'MQTT message received from Cloud VPS. Master routed HEAD_LEFT to Servo Node 0x03.', 'ok');
+      }
+      else if (type === 'obstacle_override') {
+        document.getElementById('node-master').classList.add('active-warning');
+        document.getElementById('node-sub-motor').classList.add('active-warning');
+
+        appendLog(term, timeStr, 'MOTOR_IR_SAFETY', 'EVENT=IR_OBSTACLE_DETECTED (<15cm)', 'LOCAL OVERRIDE: Motor Node intercepted FORWARD command and applied emergency braking! Status OBSTACLE_STOP sent to Master.', 'err');
+      }
+      else if (type === 'emergency_stop') {
+        document.querySelectorAll('.node-box').forEach(el => el.classList.add('active-danger'));
+
+        appendLog(term, timeStr, 'EMERGENCY_STOP', 'BROADCAST_ALL ➔ 0xFF', 'CRITICAL: Priority 1 Emergency Stop triggered! All motors disabled, servos locked. Mode changed to MODE_EMERGENCY_STOP.', 'err');
+      }
+
+      term.scrollTop = term.scrollHeight;
+    }
+
+    function appendLog(term, time, src, cmd, msg, status) {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      const statusClass = status === 'ok' ? 'log-ok' : 'log-err';
+      line.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-src">[${src}]</span> <span class="log-cmd">${cmd}</span> ➔ <span class="${statusClass}">${msg}</span>`;
+      term.appendChild(line);
+    }
+
+    // Packet preview generator
+    function updatePacketPreview() {
+      const src = document.getElementById('pktSrc').value;
+      const dst = document.getElementById('pktDst').value;
+      const cmd = document.getElementById('pktCmd').value;
+      const val1 = document.getElementById('pktVal1').value;
+
+      document.getElementById('pktCodeDump').textContent = `// C++ Struct Memory Layout (16 Bytes Total)
+struct PrayasPacket {
+    uint8_t  source      = ${src};   // Originator Node
+    uint8_t  destination = ${dst};   // Target Mesh Node
+    uint8_t  command     = ${cmd};   // Command Opcode
+    uint8_t  mode        = 0x01;   // MODE_MANUAL
+    int16_t  value1      = ${val1};    // Parameter 1
+    int16_t  value2      = 0;      // Reserved / Sub-command
+    uint16_t sequence    = 1043;   // Packet Sequence #
+    uint32_t timestamp   = ${Date.now()}; // System Millis
+};`;
+    }
+  </script>
+</body>
+
+</html>

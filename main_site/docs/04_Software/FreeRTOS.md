@@ -19,7 +19,7 @@ ESP32 microcontrollers feature a dual-core Xtensa processor (Core 0 and Core 1).
 | :--- | :---: | :---: | :---: | :--- |
 | `vESPNOWRecv` | 5 | 0 | 2048 | Receives and parses target velocities from the Master Node. |
 | `vMotorPID`   | 6 | 1 | 4096 | Computes wheel speeds (20 kHz PWM rate) for the H-bridge. |
-| `vProximityTask` | 4 | 0 | 1024 | Reads 3 digital outputs of E18-D80NK IR proximity sensors for obstacle checking. |
+| `vProximityTask` | 4 | 0 | 1024 | Reads 4 HC-SR04 ultrasonic echo pulse signals (FL, FR, RL, RR) for obstacle checking. |
 
 ## Code Pattern: Creating Non-Blocking Tasks
 ```cpp

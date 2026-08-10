@@ -18,17 +18,17 @@ PRAYAS V1 Humanoid Robot
 │   └── Mounting Hardware (M3 Standoffs + Screws) ──── Qty: 4 ─── $1.00
 │                                                          Subtotal: $12.00
 │
-├── 2. MOTOR NODE (4WD 10x4cm WHEELS & 4x IR)
+├── 2. MOTOR NODE (4WD 10x4cm WHEELS & 4x ULTRASONIC)
 │   ├── ESP32-WROOM-32E DevKit (38-Pin) ──────────── Qty: 1 ─── $4.50
 │   ├── BTS7960 43A Dual H-Bridge Driver ──────────── Qty: 2 ─── $17.00
 │   ├── Johnson 12V 200RPM Geared DC Motor ────────── Qty: 4 ─── $60.00
 │   ├── Robot Wheel (10cm Dia, 4cm Width Rubber) ──── Qty: 4 ─── $24.00
 │   ├── Wheel Flange Hub Bracket (100mm) ──────────── Qty: 4 ─── $10.00
-│   ├── E18-D80NK IR Proximity Sensor (FL,FR,RL,RR) ─ Qty: 4 ─── $18.00
+│   ├── HC-SR04 Ultrasonic Sensor (FL,FR,RL,RR) ───── Qty: 4 ─── $10.00
 │   ├── Jumper Wires (Male-to-Male/Female, 24 AWG) ── Qty: 30 ── $3.00
 │   ├── Screw Terminal Block (5.08mm, 2-Pin) ──────── Qty: 4 ─── $2.00
 │   └── Mounting Hardware (M4 Screws + L-Brackets) ── Qty: 8 ─── $3.00
-│                                                          Subtotal: $141.50
+│                                                          Subtotal: $133.50
 │
 ├── 3. SERVO NODE
 │   ├── ESP32-WROOM-32E DevKit (38-Pin) ──────────── Qty: 1 ─── $4.50
@@ -136,15 +136,17 @@ Master Node
 ```
 Motor Node
  └── ESP32-WROOM-32E ── Differential drive controller
-      ├── BTS7960 Driver (Left) ── GPIO 12, 13, 14
+      ├── Left BTS7960 Driver (R_EN/L_EN=5V) ── RPWM: GPIO 25, LPWM: GPIO 26
       │    ├── Left Front Motor
       │    └── Left Rear Motor
-      ├── BTS7960 Driver (Right) ── GPIO 25, 26, 27
+      ├── Right BTS7960 Driver (R_EN/L_EN=5V) ── RPWM: GPIO 27, LPWM: GPIO 14
       │    ├── Right Front Motor
       │    └── Right Rear Motor
-      ├── E18-D80NK IR Sensor (Left) ── GPIO 34
-      ├── E18-D80NK IR Sensor (Center) ── GPIO 35
-      └── E18-D80NK IR Sensor (Right) ── GPIO 39
+      └── 4x HC-SR04 Ultrasonic Sensors (with 1k/2k voltage dividers on ECHO)
+           ├── Front Sensor ── TRIG: GPIO 16, ECHO: GPIO 34
+           ├── Left Sensor ── TRIG: GPIO 17, ECHO: GPIO 35
+           ├── Right Sensor ── TRIG: GPIO 18, ECHO: GPIO 32
+           └── Rear Sensor ── TRIG: GPIO 19, ECHO: GPIO 33
 ```
 
 ### Servo Node

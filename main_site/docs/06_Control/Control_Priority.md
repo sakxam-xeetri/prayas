@@ -40,7 +40,7 @@ When overlapping commands are received simultaneously, the Master Control Manage
 
 ```
   [HIGHEST]  1. EMERGENCY STOP (Global Hardware/Software E-Stop Override)
-             2. LOCAL SAFETY / OBSTACLE OVERRIDE (Motor Node IR / INA219 Trip)
+             2. LOCAL SAFETY / OBSTACLE OVERRIDE (Motor Node Ultrasonic Trip)
              3. PHYSICAL CONTROLLER (Gamepad Direct Radio Input)
              4. REMOTE CONTROL (Cloud VPS / MQTT Remote Commands)
              5. LOCAL WEB CONTROL (WebSocket / HTTP Master Dashboard)

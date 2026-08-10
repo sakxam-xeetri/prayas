@@ -7,12 +7,12 @@ The Motor Controller Node is the hardware subsystem responsible for driving the 
 
 ### What this Node Controls
 *   **Motors**: Actuates the 4 wheels (10 cm Diameter, 4 cm Width) using H-bridge drivers in a 4x4 differential drive setup.
-*   **Sensors**: Interfaces with **4 infrared obstacle sensors** (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.
+*   **Sensors**: Interfaces with **4 ultrasonic sensors (HC-SR04 or equivalent)** (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.
 
 ### Responsibilities of the Node
 *   Receive directional and speed commands.
 *   Translate these commands into electrical signals that control motor speed and direction.
-*   Sample all 4 infrared sensors continuously.
+*   Sample all 4 ultrasonic sensors continuously.
 *   Halt all motion immediately if an obstacle is detected in any direction of travel.
 
 ---
@@ -27,7 +27,9 @@ The table below lists all components required to assemble the Motor Node:
 | **BTS7960 Motor Driver** | 2 | 43A High-Current Dual H-Bridge Module | Interfaces between ESP32 signals and Johnson DC motors. |
 | **Johnson 12V DC Motors** | 4 | 12V Nominal, 200 RPM Geared DC Motors | Electric geared motors driving the 4-wheel chassis. |
 | **Robot Wheels (10cm x 4cm)**| 4 | 10 cm Diameter, 4 cm Width, High-Traction Rubber | Wheels mounted to motor shafts via 100mm flange hubs. |
-| **E18-D80NK IR Sensors** | 4 | Adjustable Range (3–80 cm), Active LOW | Proximity sensors detecting obstacles (FL, FR, RL, RR). |
+| **HC-SR04 Ultrasonic Sensors**| 4 | Range (2–400 cm), 5V Operating Voltage | Proximity sensors detecting obstacles (FL, FR, RL, RR). |
+| **Motor Clamps / Mounts**| 4 | Heavy-Duty Aluminum / Steel Mount Brackets | Securely mount the Johnson DC motors to the base plate. |
+| **PCB / Perfboard** | 1 | Standard Prototyping Perfboard (Base) | Base circuit board for power distribution & signal headers. |
 | **Power Input Connector**| 1 | XT60 Connector (Male/Female pair) | Connects main 12V battery power. |
 | **Screw Terminal Blocks**| Assorted| 5.08 mm Pitch PCB Screw Terminals | Secure cable connections for power distribution. |
 | **Connecting Wires** | Assorted| 14 AWG (Power) / 24 AWG (Logic Signal) | Carries electric current and logic signals. |
@@ -41,7 +43,7 @@ The table below lists all components required to assemble the Motor Node:
     
     ![ESP32 DevKitC v4 Pinout Diagram](../assets/img/esp32-devkitC-v4-pinout.png){ style="display: block; margin: 0 auto;" width="500" }
 *   **Why it is used**: It provides fast processing speeds, hardware timers capable of generating precise Pulse Width Modulation (PWM) signals, and has enough GPIO pins to handle the sensors and drivers.
-*   **How it works inside PRAYAS**: It acts as the local brain of the Motor Node. It reads the digital states of the IR sensors and outputs the control signals (speed and direction) to the motor drivers.
+*   **How it works inside PRAYAS**: It acts as the local brain of the Motor Node. It reads distance echo signals from the ultrasonic sensors and outputs control signals (speed and direction) to the motor drivers.
 
 ### BTS7960 Motor Driver
 *   **What it is**: A high-current H-bridge motor driver module designed to control a DC motor's direction and speed.
@@ -57,13 +59,10 @@ The table below lists all components required to assemble the Motor Node:
 *   **Why it is used**: The gearbox reduces rotation speed to 200 RPM while multiplying torque. Combined with 10cm diameter / 4cm width wheels, it provides smooth indoor travel and obstacle clearance.
 *   **How it works inside PRAYAS**: Four motors drive the wheels. They are wired in parallel groups (two on the left, two on the right) to run a 4-wheel-drive differential chassis.
 
-### E18-D80NK IR Obstacle Sensors (4-Sensor Array)
-*   **What it is**: Infrared proximity sensors emitting a modulated beam and detecting reflection from nearby obstacles.
-    
-    ![E18-D80NK IR Sensor](../assets/img/ed18_sensor.jpg){ style="display: block; margin: 0 auto;" width="250" }
-    *   *Reference*: [E18-D80NK Datasheet Reference](https://handsontec.com/dataspecs/sensor/E18-D80NK%20IR%20Sensor.pdf)
-*   **Why it is used**: Provides instantaneous, hardware-level digital collision detection.
-*   **How it works inside PRAYAS**: Four sensors are mounted on the base deck corners: Front-Left (FL), Front-Right (FR), Rear-Left (RL), and Rear-Right (RR). If any sensor detects an obstacle within 20 cm, its output pin pulls LOW, signaling the ESP32 safety watchdog to immediately apply emergency dynamic braking.
+### HC-SR04 Ultrasonic Obstacle Sensors (4-Sensor Array)
+*   **What it is**: Ultrasonic distance measurement sensors emitting a 40 kHz acoustic burst and measuring the round-trip echo pulse duration.
+*   **Why it is used**: Provides accurate non-contact distance measurement (2 cm to 400 cm), unaffected by ambient lighting or surface color contrast.
+*   **How it works inside PRAYAS**: Four sensors are mounted on the base deck perimeter: Front, Left, Right, and Rear. The ESP32 drives dedicated trigger pins (GPIO 16, 17, 18, 19) and reads returned Echo pulses on input pins (GPIO 34, 35, 32, 33) through 1kΩ / 2kΩ voltage dividers to step down the 5V Echo signals to 3.3V logic levels. If an obstacle is detected within 20 cm in the direction of motion, the safety watchdog immediately engages emergency dynamic braking.
 
 ---
 
@@ -72,17 +71,16 @@ The table below lists all components required to assemble the Motor Node:
 This section details how to connect the components of the Motor Node.
 
 ### ESP32 to BTS7960 Connections
-Control signals are routed from the ESP32 to the logic inputs of the H-bridges:
+Control signals are routed from the ESP32 to the logic inputs of the H-bridges (`R_EN` and `L_EN` are permanently tied to 5V VCC; `R_IS` and `L_IS` are left unconnected):
 
 | ESP32 Pin | Connected To | BTS7960 Driver | Function |
 | :--- | :--- | :--- | :--- |
-| **GPIO 12** | L_PWM | Left Driver (Driver 1) | Left forward speed signal (PWM) |
-| **GPIO 13** | R_PWM | Left Driver (Driver 1) | Left reverse speed signal (PWM) |
-| **GPIO 14** | L_EN & R_EN (Tied) | Left Driver (Driver 1) | Left driver enable control |
-| **GPIO 25** | L_PWM | Right Driver (Driver 2) | Right forward speed signal (PWM) |
-| **GPIO 26** | R_PWM | Right Driver (Driver 2) | Right reverse speed signal (PWM) |
-| **GPIO 27** | L_EN & R_EN (Tied) | Right Driver (Driver 2) | Right driver enable control |
-| **5V** | VCC | Both Drivers | Logic power supply for drivers |
+| **GPIO 25** | RPWM | Left Driver (Driver 1) | Left-side motor forward PWM signal |
+| **GPIO 26** | LPWM | Left Driver (Driver 1) | Left-side motor reverse PWM signal |
+| **GPIO 27** | RPWM | Right Driver (Driver 2) | Right-side motor forward PWM signal |
+| **GPIO 14** | LPWM | Right Driver (Driver 2) | Right-side motor reverse PWM signal |
+| **5V Rail** | R_EN & L_EN | Both Drivers | Driver enables (permanently enabled via 5V VCC) |
+| **5V Rail** | VCC | Both Drivers | Logic power supply for drivers |
 | **GND** | GND | Both Drivers | Logic ground reference |
 
 ### BTS7960 to Motors Connections
@@ -90,20 +88,19 @@ Motor outputs are wired in parallel to drive the two motors on each side togethe
 
 | Driver Terminal | Connected To | Motor Group | Description |
 | :--- | :--- | :--- | :--- |
-| **Left Driver M+** | (+) Terminals | Left Front & Left Rear Motors | Drives the left side wheels forward |
-| **Left Driver M-** | (-) Terminals | Left Front & Left Rear Motors | Drives the left side wheels backward |
-| **Right Driver M+**| (+) Terminals | Right Front & Right Rear Motors | Drives the right side wheels forward |
-| **Right Driver M-**| (-) Terminals | Right Front & Right Rear Motors | Drives the right side wheels backward |
+| **Left Driver M+ / M-** | (+) & (-) Terminals | Left Front & Left Rear Motors | Drives both left-side wheels in parallel |
+| **Right Driver M+ / M-**| (+) & (-) Terminals | Right Front & Right Rear Motors | Drives both right-side wheels in parallel |
 
-### ESP32 to 4 IR Sensors Connections
-Sensors require 5V power and return digital signals to ESP32 input-only pins:
+### ESP32 to 4 Ultrasonic Sensors Connections
+Sensors require 5V VCC power, common ground, dedicated Trigger outputs, and Echo input signals connected via 1kΩ / 2kΩ voltage dividers to protect ESP32 3.3V GPIOs:
 
-| IR Sensor Module | Wire Color | ESP32 Pin | Pin Function |
+| Ultrasonic Sensor Module | Sensor Pin | ESP32 Pin | Connection & Protection |
 | :--- | :--- | :--- | :--- |
-| **Front-Left IR Sensor** | Brown / Blue / Black | **5V / GND / GPIO 34** | Digital sensor output (Active LOW, GPI 34) |
-| **Front-Right IR Sensor**| Brown / Blue / Black | **5V / GND / GPIO 35** | Digital sensor output (Active LOW, GPI 35) |
-| **Rear-Left IR Sensor**  | Brown / Blue / Black | **5V / GND / GPIO 36** | Digital sensor output (Active LOW, GPI 36) |
-| **Rear-Right IR Sensor** | Brown / Blue / Black | **5V / GND / GPIO 39** | Digital sensor output (Active LOW, GPI 39) |
+| **Front HC-SR04** | TRIG / ECHO | **GPIO 16 / GPIO 34** | TRIG: Direct GPIO 16. ECHO: GPIO 34 via 1kΩ/2kΩ divider. |
+| **Left HC-SR04**  | TRIG / ECHO | **GPIO 17 / GPIO 35** | TRIG: Direct GPIO 17. ECHO: GPIO 35 via 1kΩ/2kΩ divider. |
+| **Right HC-SR04** | TRIG / ECHO | **GPIO 18 / GPIO 32** | TRIG: Direct GPIO 18. ECHO: GPIO 32 via 1kΩ/2kΩ divider. |
+| **Rear HC-SR04**  | TRIG / ECHO | **GPIO 19 / GPIO 33** | TRIG: Direct GPIO 19. ECHO: GPIO 33 via 1kΩ/2kΩ divider. |
+| **All Sensors VCC / GND** | VCC / GND | **5V / GND** | 5V Power rail from buck converter & common ground |
 
 ---
 
@@ -113,17 +110,19 @@ The table below lists all ESP32 pins used in this node:
 
 | GPIO | Connected To | Pin Mode | Purpose | Safe Boot Handling |
 | :--- | :--- | :---: | :--- | :--- |
-| **GPIO 12** | Left Driver L_PWM | Output | Left forward speed (PWM) | **Boot Strap Pin (MTDI)**: Must be LOW at boot. |
-| **GPIO 13** | Left Driver R_PWM | Output | Left reverse speed (PWM) | Safe to use. |
-| **GPIO 14** | Left Driver EN | Output | Left driver enable control | Safe to use. |
-| **GPIO 25** | Right Driver L_PWM | Output | Right forward speed (PWM) | Safe to use. |
-| **GPIO 26** | Right Driver R_PWM | Output | Right reverse speed (PWM) | Safe to use. |
-| **GPIO 27** | Right Driver EN | Output | Right driver enable control | Safe to use. |
-| **GPIO 34** | Front-Left IR Out | Input | FL obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
-| **GPIO 35** | Front-Right IR Out| Input | FR obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
-| **GPIO 36** | Rear-Left IR Out  | Input | RL obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
-| **GPIO 39** | Rear-Right IR Out | Input | RR obstacle sensor input | Input-only GPI pin. Internal/external pull-up. |
-| **GPIO 2** | Onboard LED | Output | Status indicator (blinking) | **Boot Strap Pin**: Must be LOW or floating at boot. |
+| **GPIO 25** | Left Driver RPWM | Output | Left motor forward PWM signal | Safe to use. |
+| **GPIO 26** | Left Driver LPWM | Output | Left motor reverse PWM signal | Safe to use. |
+| **GPIO 27** | Right Driver RPWM | Output | Right motor forward PWM signal | Safe to use. |
+| **GPIO 14** | Right Driver LPWM | Output | Right motor reverse PWM signal | Safe to use. |
+| **GPIO 16** | Front Sensor TRIG | Output | Front ultrasonic 10 µs trigger pulse | Safe to use. |
+| **GPIO 34** | Front Sensor ECHO | Input | Front ultrasonic echo input (via 1k/2k divider)| Input-only GPI pin. |
+| **GPIO 17** | Left Sensor TRIG  | Output | Left ultrasonic 10 µs trigger pulse  | Safe to use. |
+| **GPIO 35** | Left Sensor ECHO  | Input | Left ultrasonic echo input (via 1k/2k divider) | Input-only GPI pin. |
+| **GPIO 18** | Right Sensor TRIG | Output | Right ultrasonic 10 µs trigger pulse | Safe to use. |
+| **GPIO 32** | Right Sensor ECHO | Input | Right ultrasonic echo input (via 1k/2k divider)| Internal pull-down. |
+| **GPIO 19** | Rear Sensor TRIG  | Output | Rear ultrasonic 10 µs trigger pulse  | Safe to use. |
+| **GPIO 33** | Rear Sensor ECHO  | Input | Rear ultrasonic echo input (via 1k/2k divider) | Internal pull-down. |
+| **GPIO 2**  | Onboard LED       | Output | Status indicator (blinking)         | **Boot Strap Pin**: Must be LOW at boot. |
 
 ---
 
@@ -133,8 +132,8 @@ The table below lists all ESP32 pins used in this node:
 *   **Battery Input**: The robot runs on a 12V Li-Ion battery pack. It is connected to the system using a high-current XT60 connector.
 *   **Voltage used by Motors**: The 4 Johnson DC motors are powered directly by the 12V battery rail through the BTS7960 drivers to maximize torque.
 *   **Voltage used by ESP32**: The ESP32 cannot handle 12V directly. A 5V DC-to-DC buck regulator steps down the 12V battery power to 5V, which is fed into the ESP32 Vin pin.
-*   **Voltage used by Sensors**: The E18-D80NK IR proximity sensors require 5V to power their internal optical circuits. They are wired to the 5V output of the buck regulator.
-*   **Common Ground**: The negative terminals of the battery, H-bridges, 5V regulator, ESP32 ground pins, and IR sensors must all be connected to a single point. This ensures a stable reference voltage for all logic signals.
+*   **Voltage used by Sensors**: The HC-SR04 ultrasonic sensors require 5V to power their internal transducer drive circuits. They are wired directly to the 5V output of the buck regulator.
+*   **Common Ground**: The negative terminals of the battery, H-bridges, 5V regulator, ESP32 ground pins, and ultrasonic sensors must all be connected to a single point. This ensures a stable reference voltage for all logic signals.
 
 ### Power Flow Diagram
 ```mermaid
@@ -150,7 +149,7 @@ graph TD
     DriverR -->|12V PWM| MotorsR[Right Motors x2]
     
     Buck -->|5V Rail| ESP32[ESP32 Dev Board]
-    Buck -->|5V Rail| Sensors[3x IR Sensors]
+    Buck -->|5V Rail| Sensors[4x HC-SR04 Ultrasonic Sensors]
     
     %% Common Ground Connections
     GND((Common Ground Point)) --- Bat
@@ -171,13 +170,13 @@ The step-by-step operation of the Motor Node is described below:
   [ Power ON ]
        │
        ▼
-  [ ESP32 Boots ] ──> Sets Pin Modes (LEDC outputs and Sensor inputs)
+  [ ESP32 Boots ] ──> Sets Pin Modes (PWM outputs, TRIG output, ECHO inputs)
        │
        ▼
   [ Drivers Init ] ──> Sets Enables HIGH and Speed PWM to 0%
        │
        ▼
-  [ Sensors Init ] ──> Emitters start transmitting IR beams
+  [ Sensors Init ] ──> Sends 10µs TRIG pulse on GPIO 15
        │
        ▼
   [ Wait for Command ] ◄── Incoming directives (Forward, Turn, Stop)
@@ -187,11 +186,11 @@ The step-by-step operation of the Motor Node is described below:
   [ Command Received ]            [ Timeout Check ] ──> Halt if no cmd for 500ms
        │
        ▼
-  [ Check Obstacle ]
+  [ Measure Ultrasonic Echoes ]
        │
-       ├── Obstacle Detected (Any IR pin LOW) ──> Force Motor Speed to 0% (E-Stop)
+       ├── Obstacle < 20 cm in travel path ──> Force Motor Speed to 0% (E-Stop)
        │
-       └── Path Clear (All IR pins HIGH)
+       └── Path Clear (All directional distances >= 20 cm)
                │
                ▼
           [ Drive Motors ] ──> Apply PWM to target H-bridges
@@ -206,35 +205,36 @@ The step-by-step operation of the Motor Node is described below:
 
 Locomotion is controlled by varying the speed and direction of the left and right motor groups:
 
-*   **Forward**: The ESP32 drives the forward PWM pins (GPIO 12 and 25) HIGH. Both the left and right motor groups spin forward at the same speed.
-*   **Backward**: The ESP32 drives the reverse PWM pins (GPIO 13 and 26) HIGH. Both motor groups spin backward.
-*   **Left**: The left motor group spins backward (GPIO 13 HIGH) and the right group spins forward (GPIO 25 HIGH), pivoting the robot left.
-*   **Right**: The right motor group spins backward (GPIO 26 HIGH) and the left group spins forward (GPIO 12 HIGH), pivoting the robot right.
-*   **Rotate Left**: Spins the left wheels backward and right wheels forward at equal speeds to rotate the robot on its center axis.
-*   **Rotate Right**: Spins the left wheels forward and right wheels backward at equal speeds.
-*   **Stop**: The ESP32 sets all PWM outputs to 0. The H-bridge driver shorts the motor leads to ground to engage dynamic braking.
-*   **Variable Speed**: Achieved by adjusting the PWM Duty Cycle (0% to 100%). By switching the 12V supply ON and OFF at a high frequency (20 kHz), the average voltage delivered to the motors changes, providing smooth speed control.
+*   **Forward**: The ESP32 drives Left RPWM (GPIO 25) and Right RPWM (GPIO 27) with PWM signals. Both motor groups spin forward.
+*   **Backward**: The ESP32 drives Left LPWM (GPIO 26) and Right LPWM (GPIO 14) with PWM signals. Both motor groups spin backward.
+*   **Left**: The ESP32 drives Left LPWM (GPIO 26) and Right RPWM (GPIO 27), pivoting the robot left.
+*   **Right**: The ESP32 drives Left RPWM (GPIO 25) and Right LPWM (GPIO 14), pivoting the robot right.
+*   **Rotate Left**: Left wheels reverse (GPIO 26 PWM) and right wheels forward (GPIO 27 PWM) at equal speeds.
+*   **Rotate Right**: Left wheels forward (GPIO 25 PWM) and right wheels reverse (GPIO 14 PWM) at equal speeds.
+*   **Stop**: The ESP32 sets all PWM outputs (GPIO 25, 26, 27, 14) to 0. Dynamic braking is applied.
 
 ---
 
 ## 9. Obstacle Detection
 
-The collision avoidance system uses 3 IR proximity sensors mounted on the front edge of the plywood chassis:
+The 360° collision avoidance system uses **4 HC-SR04 ultrasonic sensors** mounted on the base deck perimeter:
 
-*   **Left Sensor**: Angled outward at $30^\circ$. It monitors the front-left travel zone.
-*   **Center Sensor**: Mounted straight forward ($0^\circ$). It monitors the direct path of travel.
-*   **Right Sensor**: Angled outward at $30^\circ$. It monitors the front-right travel zone.
+*   **Front Sensor**: TRIG GPIO 16, ECHO GPIO 34 (via 1k/2k voltage divider).
+*   **Left Sensor**: TRIG GPIO 17, ECHO GPIO 35 (via 1k/2k voltage divider).
+*   **Right Sensor**: TRIG GPIO 18, ECHO GPIO 32 (via 1k/2k voltage divider).
+*   **Rear Sensor**: TRIG GPIO 19, ECHO GPIO 33 (via 1k/2k voltage divider).
 
 ### Obstacle Trigger Logic Table
-When a sensor detects an object within its adjusted range, its signal output goes LOW. The robot reacts as follows:
+When a sensor measures an obstacle distance under **20 cm**, the ESP32 safety task triggers immediate dynamic braking:
 
-| Left Sensor | Center Sensor | Right Sensor | Detection Zone | Robot Reaction |
-| :---: | :---: | :---: | :---: | :--- |
-| HIGH | HIGH | HIGH | Clear | Travel normally |
-| **LOW** | HIGH | HIGH | Left Obstacle | Halt forward travel. Rotate right to clear. |
-| HIGH | **LOW** | HIGH | Center Obstacle | Halt travel immediately. Reverse, then pivot away. |
-| HIGH | HIGH | **LOW** | Right Obstacle | Halt forward travel. Rotate left to clear. |
-| **LOW** | **LOW** | **LOW** | Trap | Halt immediately. Lock out forward motion. |
+| Front Distance | Left Distance | Right Distance | Rear Distance | Direction | Robot Action |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| $\ge 20\text{ cm}$ | $\ge 20\text{ cm}$ | $\ge 20\text{ cm}$ | $\ge 20\text{ cm}$ | Clear | Travel normally in any direction |
+| **$< 20\text{ cm}$** | Any | Any | Any | Front Blocked | Halt forward travel. Allow reverse or turn away. |
+| Any | **$< 20\text{ cm}$** | Any | Any | Left Blocked | Halt left turns/strafe. Rotate right to clear. |
+| Any | Any | **$< 20\text{ cm}$** | Any | Right Blocked | Halt right turns/strafe. Rotate left to clear. |
+| Any | Any | Any | **$< 20\text{ cm}$** | Rear Blocked | Halt reverse travel. Allow forward motion. |
+| **$< 20\text{ cm}$** | **$< 20\text{ cm}$** | **$< 20\text{ cm}$** | **$< 20\text{ cm}$** | Surrounded | Emergency stop. Lock out all motion vectors. |
 
 ---
 
@@ -253,11 +253,11 @@ graph TD
     
     %% Logic Power Distribution
     Reg -->|5V| ESP[ESP32 Dev Board]
-    Reg -->|5V| IR_L[Left IR Sensor]
-    Reg -->|5V| IR_C[Center IR Sensor]
-    Reg -->|5V| IR_R[Right IR Sensor]
-    ESP -->|5V| DriverL
-    ESP -->|5V| DriverR
+    Reg -->|5V| US_F[Front HC-SR04]
+    Reg -->|5V| US_L[Left HC-SR04]
+    Reg -->|5V| US_R[Right HC-SR04]
+    Reg -->|5V| US_B[Rear HC-SR04]
+    Reg -->|5V VCC| DriverL & DriverR
 
     %% Motor Outputs
     DriverL -->|12V PWM| ML1[Left Front Motor]
@@ -266,13 +266,12 @@ graph TD
     DriverR -->|12V PWM| MR2[Right Rear Motor]
 
     %% Control Signals
-    ESP -->|GPIO 12/13/14| DriverL
-    ESP -->|GPIO 25/26/27| DriverR
-
-    %% Feedback Signals
-    IR_L -->|GPIO 34| ESP
-    IR_C -->|GPIO 35| ESP
-    IR_R -->|GPIO 39| ESP
+    ESP -->|GPIO 25 RPWM / GPIO 26 LPWM| DriverL
+    ESP -->|GPIO 27 RPWM / GPIO 14 LPWM| DriverR
+    ESP -->|GPIO 16 TRIG / GPIO 34 ECHO| US_F
+    ESP -->|GPIO 17 TRIG / GPIO 35 ECHO| US_L
+    ESP -->|GPIO 18 TRIG / GPIO 32 ECHO| US_R
+    ESP -->|GPIO 19 TRIG / GPIO 33 ECHO| US_B
 ```
 
 ---

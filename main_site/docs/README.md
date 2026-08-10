@@ -73,7 +73,7 @@ PRAYAS V1 is an open-source, modular humanoid upper-body robot mounted on a heav
 | **Total Height & Base Footprint** | 95 cm Height \| Base: 40 cm x 40 cm | 70 cm PVC torso column on 12mm plywood deck |
 | **Total Mass** | 8.5 kg ± 0.3 kg (including battery) | Modular upper-body and base breakdown |
 | **Locomotion System** | 4-Motor Differential Drive (4WD) | 4x Johnson 12V 200 RPM Motors + 10 cm x 4 cm Wheels |
-| **Motor Drive Electronics** | 2x BTS7960 43A High-Power H-Bridges | 4x E18-D80NK IR Proximity Sensors (FL, FR, RL, RR) |
+| **Motor Drive Electronics** | 2x BTS7960 43A High-Power H-Bridges | 4x HC-SR04 Ultrasonic Sensors (FL, FR, RL, RR) |
 | **Upper Body Kinematics** | 7x MG995 Servos (13 kg·cm @ 6V) | 3-DOF Left Arm, 3-DOF Right Arm, 1-DOF Neck Yaw |
 | **PWM Actuation Controller** | PCA9685 16-Channel 12-bit I2C Module | Interfaced to Servo Control Node (ESP32) |
 | **Primary Gateway Processor** | ESP32 DevKitC v4 (Dual-Core 240 MHz) | ESP-NOW hub, MQTT gateway, Integrated Status OLED |

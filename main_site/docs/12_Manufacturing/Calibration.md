@@ -6,4 +6,4 @@ This document details the calibration procedures for the sensors and servos of P
 ## Calibration Steps
 1.  **Servo Neutral Alignment**: Set all servos to their neutral position ($90^\circ$, 1.5ms pulse width) and align the limbs.
 2.  **IMU Calibration**: Place the robot on a flat, level surface and run the calibration script to calculate accelerometer and gyroscope offsets.
-3.  **E18-D80NK Proximity Sensor Range Adjustment**: Use a small screwdriver to adjust the multi-turn potentiometer on the back of each of the 3 E18-D80NK IR sensors. Turn clockwise to increase range (up to 80cm) or counterclockwise to decrease it. Calibrate each sensor so that it pulls its output LOW (triggered) when a barrier is within 20cm.
+3.  **HC-SR04 Ultrasonic Sensor Distance Calibration**: Verify ultrasonic echo timing calibration ($t = \text{duration} \times 0.0343 / 2$) across all 4 sensors (FL, FR, RL, RR). Set software safety threshold in `vSafetyWatchdogTask` to trigger dynamic braking whenever measured distance is $< 20\text{ cm}$.

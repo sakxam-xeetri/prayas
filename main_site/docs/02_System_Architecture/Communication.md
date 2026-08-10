@@ -257,7 +257,7 @@ SENSORS  --->  SENSOR NODE  --->  MASTER ESP32 (Autonomous Decision Engine)  ---
 1. **Sensors**: MPU6050 IMU, DHT11, and front/rear IR proximity sensors poll environmental conditions.
 2. **Sensor Node**: Aggregates data and streams periodic telemetry to Master ESP32.
 3. **Master Decision Engine**: Processes sensor inputs combined with vision triggers from AI Node to calculate trajectory paths.
-4. **Motor Safety Interlock**: Issued autonomous movement commands pass through the Motor Node's local IR safety check before motor activation.
+4. **Motor Safety Interlock**: Issued autonomous movement commands pass through the Motor Node's local ultrasonic safety check before motor activation.
 
 ---
 
@@ -268,7 +268,7 @@ The **Motor Node** (ESP32) is dedicated to real-time drivetrain control and loca
 ### Hardware Managed
 *   4 × Johnson 12V 200 RPM DC Gear Motors.
 *   2 × BTS7960 43A High-Power H-Bridge Motor Drivers.
-*   4 × E18-D80NK IR Proximity Obstacle Sensors (Front-Left, Front-Right, Rear-Left, Rear-Right).
+*   4 × HC-SR04 Ultrasonic Sensors (Front-Left, Front-Right, Rear-Left, Rear-Right).
 *   1 × INA219 Current and Voltage Monitor (I2C).
 
 ### Master-to-Motor Command Set

@@ -42,7 +42,7 @@ graph TD
     %% Device Connections
     Master -->|I2C| StatusOLED[0.96"/1.3" Status OLED Display]
     Motor -->|PWM| Drivers[2x BTS7960 Drivers] -->|12V| Motors[4x Johnson Motors & 10x4cm Wheels]
-    Motor <--|GPI| IRSensors[4x E18-D80NK IR Proximity Sensors]
+    Motor <--|GPI| UltrasonicSensors[4x HC-SR04 Ultrasonic Sensors]
     Servo -->|I2C| PCA[PCA9685 PWM Driver] -->|6V| Servos[7x MG995 Servos]
     AI -->|SPI| SPIDisplay[2.4" SPI TFT Display]
     AI -->|I2S| Speaker[3W Speaker / Amp]

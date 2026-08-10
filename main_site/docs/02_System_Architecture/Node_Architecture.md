@@ -32,7 +32,7 @@ This document defines the roles, hardware assignments, firmware tasks, and confi
 *   **Processor**: Tensilica Xtensa Dual-Core 32-bit LX6 at 240 MHz.
 *   **Key Tasks**:
     *   `vMotorDriveTask` (Priority 5): Calculates 4WD differential kinematics for 10 cm x 4 cm wheels and updates PWM frequencies (20 kHz) to BTS7960 drivers.
-    *   `vSafetyWatchdogTask` (Priority 6): Monitors heartbeat packets and 4x E18-D80NK IR proximity sensors (FL, FR, RL, RR), initiating an emergency brake if an obstacle triggers any sensor.
+    *   `vSafetyWatchdogTask` (Priority 6): Monitors heartbeat packets and 4x HC-SR04 Ultrasonic Sensors (FL, FR, RL, RR), initiating an emergency brake if an obstacle is measured within 20 cm.
 
 ### Servo Node
 *   **Processor**: Tensilica Xtensa Dual-Core 32-bit LX6 at 240 MHz.

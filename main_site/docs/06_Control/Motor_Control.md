@@ -14,8 +14,7 @@ The Motor Node is a dedicated microcontroller node responsible for real-time 4WD
 | **Microcontroller** | ESP32 DevKitC v4 (`0x02`) | Real-time differential kinematics & safety watchdog |
 | **DC Gear Motors** | 4 × Johnson 12V 200 RPM | High-torque 4WD drivetrain ($10 \text{ cm} \times 4 \text{ cm}$ wheels) |
 | **Motor Drivers** | 2 × BTS7960 43A H-Bridges | High-current PWM motor direction & speed control ($20 \text{ kHz}$) |
-| **Proximity Sensors** | 4 × E18-D80NK IR Sensors | Front-Left, Front-Right, Rear-Left, Rear-Right obstacle detection |
-| **Current Sensor** | 1 × INA219 Monitor (I2C) | Over-current protection and motor load monitoring |
+| **Proximity Sensors** | 4 × HC-SR04 Ultrasonic Sensors | Front (GPIO 16/34), Left (GPIO 17/35), Right (GPIO 18/32), Rear (GPIO 19/33) |
 
 ---
 
@@ -35,17 +34,16 @@ The Motor Node accepts standardized ESP-NOW commands from the Master Node:
 ```
 MASTER ESP32  ---(FORWARD / SPEED 180)--->  MOTOR NODE ESP32
                                                 |
-                                        Check 4x IR Sensors
+                                    Check 4x Ultrasonic Sensors
                                                 |
                        +------------------------+------------------------+
                        |                                                 |
-                  [CLEAR]                                           [OBSTACLE]
+                  [CLEAR >= 20cm]                                   [OBSTACLE < 20cm]
                        |                                                 |
                  Execute Motion                                     HALT MOTORS (PWM 0%)
                                                                          |
                                                             Report STATUS -> MASTER
 ```
 
-* **Local IR Trip**: Overrides Master requests instantly and halts BTS7960 PWM outputs.
-* **Current Trip**: If INA219 current exceeds $15 \text{ A}$ for $> 200 \text{ ms}$, Motor Node shuts down driver outputs locally to prevent motor burn-out.
+* **Local Obstacle Trip**: Overrides Master requests instantly and halts BTS7960 PWM outputs if distance is $< 20\text{ cm}$.
 * **300ms Hardware Watchdog**: Halts motors if valid ESP-NOW control packets are absent for $> 300 \text{ ms}$.

@@ -25,7 +25,7 @@ This document is the official procurement reference for PRAYAS V1. All component
 
 ## Node 2 — Motor Node
 
-> **Role**: 4WD Differential drive controller. Drives 4 x Johnson DC motors (10 cm x 4 cm wheels) and reads 4 x E18-D80NK IR proximity sensors (FL, FR, RL, RR).
+> **Role**: 4WD Differential drive controller. Drives 4 x Johnson DC motors (10 cm x 4 cm wheels) and reads 4 x HC-SR04 Ultrasonic Sensors (FL, FR, RL, RR obstacle detection).
 
 | # | Component | Model / Spec | Qty | Unit Price (NPR) | Total (NPR) | Source / Notes |
 | :---: | :--- | :--- | :---: | :---: | :---: | :--- |
@@ -34,11 +34,11 @@ This document is the official procurement reference for PRAYAS V1. All component
 | 3 | Johnson 12V 200 RPM DC Motor | 12V Geared DC Motor, Metal Gear | 4 | रू 1,800 | रू 7,200 | Kathmandu electronics market |
 | 4 | Robot Wheel (10 cm Dia x 4 cm W) | Rubber Tread, High Traction (4 cm W) | 4 | रू 500 | रू 2,000 | Robotics shop / Daraz |
 | 5 | Wheel Flange Hub Bracket | 100mm Customized Flange Hub | 4 | रू 350 | रू 1,400 | Local fabrication / Daraz |
-| 6 | E18-D80NK IR Proximity Sensor | Adjustable 3-80 cm, Active LOW | 4 | रू 550 | रू 2,200 | electronicshub.com.np |
+| 6 | Ultrasonic Sensor (HC-SR04) | Range 2–400 cm, 5V (FL, FR, RL, RR) | 4 | रू 250 | रू 1,000 | electronicshub.com.np / Daraz |
 | 7 | Jumper Wires (M-to-M/F) | 24 AWG, 30-piece pack | 1 pk | रू 200 | रू 200 | Any electronics shop |
 | 8 | Screw Terminal Block | 5.08 mm Pitch, 2-Pin PCB | 4 | रू 35 | रू 140 | Local shop |
 | 9 | M4 Screws + L-Brackets | M4 x 12mm + Aluminum L-Brackets | 8 | रू 50 | रू 400 | Hardware store |
-| | | | | **Node 2 Subtotal** | **रू 15,990** | |
+| | | | | **Node 2 Subtotal** | **रू 14,790** | |
 
 ---
 
@@ -166,7 +166,7 @@ This document is the official procurement reference for PRAYAS V1. All component
 | Node | Description | Component Count | Estimated Cost (NPR) |
 | :---: | :--- | :---: | :---: |
 | **Node 1** | Master Node | 4 | रू 1,120 |
-| **Node 2** | Motor Node | 9 | रू 15,440 |
+| **Node 2** | Motor Node | 9 | रू 14,790 |
 | **Node 3** | Servo Node | 9 | रू 8,160 |
 | **Node 4** | AI Node | 7 | रू 4,520 |
 | **Node 5** | Camera Node | 4 | रू 1,570 |
@@ -175,7 +175,7 @@ This document is the official procurement reference for PRAYAS V1. All component
 | **Node 8** | Structural & Mechanical | 11 | रू 9,340 |
 | **Node 9** | Accessories & Tools | 3 | रू 2,450 |
 | | | | |
-| | **TOTAL** | **61 items** | **रू 50,520** |
+| | **TOTAL** | **61 items** | **रू 49,870** |
 
 ---
 

@@ -445,7 +445,7 @@ PRAYAS unified control architecture
                  │                  │                  │
              4 Motors           7 × MG995          MPU6050
              BTS7960             PCA9685             DHT11
-             IR Sensors
+             Ultrasonic Sensors
 
 The Master is the command coordinator.
 
@@ -543,7 +543,7 @@ PHONE / LAPTOP
        ↓
     ESP-NOW
        ↓
- ROBOT NODES
+ MOTOR / SERVO NODES
 
 You could have:
 
@@ -732,7 +732,7 @@ REMOTE ──Internet──VPS──►│ CONTROL       │
              │                   │
         4 Motors             7 MG995
         BTS7960              PCA9685
-        IR Sensors
+        Ultrasonic Sensors
         INA219
 Communication protocols
 Voice → ESP32-S3

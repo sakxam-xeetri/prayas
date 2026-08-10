@@ -25,11 +25,11 @@ PRAYAS separates high-level application messaging from physical peripheral buses
 | **Application** | WebSocket | Wi-Fi / IP Network | Live teleoperation joystick & continuous telemetry streaming |
 | **Application** | MQTT | Wi-Fi / Cellular VPS | Cloud teleoperation, remote commands, telemetry aggregation |
 | **Robot Network**| ESP-NOW | 802.11 LR 2.4 GHz | Inter-node real-time control bus ($< 5 \text{ ms}$ latency) |
-| **Hardware** | I2C | Dual-Wire Serial Bus | PCA9685 servo driver, INA219 current sensor, MPU6050 IMU |
+| **Hardware** | I2C | Dual-Wire Serial Bus | PCA9685 servo driver, MPU6050 IMU |
 | **Hardware** | SPI | 4-Wire Synchronous | 2.4" TFT display screen on AI Node |
 | **Hardware** | I2S | Digital Audio Bus | INMP441 microphone & MAX98357A audio amplifier |
 | **Hardware** | UART | Full-Duplex Serial | Arduino Nano Sensor Node $\leftrightarrow$ Master ESP32 bridge |
-| **Hardware** | GPIO / PWM | Direct Digital Lines | BTS7960 motor drivers, E18-D80NK IR proximity sensors |
+| **Hardware** | GPIO / PWM | Direct Digital Lines | BTS7960 motor drivers, HC-SR04 ultrasonic proximity sensors |
 
 ---
 

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRAYAS - Funding Proposal (NPR 50,000)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Rajdhani:wght@600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #1d4ed8;
+            --accent-light: #eff6ff;
+            --text-main: #1e293b;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --bg-light: #f8fafc;
+            --border-color: #cbd5e1;
+            --border-dark: #0f172a;
+
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-subheading: 'Rajdhani', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border-radius: 0 !important; /* Force ultra-sharp geometric edges across all elements */
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-main);
+            background-color: #94a3b8;
+            line-height: 1.65;
+            padding: 20px 20px 60px 20px;
+        }
+
+        /* PRINT ACTION BAR */
+        .action-bar {
+            max-width: 920px;
+            margin: 0 auto 20px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+            padding: 14px 20px;
+            border: 1px solid #1e293b;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .action-bar .brand-label {
+            font-family: var(--font-subheading);
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #93c5fd;
+            text-transform: uppercase;
+        }
+
+        .action-bar .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-print {
+            background: #1d4ed8;
+            color: #ffffff;
+            border: 1px solid #3b82f6;
+            padding: 9px 18px;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+        }
+
+        .btn-print:hover {
+            background: #2563eb;
+        }
+
+        .btn-link {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border: 1px solid #475569;
+            background: #1e293b;
+        }
+
+        .btn-link:hover {
+            background: #334155;
+            color: #ffffff;
+        }
+
+        .document-container {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 60px 65px;
+            border: 1px solid #475569;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        /* HEADER & LOGOS */
+        .header-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 25px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .logo-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .logo-item img {
+            max-height: 80px;
+            max-width: 140px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .logo-item .caption {
+            font-family: var(--font-subheading);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* SHARP ROBOTICS TITLE BANNER */
+        .doc-title-banner {
+            background: var(--primary);
+            color: #ffffff;
+            padding: 24px 30px;
+            border: 1px solid var(--primary);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .doc-title-banner h1 {
+            font-family: var(--font-heading);
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .doc-title-banner h2 {
+            font-family: var(--font-subheading);
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            opacity: 0.95;
+            color: #93c5fd;
+            text-transform: uppercase;
+        }
+
+        /* SHARP META INFO BOX */
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            background: var(--bg-light);
+            padding: 20px 24px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary);
+            margin-bottom: 35px;
+            font-size: 13.5px;
+        }
+
+        .meta-info div strong {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-family: var(--font-subheading);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* SUBJECT TITLE STYLING */
+        .subject-title {
+            font-family: var(--font-heading);
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-left: 5px solid #1d4ed8;
+            padding: 14px 18px;
+            margin: 20px 0 24px 0;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+
+        /* SECTION STYLING */
+        h3.section-header {
+            font-family: var(--font-subheading);
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary);
+            border-left: 5px solid var(--accent);
+            padding-left: 12px;
+            margin: 35px 0 18px 0;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            background: #f1f5f9;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 14.5px;
+            text-align: justify;
+            color: var(--text-main);
+        }
+
+        .letter-body {
+            background: #ffffff;
+            border-left: 4px solid var(--accent);
+            padding: 10px 0 10px 20px;
+            margin-bottom: 25px;
+        }
+
+        /* SHARP ARCHITECTURE CARDS */
+        .node-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .node-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--secondary);
+            padding: 16px;
+        }
+
+        .node-card h4 {
+            font-family: var(--font-subheading);
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .node-card p {
+            font-size: 12.5px;
+            margin-bottom: 4px;
+            text-align: left;
+        }
+
+        /* UNCROPPED FULL IMAGE GALLERY */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .gallery-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: contain; /* Shows full uncropped image without clipping top/bottom */
+            display: block;
+            background: #ffffff;
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gallery-card .img-desc {
+            font-family: var(--font-subheading);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--secondary);
+            padding: 9px 12px;
+            background: #f1f5f9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* SHARP BUDGET TABLE */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            border: 1px solid var(--primary);
+        }
+
+        .budget-table th, .budget-table td {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .budget-table th {
+            font-family: var(--font-subheading);
+            background-color: var(--primary);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .budget-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .budget-table td.qty, .budget-table td.cost, .budget-table td.total {
+            text-align: right;
+            font-family: var(--font-mono);
+            font-size: 12.5px;
+        }
+
+        .category-row td {
+            font-family: var(--font-subheading);
+            background-color: var(--accent-light);
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            border-top: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .grand-total-row td {
+            font-family: var(--font-subheading);
+            background-color: var(--primary);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            border-top: 2px solid var(--primary);
+        }
+
+        /* SHARP HIGHLIGHT BOXES */
+        .highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--accent);
+            padding: 20px 24px;
+            margin: 20px 0;
+            font-size: 13.5px;
+        }
+
+        .highlight-box strong {
+            color: var(--accent);
+        }
+
+        .courage-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-left: 5px solid #d97706;
+            padding: 20px 24px;
+            margin: 20px 0;
+            font-size: 13.5px;
+        }
+
+        .courage-box strong {
+            color: #b45309;
+        }
+
+        /* SHARP TIMELINE */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .timeline-step {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--accent);
+            padding: 14px;
+            font-size: 12.5px;
+        }
+
+        .timeline-step .week {
+            font-family: var(--font-subheading);
+            font-weight: 800;
+            color: var(--accent);
+            font-size: 15px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SHARP SIGNATURES */
+        .signatures-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 550px;
+            margin: 55px auto 0 auto;
+        }
+
+        .sig-box {
+            text-align: center;
+            border-top: 2px solid var(--primary);
+            padding-top: 12px;
+            font-size: 12px;
+            background: var(--bg-light);
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+        }
+
+        .sig-box strong {
+            display: block;
+            font-family: var(--font-subheading);
+            font-size: 15px;
+            color: var(--text-dark);
+            margin-top: 4px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sig-box span {
+            color: var(--text-muted);
+            font-size: 11px;
+        }
+
+        /* 100% PERFECT A4 PRINT / PDF EXPORT RULES */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 12mm 12mm 12mm 12mm;
+            }
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .action-bar {
+                display: none !important;
+            }
+            .document-container {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .page-break {
+                break-before: page !important;
+                page-break-before: always !important;
+            }
+            .node-card, .gallery-card, .highlight-box, .courage-box, .timeline-step, .sig-box, tr {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- INTERACTIVE PRINT ACTION BAR -->
+<div class="action-bar">
+    <div class="brand-label">PRAYAS V1 — Official Funding Proposal</div>
+    <div class="btn-group">
+        <button class="btn-print" onclick="window.print()">📥 Export / Print to PDF</button>
+        <a class="btn-link" href="./PRAYAS_Funding_Proposal.md" target="_blank">📄 View Raw Markdown</a>
+    </div>
+</div>
+
+<div class="document-container">
+
+    <!-- HEADER LOGOS -->
+    <div class="header-grid">
+        <div class="logo-item">
+            <img src="./assets/img/kmc_logo.png" alt="KMC Logo" onerror="this.src='../../assets/brand/kmc_logo.png'">
+            <div class="caption">Kathmandu Model Secondary School</div>
+        </div>
+        <div class="logo-item">
+            <img src="./assets/img/kmc_robotics_club.png" alt="KMC Robotics Club Logo" onerror="this.src='../../assets/brand/kmc_robotics_club.png'">
+            <div class="caption">KMC Robotics Club</div>
+        </div>
+        <div class="logo-item">
+            <img src="./assets/img/kmc_student_committee.jpg" alt="KMC Student Committee Logo" onerror="this.src='../../assets/brand/kmc_student_committee.jpg'">
+            <div class="caption">KMC Student Committee</div>
+        </div>
+    </div>
+
+    <!-- DOCUMENT TITLE -->
+    <div class="doc-title-banner">
+        <h1>PROJECT FUNDING PROPOSAL</h1>
+        <h2>PROJECT PRAYAS — A multi functional humanoid robot</h2>
+    </div>
+
+    <!-- METADATA -->
+    <div class="meta-info">
+        <div><strong>Date:</strong> August 10, 2026</div>
+        <div><strong>Ref. No.:</strong> KMC-RC/2026/PROP-005</div>
+        <div><strong>Submitted To:</strong> ECA/CCA Department</div>
+        <div><strong>Submitted By:</strong> KMC Robotics Club & Student Committee</div>
+        <div><strong>Institution:</strong> Kathmandu Model Secondary School</div>
+        <div><strong>Requested Amount:</strong> NPR 50,000 (Fifty Thousand)</div>
+    </div>
+
+    <!-- SECTION 1: COVERING LETTER -->
+    <h3 class="section-header">1. Formal Covering Letter</h3>
+    <div class="letter-body">
+        <p><strong>To,</strong><br>
+        <strong>The Department of Extra-Curricular Activities (ECA / CCA),</strong><br>
+        Kathmandu Model Secondary School (KMC), Kathmandu, Nepal</p>
+        
+        <div class="subject-title">
+            Subject: Request for Grant Funding of NPR 50,000 for Project PRAYAS V1 (Modular AI Humanoid Assistant Robot)
+        </div>
+
+        <p>Respected Sir/Madam,</p>
+
+        <p>With due respect, the <strong>KMC Robotics Club</strong>, in collaboration with the <strong>KMC Student Committee</strong>, submits this formal project funding proposal for <strong>PRAYAS (A multi functional humanoid robot)</strong>.</p>
+
+        <p>Over the past academic year, our club members have dedicated hundreds of hours to mastering embedded electronics, microcontrollers, mechanical fabrication, and artificial intelligence. Through rigorous research and prototyping, our team has engineered <strong>PRAYAS</strong> — an ambitious, indigenous humanoid assistant robot combining real-time natural language voice AI, edge vision intelligence, 7-degree-of-freedom gestural arm manipulators, and a differential motorized mobility chassis controlled via a distributed 6-node ESP32 architecture.</p>
+
+        <p>To fabricate the functional prototype, we respectfully request financial assistance of <strong>NPR 50,000 (Fifty Thousand Nepalese Rupees)</strong> from the ECA/CCA Department. This funding will directly cover essential high-torque DC motors, metal gear servo joint actuators, lithium battery power management packs, sensor arrays, and precision structural fabrication materials.</p>
+
+        <div class="courage-box">
+            <strong>Our Courage, Vision & Determination to Build PRAYAS:</strong><br>
+            Building an AI-powered humanoid assistant in a high school environment is a pioneering endeavor. Our team possesses the courage, technical capability, and resilience required to overcome complex engineering challenges. Despite working out of temporary classrooms and managing delicate components under tight constraints, we have already engineered the full distributed firmware architecture, circuit schematics, and mechanical CAD frames. We are fully determined to demonstrate that KMC students can design and build state-of-the-art robotics comparable to university-level engineering projects.
+        </div>
+
+        <p>We assure the school administration that all requested funds will be managed responsibly, audited with complete transparency, and used solely for component procurement and project execution.</p>
+
+        <p>We respectfully request your kind consideration and support for this grant. We firmly believe that backing Project PRAYAS will inspire our student body, demonstrate KMC’s leadership in technological innovation, and proudly represent our institution across Nepal.</p>
+
+        <p>Thank you for your valuable time and continuous encouragement.</p>
+    </div>
+
+    <!-- SECTION 2: EXECUTIVE SUMMARY & VISUALS -->
+    <h3 class="section-header">2. Project Overview & Visual Prototypes</h3>
+    <p>Project PRAYAS bridges static smart home voice assistants and expensive industrial humanoid robots, combining spatial indoor mobility with rich human interaction capabilities.</p>
+
+    <div class="image-gallery">
+        <div class="gallery-card">
+            <img src="./main_site/img/overall.png" alt="PRAYAS Overall Model">
+            <div class="img-desc">PRAYAS Full Humanoid & Base Assembly</div>
+        </div>
+        <div class="gallery-card">
+            <img src="./main_site/img/prayas (2).png" alt="PRAYAS Upper Body & Arm">
+            <div class="img-desc">7-DOF Upper Torso & Arm Joint Mechanics</div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: SYSTEM ARCHITECTURE -->
+    <h3 class="section-header">3. Distributed 6-Node Architecture</h3>
+    <p>PRAYAS divides computational tasks across 6 specialized microcontroller nodes connected via high-speed ESP-NOW and MQTT wireless protocols:</p>
+
+    <div class="node-grid">
+        <div class="node-card">
+            <h4>Node 01 — Motor Drivetrain</h4>
+            <p><strong>Hardware:</strong> ESP32, 2x BTS7960 43A Drivers, 4x Johnson 12V 200RPM Motors.</p>
+            <p>High-torque differential drive, smooth acceleration, and zero-radius turning.</p>
+        </div>
+        <div class="node-card">
+            <h4>Node 02 — Servo Joint Manipulator</h4>
+            <p><strong>Hardware:</strong> ESP32, PCA9685 PWM Driver, 7x MG995 Metal Servos.</p>
+            <p>3-DOF per arm + neck yaw/pitch gesture control for posture positioning.</p>
+        </div>
+        <div class="node-card">
+            <h4>Node 03 — Environmental Sensor</h4>
+            <p><strong>Hardware:</strong> Arduino Nano, MPU6050 IMU, DHT11 Sensor, 16x2 LCD.</p>
+            <p>Vehicle balance monitoring, inclination detection, and environmental logging.</p>
+        </div>
+        <div class="node-card">
+            <h4>Node 04 — Master Control & Display</h4>
+            <p><strong>Hardware:</strong> ESP32-WROOM-32, 3.5" SPI Color TFT Display.</p>
+            <p>System state management, ESP-NOW packet routing, live diagnostic UI.</p>
+        </div>
+        <div class="node-card">
+            <h4>Node 05 — AI Voice & Vision</h4>
+            <p><strong>Hardware:</strong> ESP32-S3-CAM, INMP441 Microphone, MAX98357A DAC, 10W Speaker.</p>
+            <p>Speech-to-Text, cloud LLM natural dialogue, vision snapshots & audio playback.</p>
+        </div>
+        <div class="node-card">
+            <h4>Node 06 — Power Distribution</h4>
+            <p><strong>Hardware:</strong> 12x 18650 Pack (3S4P), 3S 40A BMS, 5V 20A & 5V 3A Bucks.</p>
+            <p>Noise-isolated high-current power rails for heavy motor loads and logic systems.</p>
+        </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- SECTION 4: ITEMIZED FINANCIAL BUDGET -->
+    <h3 class="section-header">4. Itemized Financial Budget (NPR 50,000)</h3>
+    <table class="budget-table">
+        <thead>
+            <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 55%;">Category & Component Description</th>
+                <th style="width: 8%; text-align: center;">Qty</th>
+                <th style="width: 16%; text-align: right;">Unit (NPR)</th>
+                <th style="width: 16%; text-align: right;">Total (NPR)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="category-row"><td colspan="5">1. Microcontrollers & Processing Nodes</td></tr>
+            <tr><td>1.1</td><td>ESP32-WROOM-32 Development Boards (Master, Motor, Servo Nodes)</td><td class="qty">3</td><td class="cost">950</td><td class="total">2,850</td></tr>
+            <tr><td>1.2</td><td>ESP32-S3-CAM AI Node + INMP441 Mic + MAX98357A DAC + 10W Speaker</td><td class="qty">1</td><td class="cost">4,200</td><td class="total">4,200</td></tr>
+            <tr><td>1.3</td><td>ESP32-CAM Board with External Antenna (Video Node)</td><td class="qty">1</td><td class="cost">1,800</td><td class="total">1,800</td></tr>
+            <tr><td>1.4</td><td>3.5" SPI Color TFT LCD Touch Display Module (Dashboard UI)</td><td class="qty">1</td><td class="cost">3,200</td><td class="total">3,200</td></tr>
+            <tr><td>1.5</td><td>Arduino Nano ATmega328P Module (Sensor Monitoring Node)</td><td class="qty">1</td><td class="cost">650</td><td class="total">650</td></tr>
+
+            <tr class="category-row"><td colspan="5">2. Actuators, Drivers & Servo Joint Mechanisms</td></tr>
+            <tr><td>2.1</td><td>Johnson 12V 200RPM Heavy Duty Metal Geared DC Motors</td><td class="qty">4</td><td class="cost">1,850</td><td class="total">7,400</td></tr>
+            <tr><td>2.2</td><td>BTS7960 43A High Power H-Bridge Motor Driver Modules</td><td class="qty">2</td><td class="cost">1,450</td><td class="total">2,900</td></tr>
+            <tr><td>2.3</td><td>MG995 High Torque Metal Gear Servos (7-DOF Joint Actuators)</td><td class="qty">7</td><td class="cost">850</td><td class="total">5,950</td></tr>
+            <tr><td>2.4</td><td>PCA9685 16-Channel 12-Bit I2C PWM Servo Controller Module</td><td class="qty">1</td><td class="cost">750</td><td class="total">750</td></tr>
+
+            <tr class="category-row"><td colspan="5">3. Power Systems & Electrical Management</td></tr>
+            <tr><td>3.1</td><td>High-Capacity 18650 Li-ion Cells (3S4P Battery Pack - 11.1V 10.4Ah)</td><td class="qty">12</td><td class="cost">350</td><td class="total">4,200</td></tr>
+            <tr><td>3.2</td><td>3S 40A Balanced Li-ion BMS Circuit Board + Battery Holders</td><td class="qty">1</td><td class="cost">1,200</td><td class="total">1,200</td></tr>
+            <tr><td>3.3</td><td>Heavy Duty 5V 20A Buck Step-Down Voltage Regulator (Servos)</td><td class="qty">1</td><td class="cost">1,600</td><td class="total">1,600</td></tr>
+            <tr><td>3.4</td><td>5V 3A Dual Buck Voltage Regulators (Logic Rails)</td><td class="qty">2</td><td class="cost">400</td><td class="total">800</td></tr>
+            <tr><td>3.5</td><td>XT60 Connectors, Heavy Gauge Wiring, Fuses & Switches</td><td class="qty">1 Set</td><td class="cost">1,200</td><td class="total">1,200</td></tr>
+
+            <tr class="category-row"><td colspan="5">4. Chassis Fabrication & Mechanical Materials</td></tr>
+            <tr><td>4.1</td><td>3D Printer PETG Filament Spools (Torso, Arm Joints & Head Shell)</td><td class="qty">3</td><td class="cost">1,500</td><td class="total">4,500</td></tr>
+            <tr><td>4.2</td><td>12mm High-Density Plywood Deck Base & Structural Aluminum Rods</td><td class="qty">1 Set</td><td class="cost">2,200</td><td class="total">2,200</td></tr>
+            <tr><td>4.3</td><td>Heavy-Duty 10cm Rubber All-Terrain Wheels + Shaft Couplers</td><td class="qty">4</td><td class="cost">450</td><td class="total">1,800</td></tr>
+            <tr><td>4.4</td><td>Sunboard Outer Shroud, 4" PVC Torso Column, Hardware & Fasteners</td><td class="qty">1 Set</td><td class="cost">2,800</td><td class="total">2,800</td></tr>
+
+            <tr class="grand-total-row">
+                <td colspan="4" style="text-align: right; padding-right: 20px;">TOTAL FUNDING REQUESTED</td>
+                <td style="text-align: right;">NPR 50,000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- SECTION 5: INSTITUTIONAL VALUE -->
+    <h3 class="section-header">5. Institutional Benefits for Kathmandu Model Sec. School</h3>
+    <div class="highlight-box">
+        <strong>1. Flagship Technological Representation:</strong> PRAYAS will enter KMC into premier technology competitions including Trinity Tech Fest, YSS (Youth Science Summit), LOCUS (IOE Pulchowk), KU HackFest, and national robotics exhibitions, demonstrating KMC's engineering prowess.<br><br>
+        <strong>2. Interactive Campus Reception Ambassador:</strong> Demonstrable live at KMC Open Days, orientation sessions, and ceremonies to welcome guests and parents with custom voice responses and gestural movements.<br><br>
+        <strong>3. STEM Educational Base:</strong> The code and hardware architecture created will serve as an ongoing training platform for KMC Robotics Club workshops to mentor junior students.
+    </div>
+
+    <!-- SECTION 6: TIMELINE -->
+    <h3 class="section-header">6. Project Implementation Schedule</h3>
+    <div class="timeline">
+        <div class="timeline-step">
+            <div class="week">Weeks 1 - 2</div>
+            Component procurement, power pack assembly, chassis woodworking & motor base testing.
+        </div>
+        <div class="timeline-step">
+            <div class="week">Weeks 3 - 4</div>
+            3D printing arm/head shells, servo mounting, ESP-NOW node firmware flashing.
+        </div>
+        <div class="timeline-step">
+            <div class="week">Weeks 5 - 6</div>
+            AI Voice/Vision calibration, outer shroud finishing & ECA live demonstration.
+        </div>
+    </div>
+
+    <!-- SECTION 7: APPROVAL SIGNATURES -->
+    <h3 class="section-header">7. Recommendation & Approval</h3>
+    <div class="signatures-grid">
+        <div class="sig-box">
+            <br><br>
+            _______________________
+            <strong>Coordinator / Incharge</strong>
+            <span>ECA / CCA Department<br>Kathmandu Model Sec. School</span>
+        </div>
+        <div class="sig-box">
+            <br><br>
+            _______________________
+            <strong>Principal</strong>
+            <span>Kathmandu Model Sec. School<br>Kathmandu, Nepal</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
