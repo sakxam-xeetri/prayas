@@ -2,7 +2,7 @@
 
 <div align="center">
 
-| ![KMC Logo](./kmc_logo.png) | ![KMC Robotics Club](./kmc%20robotics%20club.png) | ![KMC Student Committee](./kmc%20studetn%20commite.jpg) |
+| ![KMC Logo](../assets/img/kmc_logo.png) | ![KMC Robotics Club](../assets/img/kmc_robotics_club.png) | ![KMC Student Committee](../assets/img/kmc_student_committee.jpg) |
 | :---: | :---: | :---: |
 | **Kathmandu Model Secondary School** | **KMC Robotics Club** | **KMC Student Committee** |
 
@@ -156,7 +156,7 @@ Supporting Project PRAYAS yields high tangible and promotional value for KMC:
 
 > [!TIP]
 > **1. Flagship Technological Representation**  
-> PRAYAS will enter KMC into premier technology competitions including LOCUS (IOE Pulchowk), KU HackFest, and national robotics exhibitions, demonstrating KMC's academic and technological excellence.
+> PRAYAS will enter KMC into premier technology competitions including Trinity Tech Fest, YSS (Youth Science Summit), LOCUS (IOE Pulchowk), KU HackFest, and national robotics exhibitions, demonstrating KMC's academic and technological excellence.
 
 > [!NOTE]
 > **2. Campus Reception & Open Day Ambassador**  

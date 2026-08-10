@@ -25,3 +25,6 @@ PRAYAS/
 ├── scripts/                    # Calibration and testing scripts
 └── docs/                       # MkDocs documentation project
 ```
+
+> 📌 **Complete System Architecture & Directory Index**: For an exhaustive, node-by-node mapping of all site pages, web dashboards, and documentation files, refer to [PROJECT_STRUCTURE.md](../../../PROJECT_STRUCTURE.md).
+
