@@ -1,0 +1,631 @@
+PRAYAS HUMANOID ROBOT
+MOTOR NODE — COMPLETE TECHNICAL DOCUMENTATION
+================================================
+
+1. MOTOR NODE OVERVIEW
+----------------------
+The PRAYAS Motor Node is the dedicated controller for the robot's four-wheel
+motorized base. It handles low-level motor control, speed control, direction
+control, four-direction obstacle sensing, and local obstacle-avoidance logic.
+
+It communicates with the Master Node through ESP-NOW.
+
+Architecture:
+
+    MASTER NODE
+         |
+       ESP-NOW
+         |
+         v
+    MOTOR NODE (ESP32)
+       /       \
+      /         \
+ LEFT DRIVER   RIGHT DRIVER
+    |              |
+  2 motors       2 motors
+
+2. FINAL COMPONENTS / BOM
+--------------------------
+1. ESP32 DevKit / ESP32-WROOM board       - 1
+2. BTS7960 motor driver module            - 2
+3. 12V 200 RPM Johnson DC motor            - 4
+4. HC-SR04 ultrasonic sensor               - 4
+5. 5V buck converter                        - 1
+6. Main power switch                        - 1
+7. Fuse + holder                            - 1
+8. PCB / perfboard                          - 1
+9. Motor clamps / mounts                    - 4
+10. Wheels                                  - 4
+11. 4-pin connectors / terminal connectors  - As required
+12. Signal/jumper wire                      - As required
+13. Power wire                              - As required
+14. Nuts, bolts and spacers                 - As required
+
+INA219 IS NOT USED IN THE FINAL MOTOR NODE.
+
+3. MOTOR DRIVER ARCHITECTURE
+----------------------------
+Only two BTS7960 modules are used.
+
+LEFT BTS7960:
+    Controls Left Front Motor + Left Rear Motor
+
+RIGHT BTS7960:
+    Controls Right Front Motor + Right Rear Motor
+
+The two motors on each side are connected in parallel to the corresponding
+driver output and therefore receive the same direction and PWM command.
+
+IMPORTANT:
+Check the actual running and stall current of the two motors against the
+actual BTS7960 module, wiring, connectors, fuse and battery capability before
+final assembly.
+
+4. BTS7960 CONFIGURATION
+------------------------
+The selected configuration uses only RPWM and LPWM for active control.
+
+BTS7960:
+    VCC  -> 5V
+    GND  -> Common GND
+    R_EN -> 5V / VCC (permanently enabled)
+    L_EN -> 5V / VCC (permanently enabled)
+    R_IS -> Open / not connected
+    L_IS -> Open / not connected
+    RPWM -> ESP32 PWM GPIO
+    LPWM -> ESP32 PWM GPIO
+
+Motor power:
+    B+ -> 12V motor supply positive
+    B- -> motor supply negative
+
+Motor:
+    M+ / M- -> motor output
+
+Control concept:
+    Forward:  RPWM = PWM, LPWM = LOW
+    Reverse:  RPWM = LOW, LPWM = PWM
+    Stop:     RPWM = LOW, LPWM = LOW
+
+PWM duty cycle controls commanded motor speed.
+
+5. FINAL ESP32 PIN ALLOCATION
+-----------------------------
+This allocation assumes a standard ESP32 DevKit / ESP32-WROOM-class board.
+
+MOTOR DRIVERS:
+    GPIO25 -> Left BTS7960 RPWM
+    GPIO26 -> Left BTS7960 LPWM
+    GPIO27 -> Right BTS7960 RPWM
+    GPIO14 -> Right BTS7960 LPWM
+
+ULTRASONIC:
+    GPIO16 -> Front TRIG
+    GPIO34 -> Front ECHO
+
+    GPIO17 -> Left TRIG
+    GPIO35 -> Left ECHO
+
+    GPIO18 -> Right TRIG
+    GPIO32 -> Right ECHO
+
+    GPIO19 -> Rear TRIG
+    GPIO33 -> Rear ECHO
+
+GPIO34 and GPIO35 are input-only pins and are suitable for ECHO inputs.
+
+Avoid GPIO6-GPIO11 on a standard ESP32-WROOM board because those pins are
+normally connected to the internal SPI flash.
+
+6. LEFT BTS7960 CONNECTION
+--------------------------
+Control:
+    RPWM -> ESP32 GPIO25
+    LPWM -> ESP32 GPIO26
+    R_EN -> 5V
+    L_EN -> 5V
+    VCC  -> 5V
+    GND  -> Common GND
+    R_IS -> Open
+    L_IS -> Open
+
+Power:
+    B+ -> 12V battery/motor supply positive
+    B- -> battery/system negative
+
+Motor outputs:
+    M+ / M- -> Left Front Motor
+    M+ / M- -> Left Rear Motor
+
+The two left motors are connected in parallel.
+
+7. RIGHT BTS7960 CONNECTION
+---------------------------
+Control:
+    RPWM -> ESP32 GPIO27
+    LPWM -> ESP32 GPIO14
+    R_EN -> 5V
+    L_EN -> 5V
+    VCC  -> 5V
+    GND  -> Common GND
+    R_IS -> Open
+    L_IS -> Open
+
+Power:
+    B+ -> 12V battery/motor supply positive
+    B- -> battery/system negative
+
+Motor outputs:
+    M+ / M- -> Right Front Motor
+    M+ / M- -> Right Rear Motor
+
+The two right motors are connected in parallel.
+
+8. ULTRASONIC SENSOR CONNECTIONS
+--------------------------------
+Four HC-SR04-type ultrasonic sensors are used:
+
+FRONT:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO16
+    ECHO -> GPIO34 through voltage divider
+
+LEFT:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO17
+    ECHO -> GPIO35 through voltage divider
+
+RIGHT:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO18
+    ECHO -> GPIO32 through voltage divider
+
+REAR:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO19
+    ECHO -> GPIO33 through voltage divider
+
+9. HC-SR04 ECHO PROTECTION
+---------------------------
+A typical HC-SR04 ECHO signal is about 5V, while ESP32 GPIO is 3.3V logic.
+
+Do NOT connect a typical 5V ECHO directly to the ESP32.
+
+Use a voltage divider for every ECHO line.
+
+Example:
+
+    HC-SR04 ECHO
+         |
+        1k ohm
+         |
+         +---------> ESP32 ECHO GPIO
+         |
+        2k ohm
+         |
+        GND
+
+This reduces a 5V input to approximately 3.3V.
+
+10. ULTRASONIC MEASUREMENT METHOD
+---------------------------------
+Do not trigger all four ultrasonic sensors simultaneously. Trigger them
+sequentially to reduce cross-talk.
+
+Recommended cycle:
+
+    FRONT -> LEFT -> RIGHT -> REAR -> repeat
+
+Example measured state:
+
+    Front = 32 cm
+    Left  = 85 cm
+    Right = 21 cm
+    Rear  = 110 cm
+
+11. MOTOR MOVEMENT FUNCTIONS
+----------------------------
+FORWARD:
+    Left side  -> Forward
+    Right side -> Forward
+
+BACKWARD:
+    Left side  -> Reverse
+    Right side -> Reverse
+
+TURN LEFT:
+    Left side  -> Slower or Reverse
+    Right side -> Forward
+
+TURN RIGHT:
+    Left side  -> Forward
+    Right side -> Slower or Reverse
+
+ROTATE IN PLACE:
+    Left side  -> Reverse
+    Right side -> Forward
+
+STOP:
+    Both sides -> Stop
+
+12. SPEED CONTROL
+-----------------
+The ESP32 controls motor speed using PWM duty cycle.
+
+Example:
+    0%   -> Stop
+    25%  -> Slow
+    50%  -> Medium
+    75%  -> Fast
+    100% -> Maximum commanded PWM
+
+Actual speed depends on battery voltage, motor load, wheel size, friction,
+motor characteristics and mechanical design.
+
+13. OBSTACLE AVOIDANCE
+----------------------
+Obstacle avoidance is handled locally inside the Motor Node.
+
+Example basic logic:
+
+    IF front < 30 cm:
+        STOP
+
+    IF front < 50 cm AND left > right:
+        TURN LEFT
+
+    IF front < 50 cm AND right > left:
+        TURN RIGHT
+
+These distances are starting values and must be calibrated experimentally.
+
+The final firmware should also handle:
+- Sensor timeout
+- Invalid measurements
+- Minimum safe distance
+- Speed reduction near obstacles
+- Stop conditions
+- Hysteresis/debounce to prevent rapid switching
+
+14. WHY OBSTACLE LOGIC IS LOCAL
+-------------------------------
+Obstacle avoidance is a safety-critical movement function, so it should not
+depend entirely on the Master, Wi-Fi, VPS or AI.
+
+If communication is lost, the Motor Node should still be capable of stopping
+the motors when a dangerous obstacle is detected.
+
+15. MASTER NODE COMMUNICATION
+-----------------------------
+The Motor Node communicates with the Master Node through ESP-NOW.
+
+Basic architecture:
+
+    Local controller / web / voice / autonomous command
+                         |
+                         v
+                    MASTER NODE
+                         |
+                      ESP-NOW
+                         |
+                         v
+                    MOTOR NODE
+                         |
+                 Motor + safety logic
+
+Possible high-level commands:
+
+    FORWARD
+    BACKWARD
+    LEFT
+    RIGHT
+    STOP
+    SPEED
+    MANUAL
+    AUTO
+    OBSTACLE_AVOID
+    EMERGENCY_STOP
+
+The exact packet format will be defined during firmware development.
+
+16. POWER ARCHITECTURE
+----------------------
+The motor system uses the 12V battery supply. A buck converter supplies the
+low-voltage electronics.
+
+Basic arrangement:
+
+                    12V BATTERY
+                         |
+                    MAIN SWITCH
+                         |
+                       FUSE
+                         |
+             +-----------+-----------+
+             |                       |
+             v                       v
+        MOTOR POWER             5V BUCK
+             |                       |
+       +-----+-----+                 |
+       |           |                 v
+       v           v               ESP32
+  BTS7960 LEFT  BTS7960 RIGHT         |
+       |           |             4x HC-SR04
+    2 motors    2 motors
+
+The exact buck-converter output and ESP32 input connection must match the
+specific ESP32 DevKit being used.
+
+17. COMMON GROUND
+-----------------
+The control system should use a common ground:
+
+    Battery negative
+        |
+        +-> Left BTS7960 GND
+        +-> Right BTS7960 GND
+        +-> Buck converter GND
+        +-> ESP32 GND
+        +-> Front ultrasonic GND
+        +-> Left ultrasonic GND
+        +-> Right ultrasonic GND
+        +-> Rear ultrasonic GND
+
+Do not rely on the robot's mechanical frame as the electrical ground.
+
+18. POWER SAFETY
+---------------
+Because two motors are connected to each BTS7960, startup and stall current
+can be much higher than normal running current.
+
+Before final assembly:
+- Measure/verify motor current.
+- Check combined current for two motors.
+- Verify the BTS7960's practical capability.
+- Use appropriately sized wires.
+- Use suitable connectors.
+- Use an appropriately rated fuse.
+- Keep high-current wiring short where practical.
+- Use proper battery protection/BMS in the overall PRAYAS power system.
+- Provide adequate thermal management.
+
+Do not assume an advertised BTS7960 current rating is automatically a safe
+continuous rating inside the final robot enclosure.
+
+19. COMPLETE POWER CONNECTION
+-----------------------------
+12V battery positive
+        |
+      SWITCH
+        |
+       FUSE
+        |
+        +----------> Left BTS7960 B+
+        |
+        +----------> Right BTS7960 B+
+        |
+        +----------> 5V buck input+
+
+12V battery negative
+        |
+        +----------> Left BTS7960 B-
+        |
+        +----------> Right BTS7960 B-
+        |
+        +----------> 5V buck input-
+
+5V buck output
+        |
+        +----------> ESP32 appropriate 5V/VIN input
+        |
+        +----------> HC-SR04 VCC
+        |
+        +----------> BTS7960 logic VCC / enable supply
+
+Confirm the exact ESP32 DevKit's recommended power-input pin before wiring.
+
+20. COMPLETE MOTOR NODE BLOCK DIAGRAM
+-------------------------------------
+
+                         12V BATTERY
+                              |
+                         MAIN SWITCH
+                              |
+                            FUSE
+                              |
+              +---------------+----------------+
+              |                                |
+              v                                v
+       MOTOR POWER BUS                    5V BUCK
+              |                                |
+        +-----+-----+                          v
+        |           |                       ESP32
+        v           v                         |
+   BTS7960 LEFT  BTS7960 RIGHT                |
+        |           |                         |
+    +---+---+   +---+---+          +----------+----------+
+    |       |   |       |          |          |          |
+   LF      LR  RF      RR       FRONT       LEFT       RIGHT
+  MOTOR   MOTOR MOTOR   MOTOR   ULTRA       ULTRA      ULTRA
+                                                |
+                                               REAR
+
+ESP32 motor pins:
+    GPIO25 -> Left RPWM
+    GPIO26 -> Left LPWM
+    GPIO27 -> Right RPWM
+    GPIO14 -> Right LPWM
+
+ESP32 ultrasonic pins:
+    GPIO16 -> Front TRIG
+    GPIO34 -> Front ECHO
+    GPIO17 -> Left TRIG
+    GPIO35 -> Left ECHO
+    GPIO18 -> Right TRIG
+    GPIO32 -> Right ECHO
+    GPIO19 -> Rear TRIG
+    GPIO33 -> Rear ECHO
+
+21. FINAL CONNECTION SUMMARY
+----------------------------
+LEFT BTS7960:
+    RPWM -> GPIO25
+    LPWM -> GPIO26
+    R_EN -> 5V
+    L_EN -> 5V
+    VCC  -> 5V
+    GND  -> common GND
+    R_IS -> open
+    L_IS -> open
+    B+   -> 12V motor supply
+    B-   -> system negative
+    M+/M- -> left front + left rear motors in parallel
+
+RIGHT BTS7960:
+    RPWM -> GPIO27
+    LPWM -> GPIO14
+    R_EN -> 5V
+    L_EN -> 5V
+    VCC  -> 5V
+    GND  -> common GND
+    R_IS -> open
+    L_IS -> open
+    B+   -> 12V motor supply
+    B-   -> system negative
+    M+/M- -> right front + right rear motors in parallel
+
+FRONT HC-SR04:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO16
+    ECHO -> GPIO34 through divider
+
+LEFT HC-SR04:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO17
+    ECHO -> GPIO35 through divider
+
+RIGHT HC-SR04:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO18
+    ECHO -> GPIO32 through divider
+
+REAR HC-SR04:
+    VCC  -> 5V
+    GND  -> GND
+    TRIG -> GPIO19
+    ECHO -> GPIO33 through divider
+
+22. MOTOR NODE FUNCTION LIST
+----------------------------
+1. Forward
+2. Backward
+3. Left
+4. Right
+5. Stop
+6. Differential steering
+7. Manual speed control
+8. Manual mode
+9. Autonomous obstacle-avoidance mode
+10. Four-direction obstacle sensing
+11. Local safety stop
+12. ESP-NOW command reception
+13. Low-level PWM generation
+14. Sequential ultrasonic distance measurement
+
+23. DEVELOPMENT / TESTING ORDER
+--------------------------------
+1. Test ESP32 alone.
+2. Test one BTS7960 with one motor.
+3. Test forward/reverse PWM.
+4. Test the second BTS7960.
+5. Test all four motors at low speed.
+6. Verify left/right direction.
+7. Test one ultrasonic sensor.
+8. Test all four sensors sequentially.
+9. Implement basic obstacle stop.
+10. Implement differential turning.
+11. Test ESP-NOW communication with Master.
+12. Add manual speed control.
+13. Add autonomous obstacle avoidance.
+14. Perform full-load, thermal and safety testing.
+
+24. FINAL DESIGN SUMMARY
+------------------------
+Controller:
+    1 x ESP32 DevKit / ESP32-WROOM
+
+Drivers:
+    2 x BTS7960
+
+Motors:
+    4 x 12V 200 RPM Johnson DC motors
+    Left driver = 2 motors
+    Right driver = 2 motors
+
+Obstacle sensors:
+    4 x HC-SR04
+    Front / Left / Right / Rear
+
+Current sensor:
+    None in final Motor Node
+    INA219 removed
+
+BTS7960:
+    RPWM + LPWM controlled by ESP32
+    R_EN/L_EN connected to VCC
+    R_IS/L_IS left open
+
+Communication:
+    ESP-NOW with Master Node
+
+Power:
+    12V motor supply
+    5V buck converter for electronics
+    Main switch
+    Fuse
+    Common ground
+
+FINAL ESP32 PINS:
+    GPIO25 -> Left RPWM
+    GPIO26 -> Left LPWM
+    GPIO27 -> Right RPWM
+    GPIO14 -> Right LPWM
+
+    GPIO16 -> Front TRIG
+    GPIO34 -> Front ECHO
+
+    GPIO17 -> Left TRIG
+    GPIO35 -> Left ECHO
+
+    GPIO18 -> Right TRIG
+    GPIO32 -> Right ECHO
+
+    GPIO19 -> Rear TRIG
+    GPIO33 -> Rear ECHO
+
+FINAL MOTOR NODE:
+    ESP32
+      |
+      +-- 2 BTS7960
+      |      |
+      |      +-- 4 motors
+      |
+      +-- 4 ultrasonic sensors
+      |
+      +-- ESP-NOW
+             |
+             v
+         MASTER NODE
+
+NOTE:
+This document represents the current agreed Motor Node design. Any future
+addition such as wheel encoders, current sensing, LiDAR, extra safety inputs,
+or additional sensors should be checked against the complete GPIO, power and
+communication architecture before being added.

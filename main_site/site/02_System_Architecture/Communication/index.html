@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -770,6 +770,34 @@
     
   
     Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Funding_Proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ECA Funding Proposal
   
 
     
@@ -6131,7 +6159,7 @@ The VPS/MQTT layer is explicitly excluded from critical motor safety loops. In t
 <li><strong>Sensors</strong>: MPU6050 IMU, DHT11, and front/rear IR proximity sensors poll environmental conditions.</li>
 <li><strong>Sensor Node</strong>: Aggregates data and streams periodic telemetry to Master ESP32.</li>
 <li><strong>Master Decision Engine</strong>: Processes sensor inputs combined with vision triggers from AI Node to calculate trajectory paths.</li>
-<li><strong>Motor Safety Interlock</strong>: Issued autonomous movement commands pass through the Motor Node's local IR safety check before motor activation.</li>
+<li><strong>Motor Safety Interlock</strong>: Issued autonomous movement commands pass through the Motor Node's local ultrasonic safety check before motor activation.</li>
 </ol>
 <hr />
 <h2 id="11-motor-node-communication">11. Motor Node Communication<a class="headerlink" href="#11-motor-node-communication" title="Permanent link">&para;</a></h2>
@@ -6140,7 +6168,7 @@ The VPS/MQTT layer is explicitly excluded from critical motor safety loops. In t
 <ul>
 <li>4 × Johnson 12V 200 RPM DC Gear Motors.</li>
 <li>2 × BTS7960 43A High-Power H-Bridge Motor Drivers.</li>
-<li>4 × E18-D80NK IR Proximity Obstacle Sensors (Front-Left, Front-Right, Rear-Left, Rear-Right).</li>
+<li>4 × HC-SR04 Ultrasonic Sensors (Front-Left, Front-Right, Rear-Left, Rear-Right).</li>
 <li>1 × INA219 Current and Voltage Monitor (I2C).</li>
 </ul>
 <h3 id="master-to-motor-command-set">Master-to-Motor Command Set<a class="headerlink" href="#master-to-motor-command-set" title="Permanent link">&para;</a></h3>
@@ -6678,7 +6706,7 @@ Autonomous control algorithms execute inside the Master Control Manager processi
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

@@ -21,7 +21,7 @@
 **Submitted To:** ECA/CCA Department  
 **Submitted By:** KMC Robotics Club & Student Committee  
 **Institution:** Kathmandu Model Secondary School  
-**Requested Amount:** NPR 50,000 (Fifty Thousand)  
+**Requested Amount:** NPR 50,000 (Fifty Thousand) [Total Component Bill: NPR 57,600 | Team Co-Funded: NPR 7,600]  
 
 ---
 
@@ -31,7 +31,7 @@
 **The Department of Extra-Curricular Activities (ECA / CCA),**  
 Kathmandu Model Secondary School (KMC), Kathmandu, Nepal  
 
-### **Subject: Request for Grant Funding of NPR 50,000 for Project PRAYAS V1 (Modular AI Humanoid Assistant Robot)**
+### **Subject: Request for Grant Funding of NPR 50,000 for Project PRAYAS V1 (Modular AI Humanoid Assistant Robot — Total Component Bill: NPR 57,600)**
 
 Respected Sir/Madam,
 
@@ -39,7 +39,7 @@ With due respect, the **KMC Robotics Club**, in collaboration with the **KMC Stu
 
 Over the past academic year, our club members have dedicated hundreds of hours to mastering embedded electronics, microcontrollers, mechanical fabrication, and artificial intelligence. Through rigorous research and prototyping, our team has engineered **PRAYAS** — an ambitious, indigenous humanoid assistant robot combining real-time natural language voice AI, edge vision intelligence, 7-degree-of-freedom gestural arm manipulators, and a differential motorized mobility chassis controlled via a distributed 6-node ESP32 architecture.
 
-To fabricate the functional prototype, we respectfully request financial assistance of **NPR 50,000 (Fifty Thousand Nepalese Rupees)** from the ECA/CCA Department. This funding will directly cover essential high-torque DC motors, metal gear servo joint actuators, lithium battery power management packs, sensor arrays, and precision structural fabrication materials.
+To fabricate the functional prototype, the total estimated component bill is **NPR 57,600 (Fifty-Seven Thousand Six Hundred Nepalese Rupees)**. Through team fundraising and club co-funding, we are absorbing **NPR 7,600**, and respectfully request grant financial assistance of **NPR 50,000 (Fifty Thousand Nepalese Rupees)** from the ECA/CCA Department. This funding will directly cover essential high-torque DC motors, metal gear servo joint actuators, lithium battery power management packs, sensor arrays, and precision structural fabrication materials.
 
 ### Our Determination & Courage to Build PRAYAS
 Building an AI-powered humanoid assistant in a high school environment is a pioneering endeavor. Our team possesses the courage, technical capability, and resilience required to overcome complex engineering challenges. Despite working out of temporary classrooms and managing delicate components under tight constraints, we have already engineered the full distributed firmware architecture, circuit schematics, and mechanical CAD frames. We are fully determined to demonstrate that KMC students can design and build state-of-the-art robotics comparable to university-level engineering projects.
@@ -60,7 +60,7 @@ Respectfully submitted,
 **Submitted To:** ECA/CCA Department  
 **Submitted By:** KMC Robotics Club & Student Committee  
 **Institution:** Kathmandu Model Secondary School  
-**Requested Amount:** NPR 50,000 (Fifty Thousand)  
+**Requested Amount:** NPR 50,000 (Fifty Thousand) [Total Bill: NPR 57,600 | Club Co-Funding: NPR 7,600]  
 
 ```
    ┌──────────────────────────────────────────────────────────┐
@@ -118,35 +118,37 @@ PRAYAS eliminates single-processor bottlenecks by utilizing a **Distributed Mult
 
 ---
 
-## 4. ITEMIZED FINANCIAL BUDGET (NPR 50,000)
+## 4. ITEMIZED FINANCIAL BUDGET (GRANT REQUEST: NPR 50,000)
 
-The total requested grant is **NPR 50,000**. The table below details the exact breakdown of electronics, actuators, power systems, and structural materials required.
+The total estimated component bill for PRAYAS V1 is **NPR 57,600**. The KMC Robotics Club will contribute **NPR 7,600** through member contributions and internal fundraising, bringing the net requested grant from the ECA/CCA Department to **NPR 50,000**.
 
 | S.N. | Category & Component Description | Qty | Unit Cost (NPR) | Total Cost (NPR) |
 | :--- | :--- | :---: | :---: | :---: |
 | **1** | **Microcontrollers & Processing Nodes** | | | |
-| 1.1 | ESP32-WROOM-32 Microcontroller Boards (Master, Motor, Servo) | 3 | 950 | 2,850 |
-| 1.2 | ESP32-S3-CAM AI Node + INMP441 Microphone + MAX98357A DAC + 10W Speaker | 1 | 4,200 | 4,200 |
-| 1.3 | ESP32-CAM Board with External Antenna (Video Node) | 1 | 1,800 | 1,800 |
+| 1.1 | ESP32-WROOM-32 Microcontroller Boards (Master, Motor, Servo) | 3 | 1,100 | 3,300 |
+| 1.2 | ESP32-S3-CAM AI Node + INMP441 Microphone + MAX98357A DAC + 10W Speaker | 1 | 7,000 | 7,000 |
+| 1.3 | ESP32-CAM Board with External Antenna (Video Node) | 1 | 1,100 | 1,100 |
 | 1.4 | 3.5" SPI TFT LCD Touch Display Module (Dashboard Node) | 1 | 3,200 | 3,200 |
-| 1.5 | Arduino Nano ATmega328P (Sensor Node) | 1 | 650 | 650 |
+| 1.5 | Arduino Nano ATmega328P (Sensor Node) | 1 | 600 | 600 |
 | **2** | **Motors, Drivers & Servo Actuators** | | | |
 | 2.1 | Johnson 12V 200RPM Heavy Duty Metal Geared DC Motors | 4 | 1,850 | 7,400 |
-| 2.2 | BTS7960 43A High Power H-Bridge Motor Driver Modules | 2 | 1,450 | 2,900 |
+| 2.2 | BTS7960 43A High Power H-Bridge Motor Driver Modules | 2 | 1,400 | 2,800 |
 | 2.3 | MG995 High Torque Metal Gear Servos (Arms & Neck Joints) | 7 | 850 | 5,950 |
-| 2.4 | PCA9685 16-Channel 12-Bit I2C PWM Servo Driver Module | 1 | 750 | 750 |
+| 2.4 | PCA9685 16-Channel 12-Bit I2C PWM Servo Driver Module | 1 | 700 | 700 |
 | **3** | **Power System & Electrical Management** | | | |
 | 3.1 | High-Capacity 18650 Li-ion Cells (3S4P Pack - 11.1V 10.4Ah) | 12 | 350 | 4,200 |
-| 3.2 | 3S 40A Balanced Li-ion BMS Protection Board + Holders | 1 | 1,200 | 1,200 |
+| 3.2 | 3S 40A Balanced Li-ion BMS Protection Board + Holders | 1 | 1,100 | 1,100 |
 | 3.3 | Heavy Duty 5V 20A Buck Step-Down Converter (Servo Power Rail) | 1 | 1,600 | 1,600 |
 | 3.4 | 5V 3A Dual Buck Voltage Regulators (Logic Rails) | 2 | 400 | 800 |
-| 3.5 | XT60 Connectors, Heavy Duty Gauge Wire, 20A Inline Fuses & Switches | 1 Set | 1,200 | 1,200 |
+| 3.5 | XT60 Connectors, Heavy Duty Gauge Wire, 20A Inline Fuses & Switches | 1 Set | 1,100 | 1,100 |
 | **4** | **Chassis Materials & Hardware Fabrication** | | | |
-| 4.1 | 3D Printer PETG/PLA+ Filament Spools (Torso, Arm Joints & Head Shell) | 3 | 1,500 | 4,500 |
+| 4.1 | 3D Printer PETG/PLA+ Filament Spools & Custom Fabrication Services | 6 | 1,650 | 9,900 |
 | 4.2 | 12mm High-Density Plywood Base Deck & Aluminum Structural Rods | 1 Set | 2,200 | 2,200 |
 | 4.3 | Heavy-Duty 10cm Rubber All-Terrain Wheels + Motor Shaft Couplers | 4 | 450 | 1,800 |
-| 4.4 | Sunboard Outer Shroud, 4" PVC Torso Column, Hardware & Fasteners | 1 Set | 2,800 | 2,800 |
-| | **TOTAL PROJECT FUNDING REQUESTED** | | | **NPR 50,000** |
+| 4.4 | Sunboard Outer Shroud, 4" PVC Torso Column, Hardware & Fasteners | 1 Set | 2,850 | 2,850 |
+| | **TOTAL ESTIMATED COMPONENT BILL** | | | **NPR 57,600** |
+| | **LESS: ROBOTICS CLUB & TEAM CO-FUNDING CONTRIBUTION** | | | **-NPR 7,600** |
+| | **NET GRANT REQUESTED FROM ECA/CCA** | | | **NPR 50,000** |
 
 ---
 

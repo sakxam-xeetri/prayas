@@ -398,6 +398,14 @@
             </svg>
             AI NODE MANUAL
           </a>
+          <a href="motor_node.html" class="btn-pill btn-pill-dark"
+            style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #78350f; border-color: #b45309; color: white;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: #fde047;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            MOTOR NODE SPEC
+          </a>
           <a href="esp32s3_cam.html" class="btn-pill btn-pill-dark"
             style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #be185d; border-color: #9d174d; color: white;">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:14px; height:14px; stroke: white;">
@@ -450,7 +458,7 @@
             </svg>
             Core Axiom #2
           </div>
-          <div class="desc"><strong>Safety remains LOCAL.</strong> Motor Node hardware IR sensors override Master
+          <div class="desc"><strong>Safety remains LOCAL.</strong> Motor Node hardware HC-SR04 ultrasonic sensors override Master
             commands instantly to prevent collisions.</div>
         </div>
 
@@ -548,7 +556,7 @@
           <div class="node-box" id="node-sub-motor">
             <span class="node-tag" style="color: #f43f5e;">NODE 0x02 • MOTOR NODE (ESP32)</span>
             <div class="node-name">4x Motors + BTS7960</div>
-            <div class="node-subtext">IR Obstacle Sensors + INA219 Current Monitor. <strong style="color: #f43f5e;">Local
+            <div class="node-subtext">4x HC-SR04 Ultrasonic Sensors (FL/FR/RL/RR). <strong style="color: #f43f5e;">Local
                 Hardware Safety Override</strong> active.</div>
           </div>
 
@@ -606,7 +614,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
-          Simulate Safety: IR Obstacle Detected!
+          Simulate Safety: Ultrasonic Obstacle Detected!
         </button>
 
         <button class="sim-btn btn-danger" onclick="triggerSimulation('emergency_stop')">
@@ -772,8 +780,8 @@
               </tr>
               <tr>
                 <td><span class="priority-rank" style="background: #f97316;">PRIORITY 2</span></td>
-                <td><strong>LOCAL IR SAFETY</strong></td>
-                <td>Motor Node IR hardware sensor detects obstacle &lt;15cm. Overrides Master movement.</td>
+                <td><strong>LOCAL ULTRASONIC SAFETY</strong></td>
+                <td>Motor Node HC-SR04 ultrasonic sensor detects obstacle &lt;20cm. Overrides Master movement.</td>
               </tr>
               <tr>
                 <td><span class="priority-rank" style="background: #7e22ce;">PRIORITY 3</span></td>
@@ -873,13 +881,13 @@
           <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px;">
             Receives movement commands (<code style="background: var(--bg-card-alt); padding: 2px 4px;">FORWARD</code>,
             <code style="background: var(--bg-card-alt); padding: 2px 4px;">BACKWARD</code>, <code
-              style="background: var(--bg-card-alt); padding: 2px 4px;">SPEED_CONTROL</code>). Manages PWM and direction
-            signals locally. Monitors INA219 current draw.
+              style="background: var(--bg-card-alt); padding: 2px 4px;">SPEED_CONTROL</code>). Manages PWM (RPWM/LPWM) and direction
+            signals locally across dual BTS7960 H-bridges.
           </p>
           <div
             style="background: #fef2f2; border: 1px solid #fecaca; padding: 10px; font-size: 0.82rem; color: #991b1b;">
             <strong>Local Obstacle Protection:</strong> Even if Master sends <code style="color:#991b1b;">FORWARD</code>,
-            the Motor Node checks front IR sensors locally. If obstacle detected, it immediately halts motors and replies
+            the Motor Node checks 4x HC-SR04 sensors locally. If an obstacle is detected within 20cm, it immediately halts motors and replies
             <code style="color:#991b1b;">OBSTACLE_STOP</code> to Master.
           </div>
         </div>
@@ -961,7 +969,7 @@
           <tr>
             <td><strong style="color: #f59e0b; font-family: var(--font-mono);">I2C Bus</strong></td>
             <td>Hardware Peripheral</td>
-            <td>ESP32 ↔ PCA9685 Servo Driver, INA219 Current Sensor, MPU6050 IMU.</td>
+            <td>ESP32 ↔ PCA9685 Servo Driver, MPU6050 IMU.</td>
             <td>&lt; 1 ms</td>
           </tr>
           <tr>
@@ -1130,7 +1138,7 @@ struct PrayasPacket {
         document.getElementById('node-master').classList.add('active-warning');
         document.getElementById('node-sub-motor').classList.add('active-warning');
 
-        appendLog(term, timeStr, 'MOTOR_IR_SAFETY', 'EVENT=IR_OBSTACLE_DETECTED (<15cm)', 'LOCAL OVERRIDE: Motor Node intercepted FORWARD command and applied emergency braking! Status OBSTACLE_STOP sent to Master.', 'err');
+        appendLog(term, timeStr, 'MOTOR_ULTRASONIC_SAFETY', 'EVENT=ULTRASONIC_OBSTACLE_DETECTED (<20cm)', 'LOCAL OVERRIDE: Motor Node intercepted FORWARD command and applied emergency braking! Status OBSTACLE_STOP sent to Master.', 'err');
       }
       else if (type === 'emergency_stop') {
         document.querySelectorAll('.node-box').forEach(el => el.classList.add('active-danger'));

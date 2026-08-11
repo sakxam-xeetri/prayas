@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -783,6 +783,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Funding_Proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ECA Funding Proposal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1277,10 +1305,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" class="md-nav__link">
+  <a href="#hc-sr04-ultrasonic-obstacle-sensors-4-sensor-array" class="md-nav__link">
     <span class="md-ellipsis">
       
-        E18-D80NK IR Obstacle Sensors (4-Sensor Array)
+        HC-SR04 Ultrasonic Obstacle Sensors (4-Sensor Array)
       
     </span>
   </a>
@@ -1327,10 +1355,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-to-4-ir-sensors-connections" class="md-nav__link">
+  <a href="#esp32-to-4-ultrasonic-sensors-connections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 to 4 IR Sensors Connections
+        ESP32 to 4 Ultrasonic Sensors Connections
       
     </span>
   </a>
@@ -4965,10 +4993,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" class="md-nav__link">
+  <a href="#hc-sr04-ultrasonic-obstacle-sensors-4-sensor-array" class="md-nav__link">
     <span class="md-ellipsis">
       
-        E18-D80NK IR Obstacle Sensors (4-Sensor Array)
+        HC-SR04 Ultrasonic Obstacle Sensors (4-Sensor Array)
       
     </span>
   </a>
@@ -5015,10 +5043,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#esp32-to-4-ir-sensors-connections" class="md-nav__link">
+  <a href="#esp32-to-4-ultrasonic-sensors-connections" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ESP32 to 4 IR Sensors Connections
+        ESP32 to 4 Ultrasonic Sensors Connections
       
     </span>
   </a>
@@ -5226,13 +5254,13 @@
 <h3 id="what-this-node-controls">What this Node Controls<a class="headerlink" href="#what-this-node-controls" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Motors</strong>: Actuates the 4 wheels (10 cm Diameter, 4 cm Width) using H-bridge drivers in a 4x4 differential drive setup.</li>
-<li><strong>Sensors</strong>: Interfaces with <strong>4 infrared obstacle sensors</strong> (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.</li>
+<li><strong>Sensors</strong>: Interfaces with <strong>4 ultrasonic sensors (HC-SR04 or equivalent)</strong> (Front-Left, Front-Right, Rear-Left, Rear-Right) to monitor 360° proximity around the locomotion base.</li>
 </ul>
 <h3 id="responsibilities-of-the-node">Responsibilities of the Node<a class="headerlink" href="#responsibilities-of-the-node" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Receive directional and speed commands.</li>
 <li>Translate these commands into electrical signals that control motor speed and direction.</li>
-<li>Sample all 4 infrared sensors continuously.</li>
+<li>Sample all 4 ultrasonic sensors continuously.</li>
 <li>Halt all motion immediately if an obstacle is detected in any direction of travel.</li>
 </ul>
 <hr />
@@ -5273,10 +5301,22 @@
 <td style="text-align: left;">Wheels mounted to motor shafts via 100mm flange hubs.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>E18-D80NK IR Sensors</strong></td>
+<td style="text-align: left;"><strong>HC-SR04 Ultrasonic Sensors</strong></td>
 <td style="text-align: center;">4</td>
-<td style="text-align: left;">Adjustable Range (3–80 cm), Active LOW</td>
+<td style="text-align: left;">Range (2–400 cm), 5V Operating Voltage</td>
 <td style="text-align: left;">Proximity sensors detecting obstacles (FL, FR, RL, RR).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Motor Clamps / Mounts</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Heavy-Duty Aluminum / Steel Mount Brackets</td>
+<td style="text-align: left;">Securely mount the Johnson DC motors to the base plate.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PCB / Perfboard</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Standard Prototyping Perfboard (Base)</td>
+<td style="text-align: left;">Base circuit board for power distribution &amp; signal headers.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Power Input Connector</strong></td>
@@ -5306,7 +5346,7 @@
 <p><strong>What it is</strong>: A small, low-cost microcontroller development board with a dual-core processor and digital input/output (GPIO) pins.</p>
 <p><img alt="ESP32 DevKitC v4 Pinout Diagram" src="../../assets/img/esp32-devkitC-v4-pinout.png" style="display: block; margin: 0 auto;" width="500" />
 *   <strong>Why it is used</strong>: It provides fast processing speeds, hardware timers capable of generating precise Pulse Width Modulation (PWM) signals, and has enough GPIO pins to handle the sensors and drivers.
-*   <strong>How it works inside PRAYAS</strong>: It acts as the local brain of the Motor Node. It reads the digital states of the IR sensors and outputs the control signals (speed and direction) to the motor drivers.</p>
+*   <strong>How it works inside PRAYAS</strong>: It acts as the local brain of the Motor Node. It reads distance echo signals from the ultrasonic sensors and outputs control signals (speed and direction) to the motor drivers.</p>
 </li>
 </ul>
 <h3 id="bts7960-motor-driver">BTS7960 Motor Driver<a class="headerlink" href="#bts7960-motor-driver" title="Permanent link">&para;</a></h3>
@@ -5327,21 +5367,17 @@
 *   <strong>How it works inside PRAYAS</strong>: Four motors drive the wheels. They are wired in parallel groups (two on the left, two on the right) to run a 4-wheel-drive differential chassis.</p>
 </li>
 </ul>
-<h3 id="e18-d80nk-ir-obstacle-sensors-4-sensor-array">E18-D80NK IR Obstacle Sensors (4-Sensor Array)<a class="headerlink" href="#e18-d80nk-ir-obstacle-sensors-4-sensor-array" title="Permanent link">&para;</a></h3>
+<h3 id="hc-sr04-ultrasonic-obstacle-sensors-4-sensor-array">HC-SR04 Ultrasonic Obstacle Sensors (4-Sensor Array)<a class="headerlink" href="#hc-sr04-ultrasonic-obstacle-sensors-4-sensor-array" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><strong>What it is</strong>: Infrared proximity sensors emitting a modulated beam and detecting reflection from nearby obstacles.</p>
-<p><img alt="E18-D80NK IR Sensor" src="../../assets/img/ed18_sensor.jpg" style="display: block; margin: 0 auto;" width="250" />
-*   <em>Reference</em>: <a href="https://handsontec.com/dataspecs/sensor/E18-D80NK%20IR%20Sensor.pdf">E18-D80NK Datasheet Reference</a>
-*   <strong>Why it is used</strong>: Provides instantaneous, hardware-level digital collision detection.
-*   <strong>How it works inside PRAYAS</strong>: Four sensors are mounted on the base deck corners: Front-Left (FL), Front-Right (FR), Rear-Left (RL), and Rear-Right (RR). If any sensor detects an obstacle within 20 cm, its output pin pulls LOW, signaling the ESP32 safety watchdog to immediately apply emergency dynamic braking.</p>
-</li>
+<li><strong>What it is</strong>: Ultrasonic distance measurement sensors emitting a 40 kHz acoustic burst and measuring the round-trip echo pulse duration.</li>
+<li><strong>Why it is used</strong>: Provides accurate non-contact distance measurement (2 cm to 400 cm), unaffected by ambient lighting or surface color contrast.</li>
+<li><strong>How it works inside PRAYAS</strong>: Four sensors are mounted on the base deck perimeter: Front, Left, Right, and Rear. The ESP32 drives dedicated trigger pins (GPIO 16, 17, 18, 19) and reads returned Echo pulses on input pins (GPIO 34, 35, 32, 33) through 1kΩ / 2kΩ voltage dividers to step down the 5V Echo signals to 3.3V logic levels. If an obstacle is detected within 20 cm in the direction of motion, the safety watchdog immediately engages emergency dynamic braking.</li>
 </ul>
 <hr />
 <h2 id="4-circuit-connection">4. Circuit Connection<a class="headerlink" href="#4-circuit-connection" title="Permanent link">&para;</a></h2>
 <p>This section details how to connect the components of the Motor Node.</p>
 <h3 id="esp32-to-bts7960-connections">ESP32 to BTS7960 Connections<a class="headerlink" href="#esp32-to-bts7960-connections" title="Permanent link">&para;</a></h3>
-<p>Control signals are routed from the ESP32 to the logic inputs of the H-bridges:</p>
+<p>Control signals are routed from the ESP32 to the logic inputs of the H-bridges (<code>R_EN</code> and <code>L_EN</code> are permanently tied to 5V VCC; <code>R_IS</code> and <code>L_IS</code> are left unconnected):</p>
 <table>
 <thead>
 <tr>
@@ -5353,43 +5389,37 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>GPIO 12</strong></td>
-<td style="text-align: left;">L_PWM</td>
-<td style="text-align: left;">Left Driver (Driver 1)</td>
-<td style="text-align: left;">Left forward speed signal (PWM)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>GPIO 13</strong></td>
-<td style="text-align: left;">R_PWM</td>
-<td style="text-align: left;">Left Driver (Driver 1)</td>
-<td style="text-align: left;">Left reverse speed signal (PWM)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>GPIO 14</strong></td>
-<td style="text-align: left;">L_EN &amp; R_EN (Tied)</td>
-<td style="text-align: left;">Left Driver (Driver 1)</td>
-<td style="text-align: left;">Left driver enable control</td>
-</tr>
-<tr>
 <td style="text-align: left;"><strong>GPIO 25</strong></td>
-<td style="text-align: left;">L_PWM</td>
-<td style="text-align: left;">Right Driver (Driver 2)</td>
-<td style="text-align: left;">Right forward speed signal (PWM)</td>
+<td style="text-align: left;">RPWM</td>
+<td style="text-align: left;">Left Driver (Driver 1)</td>
+<td style="text-align: left;">Left-side motor forward PWM signal</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 26</strong></td>
-<td style="text-align: left;">R_PWM</td>
-<td style="text-align: left;">Right Driver (Driver 2)</td>
-<td style="text-align: left;">Right reverse speed signal (PWM)</td>
+<td style="text-align: left;">LPWM</td>
+<td style="text-align: left;">Left Driver (Driver 1)</td>
+<td style="text-align: left;">Left-side motor reverse PWM signal</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 27</strong></td>
-<td style="text-align: left;">L_EN &amp; R_EN (Tied)</td>
+<td style="text-align: left;">RPWM</td>
 <td style="text-align: left;">Right Driver (Driver 2)</td>
-<td style="text-align: left;">Right driver enable control</td>
+<td style="text-align: left;">Right-side motor forward PWM signal</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>5V</strong></td>
+<td style="text-align: left;"><strong>GPIO 14</strong></td>
+<td style="text-align: left;">LPWM</td>
+<td style="text-align: left;">Right Driver (Driver 2)</td>
+<td style="text-align: left;">Right-side motor reverse PWM signal</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5V Rail</strong></td>
+<td style="text-align: left;">R_EN &amp; L_EN</td>
+<td style="text-align: left;">Both Drivers</td>
+<td style="text-align: left;">Driver enables (permanently enabled via 5V VCC)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>5V Rail</strong></td>
 <td style="text-align: left;">VCC</td>
 <td style="text-align: left;">Both Drivers</td>
 <td style="text-align: left;">Logic power supply for drivers</td>
@@ -5415,66 +5445,60 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Left Driver M+</strong></td>
-<td style="text-align: left;">(+) Terminals</td>
+<td style="text-align: left;"><strong>Left Driver M+ / M-</strong></td>
+<td style="text-align: left;">(+) &amp; (-) Terminals</td>
 <td style="text-align: left;">Left Front &amp; Left Rear Motors</td>
-<td style="text-align: left;">Drives the left side wheels forward</td>
+<td style="text-align: left;">Drives both left-side wheels in parallel</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Left Driver M-</strong></td>
-<td style="text-align: left;">(-) Terminals</td>
-<td style="text-align: left;">Left Front &amp; Left Rear Motors</td>
-<td style="text-align: left;">Drives the left side wheels backward</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Right Driver M+</strong></td>
-<td style="text-align: left;">(+) Terminals</td>
+<td style="text-align: left;"><strong>Right Driver M+ / M-</strong></td>
+<td style="text-align: left;">(+) &amp; (-) Terminals</td>
 <td style="text-align: left;">Right Front &amp; Right Rear Motors</td>
-<td style="text-align: left;">Drives the right side wheels forward</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Right Driver M-</strong></td>
-<td style="text-align: left;">(-) Terminals</td>
-<td style="text-align: left;">Right Front &amp; Right Rear Motors</td>
-<td style="text-align: left;">Drives the right side wheels backward</td>
+<td style="text-align: left;">Drives both right-side wheels in parallel</td>
 </tr>
 </tbody>
 </table>
-<h3 id="esp32-to-4-ir-sensors-connections">ESP32 to 4 IR Sensors Connections<a class="headerlink" href="#esp32-to-4-ir-sensors-connections" title="Permanent link">&para;</a></h3>
-<p>Sensors require 5V power and return digital signals to ESP32 input-only pins:</p>
+<h3 id="esp32-to-4-ultrasonic-sensors-connections">ESP32 to 4 Ultrasonic Sensors Connections<a class="headerlink" href="#esp32-to-4-ultrasonic-sensors-connections" title="Permanent link">&para;</a></h3>
+<p>Sensors require 5V VCC power, common ground, dedicated Trigger outputs, and Echo input signals connected via 1kΩ / 2kΩ voltage dividers to protect ESP32 3.3V GPIOs:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">IR Sensor Module</th>
-<th style="text-align: left;">Wire Color</th>
+<th style="text-align: left;">Ultrasonic Sensor Module</th>
+<th style="text-align: left;">Sensor Pin</th>
 <th style="text-align: left;">ESP32 Pin</th>
-<th style="text-align: left;">Pin Function</th>
+<th style="text-align: left;">Connection &amp; Protection</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>Front-Left IR Sensor</strong></td>
-<td style="text-align: left;">Brown / Blue / Black</td>
-<td style="text-align: left;"><strong>5V / GND / GPIO 34</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW, GPI 34)</td>
+<td style="text-align: left;"><strong>Front HC-SR04</strong></td>
+<td style="text-align: left;">TRIG / ECHO</td>
+<td style="text-align: left;"><strong>GPIO 16 / GPIO 34</strong></td>
+<td style="text-align: left;">TRIG: Direct GPIO 16. ECHO: GPIO 34 via 1kΩ/2kΩ divider.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Front-Right IR Sensor</strong></td>
-<td style="text-align: left;">Brown / Blue / Black</td>
-<td style="text-align: left;"><strong>5V / GND / GPIO 35</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW, GPI 35)</td>
+<td style="text-align: left;"><strong>Left HC-SR04</strong></td>
+<td style="text-align: left;">TRIG / ECHO</td>
+<td style="text-align: left;"><strong>GPIO 17 / GPIO 35</strong></td>
+<td style="text-align: left;">TRIG: Direct GPIO 17. ECHO: GPIO 35 via 1kΩ/2kΩ divider.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Rear-Left IR Sensor</strong></td>
-<td style="text-align: left;">Brown / Blue / Black</td>
-<td style="text-align: left;"><strong>5V / GND / GPIO 36</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW, GPI 36)</td>
+<td style="text-align: left;"><strong>Right HC-SR04</strong></td>
+<td style="text-align: left;">TRIG / ECHO</td>
+<td style="text-align: left;"><strong>GPIO 18 / GPIO 32</strong></td>
+<td style="text-align: left;">TRIG: Direct GPIO 18. ECHO: GPIO 32 via 1kΩ/2kΩ divider.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>Rear-Right IR Sensor</strong></td>
-<td style="text-align: left;">Brown / Blue / Black</td>
-<td style="text-align: left;"><strong>5V / GND / GPIO 39</strong></td>
-<td style="text-align: left;">Digital sensor output (Active LOW, GPI 39)</td>
+<td style="text-align: left;"><strong>Rear HC-SR04</strong></td>
+<td style="text-align: left;">TRIG / ECHO</td>
+<td style="text-align: left;"><strong>GPIO 19 / GPIO 33</strong></td>
+<td style="text-align: left;">TRIG: Direct GPIO 19. ECHO: GPIO 33 via 1kΩ/2kΩ divider.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>All Sensors VCC / GND</strong></td>
+<td style="text-align: left;">VCC / GND</td>
+<td style="text-align: left;"><strong>5V / GND</strong></td>
+<td style="text-align: left;">5V Power rail from buck converter &amp; common ground</td>
 </tr>
 </tbody>
 </table>
@@ -5493,81 +5517,95 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><strong>GPIO 12</strong></td>
-<td style="text-align: left;">Left Driver L_PWM</td>
-<td style="text-align: center;">Output</td>
-<td style="text-align: left;">Left forward speed (PWM)</td>
-<td style="text-align: left;"><strong>Boot Strap Pin (MTDI)</strong>: Must be LOW at boot.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>GPIO 13</strong></td>
-<td style="text-align: left;">Left Driver R_PWM</td>
-<td style="text-align: center;">Output</td>
-<td style="text-align: left;">Left reverse speed (PWM)</td>
-<td style="text-align: left;">Safe to use.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>GPIO 14</strong></td>
-<td style="text-align: left;">Left Driver EN</td>
-<td style="text-align: center;">Output</td>
-<td style="text-align: left;">Left driver enable control</td>
-<td style="text-align: left;">Safe to use.</td>
-</tr>
-<tr>
 <td style="text-align: left;"><strong>GPIO 25</strong></td>
-<td style="text-align: left;">Right Driver L_PWM</td>
+<td style="text-align: left;">Left Driver RPWM</td>
 <td style="text-align: center;">Output</td>
-<td style="text-align: left;">Right forward speed (PWM)</td>
+<td style="text-align: left;">Left motor forward PWM signal</td>
 <td style="text-align: left;">Safe to use.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 26</strong></td>
-<td style="text-align: left;">Right Driver R_PWM</td>
+<td style="text-align: left;">Left Driver LPWM</td>
 <td style="text-align: center;">Output</td>
-<td style="text-align: left;">Right reverse speed (PWM)</td>
+<td style="text-align: left;">Left motor reverse PWM signal</td>
 <td style="text-align: left;">Safe to use.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 27</strong></td>
-<td style="text-align: left;">Right Driver EN</td>
+<td style="text-align: left;">Right Driver RPWM</td>
 <td style="text-align: center;">Output</td>
-<td style="text-align: left;">Right driver enable control</td>
+<td style="text-align: left;">Right motor forward PWM signal</td>
+<td style="text-align: left;">Safe to use.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 14</strong></td>
+<td style="text-align: left;">Right Driver LPWM</td>
+<td style="text-align: center;">Output</td>
+<td style="text-align: left;">Right motor reverse PWM signal</td>
+<td style="text-align: left;">Safe to use.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 16</strong></td>
+<td style="text-align: left;">Front Sensor TRIG</td>
+<td style="text-align: center;">Output</td>
+<td style="text-align: left;">Front ultrasonic 10 µs trigger pulse</td>
 <td style="text-align: left;">Safe to use.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 34</strong></td>
-<td style="text-align: left;">Front-Left IR Out</td>
+<td style="text-align: left;">Front Sensor ECHO</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">FL obstacle sensor input</td>
-<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
+<td style="text-align: left;">Front ultrasonic echo input (via 1k/2k divider)</td>
+<td style="text-align: left;">Input-only GPI pin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 17</strong></td>
+<td style="text-align: left;">Left Sensor TRIG</td>
+<td style="text-align: center;">Output</td>
+<td style="text-align: left;">Left ultrasonic 10 µs trigger pulse</td>
+<td style="text-align: left;">Safe to use.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 35</strong></td>
-<td style="text-align: left;">Front-Right IR Out</td>
+<td style="text-align: left;">Left Sensor ECHO</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">FR obstacle sensor input</td>
-<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
+<td style="text-align: left;">Left ultrasonic echo input (via 1k/2k divider)</td>
+<td style="text-align: left;">Input-only GPI pin.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 36</strong></td>
-<td style="text-align: left;">Rear-Left IR Out</td>
-<td style="text-align: center;">Input</td>
-<td style="text-align: left;">RL obstacle sensor input</td>
-<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
+<td style="text-align: left;"><strong>GPIO 18</strong></td>
+<td style="text-align: left;">Right Sensor TRIG</td>
+<td style="text-align: center;">Output</td>
+<td style="text-align: left;">Right ultrasonic 10 µs trigger pulse</td>
+<td style="text-align: left;">Safe to use.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><strong>GPIO 39</strong></td>
-<td style="text-align: left;">Rear-Right IR Out</td>
+<td style="text-align: left;"><strong>GPIO 32</strong></td>
+<td style="text-align: left;">Right Sensor ECHO</td>
 <td style="text-align: center;">Input</td>
-<td style="text-align: left;">RR obstacle sensor input</td>
-<td style="text-align: left;">Input-only GPI pin. Internal/external pull-up.</td>
+<td style="text-align: left;">Right ultrasonic echo input (via 1k/2k divider)</td>
+<td style="text-align: left;">Internal pull-down.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 19</strong></td>
+<td style="text-align: left;">Rear Sensor TRIG</td>
+<td style="text-align: center;">Output</td>
+<td style="text-align: left;">Rear ultrasonic 10 µs trigger pulse</td>
+<td style="text-align: left;">Safe to use.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPIO 33</strong></td>
+<td style="text-align: left;">Rear Sensor ECHO</td>
+<td style="text-align: center;">Input</td>
+<td style="text-align: left;">Rear ultrasonic echo input (via 1k/2k divider)</td>
+<td style="text-align: left;">Internal pull-down.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>GPIO 2</strong></td>
 <td style="text-align: left;">Onboard LED</td>
 <td style="text-align: center;">Output</td>
 <td style="text-align: left;">Status indicator (blinking)</td>
-<td style="text-align: left;"><strong>Boot Strap Pin</strong>: Must be LOW or floating at boot.</td>
+<td style="text-align: left;"><strong>Boot Strap Pin</strong>: Must be LOW at boot.</td>
 </tr>
 </tbody>
 </table>
@@ -5578,8 +5616,8 @@
 <li><strong>Battery Input</strong>: The robot runs on a 12V Li-Ion battery pack. It is connected to the system using a high-current XT60 connector.</li>
 <li><strong>Voltage used by Motors</strong>: The 4 Johnson DC motors are powered directly by the 12V battery rail through the BTS7960 drivers to maximize torque.</li>
 <li><strong>Voltage used by ESP32</strong>: The ESP32 cannot handle 12V directly. A 5V DC-to-DC buck regulator steps down the 12V battery power to 5V, which is fed into the ESP32 Vin pin.</li>
-<li><strong>Voltage used by Sensors</strong>: The E18-D80NK IR proximity sensors require 5V to power their internal optical circuits. They are wired to the 5V output of the buck regulator.</li>
-<li><strong>Common Ground</strong>: The negative terminals of the battery, H-bridges, 5V regulator, ESP32 ground pins, and IR sensors must all be connected to a single point. This ensures a stable reference voltage for all logic signals.</li>
+<li><strong>Voltage used by Sensors</strong>: The HC-SR04 ultrasonic sensors require 5V to power their internal transducer drive circuits. They are wired directly to the 5V output of the buck regulator.</li>
+<li><strong>Common Ground</strong>: The negative terminals of the battery, H-bridges, 5V regulator, ESP32 ground pins, and ultrasonic sensors must all be connected to a single point. This ensures a stable reference voltage for all logic signals.</li>
 </ul>
 <h3 id="power-flow-diagram">Power Flow Diagram<a class="headerlink" href="#power-flow-diagram" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>graph TD
@@ -5594,7 +5632,7 @@
     DriverR --&gt;|12V PWM| MotorsR[Right Motors x2]
 
     Buck --&gt;|5V Rail| ESP32[ESP32 Dev Board]
-    Buck --&gt;|5V Rail| Sensors[3x IR Sensors]
+    Buck --&gt;|5V Rail| Sensors[4x HC-SR04 Ultrasonic Sensors]
 
     %% Common Ground Connections
     GND((Common Ground Point)) --- Bat
@@ -5609,13 +5647,13 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>  [ Power ON ]
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>       │
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>       ▼
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  [ ESP32 Boots ] ──&gt; Sets Pin Modes (LEDC outputs and Sensor inputs)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  [ ESP32 Boots ] ──&gt; Sets Pin Modes (PWM outputs, TRIG output, ECHO inputs)
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>       │
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       ▼
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  [ Drivers Init ] ──&gt; Sets Enables HIGH and Speed PWM to 0%
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       │
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>       ▼
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  [ Sensors Init ] ──&gt; Emitters start transmitting IR beams
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  [ Sensors Init ] ──&gt; Sends 10µs TRIG pulse on GPIO 15
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>       │
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>       ▼
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  [ Wait for Command ] ◄── Incoming directives (Forward, Turn, Stop)
@@ -5625,11 +5663,11 @@
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>  [ Command Received ]            [ Timeout Check ] ──&gt; Halt if no cmd for 500ms
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>       │
 </span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>       ▼
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  [ Check Obstacle ]
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  [ Measure Ultrasonic Echoes ]
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>       │
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>       ├── Obstacle Detected (Any IR pin LOW) ──&gt; Force Motor Speed to 0% (E-Stop)
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>       ├── Obstacle &lt; 20 cm in travel path ──&gt; Force Motor Speed to 0% (E-Stop)
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>       │
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>       └── Path Clear (All IR pins HIGH)
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>       └── Path Clear (All directional distances &gt;= 20 cm)
 </span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>               │
 </span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>               ▼
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>          [ Drive Motors ] ──&gt; Apply PWM to target H-bridges
@@ -5641,70 +5679,84 @@
 <h2 id="8-motor-functions">8. Motor Functions<a class="headerlink" href="#8-motor-functions" title="Permanent link">&para;</a></h2>
 <p>Locomotion is controlled by varying the speed and direction of the left and right motor groups:</p>
 <ul>
-<li><strong>Forward</strong>: The ESP32 drives the forward PWM pins (GPIO 12 and 25) HIGH. Both the left and right motor groups spin forward at the same speed.</li>
-<li><strong>Backward</strong>: The ESP32 drives the reverse PWM pins (GPIO 13 and 26) HIGH. Both motor groups spin backward.</li>
-<li><strong>Left</strong>: The left motor group spins backward (GPIO 13 HIGH) and the right group spins forward (GPIO 25 HIGH), pivoting the robot left.</li>
-<li><strong>Right</strong>: The right motor group spins backward (GPIO 26 HIGH) and the left group spins forward (GPIO 12 HIGH), pivoting the robot right.</li>
-<li><strong>Rotate Left</strong>: Spins the left wheels backward and right wheels forward at equal speeds to rotate the robot on its center axis.</li>
-<li><strong>Rotate Right</strong>: Spins the left wheels forward and right wheels backward at equal speeds.</li>
-<li><strong>Stop</strong>: The ESP32 sets all PWM outputs to 0. The H-bridge driver shorts the motor leads to ground to engage dynamic braking.</li>
-<li><strong>Variable Speed</strong>: Achieved by adjusting the PWM Duty Cycle (0% to 100%). By switching the 12V supply ON and OFF at a high frequency (20 kHz), the average voltage delivered to the motors changes, providing smooth speed control.</li>
+<li><strong>Forward</strong>: The ESP32 drives Left RPWM (GPIO 25) and Right RPWM (GPIO 27) with PWM signals. Both motor groups spin forward.</li>
+<li><strong>Backward</strong>: The ESP32 drives Left LPWM (GPIO 26) and Right LPWM (GPIO 14) with PWM signals. Both motor groups spin backward.</li>
+<li><strong>Left</strong>: The ESP32 drives Left LPWM (GPIO 26) and Right RPWM (GPIO 27), pivoting the robot left.</li>
+<li><strong>Right</strong>: The ESP32 drives Left RPWM (GPIO 25) and Right LPWM (GPIO 14), pivoting the robot right.</li>
+<li><strong>Rotate Left</strong>: Left wheels reverse (GPIO 26 PWM) and right wheels forward (GPIO 27 PWM) at equal speeds.</li>
+<li><strong>Rotate Right</strong>: Left wheels forward (GPIO 25 PWM) and right wheels reverse (GPIO 14 PWM) at equal speeds.</li>
+<li><strong>Stop</strong>: The ESP32 sets all PWM outputs (GPIO 25, 26, 27, 14) to 0. Dynamic braking is applied.</li>
 </ul>
 <hr />
 <h2 id="9-obstacle-detection">9. Obstacle Detection<a class="headerlink" href="#9-obstacle-detection" title="Permanent link">&para;</a></h2>
-<p>The collision avoidance system uses 3 IR proximity sensors mounted on the front edge of the plywood chassis:</p>
+<p>The 360° collision avoidance system uses <strong>4 HC-SR04 ultrasonic sensors</strong> mounted on the base deck perimeter:</p>
 <ul>
-<li><strong>Left Sensor</strong>: Angled outward at <span class="arithmatex">\(30^\circ\)</span>. It monitors the front-left travel zone.</li>
-<li><strong>Center Sensor</strong>: Mounted straight forward (<span class="arithmatex">\(0^\circ\)</span>). It monitors the direct path of travel.</li>
-<li><strong>Right Sensor</strong>: Angled outward at <span class="arithmatex">\(30^\circ\)</span>. It monitors the front-right travel zone.</li>
+<li><strong>Front Sensor</strong>: TRIG GPIO 16, ECHO GPIO 34 (via 1k/2k voltage divider).</li>
+<li><strong>Left Sensor</strong>: TRIG GPIO 17, ECHO GPIO 35 (via 1k/2k voltage divider).</li>
+<li><strong>Right Sensor</strong>: TRIG GPIO 18, ECHO GPIO 32 (via 1k/2k voltage divider).</li>
+<li><strong>Rear Sensor</strong>: TRIG GPIO 19, ECHO GPIO 33 (via 1k/2k voltage divider).</li>
 </ul>
 <h3 id="obstacle-trigger-logic-table">Obstacle Trigger Logic Table<a class="headerlink" href="#obstacle-trigger-logic-table" title="Permanent link">&para;</a></h3>
-<p>When a sensor detects an object within its adjusted range, its signal output goes LOW. The robot reacts as follows:</p>
+<p>When a sensor measures an obstacle distance under <strong>20 cm</strong>, the ESP32 safety task triggers immediate dynamic braking:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: center;">Left Sensor</th>
-<th style="text-align: center;">Center Sensor</th>
-<th style="text-align: center;">Right Sensor</th>
-<th style="text-align: center;">Detection Zone</th>
-<th style="text-align: left;">Robot Reaction</th>
+<th style="text-align: center;">Front Distance</th>
+<th style="text-align: center;">Left Distance</th>
+<th style="text-align: center;">Right Distance</th>
+<th style="text-align: center;">Rear Distance</th>
+<th style="text-align: center;">Direction</th>
+<th style="text-align: left;">Robot Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">HIGH</td>
+<td style="text-align: center;"><span class="arithmatex">\(\ge 20\text{ cm}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\ge 20\text{ cm}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\ge 20\text{ cm}\)</span></td>
+<td style="text-align: center;"><span class="arithmatex">\(\ge 20\text{ cm}\)</span></td>
 <td style="text-align: center;">Clear</td>
-<td style="text-align: left;">Travel normally</td>
+<td style="text-align: left;">Travel normally in any direction</td>
 </tr>
 <tr>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">Left Obstacle</td>
-<td style="text-align: left;">Halt forward travel. Rotate right to clear.</td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Front Blocked</td>
+<td style="text-align: left;">Halt forward travel. Allow reverse or turn away.</td>
 </tr>
 <tr>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">Center Obstacle</td>
-<td style="text-align: left;">Halt travel immediately. Reverse, then pivot away.</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Left Blocked</td>
+<td style="text-align: left;">Halt left turns/strafe. Rotate right to clear.</td>
 </tr>
 <tr>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;">HIGH</td>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;">Right Obstacle</td>
-<td style="text-align: left;">Halt forward travel. Rotate left to clear.</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Right Blocked</td>
+<td style="text-align: left;">Halt right turns/strafe. Rotate left to clear.</td>
 </tr>
 <tr>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;"><strong>LOW</strong></td>
-<td style="text-align: center;">Trap</td>
-<td style="text-align: left;">Halt immediately. Lock out forward motion.</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;">Any</td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;">Rear Blocked</td>
+<td style="text-align: left;">Halt reverse travel. Allow forward motion.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;"><strong><span class="arithmatex">\(&lt; 20\text{ cm}\)</span></strong></td>
+<td style="text-align: center;">Surrounded</td>
+<td style="text-align: left;">Emergency stop. Lock out all motion vectors.</td>
 </tr>
 </tbody>
 </table>
@@ -5721,11 +5773,11 @@
 
     %% Logic Power Distribution
     Reg --&gt;|5V| ESP[ESP32 Dev Board]
-    Reg --&gt;|5V| IR_L[Left IR Sensor]
-    Reg --&gt;|5V| IR_C[Center IR Sensor]
-    Reg --&gt;|5V| IR_R[Right IR Sensor]
-    ESP --&gt;|5V| DriverL
-    ESP --&gt;|5V| DriverR
+    Reg --&gt;|5V| US_F[Front HC-SR04]
+    Reg --&gt;|5V| US_L[Left HC-SR04]
+    Reg --&gt;|5V| US_R[Right HC-SR04]
+    Reg --&gt;|5V| US_B[Rear HC-SR04]
+    Reg --&gt;|5V VCC| DriverL &amp; DriverR
 
     %% Motor Outputs
     DriverL --&gt;|12V PWM| ML1[Left Front Motor]
@@ -5734,13 +5786,12 @@
     DriverR --&gt;|12V PWM| MR2[Right Rear Motor]
 
     %% Control Signals
-    ESP --&gt;|GPIO 12/13/14| DriverL
-    ESP --&gt;|GPIO 25/26/27| DriverR
-
-    %% Feedback Signals
-    IR_L --&gt;|GPIO 34| ESP
-    IR_C --&gt;|GPIO 35| ESP
-    IR_R --&gt;|GPIO 39| ESP</code></pre>
+    ESP --&gt;|GPIO 25 RPWM / GPIO 26 LPWM| DriverL
+    ESP --&gt;|GPIO 27 RPWM / GPIO 14 LPWM| DriverR
+    ESP --&gt;|GPIO 16 TRIG / GPIO 34 ECHO| US_F
+    ESP --&gt;|GPIO 17 TRIG / GPIO 35 ECHO| US_L
+    ESP --&gt;|GPIO 18 TRIG / GPIO 32 ECHO| US_R
+    ESP --&gt;|GPIO 19 TRIG / GPIO 33 ECHO| US_B</code></pre>
 <hr />
 <h2 id="11-notes">11. Notes<a class="headerlink" href="#11-notes" title="Permanent link">&para;</a></h2>
 <h3 id="wiring-tips">Wiring Tips<a class="headerlink" href="#wiring-tips" title="Permanent link">&para;</a></h3>
@@ -5821,7 +5872,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

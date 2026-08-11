@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -770,6 +770,34 @@
     
   
     Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Funding_Proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ECA Funding Proposal
   
 
     
@@ -4796,7 +4824,7 @@
 <li><strong>Processor</strong>: Tensilica Xtensa Dual-Core 32-bit LX6 at 240 MHz.</li>
 <li><strong>Key Tasks</strong>:<ul>
 <li><code>vMotorDriveTask</code> (Priority 5): Calculates 4WD differential kinematics for 10 cm x 4 cm wheels and updates PWM frequencies (20 kHz) to BTS7960 drivers.</li>
-<li><code>vSafetyWatchdogTask</code> (Priority 6): Monitors heartbeat packets and 4x E18-D80NK IR proximity sensors (FL, FR, RL, RR), initiating an emergency brake if an obstacle triggers any sensor.</li>
+<li><code>vSafetyWatchdogTask</code> (Priority 6): Monitors heartbeat packets and 4x HC-SR04 Ultrasonic Sensors (FL, FR, RL, RR), initiating an emergency brake if an obstacle is measured within 20 cm.</li>
 </ul>
 </li>
 </ul>
@@ -4889,7 +4917,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

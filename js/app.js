@@ -90,12 +90,12 @@ const NODE_DETAILS = {
   },
   'node-01': {
     name: 'Node 01: Motor Drivetrain',
-    desc: 'Controls four-wheel differential mobility, obstacle sensing, and current monitoring.',
+    desc: 'Controls 4WD differential mobility, 360° HC-SR04 ultrasonic obstacle sensing, and BTS7960 H-bridges.',
     steps: [
-      { title: '1. High-Current Motor Drivers', text: 'Dual BTS7960 drivers handle 4x Johnson 12V 200RPM metal geared motors.' },
-      { title: '2. Precision Current Polling', text: 'INA219 I2C sensor tracks motor draw for stall prevention and battery load analysis.' },
-      { title: '3. Proximity Safety Net', text: 'Three E18-D80NK optical IR sensors provide front and side obstacle avoidance.' },
-      { title: '4. High Power Connection', text: 'Heavy-duty XT60 plug connected to main 12V power rail with inline fuse.' }
+      { title: '1. High-Current Dual H-Bridges', text: 'Dual BTS7960 drivers (R_EN/L_EN tied to 5V VCC) drive 4x Johnson 12V 200RPM motors in parallel.' },
+      { title: '2. Dedicated 4-Channel Motor PWM', text: 'ESP32 outputs Left RPWM (GPIO 25), LPWM (GPIO 26) & Right RPWM (GPIO 27), LPWM (GPIO 14).' },
+      { title: '3. 360° Ultrasonic Safety Net', text: 'Four HC-SR04 sensors (Front: 16/34, Left: 17/35, Right: 18/32, Rear: 19/33) with 1k/2k voltage dividers on Echo pins.' },
+      { title: '4. High Power Connection & Common GND', text: 'Heavy-duty XT60 plug on main 12V power rail with inline fuse, 5V buck converter, and common ground.' }
     ]
   },
   'node-02': {

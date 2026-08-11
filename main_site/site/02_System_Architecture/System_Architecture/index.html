@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://prayas-robot.github.io/docs/02_System_Architecture/System_Architecture/">
       
       
-        <link rel="prev" href="../../01_Project/Architecture_Principles/">
+        <link rel="prev" href="../../01_Project/Funding_Proposal/">
       
       
         <link rel="next" href="../Node_Architecture/">
@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -770,6 +770,34 @@
     
   
     Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Funding_Proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ECA Funding Proposal
   
 
     
@@ -4680,7 +4708,7 @@
     %% Device Connections
     Master --&gt;|I2C| StatusOLED[0.96"/1.3" Status OLED Display]
     Motor --&gt;|PWM| Drivers[2x BTS7960 Drivers] --&gt;|12V| Motors[4x Johnson Motors &amp; 10x4cm Wheels]
-    Motor &lt;--|GPI| IRSensors[4x E18-D80NK IR Proximity Sensors]
+    Motor &lt;--|GPI| UltrasonicSensors[4x HC-SR04 Ultrasonic Sensors]
     Servo --&gt;|I2C| PCA[PCA9685 PWM Driver] --&gt;|6V| Servos[7x MG995 Servos]
     AI --&gt;|SPI| SPIDisplay[2.4" SPI TFT Display]
     AI --&gt;|I2S| Speaker[3W Speaker / Amp]
@@ -4758,7 +4786,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

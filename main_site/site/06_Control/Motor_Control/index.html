@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -770,6 +770,34 @@
     
   
     Architecture Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_Project/Funding_Proposal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ECA Funding Proposal
   
 
     
@@ -4651,13 +4679,8 @@
 </tr>
 <tr>
 <td style="text-align: left;"><strong>Proximity Sensors</strong></td>
-<td style="text-align: left;">4 × E18-D80NK IR Sensors</td>
-<td style="text-align: left;">Front-Left, Front-Right, Rear-Left, Rear-Right obstacle detection</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Current Sensor</strong></td>
-<td style="text-align: left;">1 × INA219 Monitor (I2C)</td>
-<td style="text-align: left;">Over-current protection and motor load monitoring</td>
+<td style="text-align: left;">4 × HC-SR04 Ultrasonic Sensors</td>
+<td style="text-align: left;">Front (GPIO 16/34), Left (GPIO 17/35), Right (GPIO 18/32), Rear (GPIO 19/33)</td>
 </tr>
 </tbody>
 </table>
@@ -4673,19 +4696,18 @@ To eliminate wireless latency risks during physical collision hazards, <strong>o
 </blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>MASTER ESP32  ---(FORWARD / SPEED 180)---&gt;  MOTOR NODE ESP32
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                                                |
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                        Check 4x IR Sensors
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                                    Check 4x Ultrasonic Sensors
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                |
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                       +------------------------+------------------------+
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                       |                                                 |
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                  [CLEAR]                                           [OBSTACLE]
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                  [CLEAR &gt;= 20cm]                                   [OBSTACLE &lt; 20cm]
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                       |                                                 |
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                 Execute Motion                                     HALT MOTORS (PWM 0%)
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                                                         |
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                                            Report STATUS -&gt; MASTER
 </span></code></pre></div>
 <ul>
-<li><strong>Local IR Trip</strong>: Overrides Master requests instantly and halts BTS7960 PWM outputs.</li>
-<li><strong>Current Trip</strong>: If INA219 current exceeds <span class="arithmatex">\(15 \text{ A}\)</span> for <span class="arithmatex">\(&gt; 200 \text{ ms}\)</span>, Motor Node shuts down driver outputs locally to prevent motor burn-out.</li>
+<li><strong>Local Obstacle Trip</strong>: Overrides Master requests instantly and halts BTS7960 PWM outputs if distance is <span class="arithmatex">\(&lt; 20\text{ cm}\)</span>.</li>
 <li><strong>300ms Hardware Watchdog</strong>: Halts motors if valid ESP-NOW control packets are absent for <span class="arithmatex">\(&gt; 300 \text{ ms}\)</span>.</li>
 </ul>
 
@@ -4746,7 +4768,7 @@ To eliminate wireless latency risks during physical collision hazards, <strong>o
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
