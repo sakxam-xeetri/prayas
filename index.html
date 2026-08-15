@@ -28,15 +28,14 @@
     <header>
       <div class="top-badge-wrapper"
         style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
-        <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
           <span class="top-badge">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
               </path>
             </svg>
-            PRAYAS V1 ROBOTICS
-            3</span>
+            PRAYAS V1 ROBOTICS (7 NODES)</span>
           <span class="top-badge cloud-badge" id="cloudSyncStatusBadge" onclick="openSupabaseModal()"
             style="cursor: pointer;" title="Click to configure Supabase Cloud DB">
             <span class="cloud-dot offline" id="cloudDot"></span>
@@ -71,6 +70,26 @@
                 d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             MOTOR NODE SPEC
+          </a>
+          <a href="esp32s3_cam.html" class="top-badge cloud-badge"
+            style="text-decoration: none; cursor: pointer; background: #064e3b; color: #ffffff; border-color: #059669;"
+            title="Open ESP32-S3 Camera & Vision Stream Interface">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width:14px; height:14px; stroke: #34d399;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+            CAMERA NODE SPEC
+          </a>
+          <a href="main_site/docs/all%20components.txt" target="_blank" class="top-badge cloud-badge"
+            style="text-decoration: none; cursor: pointer; background: #1e1b4b; color: #ffffff; border-color: #6366f1;"
+            title="View Raw Full Components List Document (all components.txt)">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              style="width:14px; height:14px; stroke: #a5b4fc;">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            ALL COMPONENTS LIST
           </a>
         </div>
 
