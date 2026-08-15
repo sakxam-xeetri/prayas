@@ -800,14 +800,14 @@
             </div>
         </div>
 
-        <!-- SECTION 2: Battery Pack (3S4P) -->
+        <!-- SECTION 2: Battery Pack (3S7P) -->
         <div class="bom-section" id="section-battery">
             <div class="section-header">
                 <div class="section-title">
-                    <h2>🔋 २. ब्याट्री प्याक (3S4P) - सामानको विवरण</h2>
+                    <h2>🔋 २. ब्याट्री प्याक (3S7P) - सामानको विवरण</h2>
                     <span class="badge">Battery Pack BOM</span>
                 </div>
-                <div class="badge badge-green">3S4P Configuration</div>
+                <div class="badge badge-green">3S7P Configuration (21 Cells)</div>
             </div>
 
             <div class="table-responsive">
@@ -827,8 +827,8 @@
                                 <div class="comp-name-ne">१८६५० लि-आयन सेल (२२००mAh)</div>
                                 <div class="comp-name-en">18650 Li-ion Cell (2200mAh)</div>
                             </td>
-                            <td><span class="qty-badge">१२ (12)</span></td>
-                            <td>Rechargeable High-Drain Lithium Cells</td>
+                            <td><span class="qty-badge">२१ (21)</span></td>
+                            <td>Rechargeable High-Drain Lithium Cells (3S7P)</td>
                         </tr>
                         <tr>
                             <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
@@ -836,17 +836,17 @@
                                 <div class="comp-name-ne">३S ब्याट्री होल्डर / ब्याट्री क्याप्स</div>
                                 <div class="comp-name-en">3S Battery Holder / Battery Caps</div>
                             </td>
-                            <td><span class="qty-badge">१२ (12)</span></td>
+                            <td><span class="qty-badge">२१ (21)</span></td>
                             <td>Plastic Cell Spacers / Modular Caps</td>
                         </tr>
                         <tr>
                             <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
                             <td>
-                                <div class="comp-name-ne">३S ३०A–४०A BMS बोर्ड</div>
-                                <div class="comp-name-en">3S 30A–40A BMS Board</div>
+                                <div class="comp-name-ne">३S ४०A BMS बोर्ड</div>
+                                <div class="comp-name-en">3S 40A BMS Board</div>
                             </td>
                             <td><span class="qty-badge">१ (1)</span></td>
-                            <td>Battery Protection Board (Overcharge/Short Circuit Protection)</td>
+                            <td>Battery Protection Board (Overcharge/Short Circuit Protection & Cell Balancing)</td>
                         </tr>
                         <tr>
                             <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
@@ -869,8 +869,8 @@
                         <tr>
                             <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
                             <td>
-                                <div class="comp-name-ne">१८AWG सिलिकन वायर (रातो र कालो)</div>
-                                <div class="comp-name-en">18AWG Silicone Wire (Red & Black)</div>
+                                <div class="comp-name-ne">१४AWG सिलिकन वायर (रातो र कालो)</div>
+                                <div class="comp-name-en">14AWG Silicone Wire (Red & Black)</div>
                             </td>
                             <td><span class="qty-badge">आवश्यकता अनुसार (As Required)</span></td>
                             <td>High Temperature Flexible Power Wire</td>
@@ -878,8 +878,8 @@
                         <tr>
                             <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
                             <td>
-                                <div class="comp-name-ne">निकेल स्ट्रिप (०.१५–०.२ मिमी)</div>
-                                <div class="comp-name-en">Nickel Strip (0.15–0.2mm)</div>
+                                <div class="comp-name-ne">निकेल स्ट्रिप (०.१५ मिमी)</div>
+                                <div class="comp-name-en">Nickel Strip (0.15mm)</div>
                             </td>
                             <td><span class="qty-badge">आवश्यकता अनुसार (As Required)</span></td>
                             <td>Pure / Plated Nickel Strip for Spot Welding</td>
@@ -890,7 +890,7 @@
                                 <div class="comp-name-ne">फिस पेपर इन्सुलेसन रिङ्स</div>
                                 <div class="comp-name-en">Fish Paper Insulation Rings</div>
                             </td>
-                            <td><span class="qty-badge">१२ (12)</span></td>
+                            <td><span class="qty-badge">२१ (21)</span></td>
                             <td>Positive Terminal Short Protection Rings</td>
                         </tr>
                         <tr>
@@ -911,12 +911,30 @@
                             <td><span class="qty-badge">१ (1)</span></td>
                             <td>DC Barrel Jack / Fast Charge Port</td>
                         </tr>
+                        <tr>
+                            <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
+                            <td>
+                                <div class="comp-name-ne">DC-DC बक कन्भर्टर (२००W/२०A)</div>
+                                <div class="comp-name-en">DC-DC Buck Converter (200W/20A)</div>
+                            </td>
+                            <td><span class="qty-badge">३ (3)</span></td>
+                            <td>Step-Down Regulators (6V/10A Servo, 5V/10A Main, 5V/3A AI)</td>
+                        </tr>
+                        <tr>
+                            <td class="check-col"><input type="checkbox" class="item-checkbox" onchange="markAcquired(this)"></td>
+                            <td>
+                                <div class="comp-name-ne">DC कुलिङ फ्यान</div>
+                                <div class="comp-name-en">DC Cooling Fan</div>
+                            </td>
+                            <td><span class="qty-badge">३ (3)</span></td>
+                            <td>Heatsink Cooling Fans for Buck Converters</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="section-footer-note" id="batNote">
-                🔋 <strong>नोट:</strong> ब्याट्री प्याक निर्माण गर्दा उच्च सुरक्षा अपनाउनुहोस् र 18650 सेलहरूमा स्पट वेल्डिङ प्रयोग गर्नुहोस्।
+                🔋 <strong>नोट:</strong> ब्याट्री प्याक (3S7P - 21 cells) निर्माण गर्दा उच्च सुरक्षा अपनाउनुहोस् र 18650 सेलहरूमा स्पट वेल्डिङ प्रयोग गर्नुहोस्।
             </div>
         </div>
 
@@ -949,8 +967,8 @@
                 document.getElementById('mainHeaderSub').textContent = 'Components List and Prices for Motorized Base & Battery Pack';
                 document.getElementById('metric1Title').textContent = 'Base System Est. Cost';
                 document.getElementById('metric1Sub').textContent = '(Excl. battery & 3D printed parts)';
-                document.getElementById('metric2Title').textContent = 'Battery Pack (3S4P) Cells';
-                document.getElementById('metric2Sub').textContent = '18650 Li-ion Cells (2200mAh)';
+                document.getElementById('metric2Title').textContent = 'Battery Pack (3S7P) Cells';
+                document.getElementById('metric2Sub').textContent = '21 x 18650 Li-ion Cells (2200mAh)';
                 document.getElementById('metric3Title').textContent = 'Total Component Count';
                 document.getElementById('metric3Sub').textContent = 'Motor Base + Battery Pack';
                 document.getElementById('infoCallout').innerHTML = '💡 <strong>Note:</strong> Listed prices reflect approximate local Kathmandu market rates (New Road / Patan Dhoka) & Daraz.com.np.';
@@ -964,15 +982,15 @@
                 document.getElementById('subTitleWire').textContent = 'Connectors & Wiring';
                 document.getElementById('subTitleMech').textContent = 'Mechanical Components';
                 document.getElementById('baseNote').innerHTML = '📌 <strong>Motorized Base Total Cost:</strong> Rs. 13,150 (Excluding Battery, Buck Converters, 3D Printed Parts, and Upper Body)';
-                document.getElementById('batNote').innerHTML = '🔋 <strong>Note:</strong> Ensure safety precautions and spot-welding when assembling the 18650 battery pack.';
+                document.getElementById('batNote').innerHTML = '🔋 <strong>Note:</strong> Ensure safety precautions and spot-welding when assembling the 3S7P 18650 battery pack.';
             } else {
                 langText.textContent = 'English मा हेर्नुहोस्';
                 document.getElementById('mainHeaderTitle').textContent = 'प्रयास V1 — सामानको विवरण (BOM)';
                 document.getElementById('mainHeaderSub').textContent = 'PRAYAS V1 Motorized Base & Battery System Bill of Materials';
                 document.getElementById('metric1Title').textContent = 'मोटोराइज्ड बेस अनुमानित खर्च';
                 document.getElementById('metric1Sub').textContent = '(ब्याट्री र 3D पार्ट बाहेक)';
-                document.getElementById('metric2Title').textContent = 'ब्याट्री प्याक (3S4P) सेलहरू';
-                document.getElementById('metric2Sub').textContent = '18650 Li-ion Cells (2200mAh)';
+                document.getElementById('metric2Title').textContent = 'ब्याट्री प्याक (3S7P) सेलहरू';
+                document.getElementById('metric2Sub').textContent = '21 x 18650 Li-ion Cells (2200mAh)';
                 document.getElementById('metric3Title').textContent = 'कम्पोनेन्ट जम्मा संख्या';
                 document.getElementById('metric3Sub').textContent = 'बेस + ब्याट्री सिस्टम';
                 document.getElementById('infoCallout').innerHTML = '💡 <strong>सूचना:</strong> प्रस्तुत मूल्यहरू काठमाडौँ स्थानीय बजार (न्यु रोड / पाटन ढोका) तथा दराज (Daraz.com.np) को दर अनुसार राखिएको छ।';

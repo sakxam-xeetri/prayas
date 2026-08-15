@@ -1,0 +1,89 @@
+BATTERY CONFIGURATION
+---------------------
+Configuration: 3S7P
+Total cells: 21 × 18650 Li-ion
+Cell capacity: 2200 mAh
+Nominal voltage: 11.1 V
+Maximum voltage: 12.6 V
+Total capacity: 15.4 Ah
+Approx. energy: 171 Wh
+
+
+BATTERY CELLS
+-------------
+21 × 18650 Li-ion cells
+2200 mAh per cell
+3.7 V nominal
+4.2 V maximum
+
+
+BMS
+---
+1 × 3S Li-ion BMS
+Continuous discharge: 40 A
+Cell balancing: Required
+
+Required protections:
+- Overcharge protection
+- Over-discharge protection
+- Over-current protection
+- Short-circuit protection
+- Cell balancing
+- Temperature protection preferred
+
+
+CHARGER
+-------
+1 × 12.6 V / 3 A Li-ion CC/CV charger
+
+Output: 12.6 V
+Maximum charging current: 3 A
+Charging rate: approximately 0.2C
+
+
+BATTERY MONITOR
+---------------
+1 × Battery voltage/capacity meter
+
+Purpose:
+- Battery voltage monitoring
+- Approximate charge-level indication
+- Quick battery health/status check
+
+
+EXTERNAL BATTERY TERMINALS
+--------------------------
+2 × External high-current battery terminals
+
+Terminal 1: BATTERY +
+Terminal 2: BATTERY -
+
+These terminals must be:
+- Physically separated from each other
+- Properly insulated
+- Clearly labelled
+- Mounted outside the robot chassis
+- Protected against accidental short circuits
+- Rated for the maximum expected battery current
+
+Purpose:
+- External battery voltage testing
+- Battery diagnostic checking
+- Emergency battery isolation/testing
+- Maintenance access without opening the entire robot
+
+IMPORTANT:
+The external terminals should NOT bypass the BMS.
+
+Recommended path:
+
+Battery cells
+     |
+     v
+   3S BMS
+     |
+     v
+External BAT+ / BAT-
+     |
+     v
+Main fuse / switch / robot power distribution

@@ -42,16 +42,20 @@ Sensor sampling (specifically NMEA parsing and I2C sensor polling) requires cons
 
 ## 2. Components Required
 
-The table below lists all components required for the Sensor Node:
+The table below lists all components required for the Sensor Node according to [`all components.txt`](file:///d:/prayas/main_site/docs/all%20components.txt):
 
 | Component Name | Quantity | Specification | Purpose |
 | :--- | :---: | :--- | :--- |
-| **Arduino Nano** | 1 | ATmega328P, 16 MHz, 32KB Flash, 2KB RAM | Microcontroller reading GPS, MPU6050, Humidity sensor, driving LCD. |
-| **GPS Module** | 1 | NEO-6M / NEO-M8N GPS receiver, UART interface, active patch antenna | Reads global positioning coordinates, velocity, and UTC time. |
-| **MPU6050 Module** | 1 | InvenSense MPU6050 6-axis IMU (3-axis Accel + 3-axis Gyro), I2C Interface | Measures orientation, pitch/roll, and motion events. |
-| **Humidity Sensor** | 1 | DHT11 / DHT22 / SHT30 Digital Temperature & Humidity Sensor | Measures ambient air temperature and relative humidity. |
-| **I2C LCD Display** | 1 | 16x2 or 20x4 HD44780 LCD with PCF8574 I2C Adapter (0x27 / 0x3F) | Displays real-time local telemetry readout directly on the robot chassis. |
-| **UART & I2C Wiring** | Assorted | 24 AWG Dupont wires (TX, RX, SDA, SCL, GND, 5V) | Connects modules to Arduino Nano. |
+| **ESP32 Dev Board** | 1 | ESP32-WROOM-32 DevKit (38-pin) | Primary sensor node controller with native ESP-NOW communication. |
+| **NEO-6M GPS Module** | 1 | NEO-6M GPS Receiver + Patch Antenna | Reads global positioning coordinates, velocity, and UTC time. |
+| **DHT11 Sensor** | 1 | Digital Temperature & Humidity Sensor | Measures ambient air temperature and relative humidity. |
+| **MQ-135 Gas Sensor** | 1 | Air Quality & Hazardous Gas Sensor | Detects air quality, CO2, ammonia, and smoke levels. |
+| **MPU6050 IMU Module** | 1 | InvenSense MPU6050 6-axis IMU (Accel + Gyro), I2C | Measures orientation, pitch/roll, and motion events. |
+| **16×2 LCD Display** | 1 | 16x2 Character LCD Screen | Displays real-time local telemetry readout directly on the robot chassis. |
+| **I2C LCD Backpack** | 1 | PCF8574 I2C Adapter Module | Converts 16x2 LCD interface to 2-wire I2C bus. |
+| **Expansion Connectors**| Assorted | Sensor Expansion Connectors & Headers | Allows connecting additional environmental or distance sensors. |
+| **PCB & Wiring** | 1 set | PCB Sensor Distribution Board, Jumpers & Wires | Power distribution & signal bus wiring. |
+| **Mounting Hardware** | 1 set | M3 Standoffs, Nuts, Bolts, Heat-Shrink & Cable Ties | Secures sensor breakout boards mechanically. |
 
 ---
 

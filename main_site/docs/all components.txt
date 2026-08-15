@@ -1,0 +1,701 @@
+PRAYAS – MOTOR NODE BOM
+
+1. ESP32 Dev Module – ESP32-WROOM-32 – Qty: 1
+2. BTS7960 Motor Driver – Qty: 2
+3. Johnson DC Motor – 12V, 200 RPM – Qty: 4
+4. Wheel – 10 cm diameter – Qty: 4
+5. Motor Clamp – Compatible with Johnson Motor – Qty: 4
+6. Ultrasonic Sensor – HC-SR04 / Equivalent – Qty: 4
+7. Main Power Switch – Qty: 1
+8. PCB / Terminal Distribution Board – Qty: 1
+9. 4-Pin Connectors – As Required
+10. Jumper Wires – As Required
+11. High-Current Motor Wires – As Required
+12. Signal Wires – As Required
+13. Mounting Nuts & Bolts – As Required
+14. Cable Ties – As Required
+15. Heat-Shrink Tubing – As Required
+
+PRAYAS – BATTERY & POWER SYSTEM BOM
+
+BATTERY PACK:
+
+1. 18650 Li-ion Battery Cell – 2200 mAh, 3.7V – Qty: 21
+2. 3S7P Battery Configuration – 3 Series × 7 Parallel
+3. 3S 40A Li-ion BMS with Cell Balancing – Qty: 1
+4. 12.6V 3A CC/CV Li-ion Charger – Qty: 1
+5. Battery Voltage/Capacity Meter – Qty: 1
+
+BATTERY CONSTRUCTION:
+
+6. Nickel Strip – As Required
+7. 18650 Cell Holder/Spacer – As Required
+8. Cell Insulating Rings – Qty: 21
+9. Fish-Paper Insulation – As Required
+10. Battery Heat-Shrink Sleeve – Qty: 1
+11. Battery Enclosure/Case – Qty: 1
+12. High-Current Battery Wire – As Required
+13. BMS Balance Wires – As Required
+14. High-Current Battery Connector – Qty: 1
+15. Charging Connector – Qty: 1
+
+PROTECTION & SAFETY:
+
+16. Main Battery Fuse + Fuse Holder – Qty: 1
+17. Main Power Switch – Qty: 1
+18. NTC Temperature Sensor – Qty: 1
+19. Terminal Insulation/Covers – Qty: 2
+20. Battery Mounting Brackets – As Required
+21. Heat-Shrink Tubing – As Required
+22. Cable Ties – As Required
+23. Crimp Terminals/Connectors – As Required
+
+EXTERNAL BATTERY ACCESS:
+
+24. External BAT+ Terminal – Qty: 1
+25. External BAT- Terminal – Qty: 1
+26. External Charging Port – Qty: 1
+
+POWER CONVERTERS:
+
+27. 200W / 20A DC-DC Buck Converter – Qty: 3
+
+Converter 1:
+Output: 6V
+Current Limit: 10A
+Purpose: 7 × MG995 Servo Motors
+
+Converter 2:
+Output: 5V
+Current Limit: 10A
+Purpose: All Main Electronics/ESP32 Nodes
+
+Converter 3:
+Output: 5V
+Current Limit: 3A
+Purpose: AI Node – ESP32-S3-CAM + Audio System
+
+COOLING:
+
+28. DC Cooling Fan – Suitable for Buck Converter Heatsink – Qty: 3
+29. Fan Mounting Hardware/Guards – As Required
+30. Fan Wires & Connectors – As Required
+
+BATTERY SPECIFICATION:
+
+Configuration: 3S7P
+Total Cells: 21
+Cell Capacity: 2200 mAh
+Total Capacity: 15.4 Ah
+Nominal Voltage: 11.1V
+Maximum Voltage: 12.6V
+Approximate Energy: 171 Wh
+
+BMS:
+3S / 40A with balancing and protection
+
+CHARGER:
+12.6V / 3A CC/CV
+
+POWER DISTRIBUTION:
+
+Battery → BMS → Main Fuse → Main Switch
+                    │
+                    ├── Motor Drivers → Direct Battery
+                    │
+                    ├── 6V / 10A Buck → Servo Motors
+                    │
+                    ├── 5V / 10A Buck → Main Electronics
+                    │
+                    └── 5V / 3A Buck → AI Node
+
+IMPORTANT:
+
+- Use matched 18650 cells.
+- Use spot welding with nickel strip.
+- Do not solder directly to 18650 cells.
+- External BAT+ and BAT- terminals must remain separated and insulated.
+- External terminals must not bypass the BMS.
+- Install the battery in a secure, insulated enclosure.
+- Provide adequate ventilation for the buck converters.
+- Use cooling fans for continuous/high-load converter operation.
+
+
+PRAYAS – SERVO NODE BOM
+
+SERVO CONTROL:
+
+1. ESP32 Dev Module – ESP32-WROOM-32 – Qty: 1
+2. PCA9685 16-Channel Servo Driver – Qty: 1
+3. MG995 High-Torque Metal Gear Servo Motor – Qty: 7
+
+SERVO CONFIGURATION:
+
+4. L1 Servo – Left Arm – Qty: 1
+5. L2 Servo – Left Arm – Qty: 1
+6. L3 Servo – Left Arm – Qty: 1
+
+7. R1 Servo – Right Arm – Qty: 1
+8. R2 Servo – Right Arm – Qty: 1
+9. R3 Servo – Right Arm – Qty: 1
+
+10. H1 Servo – Head – Qty: 1
+
+POWER:
+
+11. 6V / 10A DC-DC Buck Converter – Supplied from Main Power System – Qty: 1
+12. High-Current Servo Power Wires – As Required
+13. 5V Logic Power Wires – As Required
+14. Common GND Wires – As Required
+
+CONNECTION & MOUNTING:
+
+15. Servo Connectors – As Required
+16. 4/6-Pin Connectors – As Required
+17. PCB / Terminal Distribution Board – Qty: 1
+18. Jumper Wires – As Required
+19. Signal Wires – As Required
+20. Mounting Nuts & Bolts – As Required
+21. Servo Mounting Brackets – As Required
+22. Cable Ties – As Required
+23. Heat-Shrink Tubing – As Required
+
+SERVO POWER ARCHITECTURE:
+
+3S7P Battery
+      |
+      v
+6V / 10A Buck Converter
+      |
+      +------> MG995 L1
+      +------> MG995 L2
+      +------> MG995 L3
+      +------> MG995 R1
+      +------> MG995 R2
+      +------> MG995 R3
+      +------> MG995 H1
+
+ESP32
+  |
+  +------ I2C ------> PCA9685
+                         |
+                         +---- L1
+                         +---- L2
+                         +---- L3
+                         +---- R1
+                         +---- R2
+                         +---- R3
+                         +---- H1
+
+SERVO FUNCTIONS:
+
+- Hand Down Position
+- Wave
+- Handshake
+- Random Movement
+- Dance
+- Preset Servo Motions
+- Master Command Execution
+- ESP-NOW Communication with Master Node
+
+IMPORTANT:
+
+- Servo motors receive power from the dedicated 6V high-current rail.
+- ESP32 and PCA9685 logic use the appPRAYAS – SENSOR NODE BOM
+
+CONTROLLER:
+
+1. ESP32 Dev Module – ESP32-WROOM-32 – Qty: 1
+
+SENSORS:
+
+2. NEO-6M GPS Module – Qty: 1
+3. DHT11 Temperature & Humidity Sensor – Qty: 1
+4. MQ-135 Gas Sensor – Qty: 1
+5. MPU6050 6-Axis IMU Sensor – Qty: 1
+
+DISPLAY:
+
+6. 16×2 LCD Display – Qty: 1
+7. I2C LCD Backpack/Module – Qty: 1
+
+ADDITIONAL SENSORS:
+
+8. Additional Environmental/Distance Sensors – As Required
+9. Sensor Expansion Connectors – As Required
+
+COMMUNICATION:
+
+10. ESP-NOW – For communication with Master ESP32
+
+POWER:
+
+11. 5V Regulated Power Supply – From Main 5V Electronics Rail
+12. Power Distribution Wires – As Required
+13. Common GND Connection – As Required
+
+CONNECTION & MOUNTING:
+
+14. Jumper Wires – As Required
+15. I2C Wires – As Required
+16. UART Wires – As Required
+17. PCB / Sensor Distribution Board – Qty: 1
+18. Pin Headers / Connectors – As Required
+19. Mounting Nuts & Bolts – As Required
+20. Heat-Shrink Tubing – As Required
+21. Cable Ties – As Required
+
+SENSOR NODE FUNCTIONS:
+
+- GPS Location Tracking
+- Temperature Monitoring
+- Humidity Monitoring
+- Gas/Air Quality Monitoring
+- Robot Orientation & Motion Detection
+- Environmental Data Collection
+- Sensor Status Monitoring
+- Data Transmission to Master Node
+- ESP-NOW Communication
+
+COMMUNICATION:
+
+Sensor Node
+     |
+     | ESP-NOW
+     v
+Master ESP32
+     |
+     v
+Robot Control System
+
+LOCAL CONNECTIONS:
+
+NEO-6M GPS
+     |
+    UART
+     |
+   ESP32
+
+DHT11
+     |
+   GPIO
+     |
+   ESP32
+
+MQ-135
+     |
+   ADC
+     |
+   ESP32
+
+MPU6050
+     |
+    I2C
+     |
+   ESP32
+
+16×2 LCD
+     |
+    I2C
+     |
+   ESP32
+
+POWER:
+
+5V Electronics Rail
+       |
+       v
+   Sensor Node
+       |
+       +---- ESP32
+       +---- NEO-6M
+       +---- DHT11
+       +---- MQ-135
+       +---- MPU6050
+       +---- 16×2 LCDropriate regulated logic supply.
+- Servo power and logic power should have a common GND.
+- Do not power all seven MG995 servos from the ESP32 5V pin.
+
+PRAYAS – AI NODE BOM
+
+CONTROLLER:
+
+1. ESP32-S3-CAM Development Board – Qty: 1
+
+DISPLAY:
+
+2. SPI TFT Display – Qty: 1
+
+AUDIO INPUT:
+
+3. Microphone Module – Compatible with ESP32-S3-CAM – Qty: 1
+
+AUDIO OUTPUT:
+
+4. PCM5102 I2S DAC Module – Qty: 1
+5. AUX Speaker – Qty: 1
+6. 3.5mm AUX Cable / Connector – Qty: 1
+
+LIGHTING:
+
+7. LED Indicators – As Required
+8. Current-Limiting Resistors for LEDs – As Required
+
+CAMERA:
+
+9. ESP32-S3-CAM Integrated Camera Module – Qty: 1
+
+COMMUNICATION:
+
+10. ESP-NOW – For communication with Master ESP32
+11. Wi-Fi – For AI/Internet-based services when required
+
+POWER:
+
+12. 5V Regulated Power Supply – From Main 5V Electronics Rail
+13. Power Distribution Wires – As Required
+14. Common GND Connection – As Required
+
+CONNECTION & MOUNTING:
+
+15. Jumper Wires – As Required
+16. I2S Wires – As Required
+17. SPI Wires – As Required
+18. PCB / Distribution Board – Qty: 1
+19. Pin Headers / Connectors – As Required
+20. Mounting Nuts & Bolts – As Required
+21. Heat-Shrink Tubing – As Required
+22. Cable Ties – As Required
+
+AI NODE FUNCTIONS:
+
+- Voice Command Reception
+- Microphone Audio Input
+- AI/Voice Processing
+- Camera/Visual Processing
+- Voice Response
+- Audio Playback
+- LED Status Indication
+- TFT Information Display
+- ESP-NOW Communication with Master
+- Wi-Fi/Internet Connectivity
+- AI Assistant Functions
+
+COMMUNICATION:
+
+AI Node
+   |
+   | ESP-NOW
+   v
+Master ESP32
+   |
+   +---- Motor Node
+   +---- Servo Node
+   +---- Sensor Node
+
+AUDIO SYSTEM:
+
+Microphone
+     |
+     v
+ESP32-S3-CAM
+     |
+     | I2S
+     v
+PCM5102 DAC
+     |
+     | Analog Audio
+     v
+AUX Speaker
+
+DISPLAY:
+
+ESP32-S3-CAM
+      |
+     SPI
+      |
+      v
+SPI TFT Display
+
+POWER:
+
+5V / 10A Electronics Rail
+          |
+          v
+       AI Node
+          |
+          +---- ESP32-S3-CAM
+          +---- SPI TFT
+          +---- Microphone
+          +---- PCM5102
+          +---- LEDs
+
+IMPORTANT:
+
+- MAX98357A amplifier is NOT used.
+- PCM5102 is used as the I2S audio DAC.
+- PCM5102 is a DAC and does not directly drive a passive speaker.
+- If the AUX speaker is a passive speaker, a separate audio amplifier is required
+  between the PCM5102 and the speaker.
+- If the AUX speaker is an active/powered speaker with its own amplifier,
+  PCM5102 can provide the audio signal through the AUX connection.
+
+PRAYAS – MASTER NODE BOM
+
+CONTROLLER:
+
+1. ESP32 Dev Module – ESP32-WROOM-32 – Qty: 1
+
+DISPLAY:
+
+2. TFT Display – SPI Interface – Qty: 1
+
+COMMUNICATION:
+
+3. ESP-NOW – Communication with Motor, Servo, Sensor and AI Nodes
+4. Wi-Fi – Communication with VPS / Internet
+5. MQTT – VPS/Remote Communication
+
+POWER:
+
+6. 5V Regulated Power Supply – From Main 5V / 10A Electronics Rail
+7. Power Distribution Wires – As Required
+8. Common GND Connection – As Required
+
+CONNECTION & MOUNTING:
+
+9. Jumper Wires – As Required
+10. SPI Wires – As Required
+11. PCB / Distribution Board – Qty: 1
+12. Pin Headers / Connectors – As Required
+13. Mounting Nuts & Bolts – As Required
+14. Heat-Shrink Tubing – As Required
+15. Cable Ties – As Required
+
+MASTER NODE FUNCTIONS:
+
+- Central Robot Controller
+- Receives Commands from VPS
+- Receives Commands from Web-Based Control System
+- Receives Voice Commands from AI Node
+- Sends Motor Commands
+- Sends Servo Commands
+- Requests and Receives Sensor Data
+- Monitors Node Status
+- Handles Robot Operating Modes
+- Manual Control
+- Remote Control
+- Autonomous Control
+- Speed Control
+- Emergency Stop
+- Node Heartbeat Monitoring
+- Communication Watchdog
+- OTA Update Management
+- Robot Status Display
+- Battery Status Monitoring
+
+COMMUNICATION ARCHITECTURE:
+
+                         MASTER ESP32
+                              |
+              ┌───────────────┼───────────────┐
+              |               |               |
+          ESP-NOW          ESP-NOW         ESP-NOW
+              |               |               |
+              v               v               v
+         MOTOR NODE      SERVO NODE      SENSOR NODE
+              |
+           ESP-NOW
+              |
+              v
+           AI NODE
+
+
+REMOTE COMMUNICATION:
+
+Web Dashboard
+      |
+  WebSocket
+      |
+      v
+     VPS
+      |
+    MQTT
+      |
+      v
+MASTER ESP32
+      |
+  ESP-NOW
+      |
+Robot Nodes
+
+
+LOCAL CONNECTION:
+
+ESP32
+  |
+ SPI
+  |
+  v
+TFT Display
+
+
+POWER:
+
+5V / 10A Electronics Rail
+          |
+          v
+      Master Node
+          |
+          +---- ESP32
+          |
+          +---- TFT Display
+
+
+MASTER NODE CONTROL FLOW:
+
+Remote Command
+      |
+      v
+Master ESP32
+      |
+      +---- Motor Command → Motor Node
+      |
+      +---- Servo Command → Servo Node
+      |
+      +---- Sensor Request → Sensor Node
+      |
+      +---- AI Command/Status ↔ AI Node
+
+
+SAFETY:
+
+- Motor Node must have an independent communication watchdog.
+- Loss of Master communication should result in motor STOP.
+- Emergency STOP command should have the highest priority.
+- Master should continuously monitor the heartbeat/status of all nodes.
+
+PRAYAS – MECHANICAL & STRUCTURAL BOM
+
+MAIN BODY STRUCTURE:
+
+1. Plywood Sheet – Structural base and internal platforms – As Required
+2. Aluminum Square Pipe – Main structural frame – As Required
+3. Aluminum Rods – Arm and structural supports – As Required
+4. Sunboard Sheet – Body panels and outer covering – As Required
+5. 3D Printed Parts – Custom joints, brackets, head, hands and mechanical components – As Required
+
+BODY COMPONENTS:
+
+6. Lower Body/Base Frame – Qty: 1
+7. Upper Body/Torso Frame – Qty: 1
+8. Head Housing – 3D Printed – Qty: 1
+9. Left Arm Assembly – Qty: 1
+10. Right Arm Assembly – Qty: 1
+11. Hand Assembly – 3D Printed – Qty: 2
+12. Servo Mounts – As Required
+13. Motor Mounts/Clamps – Qty: 4
+14. Wheel Mounts – Qty: 4
+15. Sensor Mounts – As Required
+16. Camera Mount – Qty: 1
+17. Ultrasonic Sensor Mounts – Qty: 4
+18. TFT Display Mount – Qty: 1
+19. Speaker Mount – Qty: 1
+20. Battery Mount/Compartment – Qty: 1
+21. Electronics Mounting Plate – As Required
+22. Buck Converter Mounts – As Required
+
+FASTENERS:
+
+23. M3 Screws – As Required
+24. M4 Screws – As Required
+25. M5 Screws – As Required
+26. M3 Nuts – As Required
+27. M4 Nuts – As Required
+28. M5 Nuts – As Required
+29. Washers – As Required
+30. Lock Nuts – As Required
+31. Threaded Inserts – As Required
+32. Standoffs/Spacers – As Required
+
+MECHANICAL SUPPORT:
+
+33. L-Brackets – Aluminum/Metal – As Required
+34. Corner Brackets – As Required
+35. Metal Mounting Brackets – As Required
+36. Servo Brackets – As Required
+37. Motor Mounting Brackets – As Required
+38. Bearing Supports – As Required
+39. Shaft Couplers – As Required
+40. Mechanical Hinges – As Required
+41. Rubber Feet/Vibration Pads – As Required
+
+WHEELS & DRIVE SYSTEM:
+
+42. 10 cm Wheels – Qty: 4
+43. Wheel Hubs/Couplers – Qty: 4
+44. Motor Shafts/Couplers – As Required
+45. Motor Clamps – Qty: 4
+
+BODY FINISHING:
+
+46. Acrylic Sheet – As Required
+47. Protective Edge Trim – As Required
+48. Double-Sided Mounting Tape – As Required
+49. Velcro Strips – As Required
+50. Cable Management Clips – As Required
+51. Cable Grommets – As Required
+
+3D PRINTED PARTS:
+
+52. Head Housing
+53. Left Hand
+54. Right Hand
+55. Servo Mounts
+56. Sensor Mounts
+57. Camera Mount
+58. Display Mount
+59. Speaker Mount
+60. Cable Routing Brackets
+61. Custom Mechanical Joints
+62. Internal Electronics Brackets
+63. Other Custom Structural Parts – As Required
+
+STRUCTURAL MATERIAL SUMMARY:
+
+Plywood:
+- Base platform
+- Internal mounting platforms
+- Structural supports
+
+Aluminum:
+- Main frame
+- Square pipes
+- Structural rods
+- Reinforcement sections
+
+Sunboard:
+- Outer body panels
+- Decorative body covering
+- Lightweight enclosure sections
+
+3D Printed Parts:
+- Head
+- Hands
+- Servo brackets
+- Sensor mounts
+- Camera mount
+- Custom joints
+- Electronics mounts
+
+GENERAL HARDWARE:
+
+64. Nuts, Bolts and Screws – Assorted
+65. Washers – Assorted
+66. Spacers/Standoffs – Assorted
+67. Brackets – Assorted
+68. Hinges – As Required
+69. Rubber Pads – As Required
+70. Cable Management Accessories – As Required
+71. Adhesive/Mechanical Fastening Materials – As Required
+

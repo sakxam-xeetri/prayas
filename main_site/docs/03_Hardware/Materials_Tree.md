@@ -46,8 +46,8 @@ PRAYAS V1 Humanoid Robot
 │   ├── ESP32-S3 CAM Module (OV2640 + 8MB PSRAM) ──── Qty: 1 ─── $12.00
 │   ├── 2.4" SPI TFT Display (ST7789 240x320) ──────── Qty: 1 ─── $7.50
 │   ├── INMP441 Omnidirectional I2S Microphone ─────── Qty: 1 ─── $2.50
-│   ├── MAX98357A I2S DAC + Class-D Amplifier ──────── Qty: 1 ─── $2.00
-│   ├── Speaker (8Ω, 3W) ──────────────────────────── Qty: 1 ─── $1.50
+│   ├── PCM5102 I2S DAC Module ─────────────────────── Qty: 1 ─── $3.00
+│   ├── AUX Speaker & 3.5mm AUX Cable ──────────────── Qty: 1 ─── $2.00
 │   ├── Jumper Wires (Female-to-Female, 24 AWG) ────── Qty: 15 ── $1.50
 │   └── Mounting Hardware (M2 Screws + Spacers) ────── Qty: 4 ─── $1.00
 │                                                          Subtotal: $28.00
@@ -172,7 +172,7 @@ AI Node
  └── ESP32-S3 CAM ── Voice, display & vision processor
       ├── 2.4" SPI TFT Display (ST7789) ── Face UI & AI status
       ├── INMP441 Microphone (I2S) ── Voice input
-      ├── MAX98357A Amplifier ── 3W Speaker output
+      ├── PCM5102 I2S DAC Module ── 3.5mm AUX Speaker output
       ├── OV2640 Camera ── Object detection, visual Q&A
       └── UART to Master Node (GPIO 43/44)
 ```
