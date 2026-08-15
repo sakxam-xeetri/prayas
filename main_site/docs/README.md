@@ -76,12 +76,12 @@ PRAYAS V1 is an open-source, modular humanoid upper-body robot mounted on a heav
 | **Motor Drive Electronics** | 2x BTS7960 43A High-Power H-Bridges | 4x HC-SR04 Ultrasonic Sensors (FL, FR, RL, RR) |
 | **Upper Body Kinematics** | 7x MG995 Servos (13 kg·cm @ 6V) | 3-DOF Left Arm, 3-DOF Right Arm, 1-DOF Neck Yaw |
 | **PWM Actuation Controller** | PCA9685 16-Channel 12-bit I2C Module | Interfaced to Servo Control Node (ESP32) |
-| **Primary Gateway Processor** | ESP32 DevKitC v4 (Dual-Core 240 MHz) | ESP-NOW hub, MQTT gateway, Integrated Status OLED |
-| **Voice & AI Processing Unit** | ESP32-S3 CAM (Xiaozhi AI Framework) | Embedded 8MB PSRAM, 2.4" SPI TFT Display, I2S Mic/Amp |
+| **Primary Gateway Processor** | ESP32 DevKitC v4 (Dual-Core 240 MHz) | ESP-NOW hub, MQTT gateway, 2.4" SPI TFT Status Display |
+| **Voice & AI Processing Unit** | ESP32-S3 CAM (Xiaozhi AI Framework) | Embedded 8MB PSRAM, 2.4" SPI TFT Display, PCM5102 I2S DAC + AUX Speaker |
 | **Visual Vision Sensor** | ESP32-CAM (OV2640 2MP Sensor) | MJPEG streaming @ 15–30 fps via HTTP |
-| **Telemetry Sensor Controller** | Arduino Nano v3 (ATmega328P @ 16 MHz) | GPS receiver, MPU6050 IMU, Humidity, 20x4 I2C LCD |
-| **Main Power Cell** | 3S 6800 mAh Li-Ion Battery Pack (11.1V–12.6V) | High-current XT60 dual disconnect switch |
-| **DC Voltage Regulation** | High-efficiency LM2596 / XL4015 Bucks | 6.0V @ 10A (Servos), 5.0V @ 5A (Logic) |
+| **Telemetry Sensor Controller** | ESP32 Dev Module (ESP-NOW) | GPS receiver, MPU6050 IMU, DHT11, MQ-135, 16x2 I2C LCD |
+| **Main Power Cell** | 3S7P 21-Cell Li-Ion Battery Pack (11.1V–12.6V, 15.4 Ah / 171 Wh) | 3S 40A BMS, XT60 dual disconnect switch, External Terminals & Charge Port |
+| **DC Voltage Regulation** | 3x 200W DC-DC Buck Converters + DC Cooling Fans | 6.0V @ 10A (Servos), 5.0V @ 10A (Logic), 5.0V @ 3A (AI Node) |
 
 ---
 
@@ -135,17 +135,17 @@ graph TD
 * **Role**: Expressive kinematic gesture manager.
 * **Responsibilities**: Communicates over I2C with the PCA9685 16-channel PWM generator, calculates smooth multi-joint cubic spline trajectories for 7x MG995 servos, and triggers predefined motion presets (wave, bow, point, idle breathing).
 
-### 4. Natural Language AI Node `[NODE-04_AI]` (XIAO ESP32-S3)
+### 4. Natural Language AI Node `[NODE-04_AI]` (ESP32-S3-CAM)
 * **Role**: Natural language interface and smart assistant.
-* **Responsibilities**: Captures digital audio via I2S microphone, runs Xiaozhi framework wake-word detection, streams audio frames to cloud LLM endpoint over WebSocket, plays incoming TTS audio through MAX98357A I2S DAC amp, and parses Model Context Protocol (MCP) tool calls into robot actions.
+* **Responsibilities**: Captures digital audio via INMP441 I2S microphone, runs Xiaozhi framework wake-word detection, streams audio frames to cloud LLM endpoint over WebSocket, plays incoming TTS audio through PCM5102 I2S DAC Module to AUX speaker, renders live facial expressions on 2.4" SPI TFT Display, and parses Model Context Protocol (MCP) tool calls into robot actions.
 
 ### 5. Vision Camera Node `[NODE-05_CAM]` (ESP32-CAM)
 * **Role**: Visual awareness & live streaming.
 * **Responsibilities**: Captures video frames from OV2640 camera sensor, serves high-performance MJPEG video feed on dedicated HTTP port for web teleoperation, and supports optional face/object detection frames.
 
-### 6. Sensor & Telemetry Controller `[NODE-06_SENS]` (Arduino Nano)
-* **Role**: Low-level telemetry and obstacle sensing.
-* **Responsibilities**: Reads front/rear HC-SR04 ultrasonic distance sensors, measures battery voltage divider levels, monitors internal enclosure temperature, and reports status packets to Master Node over UART/I2C.
+### 6. Sensor & Telemetry Controller `[NODE-06_SENS]` (ESP32 Dev Module)
+* **Role**: Low-level telemetry and environmental sensing.
+* **Responsibilities**: Reads GPS coordinates, MPU6050 IMU accelerometer/gyroscope tilt, DHT11 temperature/humidity, MQ-135 air quality gas sensor, displays real-time metrics on 16x2 I2C LCD, and reports status telemetry to Master Node via ESP-NOW.
 
 ---
 

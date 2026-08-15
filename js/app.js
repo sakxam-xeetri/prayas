@@ -3,170 +3,255 @@
  * Manages Node-Wise Bill of Materials, inline Qty/Price edits, CRUD, persistence & exports.
  */
 
-// Default BOM Data parsed from all components.txt
+// Default BOM Data parsed from all components.txt - Complete Exhaustive Component Inventory
 const INITIAL_BOM_DATA = [
-  // NODE 01 MOTOR NODE
-  { id: 'm1', node: 'node-01', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 DevKit (38-Pin)', qty: 1, unitPrice: 750, status: 'In Stock' },
-  { id: 'm2', node: 'node-01', name: 'BTS7960 Motor Driver', spec: '43A High Power Dual H-Bridge', qty: 2, unitPrice: 850, status: 'In Stock' },
-  { id: 'm3', node: 'node-01', name: 'Johnson 12V 200RPM Motors', spec: '12V Geared DC Motors (High Torque)', qty: 4, unitPrice: 1800, status: 'In Stock' },
-  { id: 'm4', node: 'node-01', name: '10 cm Robot Wheels', spec: 'High-Traction Rubber Wheels (10cm Dia)', qty: 4, unitPrice: 500, status: 'In Stock' },
-  { id: 'm5', node: 'node-01', name: 'Motor Mount Clamps', spec: 'Heavy Duty Johnson Motor Brackets', qty: 4, unitPrice: 350, status: 'In Stock' },
-  { id: 'm6', node: 'node-01', name: 'HC-SR04 Ultrasonic Sensors', spec: '360 Obstacle Sensors (FL, FR, RL, RR)', qty: 4, unitPrice: 250, status: 'In Stock' },
-  { id: 'm7', node: 'node-01', name: 'Main Power Switch', spec: 'High-Current Rocker/Toggle Switch', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'm8', node: 'node-01', name: 'PCB Distribution Board', spec: 'Terminal Distribution & Prototyping Board', qty: 1, unitPrice: 140, status: 'In Stock' },
-  { id: 'm9', node: 'node-01', name: '4-Pin Connectors & Signal', spec: 'JST Signal Harnesses & 4-Pin Plugs', qty: 1, unitPrice: 120, status: 'In Stock' },
-  { id: 'm10', node: 'node-01', name: 'High-Current Motor Wires', spec: '14AWG Power Wires & Signal Jumpers', qty: 1, unitPrice: 400, status: 'In Stock' },
-  { id: 'm11', node: 'node-01', name: 'Mounting Nuts & Bolts', spec: 'Assorted M3/M4 Fasteners & Standoffs', qty: 1, unitPrice: 300, status: 'In Stock' },
-  { id: 'm12', node: 'node-01', name: 'Cable Management', spec: 'Zip Ties & Heat-Shrink Tubing', qty: 1, unitPrice: 200, status: 'In Stock' },
+  // 1. PRAYAS – MOTOR NODE BOM
+  { id: 'm1', node: 'node-01', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 'm2', node: 'node-01', name: 'BTS7960 Motor Driver', spec: '43A High-Current Dual H-Bridge (Qty: 2)', qty: 2, unitPrice: 850, status: 'In Stock' },
+  { id: 'm3', node: 'node-01', name: 'Johnson DC Motor', spec: '12V, 200 RPM Metal Geared Motor (Qty: 4)', qty: 4, unitPrice: 1800, status: 'In Stock' },
+  { id: 'm4', node: 'node-01', name: 'Wheel', spec: '10 cm diameter High-Traction Wheel (Qty: 4)', qty: 4, unitPrice: 500, status: 'In Stock' },
+  { id: 'm5', node: 'node-01', name: 'Motor Clamp', spec: 'Compatible with Johnson Motor (Qty: 4)', qty: 4, unitPrice: 350, status: 'In Stock' },
+  { id: 'm6', node: 'node-01', name: 'Ultrasonic Sensor', spec: 'HC-SR04 / Equivalent (Qty: 4)', qty: 4, unitPrice: 250, status: 'In Stock' },
+  { id: 'm7', node: 'node-01', name: 'Main Power Switch', spec: 'High-Current Rocker Switch (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'm8', node: 'node-01', name: 'PCB / Terminal Distribution Board', spec: 'Power Distribution & Header Board (Qty: 1)', qty: 1, unitPrice: 140, status: 'In Stock' },
+  { id: 'm9', node: 'node-01', name: '4-Pin Connectors', spec: 'JST 4-Pin Connectors & Plugs (As Required)', qty: 4, unitPrice: 30, status: 'In Stock' },
+  { id: 'm10', node: 'node-01', name: 'Jumper Wires', spec: '24 AWG Signal Jumpers (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'm11', node: 'node-01', name: 'High-Current Motor Wires', spec: '14 AWG Silicone Power Wires (As Required)', qty: 1, unitPrice: 250, status: 'In Stock' },
+  { id: 'm12', node: 'node-01', name: 'Signal Wires', spec: 'Inter-module Signal Harnesses (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'm13', node: 'node-01', name: 'Mounting Nuts & Bolts', spec: 'M3/M4 Mounting Screws & Hardware (As Required)', qty: 1, unitPrice: 300, status: 'In Stock' },
+  { id: 'm14', node: 'node-01', name: 'Cable Ties', spec: 'Nylon Zip Ties (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'm15', node: 'node-01', name: 'Heat-Shrink Tubing', spec: 'Wire Insulation Sleeving (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
 
-  // NODE 02 SERVO NODE
-  { id: 's1', node: 'node-02', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 Servo Controller', qty: 1, unitPrice: 750, status: 'In Stock' },
-  { id: 's2', node: 'node-02', name: 'PCA9685 PWM Driver', spec: '16-Channel 12-bit I2C Servo Controller', qty: 1, unitPrice: 550, status: 'In Stock' },
-  { id: 's3', node: 'node-02', name: 'MG995 Metal Servos', spec: 'TowerPro High-Torque Servos (L1-L3, R1-R3, H1)', qty: 7, unitPrice: 750, status: 'In Stock' },
-  { id: 's4', node: 'node-02', name: 'Servo Extensions & Plugs', spec: '3-Pin JST Servo Connectors & Extensions', qty: 1, unitPrice: 200, status: 'In Stock' },
-  { id: 's5', node: 'node-02', name: 'Terminal Board', spec: 'PCB Power Distribution Board for Servos', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 's6', node: 'node-02', name: 'Wiring & Signal Lines', spec: 'Power Wires (14AWG) & I2C/Signal Jumpers', qty: 1, unitPrice: 450, status: 'In Stock' },
-  { id: 's7', node: 'node-02', name: 'Servo Brackets & Fasteners', spec: 'Mounting Brackets, Screws & Horns', qty: 1, unitPrice: 400, status: 'In Stock' },
-  { id: 's8', node: 'node-02', name: 'Cable Ties & Heat Shrink', spec: 'Harness Insulation & Cable Ties', qty: 1, unitPrice: 100, status: 'In Stock' },
+  // 2. PRAYAS – BATTERY & POWER SYSTEM BOM (3S7P Pack)
+  { id: 'p1', node: 'node-06', name: '18650 Li-ion Battery Cell', spec: '2200 mAh, 3.7V (Qty: 21 - 3S7P Pack)', qty: 21, unitPrice: 250, status: 'In Stock' },
+  { id: 'p1_cfg', node: 'node-06', name: '3S7P Battery Configuration', spec: '3 Series × 7 Parallel (15.4 Ah / 171 Wh)', qty: 1, unitPrice: 0, status: 'In Stock' },
+  { id: 'p2', node: 'node-06', name: '3S 40A Li-ion BMS', spec: 'Cell Balancing & Protection Board (Qty: 1)', qty: 1, unitPrice: 450, status: 'In Stock' },
+  { id: 'p3', node: 'node-06', name: '12.6V 3A CC/CV Charger', spec: 'Li-ion Automatic Balance Charger (Qty: 1)', qty: 1, unitPrice: 1200, status: 'In Stock' },
+  { id: 'p4', node: 'node-06', name: 'Battery Voltage/Capacity Meter', spec: 'Digital Battery Level Indicator (Qty: 1)', qty: 1, unitPrice: 350, status: 'In Stock' },
+  { id: 'p5', node: 'node-06', name: 'Nickel Strip', spec: '0.15mm Pure Nickel Strip for Spot Welding (As Required)', qty: 1, unitPrice: 250, status: 'In Stock' },
+  { id: 'p6', node: 'node-06', name: '18650 Cell Holder/Spacer', spec: 'Modular Plastic Cell Spacers (As Required)', qty: 1, unitPrice: 350, status: 'In Stock' },
+  { id: 'p7', node: 'node-06', name: 'Cell Insulating Rings', spec: 'Positive Terminal Insulating Rings (Qty: 21)', qty: 21, unitPrice: 10, status: 'In Stock' },
+  { id: 'p8', node: 'node-06', name: 'Fish-Paper Insulation', spec: 'Insulating Barrier Sheet (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'p9', node: 'node-06', name: 'Battery Heat-Shrink Sleeve', spec: 'PVC Protective Enclosure Wrap (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'p10', node: 'node-06', name: 'Battery Enclosure/Case', spec: 'Insulated Battery Mounting Box (Qty: 1)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'p11', node: 'node-06', name: 'High-Current Battery Wire', spec: '14 AWG Silicone Wire (As Required)', qty: 1, unitPrice: 300, status: 'In Stock' },
+  { id: 'p12', node: 'node-06', name: 'BMS Balance Wires', spec: 'Multicolor BMS Wiring Harness (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p13', node: 'node-06', name: 'High-Current Battery Connector', spec: 'XT60 Plug Pair (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'p14', node: 'node-06', name: 'Charging Connector', spec: 'DC Barrel Socket Interface (Qty: 1)', qty: 1, unitPrice: 80, status: 'In Stock' },
+  { id: 'p15', node: 'node-06', name: 'Main Battery Fuse + Fuse Holder', spec: 'Inline Blade Fuse 20A + Holder (Qty: 1)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'p16', node: 'node-06', name: 'Main Power Switch', spec: '20A Heavy Duty Master Switch (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'p17', node: 'node-06', name: 'NTC Temperature Sensor', spec: 'Thermal Monitoring Probe (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p18', node: 'node-06', name: 'Terminal Insulation/Covers', spec: 'Protective Rubber Terminal Caps (Qty: 2)', qty: 2, unitPrice: 40, status: 'In Stock' },
+  { id: 'p19', node: 'node-06', name: 'Battery Mounting Brackets', spec: 'Chassis Battery Brackets (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'p20', node: 'node-06', name: 'Heat-Shrink Tubing', spec: 'Wire Harness Insulation (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p20b', node: 'node-06', name: 'Cable Ties', spec: 'Nylon Cable Management Zip Ties (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'p21', node: 'node-06', name: 'Crimp Terminals/Connectors', spec: 'Assorted Crimp Ring Terminals (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p22', node: 'node-06', name: 'External BAT+ Terminal', spec: 'High-Current Isolated Post (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p23', node: 'node-06', name: 'External BAT- Terminal', spec: 'High-Current Isolated Post (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p24', node: 'node-06', name: 'External Charging Port', spec: 'DC Fast Charging Port Socket (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'p25', node: 'node-06', name: '200W / 20A DC-DC Buck Converter', spec: 'Converter 1: 6V 10A for 7x MG995 Servos (Qty: 1)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 'p26', node: 'node-06', name: '200W / 20A DC-DC Buck Converter', spec: 'Converter 2: 5V 10A for Main Electronics (Qty: 1)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 'p27', node: 'node-06', name: '200W / 20A DC-DC Buck Converter', spec: 'Converter 3: 5V 3A for AI Node (Qty: 1)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 'p28', node: 'node-06', name: 'DC Cooling Fan', spec: 'Suitable for Buck Converter Heatsink (Qty: 3)', qty: 3, unitPrice: 150, status: 'In Stock' },
+  { id: 'p29', node: 'node-06', name: 'Fan Mounting Hardware/Guards', spec: 'Fan Guards & Mounting Screws (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'p30', node: 'node-06', name: 'Fan Wires & Connectors', spec: '2-Pin Fan Harnesses (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
 
-  // NODE 03 SENSOR NODE
-  { id: 'sn1', node: 'node-03', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 Sensor Node (ESP-NOW)', qty: 1, unitPrice: 750, status: 'In Stock' },
-  { id: 'sn2', node: 'node-03', name: 'NEO-6M GPS Module', spec: 'GPS Receiver Module + Active Antenna', qty: 1, unitPrice: 1200, status: 'In Stock' },
-  { id: 'sn3', node: 'node-03', name: 'DHT11 Temp & Humidity', spec: 'Digital Temperature & Humidity Sensor', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'sn4', node: 'node-03', name: 'MQ-135 Gas Sensor', spec: 'Air Quality & Hazardous Gas Sensor', qty: 1, unitPrice: 300, status: 'In Stock' },
-  { id: 'sn5', node: 'node-03', name: 'MPU6050 6-Axis IMU', spec: '6-DOF Accelerometer & Gyroscope', qty: 1, unitPrice: 350, status: 'In Stock' },
-  { id: 'sn6', node: 'node-03', name: '16x2 LCD + I2C Backpack', spec: 'Character LCD Screen + PCF8574 Adapter', qty: 1, unitPrice: 650, status: 'In Stock' },
-  { id: 'sn7', node: 'node-03', name: 'Sensor Expansion Connectors', spec: 'Header Strips & Expansion Harnesses', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'sn8', node: 'node-03', name: 'PCB & Distribution Board', spec: 'Sensor Distribution Board', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'sn9', node: 'node-03', name: 'Wiring & Jumpers', spec: 'I2C, UART & Power Dupont Wires', qty: 1, unitPrice: 200, status: 'In Stock' },
-  { id: 'sn10', node: 'node-03', name: 'Mounting Screws & Hardware', spec: 'M3 Standoffs, Nuts & Cable Ties', qty: 1, unitPrice: 150, status: 'In Stock' },
+  // 3. PRAYAS – SERVO NODE BOM
+  { id: 's1', node: 'node-02', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's2', node: 'node-02', name: 'PCA9685 16-Channel Servo Driver', spec: '12-bit I2C PWM Controller (Qty: 1)', qty: 1, unitPrice: 550, status: 'In Stock' },
+  { id: 's3', node: 'node-02', name: 'MG995 Servo Motor (L1)', spec: 'L1 Servo – Left Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's4', node: 'node-02', name: 'MG995 Servo Motor (L2)', spec: 'L2 Servo – Left Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's5', node: 'node-02', name: 'MG995 Servo Motor (L3)', spec: 'L3 Servo – Left Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's6', node: 'node-02', name: 'MG995 Servo Motor (R1)', spec: 'R1 Servo – Right Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's7', node: 'node-02', name: 'MG995 Servo Motor (R2)', spec: 'R2 Servo – Right Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's8', node: 'node-02', name: 'MG995 Servo Motor (R3)', spec: 'R3 Servo – Right Arm (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's9', node: 'node-02', name: 'MG995 Servo Motor (H1)', spec: 'H1 Servo – Head (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 's10', node: 'node-02', name: '6V / 10A DC-DC Buck Converter', spec: 'Supplied from Main Power System (Qty: 1)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 's11', node: 'node-02', name: 'High-Current Servo Power Wires', spec: '14 AWG Heavy Power Wires (As Required)', qty: 1, unitPrice: 250, status: 'In Stock' },
+  { id: 's12', node: 'node-02', name: '5V Logic Power Wires', spec: 'Logic Supply Line (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 's13', node: 'node-02', name: 'Common GND Wires', spec: 'Ground Bus Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 's14', node: 'node-02', name: 'Servo Connectors', spec: '3-Pin JST Servo Connectors (As Required)', qty: 7, unitPrice: 30, status: 'In Stock' },
+  { id: 's15', node: 'node-02', name: '4/6-Pin Connectors', spec: 'Header Connectors (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 's16', node: 'node-02', name: 'PCB / Terminal Distribution Board', spec: 'Servo Power & Signal Board (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 's17', node: 'node-02', name: 'Jumper Wires', spec: '24 AWG Dupont Jumpers (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 's18', node: 'node-02', name: 'Signal Wires', spec: 'I2C & Control Signal Wires (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 's19', node: 'node-02', name: 'Mounting Nuts & Bolts', spec: 'Assorted Servo Fasteners (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 's20', node: 'node-02', name: 'Servo Mounting Brackets', spec: 'Metal Servo Brackets & Horns (As Required)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 's21', node: 'node-02', name: 'Cable Ties', spec: 'Zip Ties for Servo Arm Harnesses (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 's22', node: 'node-02', name: 'Heat-Shrink Tubing', spec: 'Insulation Sleeving (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
 
-  // NODE 04 MASTER & DISPLAY NODE
-  { id: 'cd1', node: 'node-04', name: 'ESP32 Master Controller', spec: 'ESP32-WROOM-32 Central Coordinator', qty: 1, unitPrice: 750, status: 'In Stock' },
-  { id: 'cd2', node: 'node-04', name: '2.4" SPI TFT Display', spec: 'ST7789 Color SPI Status Display', qty: 1, unitPrice: 1100, status: 'In Stock' },
-  { id: 'cd3', node: 'node-04', name: 'PCB & Adapter Board', spec: 'Master Node Distribution Board', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'cd4', node: 'node-04', name: 'SPI & Power Wiring', spec: 'High-speed SPI Wires & Power Harnesses', qty: 1, unitPrice: 200, status: 'In Stock' },
-  { id: 'cd5', node: 'node-04', name: 'Headers & Standoffs', spec: 'Male Headers, Screws & Standoffs', qty: 1, unitPrice: 150, status: 'In Stock' },
+  // 4. PRAYAS – SENSOR NODE BOM
+  { id: 'sn1', node: 'node-03', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 'sn2', node: 'node-03', name: 'NEO-6M GPS Module', spec: 'GPS Receiver Module + Antenna (Qty: 1)', qty: 1, unitPrice: 1200, status: 'In Stock' },
+  { id: 'sn3', node: 'node-03', name: 'DHT11 Temperature & Humidity Sensor', spec: 'Digital Climate Sensor (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn4', node: 'node-03', name: 'MQ-135 Gas Sensor', spec: 'Air Quality & Gas Sensor (Qty: 1)', qty: 1, unitPrice: 300, status: 'In Stock' },
+  { id: 'sn5', node: 'node-03', name: 'MPU6050 6-Axis IMU Sensor', spec: 'Accelerometer & Gyroscope (Qty: 1)', qty: 1, unitPrice: 350, status: 'In Stock' },
+  { id: 'sn6', node: 'node-03', name: '16×2 LCD Display', spec: 'Character Display Screen (Qty: 1)', qty: 1, unitPrice: 450, status: 'In Stock' },
+  { id: 'sn7', node: 'node-03', name: 'I2C LCD Backpack/Module', spec: 'PCF8574 I2C Adapter (Qty: 1)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'sn8', node: 'node-03', name: 'Additional Environmental/Distance Sensors', spec: 'Expansion Sensors (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn9', node: 'node-03', name: 'Sensor Expansion Connectors', spec: 'Header Connectors (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn10', node: 'node-03', name: '5V Regulated Power Supply', spec: 'From Main 5V Rail (Qty: 1)', qty: 1, unitPrice: 0, status: 'In Stock' },
+  { id: 'sn11', node: 'node-03', name: 'Power Distribution Wires', spec: '24 AWG Power Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'sn12', node: 'node-03', name: 'Common GND Connection', spec: 'Ground Bus Wires (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'sn13', node: 'node-03', name: 'Jumper Wires', spec: 'Dupont Signal Jumpers (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn14', node: 'node-03', name: 'I2C Wires', spec: 'SDA/SCL Bus Wires (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'sn15', node: 'node-03', name: 'UART Wires', spec: 'TX/RX Telemetry Lines (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'sn16', node: 'node-03', name: 'PCB / Sensor Distribution Board', spec: 'Sensor Distribution Board (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'sn17', node: 'node-03', name: 'Pin Headers / Connectors', spec: 'Male & Female Headers (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'sn18', node: 'node-03', name: 'Mounting Nuts & Bolts', spec: 'M3 Brass Standoffs & Screws (As Required)', qty: 1, unitPrice: 120, status: 'In Stock' },
+  { id: 'sn19', node: 'node-03', name: 'Heat-Shrink Tubing', spec: 'Insulation Sleeving (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'sn20', node: 'node-03', name: 'Cable Ties', spec: 'Cable Management Zip Ties (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
 
-  // NODE 05 AI NODE
-  { id: 'ai1', node: 'node-05', name: 'ESP32-S3-CAM Board', spec: 'AI Vision & Voice Processor (8MB PSRAM)', qty: 1, unitPrice: 1800, status: 'In Stock' },
-  { id: 'ai2', node: 'node-05', name: '2.4" SPI TFT Display', spec: 'Face UI & Speech Expression Screen', qty: 1, unitPrice: 1100, status: 'In Stock' },
-  { id: 'ai3', node: 'node-05', name: 'INMP441 Microphone', spec: 'Omnidirectional I2S Digital Mic Module', qty: 1, unitPrice: 400, status: 'In Stock' },
-  { id: 'ai4', node: 'node-05', name: 'PCM5102 I2S DAC Module', spec: 'High Quality Audio DAC (MAX98357A Not Used)', qty: 1, unitPrice: 450, status: 'In Stock' },
-  { id: 'ai5', node: 'node-05', name: 'AUX Speaker', spec: '40mm Audio Speaker', qty: 1, unitPrice: 250, status: 'In Stock' },
-  { id: 'ai6', node: 'node-05', name: '3.5mm AUX Cable', spec: 'Audio Output Signal Cable', qty: 1, unitPrice: 100, status: 'In Stock' },
-  { id: 'ai7', node: 'node-05', name: 'LED Indicators', spec: 'Status LEDs & Limiting Resistors', qty: 1, unitPrice: 100, status: 'In Stock' },
-  { id: 'ai8', node: 'node-05', name: 'Integrated OV2640 Camera', spec: 'ESP32-S3 DVP Camera Module', qty: 1, unitPrice: 0, status: 'In Stock' },
-  { id: 'ai9', node: 'node-05', name: 'Wiring & Jumper Sets', spec: 'I2S, SPI, Power & Ground Wires', qty: 1, unitPrice: 200, status: 'In Stock' },
-  { id: 'ai10', node: 'node-05', name: 'PCB & Mounting Kit', spec: 'Adapter Board, M2/M3 Screws & Spacers', qty: 1, unitPrice: 300, status: 'In Stock' },
+  // 5. PRAYAS – AI NODE BOM
+  { id: 'ai1', node: 'node-05', name: 'ESP32-S3-CAM Development Board', spec: 'AI Processor (8MB PSRAM) (Qty: 1)', qty: 1, unitPrice: 1800, status: 'In Stock' },
+  { id: 'ai2', node: 'node-05', name: 'SPI TFT Display', spec: '2.4" ST7789/ILI9341 Color Screen (Qty: 1)', qty: 1, unitPrice: 1100, status: 'In Stock' },
+  { id: 'ai3', node: 'node-05', name: 'Microphone Module', spec: 'INMP441 Digital I2S Mic (Qty: 1)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'ai4', node: 'node-05', name: 'PCM5102 I2S DAC Module', spec: 'Audio DAC (MAX98357A Not Used) (Qty: 1)', qty: 1, unitPrice: 450, status: 'In Stock' },
+  { id: 'ai5', node: 'node-05', name: 'AUX Speaker', spec: '40mm Audio Speaker (Qty: 1)', qty: 1, unitPrice: 250, status: 'In Stock' },
+  { id: 'ai6', node: 'node-05', name: '3.5mm AUX Cable / Connector', spec: 'Audio Output Cable (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'ai7', node: 'node-05', name: 'LED Indicators', spec: 'Status Indicator LEDs (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'ai8', node: 'node-05', name: 'Current-Limiting Resistors for LEDs', spec: 'Resistors for LEDs (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'ai9', node: 'node-05', name: 'ESP32-S3-CAM Integrated Camera Module', spec: 'OV2640 2MP Camera Sensor (Qty: 1)', qty: 1, unitPrice: 0, status: 'In Stock' },
+  { id: 'ai10', node: 'node-05', name: '5V Regulated Power Supply', spec: 'From Main 5V Rail (5V/3A Buck)', qty: 1, unitPrice: 0, status: 'In Stock' },
+  { id: 'ai11', node: 'node-05', name: 'Power Distribution Wires', spec: 'Power Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'ai12', node: 'node-05', name: 'Common GND Connection', spec: 'Ground Wires (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'ai13', node: 'node-05', name: 'Jumper Wires', spec: 'Dupont Signal Jumpers (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'ai14', node: 'node-05', name: 'I2S Wires', spec: 'Digital Audio Bus Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'ai15', node: 'node-05', name: 'SPI Wires', spec: 'High-speed Display Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'ai16', node: 'node-05', name: 'PCB / Distribution Board', spec: 'AI Adapter Prototyping Board (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'ai17', node: 'node-05', name: 'Pin Headers / Connectors', spec: 'Pin Header Strips (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'ai18', node: 'node-05', name: 'Mounting Nuts & Bolts', spec: 'M2/M3 Screws & Spacers (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'ai19', node: 'node-05', name: 'Heat-Shrink Tubing', spec: 'Insulation Sleeving (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'ai20', node: 'node-05', name: 'Cable Ties', spec: 'Zip Ties (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
 
-  // NODE 06 POWER NODE (3S7P)
-  { id: 'p1', node: 'node-06', name: '18650 Li-ion Cells (3S7P)', spec: '2200mAh 3.7V High Drain Cells (21 Pack)', qty: 21, unitPrice: 250, status: 'In Stock' },
-  { id: 'p2', node: 'node-06', name: '3S 40A BMS Board', spec: '3S 40A Li-ion BMS with Cell Balancing', qty: 1, unitPrice: 450, status: 'In Stock' },
-  { id: 'p3', node: 'node-06', name: '12.6V 3A Li-ion Charger', spec: 'Automatic CC/CV Balance Charger', qty: 1, unitPrice: 1200, status: 'In Stock' },
-  { id: 'p4', node: 'node-06', name: 'Battery Voltage Meter', spec: 'Digital LED Voltage/Capacity Meter', qty: 1, unitPrice: 350, status: 'In Stock' },
-  { id: 'p5', node: 'node-06', name: 'Nickel Strip & Cell Holders', spec: '0.15mm Nickel Strip & Modular Spacers', qty: 1, unitPrice: 600, status: 'In Stock' },
-  { id: 'p6', node: 'node-06', name: 'Insulation & Enclosure', spec: 'Fish-paper, Insulating Rings & Shrink Sleeve', qty: 1, unitPrice: 800, status: 'In Stock' },
-  { id: 'p7', node: 'node-06', name: 'Main Battery Fuse (20A)', spec: 'Inline Blade Fuse + Heavy Duty Holder', qty: 1, unitPrice: 200, status: 'In Stock' },
-  { id: 'p8', node: 'node-06', name: 'Main Power Switch', spec: '20A Master Power Switch', qty: 1, unitPrice: 150, status: 'In Stock' },
-  { id: 'p9', node: 'node-06', name: 'External Terminals & Port', spec: 'Insulated BAT+/BAT- Terminals & DC Charge Port', qty: 1, unitPrice: 300, status: 'In Stock' },
-  { id: 'p10', node: 'node-06', name: 'DC-DC Buck Converters (200W)', spec: 'Adjustable Buck Converters (6V/10A, 5V/10A, 5V/3A)', qty: 3, unitPrice: 800, status: 'In Stock' },
-  { id: 'p11', node: 'node-06', name: 'DC Cooling Fans', spec: 'Heatsink Cooling Fans for Buck Converters', qty: 3, unitPrice: 150, status: 'In Stock' },
-  { id: 'p12', node: 'node-06', name: 'Silicone Power Wires & XT60', spec: '14AWG Silicone Wires & XT60 Plug', qty: 1, unitPrice: 550, status: 'In Stock' },
-  { id: 'p13', node: 'node-06', name: 'Hardware & NTC Sensor', spec: 'NTC Sensor, Crimp Terminals & Covers', qty: 1, unitPrice: 350, status: 'In Stock' },
+  // 6. PRAYAS – MASTER NODE BOM
+  { id: 'cd1', node: 'node-04', name: 'ESP32 Dev Module', spec: 'ESP32-WROOM-32 Central Controller (Qty: 1)', qty: 1, unitPrice: 750, status: 'In Stock' },
+  { id: 'cd2', node: 'node-04', name: 'TFT Display – SPI Interface', spec: '2.4" SPI Color Display (Qty: 1)', qty: 1, unitPrice: 1100, status: 'In Stock' },
+  { id: 'cd3', node: 'node-04', name: '5V Regulated Power Supply', spec: 'From Main 5V / 10A Rail', qty: 1, unitPrice: 0, status: 'In Stock' },
+  { id: 'cd4', node: 'node-04', name: 'Power Distribution Wires', spec: 'Power Wires (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'cd5', node: 'node-04', name: 'Common GND Connection', spec: 'Ground Bus Wires (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'cd6', node: 'node-04', name: 'Jumper Wires', spec: 'Signal Jumpers (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'cd7', node: 'node-04', name: 'SPI Wires', spec: 'High-speed SPI Display Lines (As Required)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'cd8', node: 'node-04', name: 'PCB / Distribution Board', spec: 'Master Distribution Board (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'cd9', node: 'node-04', name: 'Pin Headers / Connectors', spec: 'Male & Female Headers (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'cd10', node: 'node-04', name: 'Mounting Nuts & Bolts', spec: 'M3 Standoffs & Screws (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'cd11', node: 'node-04', name: 'Heat-Shrink Tubing', spec: 'Insulation Sleeving (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
+  { id: 'cd12', node: 'node-04', name: 'Cable Ties', spec: 'Zip Ties (As Required)', qty: 1, unitPrice: 50, status: 'In Stock' },
 
-  // MECHANICAL & STRUCTURAL
-  { id: 'mc1', node: 'node-mech', name: 'Plywood Sheet (12mm)', spec: 'Structural Base & Internal Platforms', qty: 1, unitPrice: 800, status: 'In Stock' },
-  { id: 'mc2', node: 'node-mech', name: 'Aluminum Square Pipe & Rods', spec: 'Main Structural Frame & Arm Supports', qty: 1, unitPrice: 1000, status: 'In Stock' },
-  { id: 'mc3', node: 'node-mech', name: 'Sunboard Sheet (3mm)', spec: 'White Body Panels & Coverings', qty: 2, unitPrice: 500, status: 'In Stock' },
-  { id: 'mc4', node: 'node-mech', name: '3D Printed Parts Set', spec: 'PETG Head, Hands (x2), Joints & Mounts', qty: 1, unitPrice: 4500, status: 'In Stock' },
-  { id: 'mc5', node: 'node-mech', name: 'Body & Frame Assemblies', spec: 'Lower Base, Torso Frame & Arm Shells', qty: 1, unitPrice: 1500, status: 'In Stock' },
-  { id: 'mc6', node: 'node-mech', name: 'Component Mounts & Clamps', spec: 'Motor, Wheel, Sensor, Display & Battery Mounts', qty: 1, unitPrice: 1200, status: 'In Stock' },
-  { id: 'mc7', node: 'node-mech', name: 'Assorted Fasteners Kit', spec: 'M3, M4, M5 Screws, Nuts & Washers', qty: 1, unitPrice: 1200, status: 'In Stock' },
-  { id: 'mc8', node: 'node-mech', name: 'Structural Brackets & Horns', spec: 'L-Brackets, Servo Brackets & Couplers', qty: 1, unitPrice: 1000, status: 'In Stock' },
-  { id: 'mc9', node: 'node-mech', name: '10 cm Robot Wheels & Hubs', spec: 'High-Traction Wheels (4) + Flange Hubs (4)', qty: 4, unitPrice: 850, status: 'In Stock' },
-  { id: 'mc10', node: 'node-mech', name: 'Body Finishing & Cable Clips', spec: 'Acrylic Sheet, Edge Trim, Velcro & Clips', qty: 1, unitPrice: 800, status: 'In Stock' }
+  // 7. PRAYAS – MECHANICAL & STRUCTURAL BOM
+  { id: 'mc1', node: 'node-mech', name: 'Plywood Sheet', spec: 'Structural base and internal platforms (As Required)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 'mc2', node: 'node-mech', name: 'Aluminum Square Pipe', spec: 'Main structural frame (As Required)', qty: 1, unitPrice: 600, status: 'In Stock' },
+  { id: 'mc3', node: 'node-mech', name: 'Aluminum Rods', spec: 'Arm and structural supports (As Required)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'mc4', node: 'node-mech', name: 'Sunboard Sheet', spec: 'Body panels and outer covering (As Required)', qty: 2, unitPrice: 500, status: 'In Stock' },
+  { id: 'mc5', node: 'node-mech', name: '3D Printed Parts', spec: 'Custom joints, brackets, head, hands and mechanical components (As Required)', qty: 1, unitPrice: 4500, status: 'In Stock' },
+  { id: 'mc6', node: 'node-mech', name: 'Lower Body/Base Frame', spec: 'Base chassis structure (Qty: 1)', qty: 1, unitPrice: 800, status: 'In Stock' },
+  { id: 'mc7', node: 'node-mech', name: 'Upper Body/Torso Frame', spec: 'Torso frame structure (Qty: 1)', qty: 1, unitPrice: 700, status: 'In Stock' },
+  { id: 'mc8', node: 'node-mech', name: 'Head Housing', spec: '3D Printed Head Enclosure (Qty: 1)', qty: 1, unitPrice: 1500, status: 'In Stock' },
+  { id: 'mc9', node: 'node-mech', name: 'Left Arm Assembly', spec: 'Articulated Left Arm Shell (Qty: 1)', qty: 1, unitPrice: 1000, status: 'In Stock' },
+  { id: 'mc10', node: 'node-mech', name: 'Right Arm Assembly', spec: 'Articulated Right Arm Shell (Qty: 1)', qty: 1, unitPrice: 1000, status: 'In Stock' },
+  { id: 'mc11', node: 'node-mech', name: 'Hand Assembly', spec: '3D Printed Hands (Qty: 2)', qty: 2, unitPrice: 600, status: 'In Stock' },
+  { id: 'mc12', node: 'node-mech', name: 'Servo Mounts', spec: '3D Printed / Metal Servo Mounts (As Required)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'mc13', node: 'node-mech', name: 'Motor Mounts/Clamps', spec: 'Metal Johnson Motor Clamps (Qty: 4)', qty: 4, unitPrice: 350, status: 'In Stock' },
+  { id: 'mc14', node: 'node-mech', name: 'Wheel Mounts', spec: 'Flange Wheel Mounts (Qty: 4)', qty: 4, unitPrice: 350, status: 'In Stock' },
+  { id: 'mc15', node: 'node-mech', name: 'Sensor Mounts', spec: '3D Printed Sensor Mounts (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'mc16', node: 'node-mech', name: 'Camera Mount', spec: '3D Printed Camera Mount (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'mc17', node: 'node-mech', name: 'Ultrasonic Sensor Mounts', spec: '3D Printed Proximity Mounts (Qty: 4)', qty: 4, unitPrice: 100, status: 'In Stock' },
+  { id: 'mc18', node: 'node-mech', name: 'TFT Display Mount', spec: '3D Printed Display Mount (Qty: 1)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'mc19', node: 'node-mech', name: 'Speaker Mount', spec: '3D Printed Speaker Mount (Qty: 1)', qty: 1, unitPrice: 100, status: 'In Stock' },
+  { id: 'mc20', node: 'node-mech', name: 'Battery Mount/Compartment', spec: '3D Printed / Insulated Battery Box (Qty: 1)', qty: 1, unitPrice: 300, status: 'In Stock' },
+  { id: 'mc21', node: 'node-mech', name: 'Electronics Mounting Plate', spec: 'Plywood/Sunboard Mounting Plate (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'mc22', node: 'node-mech', name: 'Buck Converter Mounts', spec: '3D Printed Converter Mounts (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'mc23_screws', node: 'node-mech', name: 'Screws (M3, M4, M5)', spec: 'Assorted Mounting Screws (As Required)', qty: 1, unitPrice: 300, status: 'In Stock' },
+  { id: 'mc23_nuts', node: 'node-mech', name: 'Nuts & Lock Nuts (M3, M4, M5)', spec: 'Hex Nuts, Lock Nuts & Threaded Inserts (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'mc23_washers', node: 'node-mech', name: 'Washers & Standoffs', spec: 'Washers, Spacers & Standoffs (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'mc24_brackets', node: 'node-mech', name: 'Brackets & Mechanical Supports', spec: 'L-Brackets, Corner Brackets, Hinges & Couplers (As Required)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'mc24_pads', node: 'node-mech', name: 'Rubber Feet & Vibration Pads', spec: 'Vibration Dampening Rubber Pads (As Required)', qty: 1, unitPrice: 150, status: 'In Stock' },
+  { id: 'mc25', node: 'node-mech', name: '10 cm Wheels', spec: 'High Traction Rubber Tread Wheels (Qty: 4)', qty: 4, unitPrice: 500, status: 'In Stock' },
+  { id: 'mc25_hubs', node: 'node-mech', name: 'Wheel Hubs & Shaft Couplers', spec: 'Flange Wheel Hubs & Shaft Couplers (Qty: 4)', qty: 4, unitPrice: 350, status: 'In Stock' },
+  { id: 'mc26_trim', node: 'node-mech', name: 'Body Finishing & Acrylic', spec: 'Acrylic Sheet, Protective Edge Trim & Sunboard Panels (As Required)', qty: 1, unitPrice: 400, status: 'In Stock' },
+  { id: 'mc26_clips', node: 'node-mech', name: 'Cable Management & Mounting', spec: 'Velcro Strips, Cable Clips & Grommets (As Required)', qty: 1, unitPrice: 200, status: 'In Stock' },
+  { id: 'mc27_hardware', node: 'node-mech', name: 'General Hardware & Fasteners', spec: 'Assorted Fastener Hardware & Adhesive Materials (As Required)', qty: 1, unitPrice: 300, status: 'In Stock' }
 ];
 
 const NODE_DETAILS = {
   'all': {
     name: 'All Robot Nodes & Drivetrain',
-    desc: 'Complete overview of all 7 subsystems forming the Prayas V1 Humanoid platform.',
+    desc: 'Complete overview of all 7 subsystems forming the Prayas V1 Humanoid platform based on all components.txt.',
     steps: [
-      { title: '1. Multi-Node Distributed Bus', text: 'Subsystems communicate via dual CAN-bus and high-speed UART links.' },
-      { title: '2. Dedicated Power Rails', text: 'Central 3S 12.6V battery split into 5V 20A motor/servo rail and 5V 3A logic rails.' },
-      { title: '3. Full Live Cost Tracking', text: 'Update prices and quantities to recalculate total robot production costs dynamically.' },
+      { title: '1. Multi-Node ESP-NOW Mesh Bus', text: 'Subsystems communicate via ESP-NOW wireless mesh and high-speed UART links.' },
+      { title: '2. Dedicated 3-Stage Buck Converters', text: '3S7P 12.6V battery feeds 6V 10A servo buck, 5V 10A main logic buck, and 5V 3A AI buck with DC cooling fans.' },
+      { title: '3. Full Live Cost Tracking', text: 'Update prices and quantities in real time to recalculate total robot investment dynamically.' },
       { title: '4. Modular Hardware Replacement', text: 'Components are organized node-wise for seamless maintenance and hardware swaps.' }
     ]
   },
   'node-01': {
     name: 'Node 01: Motor Drivetrain',
-    desc: 'Controls 4WD differential mobility, 360° HC-SR04 ultrasonic obstacle sensing, and BTS7960 H-bridges.',
+    desc: 'Controls 4WD differential mobility, 360° HC-SR04 ultrasonic obstacle sensing, and BTS7960 43A H-bridges.',
     steps: [
       { title: '1. High-Current Dual H-Bridges', text: 'Dual BTS7960 drivers (R_EN/L_EN tied to 5V VCC) drive 4x Johnson 12V 200RPM motors in parallel.' },
       { title: '2. Dedicated 4-Channel Motor PWM', text: 'ESP32 outputs Left RPWM (GPIO 25), LPWM (GPIO 26) & Right RPWM (GPIO 27), LPWM (GPIO 14).' },
-      { title: '3. 360° Ultrasonic Safety Net', text: 'Four HC-SR04 sensors (Front: 16/34, Left: 17/35, Right: 18/32, Rear: 19/33) with 1k/2k voltage dividers on Echo pins.' },
-      { title: '4. High Power Connection & Common GND', text: 'Heavy-duty XT60 plug on main 12V power rail with inline fuse, 5V buck converter, and common ground.' }
+      { title: '3. 360° Ultrasonic Safety Net', text: 'Four HC-SR04 sensors (Front: 16/34, Left: 17/35, Right: 18/32, Rear: 19/33) monitor obstacle clearance.' },
+      { title: '4. High Power Connection & PCB Bus', text: 'Heavy-duty XT60 plug on main 12V power rail with inline fuse, PCB distribution board, and common ground.' }
     ]
   },
   'node-02': {
     name: 'Node 02: Servo Articulation',
-    desc: 'Manages upper-body humanoid motion across dual 3-DOF arms and head movement.',
+    desc: 'Manages upper-body humanoid motion across dual 3-DOF arms (L1-L3, R1-R3) and head joint (H1).',
     steps: [
-      { title: '1. Offloaded Hardware PWM', text: 'PCA9685 16-channel 12-bit I2C driver generates precision 50Hz PWM signals.' },
-      { title: '2. High Torque Servos', text: 'Seven MG995 metal gear servos drive shoulder rotation, elbow flex, and neck tilt.' },
-      { title: '3. Dedicated 5V 10A Power Rail', text: 'High amp terminal block prevents logic voltage drops during heavy servo load.' },
-      { title: '4. Extension Harnesses', text: '30cm extensions with JST connectors pass through arm joints cleanly.' }
+      { title: '1. Offloaded Hardware PWM', text: 'PCA9685 16-channel 12-bit I2C driver generates precision 50Hz PWM signals for 7x MG995 servos.' },
+      { title: '2. High Torque Servos', text: 'Seven MG995 metal gear servos drive arm kinematics (wave, handshake, dance) and head tilt.' },
+      { title: '3. Dedicated 6V 10A Power Rail', text: 'Powered directly from 6V/10A DC-DC buck converter rail to prevent logic brownouts.' },
+      { title: '4. Extension Harnesses', text: 'JST connectors and extension harnesses pass through arm joints cleanly.' }
     ]
   },
   'node-03': {
     name: 'Node 03: Telemetry & Sensors',
-    desc: 'Collects orientation, acceleration, temperature, and environmental telemetry.',
+    desc: 'Collects orientation, acceleration, temperature, humidity, gas quality, and GPS telemetry.',
     steps: [
-      { title: '1. ATmega328P Co-Processor', text: 'Arduino Nano handles real-time sensor polling without delaying ESP32 controllers.' },
-      { title: '2. 6-DOF Balance IMU', text: 'MPU6050 gyroscope and accelerometer detects robot tilt and slope inclination.' },
-      { title: '3. Climate Monitoring', text: 'DHT11 sensor provides digital temperature and humidity measurements.' },
-      { title: '4. Compact Bus Interface', text: 'Communicates via I2C bus with low power footprint on dedicated perfboard.' }
+      { title: '1. ESP32 Sensor Controller', text: 'ESP32 Dev Module handles real-time sensor polling and streams data to Master Node via ESP-NOW.' },
+      { title: '2. 6-DOF Balance IMU & GPS', text: 'MPU6050 gyroscope/accel detects tilt and orientation while NEO-6M provides global location fix.' },
+      { title: '3. Environmental Sensing', text: 'DHT11 measures temperature/humidity; MQ-135 monitors ambient air quality and gas levels.' },
+      { title: '4. Local I2C LCD Readout', text: 'Formats live telemetry output to 16x2 I2C character LCD screen.' }
     ]
   },
   'node-04': {
-    name: 'Node 04: Control & Dashboard UI',
-    desc: 'Main system dashboard, local screen interface, WebSockets, OTA & MQTT bridge.',
+    name: 'Node 04: Control & Master Node',
+    desc: 'Central system coordinator, local SPI TFT display, WebSockets, OTA & MQTT cloud bridge.',
     steps: [
-      { title: '1. ESP32 Master Host', text: 'Dual-core 240MHz processor hosts system control loop and web UI server.' },
-      { title: '2. 3.5 Inch Color Display', text: 'SPI TFT display renders battery level, active state, and diagnostic logs.' },
-      { title: '3. User Controls', text: 'Rotary encoder knob and 3 tactile push buttons for offline mode selection.' },
-      { title: '4. Wireless Ecosystem', text: 'Supports OTA firmware updates, WebSockets control, and MQTT telemetry.' }
+      { title: '1. ESP32 Master Host', text: 'Dual-core 240MHz processor hosts central state machine and routes node commands.' },
+      { title: '2. 2.4" SPI TFT Color Display', text: 'SPI TFT display renders battery voltage, active operational state, and diagnostic logs.' },
+      { title: '3. Multi-Node Coordinator', text: 'Bridges Motor, Servo, Sensor, and AI Nodes using low-latency ESP-NOW protocol.' },
+      { title: '4. Remote & Wireless Connectivity', text: 'Supports OTA firmware updates, WebSockets control dashboard, and MQTT cloud telemetry.' }
     ]
   },
   'node-05': {
-    name: 'Node 05: AI, Speech & Vision',
-    desc: 'Edge AI processing for speech recognition (STT), synthesis (TTS), and camera feed.',
+    name: 'Node 05: AI Speech & Vision',
+    desc: 'Edge AI processing for speech recognition, Xiaozhi framework, vision analysis, and audio output.',
     steps: [
-      { title: '1. ESP32-S3 AI Core', text: 'Supports vector acceleration for local neural network audio/vision processing.' },
-      { title: '2. Digital I2S Audio Input', text: 'INMP441 omnidirectional MEMS mic provides noise-filtered voice capture.' },
-      { title: '3. Hi-Fi I2S Audio Output', text: 'MAX98357A amplifier drives 8 Ohm 10W speaker for natural voice response.' },
-      { title: '4. MicroSD Model Storage', text: '32GB fast storage holds offline TTS audio banks and vision detection models.' }
+      { title: '1. ESP32-S3-CAM AI Core', text: '8MB PSRAM dual-core MCU runs Xiaozhi framework for VAD, wake-word, and cloud LLM streaming.' },
+      { title: '2. Digital I2S Audio Input', text: 'INMP441 / Compatible omnidirectional MEMS mic provides noise-filtered voice capture.' },
+      { title: '3. PCM5102 I2S Audio DAC', text: 'PCM5102 I2S DAC Module feeds high quality analog audio to 3.5mm AUX speaker (MAX98357A not used).' },
+      { title: '4. Integrated Vision & Face UI', text: 'OV2640 camera captures visual query snapshots; 2.4" SPI TFT renders real-time facial expressions.' }
     ]
   },
   'node-06': {
-    name: 'Node 06: Power & Management',
-    desc: 'Central 3S Li-ion battery pack, multi-stage buck converters, BMS, and protection.',
+    name: 'Node 06: Power & Battery System',
+    desc: 'Central 3S7P Li-ion battery pack (21 cells), 3x buck converters with cooling fans, BMS, and protection.',
     steps: [
-      { title: '1. 3S4P High Drain Battery', text: '12x 18650 Li-ion cells deliver ~6800mAh at 11.1V nominal (12.6V max).' },
-      { title: '2. 40A Smart BMS Protection', text: 'Continuous cell balancing, overcharge, overdischarge, and short circuit safety.' },
-      { title: '3. Dual Step-Down Converters', text: '5V 20A buck powers high-load motors/servos; 5V 3A buck feeds electronics.' },
-      { title: '4. Power Distribution Board', text: 'Central PDB with 20A blade fuse and main toggle switch.' }
+      { title: '1. 3S7P High Capacity Battery Pack', text: '21 x 18650 Li-ion cells (2200mAh ea) deliver 15.4 Ah / 171 Wh at 11.1V nominal (12.6V max).' },
+      { title: '2. 3S 40A Smart BMS Protection', text: 'Active cell balancing, overcharge, overdischarge, and short circuit safety.' },
+      { title: '3. Triple Buck Converters with Cooling Fans', text: '6V/10A for servos, 5V/10A for main electronics, 5V/3A for AI node, each cooled by DC fans.' },
+      { title: '4. Safety & External Ports', text: 'Inline 20A fuse, master switch, NTC temp sensor, external BAT+/BAT- terminals & charging port.' }
     ]
   },
   'node-mech': {
     name: 'Mechanical Structural Frame',
-    desc: 'Physical skeleton, 3D printed enclosures, chassis base, and mounting hardware.',
+    desc: 'Physical skeleton, 3D printed enclosures, chassis base, wheels, and mounting hardware.',
     steps: [
-      { title: '1. Articulated PETG Shells', text: 'Custom 3D printed head and arm structures housing internal electronics.' },
-      { title: '2. 4-Inch PVC Spine', text: '70cm heavy-duty PVC pipe forms the central load-bearing torso column.' },
-      { title: '3. Reinforced Base Chassis', text: '12mm CNC-milled plywood base reinforced with square aluminium tubing.' },
-      { title: '4. Exterior Acrylic Styling', text: 'Laser-cut acrylic display bezel and Sunboard protective internal dividers.' }
+      { title: '1. 3D Printed PETG Parts', text: 'Custom 3D printed head housing, left & right hands, joint mounts, and sensor brackets.' },
+      { title: '2. Frame Structure & Spine', text: '12mm plywood chassis base, aluminum square pipes/rods, and sunboard body panels.' },
+      { title: '3. 10 cm Wheels & Drive Hubs', text: 'Four 10 cm high-traction rubber wheels mounted with customized flange hubs & clamps.' },
+      { title: '4. Fasteners & Cable Management', text: 'Assorted M3/M4/M5 hardware, brackets, acrylic cover, edge trim, and cable clips.' }
     ]
   }
 };
@@ -213,10 +298,13 @@ async function initApp() {
   }
 }
 
-// Load data from localStorage or fallback to defaults
+// Load data from localStorage or fallback to defaults (with version check for all components.txt update)
 function loadBOMData() {
   const saved = localStorage.getItem('prayas_bom_data');
-  if (saved) {
+  const savedVersion = localStorage.getItem('prayas_bom_version');
+  const CURRENT_VERSION = 'v3_all_components';
+
+  if (saved && savedVersion === CURRENT_VERSION) {
     try {
       bomItems = JSON.parse(saved);
     } catch (e) {
@@ -225,6 +313,8 @@ function loadBOMData() {
     }
   } else {
     bomItems = [...INITIAL_BOM_DATA];
+    localStorage.setItem('prayas_bom_data', JSON.stringify(bomItems));
+    localStorage.setItem('prayas_bom_version', CURRENT_VERSION);
   }
 }
 
@@ -546,11 +636,12 @@ function handleAddComponent(e) {
 
 // Reset BOM to default initial state
 function resetDefaultBOM() {
-  if (confirm('Reset BOM to original bom.txt default components and prices? Any custom additions will be cleared.')) {
+  if (confirm('Reset BOM to original all components.txt default components and prices? Any custom additions will be cleared.')) {
     bomItems = [...INITIAL_BOM_DATA];
+    localStorage.setItem('prayas_bom_version', 'v3_all_components');
     saveBOMData();
     renderApp();
-    showToast('Reset BOM to defaults successfully');
+    showToast('Reset BOM to all components.txt defaults successfully');
   }
 }
 
